@@ -10,7 +10,6 @@ private:
 public:
 	Window();
 	~Window();
-	static void initialize();
 	virtual void initialize() = 0;
 	virtual void releaseAll() = 0;
 	virtual void resetAll() = 0;

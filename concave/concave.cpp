@@ -36,5 +36,7 @@ void Concave::update()
 
 void Concave::render()
 {
+	graphics->spriteBegin();
 	for (Window* window : Window::windows) window->render();
+	graphics->spriteEnd();
 }

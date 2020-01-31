@@ -1,5 +1,4 @@
 #pragma once
-
 #include "graphics.h"
 #include "input.h"
 #include <vector>
@@ -9,11 +8,6 @@ class Window
 {
 private:
 public:
-	static Graphics* graphics;
-	static Input* input;
-	static float fps;
-	static vector<Window*> windows;
-
 	Window();
 	~Window();
 	static void initialize();

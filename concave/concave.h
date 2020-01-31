@@ -2,15 +2,18 @@
 
 #include "constants.h"
 #include "game.h"
+#include "window.h"
+#include <vector>
+using namespace std;
 
 class Concave : public Game
 {
 private:
-
 public:
 	Concave();
-	virtual ~Concave();
-	void initialize(HWND hwnd); void releaseAll();
+	~Concave();
+	void initialize(HWND hwnd);
+	void releaseAll();
 	void resetAll();
 	void update();
 	void render();

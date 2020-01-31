@@ -105,7 +105,7 @@ void Game::initialize(HWND hw)
 void Game::renderGame()
 {
     //start rendering
-    if (SUCCEEDED(graphics->beginScene()))
+    if (initialized && SUCCEEDED(graphics->beginScene()))
     {
         // render is a pure virtual function that must be provided in the
         // inheriting class.

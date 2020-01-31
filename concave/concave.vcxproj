@@ -159,25 +159,13 @@
     <ClCompile Include="winmain.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="audio.h" />
-    <ClInclude Include="border.h" />
-    <ClInclude Include="button.h" />
     <ClInclude Include="constants.h" />
-    <ClInclude Include="entity.h" />
     <ClInclude Include="flat.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="gameError.h" />
     <ClInclude Include="graphics.h" />
-    <ClInclude Include="hud.h" />
     <ClInclude Include="image.h" />
     <ClInclude Include="input.h" />
-    <ClInclude Include="leaderboard.h" />
-    <ClInclude Include="level.h" />
-    <ClInclude Include="menu.h" />
-    <ClInclude Include="page.h" />
-    <ClInclude Include="spriteText.h" />
-    <ClInclude Include="tile.h" />
-    <ClInclude Include="unit.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -25,8 +25,8 @@ public:
 	inline void setRect(int frameNo);
 	SpriteData getSpriteData(int frameNo);
 
-	int getX() { return spriteData.x; }
-	int getY() { return spriteData.y; }
+	float getX() { return spriteData.x; }
+	float getY() { return spriteData.y; }
 	void setX(int x) { spriteData.x = x; }
 	void setY(int y) { spriteData.y = y; }
 	int getWidth() { return spriteData.width; }

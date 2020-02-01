@@ -40,3 +40,11 @@ const float FRAME_RATE = 200.0f;               // the target frame rate (frames/
 const float MIN_FRAME_RATE = 10.0f;             // the minimum frame rate
 const float MIN_FRAME_TIME = 1.0f / FRAME_RATE;   // minimum desired time for 1 frame
 const float MAX_FRAME_TIME = 1.0f / MIN_FRAME_RATE; // maximum time used in calculations
+
+class CoordF
+{
+public:
+	float x, y;
+	CoordF() { CoordF::x = 0; CoordF::y = 0; }
+	CoordF(float x, float y) { CoordF::x = x; CoordF::y = y; }
+};

@@ -28,7 +28,7 @@ void Concave::resetAll()
 }
 
 void Concave::update()
-{	
+{
 	for (Window* window : windows) window->update();
 }
 

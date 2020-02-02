@@ -3,6 +3,8 @@
 
 class Level : public Window
 {
+private:
+	
 public:
 	Level();
 	~Level();

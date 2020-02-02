@@ -1,84 +1,60 @@
-#include "image.h"
+#include "image2.h"
 
 Image::Image()
-{
-    initialized = false;
-    spriteData.width = 1;
-    spriteData.height = 1;
-    spriteData.x = 0.0;
-    spriteData.y = 0.0;
-    spriteData.scale = 1.0;
-    spriteData.angle = 0.0;
-    spriteData.rect.left = 0;
-    spriteData.rect.top = 0;
-    spriteData.rect.right = spriteData.width;
-    spriteData.rect.bottom = spriteData.height;
-    spriteData.texture = NULL;
-    spriteData.flipHorizontal = false;
-    spriteData.flipVertical = false;
-	cols = 0;
-}
+{}
 
 Image::~Image()
-{
-	SAFE_RELEASE(spriteData.texture);
-}
+{}
 
-bool Image::initialize(Graphics* graphics, const char* file, int width, int height)
+bool Image::initialize(Graphics* graphics, const char* file, int rows, int cols)
 {
-	Image::graphics = graphics;
 	Image::file = file;
 	try {
 		HRESULT hr;
-		UINT fullWidth, fullHeight;
+		UINT width, height;
 		LP_TEXTURE texture;
-		hr = graphics->loadTexture(file, TRANSCOLOR, fullWidth, fullHeight, texture);
-		if (FAILED(hr)) {
-			SAFE_RELEASE(texture);
-			return false;
-		}
-		spriteData.texture = texture;
-		if (width == 0)		width = fullWidth;
-		if (height == 0)	height = fullHeight;
-		spriteData.width = width;
-		spriteData.height = height;
-		Image::cols = fullWidth / width;
-		setRect(0);
+		hr = graphics->loadTexture(file, TRANSCOLOR, width, height, texture);
+		if (FAILED(hr)) { SAFE_RELEASE(texture); return false; }
+		Image::texture = texture;
+		Image::width = width;
+		Image::height = height;
 	}
 	catch (...) {
 		return false;
 	}
-	initialized = true;
-	return true;
 }
 
-void Image::onLostDevice()
+void Image::onLostDevice(Graphics* graphics)
 {
-	if (!initialized) return;
-	SAFE_RELEASE(spriteData.texture);
+	SAFE_RELEASE(Image::texture);
 }
 
-void Image::onResetDevice()
+void Image::onResetDevice(Graphics* graphics)
 {
 	UINT width, height;
 	LP_TEXTURE texture;
-	if (!initialized) return;
 	graphics->loadTexture(file, TRANSCOLOR, width, height, texture);
-	spriteData.texture = texture;
-	spriteData.width = width;
-	spriteData.height = height;
+	Image::texture = texture;
+	Image::width = width;
+	Image::height = height;
 }
 
-inline void Image::setRect(int frameNo)
+SpriteData Image::getSpriteData(int frameNo, float x, float y, float scale, float angle, bool flipHorizontal = false, bool flipVertical = false)
 {
-	spriteData.rect.left = (frameNo % cols) * spriteData.width;
-	spriteData.rect.right = spriteData.rect.left + spriteData.width;
-	spriteData.rect.top = (frameNo / cols) * spriteData.height;
-	spriteData.rect.bottom = spriteData.rect.top + spriteData.height;
+	return SpriteData{ 
+		width, height, 
+		x, y, scale, angle, 
+		getRect(frameNo), texture, 
+		flipHorizontal, flipVertical
+	};
 }
 
-SpriteData Image::getSpriteData(int frameNo)
+RECT Image::getRect(int frameNo)
 {
-	setRect(frameNo);
-	return spriteData;
+	RECT rect;
+	rect.left	= (frameNo % cols) * width;
+	rect.top	= (frameNo / cols) * height;
+	rect.right	= rect.left + width;
+	rect.bottom = rect.top + height;
+	return rect;
 }

@@ -1,35 +1,20 @@
 #pragma once
-#define WIN_32_LEAN_AND_MEAN
-
 #include "constants.h"
 #include "graphics.h"
 
 class Image
 {
-protected:
-	Graphics* graphics;
+private:
 	const char* file;
-    SpriteData spriteData;
-	int cols;
-	bool initialized;
+	int rows, cols;
+	int width, height;
+	LP_TEXTURE texture;
+	RECT getRect(int frameNo);
 public:
-    Image();
-    ~Image();
-	bool initialize(
-		Graphics* graphics, const char* file, 
-		int width = 0, int height = 0);
-	void onLostDevice();
-	void onResetDevice();
-    int getCols() { return cols; }
-
-	inline void setRect(int frameNo);
-	SpriteData getSpriteData(int frameNo);
-
-	float getX() { return spriteData.x; }
-	float getY() { return spriteData.y; }
-	void setX(int x) { spriteData.x = x; }
-	void setY(int y) { spriteData.y = y; }
-	int getWidth() { return spriteData.width; }
-	int getHeight() { return spriteData.height; }
-	void draw() { graphics->drawSprite(spriteData); }
+	Image();
+	~Image();
+	bool initialize(Graphics* graphics, const char* file, int rows, int cols);
+	void onLostDevice(Graphics* graphics);
+	void onResetDevice(Graphics* graphics);
+	SpriteData getSpriteData(int frameNo, float x, float y, float scale, float angle = 0, bool flipHorizontal = false, bool flipVertical = false);
 };

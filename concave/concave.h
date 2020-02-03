@@ -9,7 +9,6 @@ using namespace std;
 class Concave : public Game
 {
 private:
-	MainMenu mainMenu;
 public:
 	Concave();
 	~Concave();

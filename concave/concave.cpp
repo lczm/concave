@@ -11,8 +11,8 @@ Concave::~Concave()
 void Concave::initialize(HWND hwnd)
 {
 	Game::initialize(hwnd);
-	mainMenu.initialize();
-	Window::windows.push_back(&mainMenu);
+	Window::mainMenu.initialize();
+	Window::windows.push_back(&Window::mainMenu);
 }
 
 void Concave::releaseAll()

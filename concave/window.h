@@ -4,10 +4,13 @@
 #include <vector>
 using namespace std;
 
+class MainMenu;
+
 class Window
 {
 public:
 	static vector<Window*> windows;
+	static MainMenu mainMenu;
 public:
 	Window();
 	~Window();
@@ -16,4 +19,16 @@ public:
 	virtual void resetAll() = 0;
 	virtual void update() = 0;
 	virtual void render() = 0;
+};
+
+class MainMenu : public Window
+{
+public:
+	MainMenu();
+	~MainMenu();
+	void initialize();
+	void releaseAll();
+	void resetAll();
+	void update();
+	void render();
 };

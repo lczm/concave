@@ -1,6 +1,8 @@
 #include "window.h"
 
-Window::Window() 
+vector<Window*> Window::windows;
+
+Window::Window()
 {}
 
 Window::~Window()

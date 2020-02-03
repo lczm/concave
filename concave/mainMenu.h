@@ -6,7 +6,7 @@ class MainMenu : public Window
 public:
 	MainMenu();
 	~MainMenu();
-	void initialize(vector<Window*>* windows);
+	void initialize();
 	void releaseAll();
 	void resetAll();
 	void update();

@@ -39,7 +39,7 @@ void Image::onResetDevice(Graphics* graphics)
 	Image::height = height;
 }
 
-SpriteData Image::getSpriteData(int frameNo, float x, float y, float scale, float angle, bool flipHorizontal = false, bool flipVertical = false)
+SpriteData Image::getSpriteData(int frameNo, float x, float y, float scale, float angle, bool flipHorizontal, bool flipVertical)
 {
 	return SpriteData{ 
 		width, height, 

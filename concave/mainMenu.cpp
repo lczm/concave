@@ -6,7 +6,7 @@ MainMenu::MainMenu()
 MainMenu::~MainMenu()
 {}
 
-void MainMenu::initialize()
+void MainMenu::initialize(vector<Window*>* windows)
 {}
 
 void MainMenu::releaseAll()

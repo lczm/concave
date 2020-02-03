@@ -14,22 +14,23 @@ void Concave::initialize(HWND hwnd)
 	Window::graphics = graphics;
 	Window::input = input;
 	Window::mainMenu.initialize();
+	Window::level.initialize();
 	Window::windows.push_back(&Window::mainMenu);
 }
 
 void Concave::releaseAll()
 {
 	Window::mainMenu.releaseAll();
-	//Window::level.releaseAll();
-	//Window::hud.releaseAll();
+	Window::level.releaseAll();
+	Window::hud.releaseAll();
 	Game::releaseAll();
 }
 
 void Concave::resetAll()
 {
 	Window::mainMenu.resetAll();
-	//Window::level.resetAll();
-	//Window::hud.resetAll();
+	Window::level.resetAll();
+	Window::hud.resetAll();
 	Game::resetAll();
 }
 

@@ -5,6 +5,8 @@
 using namespace std;
 
 class MainMenu;
+class Level;
+class HUD;
 
 class Window
 {
@@ -16,6 +18,8 @@ public:
 	// Window
 	static vector<Window*> windows;
 	static MainMenu mainMenu;
+	static Level level;
+	static HUD hud;
 public:
 	Window();
 	~Window();
@@ -27,3 +31,5 @@ public:
 };
 
 #include "mainMenu.h"
+#include "level.h"
+#include "hud.h"

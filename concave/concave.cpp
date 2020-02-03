@@ -36,6 +36,7 @@ void Concave::resetAll()
 
 void Concave::update()
 {
+	if (Window::windows.empty()) exitGame();
 	Window::frameTime = frameTime;
 	Window::windows.back()->update();
 }

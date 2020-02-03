@@ -11,13 +11,15 @@ Concave::~Concave()
 void Concave::initialize(HWND hwnd)
 {
 	Game::initialize(hwnd);
+	Window::graphics = graphics;
+	Window::input = input;
 	Window::mainMenu.initialize();
 	Window::windows.push_back(&Window::mainMenu);
 }
 
 void Concave::releaseAll()
 {
-	//mainMenu.releaseAll();
+	Window::mainMenu.releaseAll();
 	//Window::level.releaseAll();
 	//Window::hud.releaseAll();
 	Game::releaseAll();
@@ -25,7 +27,7 @@ void Concave::releaseAll()
 
 void Concave::resetAll()
 {
-	//mainMenu.resetAll();
+	Window::mainMenu.resetAll();
 	//Window::level.resetAll();
 	//Window::hud.resetAll();
 	Game::resetAll();
@@ -33,6 +35,7 @@ void Concave::resetAll()
 
 void Concave::update()
 {
+	Window::frameTime = frameTime;
 	Window::windows.back()->update();
 }
 

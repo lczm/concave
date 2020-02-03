@@ -9,6 +9,11 @@ class MainMenu;
 class Window
 {
 public:
+	// Game
+	static Graphics* graphics;
+	static Input* input;
+	static float frameTime;
+	// Window
 	static vector<Window*> windows;
 	static MainMenu mainMenu;
 public:

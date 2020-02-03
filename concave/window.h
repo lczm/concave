@@ -21,14 +21,4 @@ public:
 	virtual void render() = 0;
 };
 
-class MainMenu : public Window
-{
-public:
-	MainMenu();
-	~MainMenu();
-	void initialize();
-	void releaseAll();
-	void resetAll();
-	void update();
-	void render();
-};
+#include "mainMenu.h"

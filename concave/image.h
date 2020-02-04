@@ -90,6 +90,3 @@ public:
 	void changeState(int state);
 	void changeDirection(int direction);
 };
-
-enum DIRECTION8 { SOUTH, SOUTH_WEST, WEST, NORTH_WEST, NORTH, NORTH_EAST, EAST, SOUTH_EAST };
-enum DIRECTION16 {};

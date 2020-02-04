@@ -1,4 +1,6 @@
 #pragma once
+#include "stdio.h"
+#include "iostream"
 #include "constants.h"
 #include "game.h"
 #include "window.h"

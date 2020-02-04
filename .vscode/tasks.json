@@ -6,10 +6,7 @@
         {
             "label": "build",
             "type": "shell",
-            "command": "msbuild -v:n -m -ds concave.sln",
-            "windows": {
-                "command": ".\\Debug\\concave.exe"
-            },
+            "command": "msbuild -v:n -m -ds concave.sln && .\\Debug\\concave.exe",
             "args": [
                 "/property:GenerateFullPaths=true",
                 "/t:build",

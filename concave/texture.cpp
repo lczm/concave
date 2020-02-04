@@ -40,15 +40,6 @@ void Texture::onResetDevice(Graphics* graphics)
 	Texture::height = height;
 }
 
-SpriteData Texture::getSpriteData(float x, float y, float scale, RECT rect, float angle = 0, bool flipHorizontal = false, bool flipVertical = false)
-{
-	return SpriteData{
-		width, height, x, y,
-		scale, angle, rect, texture,
-		flipHorizontal, flipVertical
-	};
-}
-
 ImageData Texture::getImageData(RECT rect)
 {
 	return ImageData{

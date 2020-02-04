@@ -42,7 +42,19 @@
     <ClCompile Include="level.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="animImage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="image_old.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="image.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="image2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -80,7 +92,19 @@
     <ClInclude Include="component.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="animImage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="image_old.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="image.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="image2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

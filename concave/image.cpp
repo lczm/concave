@@ -6,55 +6,31 @@ Image::Image()
 Image::~Image()
 {}
 
-bool Image::initialize(Graphics* graphics, const char* file, int rows, int cols)
+void Image::initialize(Texture texture, int originX, int originY, int perWidth, int perHeight, int gapWidth, int gapHeight)
 {
-	Image::file = file;
-	try {
-		HRESULT hr;
-		UINT width, height;
-		LP_TEXTURE texture;
-		hr = graphics->loadTexture(file, TRANSCOLOR, width, height, texture);
-		if (FAILED(hr)) { SAFE_RELEASE(texture); return false; }
-		Image::texture = texture;
-		Image::width = width;
-		Image::height = height;
-	}
-	catch (...) {
-		return false;
-	}
-}
-
-void Image::onLostDevice(Graphics* graphics)
-{
-	SAFE_RELEASE(Image::texture);
-}
-
-void Image::onResetDevice(Graphics* graphics)
-{
-	UINT width, height;
-	LP_TEXTURE texture;
-	graphics->loadTexture(file, TRANSCOLOR, width, height, texture);
 	Image::texture = texture;
-	Image::width = width;
-	Image::height = height;
+	Image::originX = originX;
+	Image::originY = originY;
+	Image::perWidth = perWidth;
+	Image::perHeight = perHeight;
+	Image::gapWidth = gapWidth;
+	Image::gapHeight = gapHeight;
 }
 
-SpriteData Image::getSpriteData(int frameNo, float x, float y, float scale, float angle, bool flipHorizontal, bool flipVertical)
-{
-	return SpriteData{ 
-		width, height, 
-		x, y, scale, angle, 
-		getRect(frameNo), texture, 
-		flipHorizontal, flipVertical
-	};
-}
-
-RECT Image::getRect(int frameNo)
+RECT Image::getRect(CoordI coord)
 {
 	RECT rect;
-	rect.left	= (frameNo % cols) * width;
-	rect.top	= (frameNo / cols) * height;
-	rect.right	= rect.left + width;
-	rect.bottom = rect.top + height;
+	rect.left	= coord.x * (perWidth + gapWidth);
+	rect.top	= coord.y * (perHeight + gapHeight);
+	rect.right	= rect.left + perWidth;
+	rect.bottom = rect.top + perHeight;
 	return rect;
+}
+
+SpriteData Image::getSpriteData(CoordI coord, float x, float y, float scale, float angle = 0, bool flipHorizontal = false, bool flipVertical = false)
+{
+	return texture.getSpriteData(
+		x, y, scale, getRect(coord), angle,
+		flipHorizontal, flipVertical
+	);
 }

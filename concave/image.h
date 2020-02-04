@@ -1,20 +1,18 @@
 #pragma once
-#include "constants.h"
-#include "graphics.h"
+#include "texture.h"
+using namespace std;
 
 class Image
 {
 private:
-	const char* file;
-	int rows, cols;
-	int width, height;
-	LP_TEXTURE texture;
-	RECT getRect(int frameNo);
+	Texture texture;
+	int originX, originY;
+	int perWidth, perHeight;
+	int gapWidth, gapHeight;
 public:
 	Image();
 	~Image();
-	bool initialize(Graphics* graphics, const char* file, int rows, int cols);
-	void onLostDevice(Graphics* graphics);
-	void onResetDevice(Graphics* graphics);
-	SpriteData getSpriteData(int frameNo, float x, float y, float scale, float angle = 0, bool flipHorizontal = false, bool flipVertical = false);
+	void initialize(Texture texture, int originX, int originY, int perWidth, int perHeight, int gapWidth, int gapHeight);
+	RECT getRect(CoordI coord);
+	SpriteData getSpriteData(CoordI coord, float x, float y, float scale, float angle = 0, bool flipHorizontal = false, bool flipVertical = false);
 };

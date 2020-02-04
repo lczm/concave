@@ -6,7 +6,7 @@ Game::Game()
     paused = false;             // game is not paused
     graphics = NULL;
     initialized = false;
-    srand(time(NULL));
+    srand((unsigned int)time(NULL));
 }
 
 Game::~Game()

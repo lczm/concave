@@ -6,7 +6,10 @@
         {
             "label": "build",
             "type": "shell",
-            "command": "msbuild & .\\Debug\\concave.exe",
+            "command": "msbuild -v:n -m -ds concave.sln",
+            "windows": {
+                "command": ".\\Debug\\concave.exe"
+            },
             "args": [
                 "/property:GenerateFullPaths=true",
                 "/t:build",
@@ -17,7 +20,8 @@
                 "isDefault": true
             },
             "presentation": {
-                "reveal": "always"
+                "reveal": "always",
+                "panel": "shared",
             },
             "problemMatcher": "$msCompile"
         }

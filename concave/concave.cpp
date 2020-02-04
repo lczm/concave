@@ -5,7 +5,6 @@ Concave::Concave()
     AllocConsole();
     freopen_s((FILE**)stdout, "CONOUT$", "w", stdout); 
     cout << "This works" << endl;
-	int test = 100;
 }
 
 Concave::~Concave()

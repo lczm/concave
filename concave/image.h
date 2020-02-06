@@ -16,8 +16,7 @@ public:
 	bool initialize(Graphics* graphics, const char* file);
 	void onLostDevice();
 	void onResetDevice(Graphics* graphics);
-	void getSpriteData(SpriteData& spriteData);
-	void getImageData(ImageData& imageData);
+	void getSpriteData(SpriteData& SpriteData);
 };
 
 class GridMask
@@ -31,8 +30,7 @@ public:
 	GridMask();
 	~GridMask();
 	void initialize(int originX, int originY, int perWidth, int perHeight, int gapWidth, int gapHeight, int pivotX, int pivotY);
-	void getSpriteData(SpriteData& spriteData, CoordI coord);
-	void getImageData(ImageData& imageData, CoordI coord);
+	void getSpriteData(SpriteData& SpriteData, CoordI coord);
 };
 
 class Image
@@ -44,8 +42,7 @@ public:
 	Image();
 	~Image();
 	void initialize(Texture* texture, GridMask gridMask);
-	void getSpriteData(SpriteData& spriteData, CoordI coord);
-	void getImageData(ImageData& imageData, CoordI coord);
+	void getSpriteData(SpriteData& SpriteData, CoordI coord);
 };
 
 class AnimImage
@@ -58,8 +55,8 @@ public:
 	AnimImage();
 	~AnimImage();
 	void initialize(Texture* texture, vector<GridMask> gridMask, vector<int> endFrames);
-	void getSpriteData(SpriteData& spriteData, int state, int direction, int frameNo);
-	void getImageData(ImageData& imageData, int state, int direction, int frameNo);
+	void getSpriteData(SpriteData& SpriteData, int state, int direction, int frameNo);
+	int getEndFrame(int state);
 };
 
 //-------------------------------------------------------
@@ -75,7 +72,7 @@ public:
 	Sprite();
 	~Sprite();
 	void initialize(Image* image, CoordI coord);
-	void getImageData(ImageData& imageData);
+	SpriteData getSpriteData();
 };
 
 class AnimSprite
@@ -83,11 +80,21 @@ class AnimSprite
 private:
 	AnimImage* animImage;
 	int state, direction, frameNo;
+	float delay, timer;
+	bool loop, loopComplete;
 public:
 	AnimSprite();
 	~AnimSprite();
-	void initialize(int state, int direction, int frameNo);
-	void getImageData(ImageData& imageData);
-	void changeState(int state);
-	void changeDirection(int direction);
+	void initialize(AnimImage* animImage, int state, int direction, int frameNo, float delay, bool loop);
+	SpriteData getSpriteData();
+	void setState(int state);
+	void setDirection(int direction);
+	void updateFrame(float deltaTime);
+
+	int getState() { return state; }
+	bool getLoop() { return loop; }
+	bool getLoopComplete() { return loopComplete; }
+	void setLoop(bool loop) { AnimSprite::loop = loop; }
+	void setLoopComplete(bool loopComplete) { AnimSprite::loopComplete = loopComplete; }
+	void setTimer(float timer) { AnimSprite::timer = timer; }
 };

@@ -19,6 +19,7 @@ private:
 	Texture tileTexture;
 	GridMask tileGridMask;
 	Image tileImage;
+	Sprite tileSprite;
 	// Unit
 	Texture unitTexture;
 	GridMask unitAttackGridMask;
@@ -27,8 +28,8 @@ private:
 	GridMask unitWalkGridMask;
 	vector<GridMask> unitGridMasks;
 	vector<int> unitEndFrames;
-	int state, direction, frameNo;
 	AnimImage unitImage;
+	AnimSprite unitSprite;
 public:
 	Level();
 	~Level();

@@ -47,13 +47,6 @@ void Texture::getSpriteData(SpriteData& spriteData)
 	spriteData.texture = texture;
 }
 
-void Texture::getImageData(ImageData& imageData)
-{
-	imageData.width = width;
-	imageData.height = height;
-	imageData.texture = texture;
-}
-
 GridMask::GridMask()
 {}
 
@@ -82,16 +75,6 @@ void GridMask::getSpriteData(SpriteData& spriteData, CoordI coord)
 	spriteData.pivotY		= pivotY;
 }
 
-void GridMask::getImageData(ImageData& imageData, CoordI coord)
-{
-	imageData.rect.left = originX + coord.x * (perWidth + gapWidth);
-	imageData.rect.top = originY + coord.y * (perHeight + gapHeight);
-	imageData.rect.right = imageData.rect.left + perWidth;
-	imageData.rect.bottom = imageData.rect.top + perHeight;
-	imageData.pivotX = pivotX;
-	imageData.pivotY = pivotY;
-}
-
 Image::Image()
 {}
 
@@ -108,12 +91,6 @@ void Image::getSpriteData(SpriteData& spriteData, CoordI coord)
 {
 	texture->getSpriteData(spriteData);
 	gridMask.getSpriteData(spriteData, coord);
-}
-
-void Image::getImageData(ImageData& imageData, CoordI coord)
-{
-	texture->getImageData(imageData);
-	gridMask.getImageData(imageData, coord);
 }
 
 AnimImage::AnimImage()
@@ -135,49 +112,75 @@ void AnimImage::getSpriteData(SpriteData& spriteData, int state, int direction, 
 	gridMasks[state].getSpriteData(spriteData, CoordI{ frameNo, direction });
 }
 
-void AnimImage::getImageData(ImageData& imageData, int state, int direction, int frameNo)
+int AnimImage::getEndFrame(int state)
 {
-	texture->getImageData(imageData);
-	gridMasks[state].getImageData(imageData, CoordI{ frameNo, direction });
+	return endFrames[state];
 }
 
-//Sprite::Sprite()
-//{}
-//
-//Sprite::~Sprite()
-//{}
-//
-//void Sprite::initialize(Image* image, CoordI coord)
-//{
-//	Sprite::image = image;
-//	Sprite::coord = coord;
-//}
-//
-//ImageData Sprite::getImageData()
-//{
-//	return image->getImageData(coord);
-//}
-//
-//AnimSprite::AnimSprite()
-//{}
-//
-//AnimSprite::~AnimSprite()
-//{}
-//
-//void AnimSprite::initialize(int state, int direction, int frameNo)
-//{
-//	AnimSprite::state = state;
-//	AnimSprite::direction = direction;
-//	AnimSprite::frameNo = frameNo;
-//}
-//
-//void AnimSprite::changeState(int state)
-//{
-//	AnimSprite::frameNo = 0;
-//	AnimSprite::state = state;
-//}
-//
-//void AnimSprite::changeDirection(int direction)
-//{
-//	AnimSprite::direction = direction;
-//}
+Sprite::Sprite()
+{}
+
+Sprite::~Sprite()
+{}
+
+void Sprite::initialize(Image* image, CoordI coord)
+{
+	Sprite::image = image;
+	Sprite::coord = coord;
+}
+
+SpriteData Sprite::getSpriteData()
+{
+	SpriteData sd;
+	image->getSpriteData(sd, coord);
+	return sd;
+}
+
+AnimSprite::AnimSprite()
+{}
+
+AnimSprite::~AnimSprite()
+{}
+
+void AnimSprite::initialize(AnimImage* animImage, int state, int direction, int frameNo, float delay, bool loop)
+{
+	AnimSprite::animImage = animImage;
+	AnimSprite::state = state;
+	AnimSprite::direction = direction;
+	AnimSprite::frameNo = frameNo;
+	AnimSprite::delay = delay;
+	AnimSprite::timer = 0;
+	AnimSprite::loop = loop;
+}
+
+SpriteData AnimSprite::getSpriteData()
+{
+	SpriteData sd;
+	animImage->getSpriteData(sd, state, direction, frameNo);
+	return sd;
+}
+
+void AnimSprite::setState(int state)
+{
+	if (AnimSprite::state == state) return;
+	AnimSprite::frameNo = 0;
+	AnimSprite::state = state;
+}
+
+void AnimSprite::setDirection(int direction)
+{
+	AnimSprite::direction = direction;
+}
+
+void AnimSprite::updateFrame(float deltaTime)
+{
+	timer += deltaTime;
+	if (timer >= delay) {
+		timer -= delay;
+		frameNo++;
+		if (frameNo >= animImage->getEndFrame(state)) {
+			frameNo = 0;
+			if (!loop) loopComplete = true;
+		}
+	}
+}

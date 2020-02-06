@@ -55,17 +55,17 @@ namespace graphicsNS
 	enum DISPLAY_MODE { TOGGLE, FULLSCREEN, WINDOW };
 }
 
-struct SpriteData
-{
-	LP_TEXTURE texture;
-	int width, height;
-	RECT rect;
-	float pivotX, pivotY;
-	float screenX, screenY;
-	float scale;
-};
+//struct SpriteData
+//{
+//	LP_TEXTURE texture;
+//	int width, height;
+//	RECT rect;
+//	float pivotX, pivotY;
+//	float screenX, screenY;
+//	float scale;
+//};
 
-struct ImageData
+struct SpriteData
 {
 	LP_TEXTURE texture;
 	int width, height;
@@ -194,10 +194,10 @@ public:
         UINT& width, UINT& height, LP_TEXTURE& texture);
 
 	// Draw sprite
-    void drawSprite(const SpriteData& spriteData, 
-		COLOR_ARGB color = graphicsNS::WHITE);
-	// Draw image
-	void drawImage(const ImageData& imageData, 
+	//void drawSprite(const SpriteData& spriteData, 
+	//	COLOR_ARGB color = graphicsNS::WHITE);
+	// Draw sprite
+	void drawSprite(const SpriteData& spriteData, 
 		float screenX, float screenY, float scale,
 		COLOR_ARGB color = graphicsNS::WHITE);
 

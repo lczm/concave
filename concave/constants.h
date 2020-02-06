@@ -7,8 +7,13 @@
 //-----------------------------------------------
 struct CoordI { int x, y; };
 struct CoordF { float x, y; };
+
 enum DIRECTION8 { SOUTH, SOUTH_WEST, WEST, NORTH_WEST, NORTH, NORTH_EAST, EAST, SOUTH_EAST };
 // enum DIRECTION16 { SOUTH, SOUTH_WEST, WEST, NORTH_WEST, NORTH, NORTH_EAST, EAST, SOUTH_EAST };
+//namespace DIRECTION8 {
+//	const int
+//		SOUTH = 0, SOUTH_WEST = 1, WEST = 2, NORTH_WEST = 3,
+//		NORTH = 4, NORTH_EAST = 5, EAST = 6, SOUTH_EAST = 7;}
 
 //-----------------------------------------------
 //                   Tiles
@@ -48,13 +53,6 @@ const char IMAGE_TILES_DUNGEON[] = "sprites/tiles_church_dungeon.png";
 //-----------------------------------------------
 //                Image (Units)
 //-----------------------------------------------
-const int IMAGE_UNIT_ATTACK_ORIGIN_X = 0;
-const int IMAGE_UNIT_ATTACK_ORIGIN_Y = 7;
-const int IMAGE_UNIT_WIDTH = 96;
-const int IMAGE_UNIT_HEIGHT = 128;
-const int IMAGE_UNIT_GAP_WIDTH = 0;
-const int IMAGE_UNIT_GAP_HEIGHT = 1;
-
 const char IMAGE_UNIT_WARRIOR[] = "sprites/unit_warrior.png";
 
 //-----------------------------------------------

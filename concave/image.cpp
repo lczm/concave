@@ -117,70 +117,70 @@ int AnimImage::getEndFrame(int state)
 	return endFrames[state];
 }
 
-Sprite::Sprite()
-{}
-
-Sprite::~Sprite()
-{}
-
-void Sprite::initialize(Image* image, CoordI coord)
-{
-	Sprite::image = image;
-	Sprite::coord = coord;
-}
-
-SpriteData Sprite::getSpriteData()
-{
-	SpriteData sd;
-	image->getSpriteData(sd, coord);
-	return sd;
-}
-
-AnimSprite::AnimSprite()
-{}
-
-AnimSprite::~AnimSprite()
-{}
-
-void AnimSprite::initialize(AnimImage* animImage, int state, int direction, int frameNo, float delay, bool loop)
-{
-	AnimSprite::animImage = animImage;
-	AnimSprite::state = state;
-	AnimSprite::direction = direction;
-	AnimSprite::frameNo = frameNo;
-	AnimSprite::delay = delay;
-	AnimSprite::timer = 0;
-	AnimSprite::loop = loop;
-}
-
-SpriteData AnimSprite::getSpriteData()
-{
-	SpriteData sd;
-	animImage->getSpriteData(sd, state, direction, frameNo);
-	return sd;
-}
-
-void AnimSprite::setState(int state)
-{
-	if (AnimSprite::state == state) return;
-	AnimSprite::frameNo = 0;
-	AnimSprite::state = state;
-}
-
-void AnimSprite::setDirection(int direction)
-{
-	AnimSprite::direction = direction;
-}
-
-void AnimSprite::updateFrame(float deltaTime)
-{
-	timer += deltaTime;
-	if (timer >= delay) {
-		timer -= delay;
-		frameNo++;
-		if (frameNo >= animImage->getEndFrame(state)) {
-			frameNo = 0;
-			if (!loop) loopComplete = true;
-		}
-	}
-}
+//Sprite::Sprite()
+//{}
+//
+//Sprite::~Sprite()
+//{}
+//
+//void Sprite::initialize(Image* image, CoordI coord)
+//{
+//	Sprite::image = image;
+//	Sprite::coord = coord;
+//}
+//
+//SpriteData Sprite::getSpriteData()
+//{
+//	SpriteData sd;
+//	image->getSpriteData(sd, coord);
+//	return sd;
+//}
+//
+//AnimSprite::AnimSprite()
+//{}
+//
+//AnimSprite::~AnimSprite()
+//{}
+//
+//void AnimSprite::initialize(AnimImage* animImage, int state, int direction, int frameNo, float delay, bool loop)
+//{
+//	AnimSprite::animImage = animImage;
+//	AnimSprite::state = state;
+//	AnimSprite::direction = direction;
+//	AnimSprite::frameNo = frameNo;
+//	AnimSprite::delay = delay;
+//	AnimSprite::timer = 0;
+//	AnimSprite::loop = loop;
+//}
+//
+//SpriteData AnimSprite::getSpriteData()
+//{
+//	SpriteData sd;
+//	animImage->getSpriteData(sd, state, direction, frameNo);
+//	return sd;
+//}
+//
+//void AnimSprite::setState(int state)
+//{
+//	if (AnimSprite::state == state) return;
+//	AnimSprite::frameNo = 0;
+//	AnimSprite::state = state;
+//}
+//
+//void AnimSprite::setDirection(int direction)
+//{
+//	AnimSprite::direction = direction;
+//}
+//
+//void AnimSprite::updateFrame(float deltaTime)
+//{
+//	timer += deltaTime;
+//	if (timer >= delay) {
+//		timer -= delay;
+//		frameNo++;
+//		if (frameNo >= animImage->getEndFrame(state)) {
+//			frameNo = 0;
+//			if (!loop) loopComplete = true;
+//		}
+//	}
+//}

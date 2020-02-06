@@ -15,21 +15,6 @@ private:
 	vector<Collision> collisions;
 	// Camera
 	float camX, camY, camScale;
-	// Tiles
-	Texture tileTexture;
-	GridMask tileGridMask;
-	Image tileImage;
-	Sprite tileSprite;
-	// Unit
-	Texture unitTexture;
-	GridMask unitAttackGridMask;
-	GridMask unitDieGridMask;
-	GridMask unitIdleGridMask;
-	GridMask unitWalkGridMask;
-	vector<GridMask> unitGridMasks;
-	vector<int> unitEndFrames;
-	AnimImage unitImage;
-	AnimSprite unitSprite;
 public:
 	Level();
 	~Level();

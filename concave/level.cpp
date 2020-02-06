@@ -15,8 +15,12 @@ void Level::initialize()
 	tileImage.initialize(&tileTexture, tileGridMask);
 
 	unitTexture.initialize(graphics, IMAGE_UNIT_WARRIOR);
-	unitGridMask.initialize(0, 7, 96, 128, 0, 1, 58, 114);
-	unitImage.initialize(&unitTexture, unitGridMask);
+	unitAttackGridMask.initialize(0, 7, 96, 128, 0, 1, 58, 114);
+	unitIdleGridMask.initialize(0, 1046, 96, 94, 0, 1, 43, 81);
+	vector<GridMask> unitGridMasks = { 
+		unitAttackGridMask, unitDieGridMask, unitIdleGridMask };
+	vector<int> unitEndFrames = { 14, 21, 10, 8 };
+	unitImage.initialize(&unitTexture, unitGridMasks, unitEndFrames);
 }
 
 void Level::releaseAll()

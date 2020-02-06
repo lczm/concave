@@ -211,8 +211,31 @@ void Graphics::drawSprite(const SpriteData& spriteData, COLOR_ARGB color)
 		&screenPos);                    // X, Y location
 
     sprite->SetTransform(&matrix);
-
     sprite->Draw(spriteData.texture, &spriteData.rect, NULL, NULL, color);
+}
+
+void Graphics::drawImage(const ImageData& imageData, float screenX, float screenY, float scale, COLOR_ARGB color = graphicsNS::WHITE)
+{
+	if (imageData.texture != NULL) return;
+
+	D3DXVECTOR2 pivot(imageData.pivotX, imageData.pivotY);
+	D3DXVECTOR2 scale2(scale, scale);
+	D3DXVECTOR2 screenPos(
+		screenX - imageData.pivotX,
+		screenY - imageData.pivotY);
+
+	D3DXMATRIX matrix;
+	D3DXMatrixTransformation2D(
+		&matrix,                        // The matrix
+		&pivot,							// Scaling center
+		0.0f,                           // No scaling rotation
+		&scale2,						// Scaling amount
+		NULL,							// No rotation center
+		0.0f,							// Rotation angle
+		&screenPos);                    // X, Y location
+
+	sprite->SetTransform(&matrix);
+	sprite->Draw(imageData.texture, &imageData.rect, NULL, NULL, color);
 }
 
 

@@ -17,6 +17,24 @@ const int TILE_WIDTH = 128;
 const int TILE_HEIGHT = 64;
 
 //-----------------------------------------------
+//                   Units
+//-----------------------------------------------
+const int UNIT_STATE_ATTACK = 0;
+const int UNIT_STATE_DIE = 1;
+const int UNIT_STATE_IDLE = 2;
+const int UNIT_STATE_WALK = 3;
+const int UNIT_STATE_GET_HIT = 4;
+// Players
+const int PLAYER_STATE_MAGIC_FIRE = 5;
+const int PLAYER_STATE_MAGIC_LIGHTNING = 6;
+const int PLAYER_STATE_MAGIC_SMOKE = 7;
+const int PLAYER_STATE_BLOCK = 8;
+const int PLAYER_STATE_IDLE_TOWN = 9;
+const int PLAYER_STATE_WALK_TOWN = 10;
+// Enemy
+const int ENEMY_STATE_SPECIAL = 5;
+
+//-----------------------------------------------
 //                Image (Tiles)
 //-----------------------------------------------
 const int IMAGE_TILES_ORIGIN_X = 0;
@@ -36,6 +54,7 @@ const int IMAGE_UNIT_WIDTH = 96;
 const int IMAGE_UNIT_HEIGHT = 128;
 const int IMAGE_UNIT_GAP_WIDTH = 0;
 const int IMAGE_UNIT_GAP_HEIGHT = 1;
+
 const char IMAGE_UNIT_WARRIOR[] = "sprites/unit_warrior.png";
 
 //-----------------------------------------------

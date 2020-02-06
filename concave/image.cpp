@@ -40,11 +40,18 @@ void Texture::onResetDevice(Graphics* graphics)
 	Texture::height = height;
 }
 
-void Texture::getSpriteData(SpriteData& sd)
+void Texture::getSpriteData(SpriteData& spriteData)
 {
-	sd.width = width;
-	sd.height = height;
-	sd.texture = texture;
+	spriteData.width = width;
+	spriteData.height = height;
+	spriteData.texture = texture;
+}
+
+void Texture::getImageData(ImageData& imageData)
+{
+	imageData.width = width;
+	imageData.height = height;
+	imageData.texture = texture;
 }
 
 GridMask::GridMask()
@@ -65,14 +72,24 @@ void GridMask::initialize(int originX, int originY, int perWidth, int perHeight,
 	GridMask::pivotY = pivotY;
 }
 
-void GridMask::getSpriteData(SpriteData& sd, CoordI coord)
+void GridMask::getSpriteData(SpriteData& spriteData, CoordI coord)
 {
-	sd.rect.left	= originX + coord.x * (perWidth + gapWidth);
-	sd.rect.top		= originY + coord.y * (perHeight + gapHeight);
-	sd.rect.right	= sd.rect.left + perWidth;
-	sd.rect.bottom	= sd.rect.top + perHeight;
-	sd.pivotX		= pivotX;
-	sd.pivotY		= pivotY;
+	spriteData.rect.left	= originX + coord.x * (perWidth + gapWidth);
+	spriteData.rect.top		= originY + coord.y * (perHeight + gapHeight);
+	spriteData.rect.right	= spriteData.rect.left + perWidth;
+	spriteData.rect.bottom	= spriteData.rect.top + perHeight;
+	spriteData.pivotX		= pivotX;
+	spriteData.pivotY		= pivotY;
+}
+
+void GridMask::getImageData(ImageData& imageData, CoordI coord)
+{
+	imageData.rect.left = originX + coord.x * (perWidth + gapWidth);
+	imageData.rect.top = originY + coord.y * (perHeight + gapHeight);
+	imageData.rect.right = imageData.rect.left + perWidth;
+	imageData.rect.bottom = imageData.rect.top + perHeight;
+	imageData.pivotX = pivotX;
+	imageData.pivotY = pivotY;
 }
 
 Image::Image()
@@ -87,10 +104,16 @@ void Image::initialize(Texture* texture, GridMask gridMask)
 	Image::gridMask = gridMask;
 }
 
-void Image::getSpriteData(SpriteData& sd, CoordI coord)
+void Image::getSpriteData(SpriteData& spriteData, CoordI coord)
 {
-	texture->getSpriteData(sd);
-	gridMask.getSpriteData(sd, coord);
+	texture->getSpriteData(spriteData);
+	gridMask.getSpriteData(spriteData, coord);
+}
+
+void Image::getImageData(ImageData& imageData, CoordI coord)
+{
+	texture->getImageData(imageData);
+	gridMask.getImageData(imageData, coord);
 }
 
 AnimImage::AnimImage()
@@ -106,10 +129,16 @@ void AnimImage::initialize(Texture* texture, vector<GridMask> gridMasks, vector<
 	AnimImage::endFrames = endFrames;
 }
 
-void AnimImage::getSpriteData(SpriteData& sd, int state, int direction, int frameNo)
+void AnimImage::getSpriteData(SpriteData& spriteData, int state, int direction, int frameNo)
 {
-	texture->getSpriteData(sd);
-	gridMasks[state].getSpriteData(sd, CoordI{ frameNo, direction });
+	texture->getSpriteData(spriteData);
+	gridMasks[state].getSpriteData(spriteData, CoordI{ frameNo, direction });
+}
+
+void AnimImage::getImageData(ImageData& imageData, int state, int direction, int frameNo)
+{
+	texture->getImageData(imageData);
+	gridMasks[state].getImageData(imageData, CoordI{ frameNo, direction });
 }
 
 //Sprite::Sprite()

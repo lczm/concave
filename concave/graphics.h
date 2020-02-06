@@ -65,6 +65,14 @@ struct SpriteData
 	float scale;
 };
 
+struct ImageData
+{
+	LP_TEXTURE texture;
+	int width, height;
+	RECT rect;
+	float pivotX, pivotY;
+};
+
 struct VertexC              // Vertex with Color
 {
 	float x, y, z;          // vertex location
@@ -185,18 +193,16 @@ public:
     HRESULT loadTexture(const char* filename, COLOR_ARGB transcolor,
         UINT& width, UINT& height, LP_TEXTURE& texture);
 
-    // Draw the sprite described in SpriteData structure
-    void drawSprite(const SpriteData& spriteData,   // Sprite to draw
-        COLOR_ARGB color = graphicsNS::WHITE);      // Default to white
+	// Draw sprite
+    void drawSprite(const SpriteData& spriteData, 
+		COLOR_ARGB color = graphicsNS::WHITE);
+	// Draw image
+	void drawImage(const ImageData& imageData, 
+		float screenX, float screenY, float scale,
+		COLOR_ARGB color = graphicsNS::WHITE);
 
     // Sprite Begin
-    void spriteBegin()
-    {
-		sprite->Begin(D3DXSPRITE_ALPHABLEND);
-    }
+    void spriteBegin() { sprite->Begin(D3DXSPRITE_ALPHABLEND); }
     // Sprite End
-    void spriteEnd()
-    {
-        sprite->End();
-    }
+    void spriteEnd() { sprite->End(); }
 };

@@ -3,14 +3,43 @@
 #include <windows.h>
 
 //-----------------------------------------------
-//                Our Constants
+//                   Data
 //-----------------------------------------------
 struct CoordI { int x, y; };
+struct CoordF { float x, y; };
 enum DIRECTION8 { SOUTH, SOUTH_WEST, WEST, NORTH_WEST, NORTH, NORTH_EAST, EAST, SOUTH_EAST };
 // enum DIRECTION16 { SOUTH, SOUTH_WEST, WEST, NORTH_WEST, NORTH, NORTH_EAST, EAST, SOUTH_EAST };
 
 //-----------------------------------------------
-//               Other Constants
+//                   Tiles
+//-----------------------------------------------
+const int TILE_WIDTH = 128;
+const int TILE_HEIGHT = 64;
+
+//-----------------------------------------------
+//                Image (Tiles)
+//-----------------------------------------------
+const int IMAGE_TILES_ORIGIN_X = 0;
+const int IMAGE_TILES_ORIGIN_Y = 0;
+const int IMAGE_TILES_WIDTH = 128;
+const int IMAGE_TILES_HEIGHT = 192;
+const int IMAGE_TILES_GAP_WIDTH = 1;
+const int IMAGE_TILES_GAP_HEIGHT = 1;
+
+const char IMAGE_TILES_DUNGEON[] = "sprites/tiles_church_dungeon.png";
+//-----------------------------------------------
+//                Image (Units)
+//-----------------------------------------------
+const int IMAGE_UNIT_ATTACK_ORIGIN_X = 0;
+const int IMAGE_UNIT_ATTACK_ORIGIN_Y = 7;
+const int IMAGE_UNIT_WIDTH = 96;
+const int IMAGE_UNIT_HEIGHT = 128;
+const int IMAGE_UNIT_GAP_WIDTH = 0;
+const int IMAGE_UNIT_GAP_HEIGHT = 1;
+const char IMAGE_UNIT_WARRIOR[] = "sprites/unit_warrior.png";
+
+//-----------------------------------------------
+//					  Other
 //-----------------------------------------------
 // Safely delete pointer referenced item
 #define SAFE_DELETE(ptr)       { if (ptr) { delete (ptr); (ptr)=NULL; } }

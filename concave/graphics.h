@@ -25,48 +25,44 @@
 
 namespace graphicsNS
 {
-    // Some common colors
-    // ARGB numbers range from 0 through 255
-    // A = Alpha channel (transparency where 255 is opague)
-    // R = Red, G = Green, B = Blue
-    const COLOR_ARGB ORANGE = D3DCOLOR_ARGB(255, 255, 165, 0);
-    const COLOR_ARGB BROWN = D3DCOLOR_ARGB(255, 139, 69, 19);
-    const COLOR_ARGB LTGRAY = D3DCOLOR_ARGB(255, 192, 192, 192);
-    const COLOR_ARGB GRAY = D3DCOLOR_ARGB(255, 128, 128, 128);
-    const COLOR_ARGB OLIVE = D3DCOLOR_ARGB(255, 128, 128, 0);
-    const COLOR_ARGB PURPLE = D3DCOLOR_ARGB(255, 128, 0, 128);
-    const COLOR_ARGB MAROON = D3DCOLOR_ARGB(255, 128, 0, 0);
-    const COLOR_ARGB TEAL = D3DCOLOR_ARGB(255, 0, 128, 128);
-    const COLOR_ARGB GREEN = D3DCOLOR_ARGB(255, 0, 220, 0);
-    const COLOR_ARGB NAVY = D3DCOLOR_ARGB(255, 0, 0, 128);
-    const COLOR_ARGB WHITE = D3DCOLOR_ARGB(255, 255, 255, 255);
-    const COLOR_ARGB YELLOW = D3DCOLOR_ARGB(255, 255, 255, 0);
-    const COLOR_ARGB MAGENTA = D3DCOLOR_ARGB(255, 255, 0, 255);
-    const COLOR_ARGB RED = D3DCOLOR_ARGB(255, 255, 0, 0);
-    const COLOR_ARGB CYAN = D3DCOLOR_ARGB(255, 0, 255, 255);
-    const COLOR_ARGB LIME = D3DCOLOR_ARGB(255, 0, 255, 0);
-    const COLOR_ARGB BLUE = D3DCOLOR_ARGB(255, 0, 0, 255);
-    const COLOR_ARGB BLACK = D3DCOLOR_ARGB(255, 0, 0, 0);
-    const COLOR_ARGB FILTER = D3DCOLOR_ARGB(0, 0, 0, 0);  // use to specify drawing with colorFilter
-    const COLOR_ARGB ALPHA25 = D3DCOLOR_ARGB(64, 255, 255, 255);  // AND with color to get 25% alpha
-    const COLOR_ARGB ALPHA50 = D3DCOLOR_ARGB(128, 255, 255, 255);  // AND with color to get 50% alpha
-    const COLOR_ARGB BACK_COLOR = NAVY;                         // background color of game
+	// Some common colors
+	// ARGB numbers range from 0 through 255
+	// A = Alpha channel (transparency where 255 is opague)
+	// R = Red, G = Green, B = Blue
+	const COLOR_ARGB ORANGE = D3DCOLOR_ARGB(255, 255, 165, 0);
+	const COLOR_ARGB BROWN = D3DCOLOR_ARGB(255, 139, 69, 19);
+	const COLOR_ARGB LTGRAY = D3DCOLOR_ARGB(255, 192, 192, 192);
+	const COLOR_ARGB GRAY = D3DCOLOR_ARGB(255, 128, 128, 128);
+	const COLOR_ARGB OLIVE = D3DCOLOR_ARGB(255, 128, 128, 0);
+	const COLOR_ARGB PURPLE = D3DCOLOR_ARGB(255, 128, 0, 128);
+	const COLOR_ARGB MAROON = D3DCOLOR_ARGB(255, 128, 0, 0);
+	const COLOR_ARGB TEAL = D3DCOLOR_ARGB(255, 0, 128, 128);
+	const COLOR_ARGB GREEN = D3DCOLOR_ARGB(255, 0, 220, 0);
+	const COLOR_ARGB NAVY = D3DCOLOR_ARGB(255, 0, 0, 128);
+	const COLOR_ARGB WHITE = D3DCOLOR_ARGB(255, 255, 255, 255);
+	const COLOR_ARGB YELLOW = D3DCOLOR_ARGB(255, 255, 255, 0);
+	const COLOR_ARGB MAGENTA = D3DCOLOR_ARGB(255, 255, 0, 255);
+	const COLOR_ARGB RED = D3DCOLOR_ARGB(255, 255, 0, 0);
+	const COLOR_ARGB CYAN = D3DCOLOR_ARGB(255, 0, 255, 255);
+	const COLOR_ARGB LIME = D3DCOLOR_ARGB(255, 0, 255, 0);
+	const COLOR_ARGB BLUE = D3DCOLOR_ARGB(255, 0, 0, 255);
+	const COLOR_ARGB BLACK = D3DCOLOR_ARGB(255, 0, 0, 0);
+	const COLOR_ARGB FILTER = D3DCOLOR_ARGB(0, 0, 0, 0);  // use to specify drawing with colorFilter
+	const COLOR_ARGB ALPHA25 = D3DCOLOR_ARGB(64, 255, 255, 255);  // AND with color to get 25% alpha
+	const COLOR_ARGB ALPHA50 = D3DCOLOR_ARGB(128, 255, 255, 255);  // AND with color to get 50% alpha
+	const COLOR_ARGB BACK_COLOR = NAVY;                         // background color of game
 
-    enum DISPLAY_MODE { TOGGLE, FULLSCREEN, WINDOW };
+	enum DISPLAY_MODE { TOGGLE, FULLSCREEN, WINDOW };
 }
 
 struct SpriteData
 {
-    int         width;              // Width of sprite in pixels
-    int         height;             // Height of sprite in pixels
-    float       x;                  // Screen location (top left corner of sprite)
-    float       y;
-    float       scale;              // <1 smaller, >1 bigger
-    float       angle;              // rotation angle in radians
-    RECT        rect;               // used to select an image from a larger texture
-    LP_TEXTURE  texture;            // pointer to texture
-    bool        flipHorizontal;     // true to flip sprite horizontally (mirror)
-    bool        flipVertical;       // true to flip sprite vertically
+	LP_TEXTURE texture;
+	int width, height;
+	RECT rect;
+	float pivotX, pivotY;
+	float screenX, screenY;
+	float scale;
 };
 
 struct VertexC              // Vertex with Color

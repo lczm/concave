@@ -4,14 +4,6 @@
 #include <vector>
 using namespace std;
 
-struct ImageData
-{
-	int         width;              // Width of sprite in pixels
-	int         height;             // Height of sprite in pixels
-	RECT        rect;               // used to select an image from a larger texture
-	LP_TEXTURE  texture;            // pointer to texture
-};
-
 class Texture
 {
 private:
@@ -25,7 +17,7 @@ public:
 	void onLostDevice();
 	void onResetDevice(Graphics* graphics);
 
-	ImageData getImageData(RECT rect);
+	void getSpriteData(SpriteData& sd);
 };
 
 class GridMask
@@ -34,11 +26,12 @@ private:
 	int originX, originY;
 	int perWidth, perHeight;
 	int gapWidth, gapHeight;
+	int pivotX, pivotY;
 public:
 	GridMask();
 	~GridMask();
-	void initialize(int originX, int originY, int perWidth, int perHeight, int gapWidth, int gapHeight);
-	RECT getRect(CoordI coord);
+	void initialize(int originX, int originY, int perWidth, int perHeight, int gapWidth, int gapHeight, int pivotX, int pivotY);
+	void getSpriteData(SpriteData& sd, CoordI coord);
 };
 
 class Image
@@ -50,7 +43,7 @@ public:
 	Image();
 	~Image();
 	void initialize(Texture* texture, GridMask gridMask);
-	ImageData getImageData(CoordI coord);
+	void getSpriteData(SpriteData& sd, CoordI coord);
 };
 
 class AnimImage
@@ -63,30 +56,32 @@ public:
 	AnimImage();
 	~AnimImage();
 	void initialize(Texture* texture, vector<GridMask> gridMask, vector<int> endFrames);
-	ImageData getImageData(int state, int direction, int frameNo);
+	void getSpriteData(SpriteData& sd, int state, int direction, int frameNo);
 };
 
-class Sprite
-{
-private:
-	Image* image;
-	CoordI coord;
-public:
-	Sprite();
-	~Sprite();
-	void initialize(Image* image, CoordI coord);
-	ImageData getImageData();
-};
-
-class AnimSprite
-{
-private:
-	AnimImage* animImage;
-	int state, direction, frameNo;
-public:
-	AnimSprite();
-	~AnimSprite();
-	void initialize(int state, int direction, int frameNo);
-	void changeState(int state);
-	void changeDirection(int direction);
-};
+// These classes shouldn't be used.
+// Please tell me if you want to use these classes.
+//class Sprite
+//{
+//private:
+//	Image* image;
+//	CoordI coord;
+//public:
+//	Sprite();
+//	~Sprite();
+//	void initialize(Image* image, CoordI coord);
+//	ImageData getImageData();
+//};
+//
+//class AnimSprite
+//{
+//private:
+//	AnimImage* animImage;
+//	int state, direction, frameNo;
+//public:
+//	AnimSprite();
+//	~AnimSprite();
+//	void initialize(int state, int direction, int frameNo);
+//	void changeState(int state);
+//	void changeDirection(int direction);
+//};

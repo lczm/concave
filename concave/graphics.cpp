@@ -8,7 +8,6 @@ Graphics::Graphics()
     width = GAME_WIDTH;    // width & height are replaced in initialize()
     height = GAME_HEIGHT;
 	backColor = SETCOLOR_ARGB(255, 124, 183, 248);
- //   backColor = SETCOLOR_ARGB(255, 121, 215, 72); // greeen
 }
 
 Graphics::~Graphics()
@@ -193,62 +192,26 @@ HRESULT Graphics::loadTexture(const char* filename, COLOR_ARGB transcolor,
 
 void Graphics::drawSprite(const SpriteData& spriteData, COLOR_ARGB color)
 {
-    // If no texture
-    if (spriteData.texture == NULL)
-        return;
+	if (spriteData.texture == NULL) return;
 
-    // Find center of sprite
-    D3DXVECTOR2 spriteCenter = D3DXVECTOR2((float)(spriteData.width / 2 * spriteData.scale),
-        (float)(spriteData.height / 2 * spriteData.scale));
-
-    // Screen position of the sprite
-    D3DXVECTOR2 translate = D3DXVECTOR2((float)spriteData.x, (float)spriteData.y);
-
-    // Scaling X, Y
-    D3DXVECTOR2 scaling(spriteData.scale, spriteData.scale);
-
-    // If flip horizontal
-    if (spriteData.flipHorizontal)
-    {
-        // Negative X scale to flip
-        scaling.x *= -1;
-
-        // Get center of flipped image
-        spriteCenter.x -= (float)(spriteData.width * spriteData.scale);
-
-        // Flip occurs around left edge, translate right to put
-        // Flipped image in same location as original
-        translate.x += (float)(spriteData.width * spriteData.scale);
-    }
-
-    // If flip vertical
-    if (spriteData.flipVertical)
-    {
-        // Negative Y scale to flip
-        scaling.y *= -1;
-
-        // Get center of flipped image
-        spriteCenter.y -= (float)(spriteData.height * spriteData.scale);
-
-        // Flip occurs around top edge, translate down to put
-        // FLipped image in same location as origiginal
-        translate.y += (float)(spriteData.height * spriteData.scale);
-    }
-
-    // Create a matrix to rotate, scale and position our sprite
-    D3DXMATRIX matrix;
-    D3DXMatrixTransformation2D(
-        &matrix,                        // The matrix
-        NULL,                           // Keep origin at top left when scaling
-        0.0f,                           // No scaling rotation
-        &scaling,                       // Scale amount
-        &spriteCenter,                  // Rotation center
-        (float)(spriteData.angle),      // Rotation angle
-        &translate);                    // X, Y location
+	D3DXVECTOR2 pivot(spriteData.pivotX, spriteData.pivotY);
+	D3DXVECTOR2 scale(spriteData.scale, spriteData.scale);
+	D3DXVECTOR2 screenPos(
+		spriteData.screenX - spriteData.pivotX, 
+		spriteData.screenY - spriteData.pivotY);
+	
+	D3DXMATRIX matrix;
+	D3DXMatrixTransformation2D(
+		&matrix,                        // The matrix
+		&pivot,							// Scaling center
+		0.0f,                           // No scaling rotation
+		&scale,							// Scaling amount
+		NULL,							// No rotation center
+		0.0f,							// Rotation angle
+		&screenPos);                    // X, Y location
 
     sprite->SetTransform(&matrix);
 
-    // Draw the sprite
     sprite->Draw(spriteData.texture, &spriteData.rect, NULL, NULL, color);
 }
 

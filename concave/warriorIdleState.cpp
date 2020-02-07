@@ -19,6 +19,7 @@ void WarriorIdleState::update(Input* input, float frameTime)
     if (input->getMouseLButton()) {
         warriorStateManager->changeState(UNITSTATE::ATTACK);
         input->setMouseLButton(false);
+        cout << "Changing state to attack" << endl;
     }
 
 	timer += frameTime;

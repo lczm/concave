@@ -17,8 +17,9 @@ WarriorAttackState::~WarriorAttackState()
 void WarriorAttackState::update(Input* input, float frameTime)
 {
     if (input->getMouseLButton()) {
-        warriorStateManager->changeState(UNITSTATE::IDLE);
+        warriorStateManager->changeState(UNITSTATE::WALK);
         input->setMouseLButton(false);
+        cout << "Changing state to walk" << endl;
     }
 
 	timer += frameTime;

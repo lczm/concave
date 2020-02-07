@@ -63,6 +63,12 @@
     <ClCompile Include="warriorStateManager.cpp">
       <Filter>Source Files\WarriorStates</Filter>
     </ClCompile>
+    <ClCompile Include="warriorDieState.cpp">
+      <Filter>Source Files\WarriorStates</Filter>
+    </ClCompile>
+    <ClCompile Include="warriorWalkState.cpp">
+      <Filter>Source Files\WarriorStates</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="constants.h">
@@ -114,6 +120,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="warriorStateManager.h">
+      <Filter>Header Files\WarriorStates</Filter>
+    </ClInclude>
+    <ClInclude Include="warriorDieState.h">
+      <Filter>Header Files\WarriorStates</Filter>
+    </ClInclude>
+    <ClInclude Include="warriorWalkState.h">
       <Filter>Header Files\WarriorStates</Filter>
     </ClInclude>
   </ItemGroup>

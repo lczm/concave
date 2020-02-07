@@ -3,10 +3,14 @@
 WarriorStateManager::WarriorStateManager()
 {
     attackState = new WarriorAttackState();
+    dieState = new WarriorDieState();
     idleState = new WarriorIdleState();
+    walkState = new WarriorWalkState();
 
     attackState->initialize(this);
+    dieState->initialize(this);
     idleState->initialize(this);
+    walkState->initialize(this);
 
     // Default currentState to idleState
     currentState = idleState;
@@ -15,10 +19,14 @@ WarriorStateManager::WarriorStateManager()
 WarriorStateManager::~WarriorStateManager()
 {
     attackState = NULL;
+    dieState = NULL;
     idleState = NULL;
+    walkState = NULL;
 
     delete attackState;
+    delete dieState;
     delete idleState;
+    delete walkState;
 }
 
 void WarriorStateManager::update(Input* input, float frameTime)
@@ -44,12 +52,18 @@ void WarriorStateManager::changeState(int state)
         currentState->enter();
         break;
     case 1:
+        currentState = dieState;
+        currentState->enter();
         break;
     case 2:
         currentState = idleState;
         currentState->enter();
         break;
     case 3:
+        currentState = walkState;
+        currentState->enter();
+        break;
+    default:
         break;
     }
 }

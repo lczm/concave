@@ -1,6 +1,7 @@
 #pragma once
 #include "image.h"
 #include "input.h"
+#include "iostream"
 
 class WarriorStateManager;
 

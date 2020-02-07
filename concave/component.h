@@ -1,25 +1,52 @@
 #pragma once
+#include "image.h"
 #include <vector>
 using namespace std;
 
+class Entity;
+
 namespace Component
 {
-	struct Position
+	struct Base
+	{
+		Entity* entity;
+	};
+
+	struct Position: Base
 	{
 		float gx, gy;
 		float sx, sy;
 	};
 
-	struct Movement
+	struct Collision: Base
 	{
-		float velocity;
-		float rotation;
-	};
-
-	struct Collision
-	{
-		struct Line { float lower, upper, shift; };
+		struct Line { float lower, upper, shift; Collision* cmpt; };
 		vector<Line> hLines;
 		vector<Line> vLines;
 	};
+
+	struct Render : Base
+	{
+		Image* image;
+		CoordI coord;
+	};
+
+	//struct Movement
+	//{
+	//	float velocity;
+	//	float rotation;
+	//};
+
+	//struct AnimRender
+	//{
+	//	AnimImage* image;
+	//	int state, direction, frameNo;
+	//};
 }
+
+struct Entity
+{
+	Component::Position* position;
+	Component::Collision* collision;
+	Component::Render* render;
+};

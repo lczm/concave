@@ -2,6 +2,7 @@
 #include "window.h"
 #include "component.h"
 #include "image.h"
+#include "tile.h"
 #include <vector>
 using namespace std;
 using namespace Component;
@@ -9,12 +10,20 @@ using namespace Component;
 class Level : public Window
 {
 private:
+	// Entity
+	Entity player;
 	// Components
 	vector<Position> positions;
-	vector<Movement> movements;
 	vector<Collision> collisions;
+	vector<Render> renders;
 	// Camera
 	float camX, camY, camScale;
+	// Tiles
+	Texture tileTexture; GridMask tileGridMask; Image tileImage;
+	vector<Tile> tiles;
+	TileGrid tileGrid;
+	// Player
+	Texture unitTexture; GridMask unitGridMask; Image unitImage;
 public:
 	Level();
 	~Level();

@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\WarriorStates">
+      <UniqueIdentifier>{81a70fdf-89f4-4b97-b998-ccb42134c61b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\WarriorStates">
+      <UniqueIdentifier>{da5d4f8f-064e-4679-9ebb-4074a3239407}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="game.cpp">
@@ -47,6 +53,12 @@
     </ClCompile>
     <ClCompile Include="warrior.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="warriorState.cpp">
+      <Filter>Source Files\WarriorStates</Filter>
+    </ClCompile>
+    <ClCompile Include="warriorAttackState.cpp">
+      <Filter>Source Files\WarriorStates</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -88,6 +100,12 @@
     </ClInclude>
     <ClInclude Include="warrior.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="warriorState.h">
+      <Filter>Header Files\WarriorStates</Filter>
+    </ClInclude>
+    <ClInclude Include="warriorAttackState.h">
+      <Filter>Header Files\WarriorStates</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

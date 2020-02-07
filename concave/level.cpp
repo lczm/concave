@@ -10,7 +10,7 @@ Level::~Level()
 
 void Level::initialize()
 {
-	warrior.initialize(graphics);
+	warrior.initialize(graphics, input);
 }
 
 void Level::releaseAll()
@@ -24,7 +24,9 @@ void Level::resetAll()
 }
 
 void Level::update()
-{}
+{
+	warrior.update(frameTime);
+}
 
 void Level::render()
 {

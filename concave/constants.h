@@ -24,11 +24,12 @@ const int TILE_HEIGHT = 64;
 //-----------------------------------------------
 //                   Units
 //-----------------------------------------------
-const int UNIT_STATE_ATTACK = 0;
-const int UNIT_STATE_DIE = 1;
-const int UNIT_STATE_IDLE = 2;
-const int UNIT_STATE_WALK = 3;
-const int UNIT_STATE_GET_HIT = 4;
+// const int UNIT_STATE_ATTACK = 0;
+// const int UNIT_STATE_DIE = 1;
+// const int UNIT_STATE_IDLE = 2;
+// const int UNIT_STATE_WALK = 3;
+// const int UNIT_STATE_GET_HIT = 4;
+enum UNITSTATE { ATTACK, DIE, IDLE, WALK, GET_HIT };
 // Players
 const int PLAYER_STATE_MAGIC_FIRE = 5;
 const int PLAYER_STATE_MAGIC_LIGHTNING = 6;

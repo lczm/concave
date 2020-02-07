@@ -5,6 +5,7 @@
 #include "image.h"
 #include "cellular.h"
 #include <vector>
+#include <fstream>
 
 using namespace std;
 using namespace Component;
@@ -39,4 +40,6 @@ public:
 
 	void levelEdit();
 	void save();
+	void readFromFile(std::string mapString, int map[mapWidth][mapHeight], int level);
+	void writeToFile(int map[mapWidth][mapHeight]);
 };

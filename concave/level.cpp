@@ -42,29 +42,59 @@ void Level::render()
 				CoordF screenPos = gridToScreen(x, y);
 				SpriteData sd; 
 
+				switch (x)
+				{
+				case 0:
+					tileImage.getSpriteData(sd, CoordI{ 5, 0 });
+					graphics->drawSprite(
+						sd,
+						screenPos.x, screenPos.y, camScale);
+					break;
+				}
+				switch (y)
+				{
+				case 0:
+					tileImage.getSpriteData(sd, CoordI{ 6, 0 });
+					graphics->drawSprite(
+						sd,
+						screenPos.x, screenPos.y, camScale);
+					break;
+				}
 
 				switch (map[x][y])
 				{
 				case 0:
-					tileImage.getSpriteData(sd, CoordI{ 12,1 });
+					tileImage.getSpriteData(sd, CoordI{ 10, 8 });
 					graphics->drawSprite(
 						sd,
 						screenPos.x, screenPos.y, camScale);
 					break;
 				case 1:
-					tileImage.getSpriteData(sd, CoordI{ 6,0 });
+					tileImage.getSpriteData(sd, CoordI{ 12,0 });
 					graphics->drawSprite(
 						sd,
 						screenPos.x, screenPos.y, camScale);
 					break;
 				case 2:
-					tileImage.getSpriteData(sd, CoordI{ 14,2 });
+					tileImage.getSpriteData(sd, CoordI{ 4,1 });
 					graphics->drawSprite(
 						sd,
 						screenPos.x, screenPos.y, camScale);
 					break;
 				case 3:
-					tileImage.getSpriteData(sd, CoordI{ 9,7 });
+					tileImage.getSpriteData(sd, CoordI{ 10 ,6 });
+					graphics->drawSprite(
+						sd,
+						screenPos.x, screenPos.y, camScale);
+					break;
+				case 4:
+					tileImage.getSpriteData(sd, CoordI{  19,3 });
+					graphics->drawSprite(
+						sd,
+						screenPos.x, screenPos.y, camScale);
+					break;
+				case 5:
+					tileImage.getSpriteData(sd, CoordI{ 18,3 });
 					graphics->drawSprite(
 						sd,
 						screenPos.x, screenPos.y, camScale);
@@ -107,12 +137,41 @@ void Level::levelEdit()
 		CoordF mouse = { input->getMouseX(), input->getMouseY() };
 		CoordF gridPos1 = screenToGrid(mouse.x, mouse.y);
 		CoordI gridPos = { gridPos1.x, gridPos1.y };
-		++map[gridPos.y][gridPos.x] %= 4;
+		++map[gridPos.y][gridPos.x] %= 6;
 		input->clearCharIn();
+	}
+
+	if (input->isKeyDown(0x52))
+	{
+		writeToFile(map);
 	}
 }
 
 void Level::save()
 {
 
+}
+
+void Level::readFromFile(std::string mapString, int map[mapWidth][mapHeight], int level)
+{
+	std::ifstream file("text\\" + std::to_string(level) + mapString);
+	for (int r = 0; r < mapWidth; r++)
+	{
+		for (int c = 0; c < mapHeight; c++) {
+			file >> map[r][c];
+		}
+	}
+}
+
+void Level::writeToFile(int map[mapWidth][mapHeight])
+{
+	ofstream outputfile("save.txt");
+	for (int r = 0; r < mapWidth; r++)
+	{
+		for (int c = 0; c < mapHeight; c++) {
+			outputfile << map[r][c] << " ";
+		}
+
+		outputfile << endl;
+	}
 }

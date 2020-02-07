@@ -30,8 +30,15 @@ void Level::update()
 
 void Level::render()
 {
-	CoordF screenPos = gridToScreen(camX, camY);
-	warrior.render(screenPos, camScale);
+	// CoordF screenPos = gridToScreen(camX, camY);
+	// warrior.render(screenPos, camScale);
+
+	SpriteData sd = warrior.getSpriteData();
+	CoordF warriorCoords = warrior.getGridCoords();
+	CoordF screenPos = gridToScreen(warriorCoords.x, warriorCoords.y);
+
+	// Draw sprites
+	graphics->drawSprite(sd, screenPos.x, screenPos.y, camScale);
 }
 
 CoordF Level::gridToScreen(float gx, float gy)

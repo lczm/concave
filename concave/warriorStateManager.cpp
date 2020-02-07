@@ -2,6 +2,9 @@
 
 WarriorStateManager::WarriorStateManager()
 {
+    gridX = 0;
+    gridY = 0;
+
     attackState = new WarriorAttackState();
     dieState = new WarriorDieState();
     idleState = new WarriorIdleState();
@@ -85,5 +88,10 @@ void WarriorStateManager::changeState(int state)
     default:
         break;
     }
+}
+
+CoordF WarriorStateManager::getGridCoords()
+{
+    return CoordF { gridX, gridY };
 }
 

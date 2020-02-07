@@ -1,10 +1,11 @@
 #pragma once
 #include "image.h"
 #include "input.h"
+#include "component.h"
+#include "warriorStateManager.h"
 #include <iostream>
 #include <vector>
 
-#include "warriorStateManager.h"
 using namespace std;
 
 class Warrior
@@ -13,8 +14,6 @@ private:
     Graphics* graphics;
     Input* input;
     WarriorStateManager* state;
-
-    int direction;
 
     // Textures
     Texture unitTexture;
@@ -26,13 +25,17 @@ private:
 	vector<int> unitEndFrames;
 	AnimImage unitImage;
 
+    Component::Health healthComponent;
+    int direction;
+
 public:
     Warrior();
     ~Warrior();
 
     void initialize(Graphics* graphics, Input* input);
     void update(float frameTime);
-    void render(CoordF screenPos, float camScale);
+    SpriteData getSpriteData();
+    CoordF getGridCoords();
 
     void onLostDevice();
     void onResetDevice();

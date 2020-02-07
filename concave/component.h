@@ -16,6 +16,12 @@ namespace Component
 		float rotation;
 	};
 
+	struct Health
+	{
+		int health;
+		int maxHealth;
+	};
+
 	struct Collision
 	{
 		struct Line { float lower, upper, shift; };

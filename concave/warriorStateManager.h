@@ -10,6 +10,9 @@ using namespace std;
 class WarriorStateManager
 {
 private:
+    float gridX;
+    float gridY;
+
     State* currentState;
     WarriorAttackState* attackState;
     WarriorDieState* dieState;
@@ -23,4 +26,5 @@ public:
     int getState();
     int getFrameNo();
     void changeState(int state);
+    CoordF getGridCoords();
 };

@@ -4,6 +4,7 @@ Warrior::Warrior()
 {
 	direction = DIRECTION8::NORTH;
 	state = new WarriorStateManager();
+	healthComponent.health, healthComponent.maxHealth = 100;
 }
 
 Warrior::~Warrior()
@@ -35,11 +36,16 @@ void Warrior::update(float frameTime)
 	state->update(input, frameTime);
 }
 
-void Warrior::render(CoordF screenPos, float camScale)
+SpriteData Warrior::getSpriteData()
 {
 	SpriteData sd;
 	unitImage.getSpriteData(sd, state->getState(), direction, state->getFrameNo());
-	graphics->drawSprite(sd, screenPos.x, screenPos.y, camScale);
+	return sd;
+}
+
+CoordF Warrior::getGridCoords()
+{
+	return state->getGridCoords();
 }
 
 void Warrior::onLostDevice()

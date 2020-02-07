@@ -6,10 +6,18 @@ Level::Level()
 }
 
 Level::~Level()
-{}
+{
+	
+}
 
 void Level::initialize()
-{}
+{	
+	tileTexture.initialize(graphics, IMAGE_TILES_DUNGEON);
+	tileGridMask.initialize(0, 0, 128, 192, 1, 1, 128 / 2, 192 - TILE_HEIGHT - 1);
+	tileImage.initialize(&tileTexture, tileGridMask);
+	Cellular cellgenerate;
+	cellgenerate.generateMap(map);
+}
 
 void Level::releaseAll()
 {}
@@ -18,10 +26,35 @@ void Level::resetAll()
 {}
 
 void Level::update()
-{}
+{
+
+	if (input->isKeyDown('P')) camScale += 0.01;
+	if (input->isKeyDown('O')) camScale -= 0.01;
+
+}
 
 void Level::render()
-{}
+{
+
+	for (int y = 0; y < mapHeight; y++) {
+		for (int x = 0; x < mapWidth; x++) {
+			CoordF screenPos = gridToScreen(x, y);
+			SpriteData sd; 
+
+			if (map[x][y] == false)
+			{
+				tileImage.getSpriteData(sd, CoordI{12,0});
+			}
+			else {
+				tileImage.getSpriteData(sd, CoordI{10,8});
+			}
+
+			graphics->drawSprite(
+					sd,
+					screenPos.x, screenPos.y, camScale);
+		}
+	}
+}
 
 CoordF Level::gridToScreen(float gx, float gy)
 {

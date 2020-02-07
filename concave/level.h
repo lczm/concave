@@ -1,8 +1,11 @@
 #pragma once
 #include "window.h"
 #include "component.h"
+#include "constants.h"
 #include "image.h"
+#include "cellular.h"
 #include <vector>
+
 using namespace std;
 using namespace Component;
 
@@ -13,8 +16,15 @@ private:
 	vector<Position> positions;
 	vector<Movement> movements;
 	vector<Collision> collisions;
+
+	// Tiles
+	Texture tileTexture;
+	GridMask tileGridMask;
+	Image tileImage;
+
 	// Camera
 	float camX, camY, camScale;
+	bool map[mapWidth][mapHeight];
 public:
 	Level();
 	~Level();

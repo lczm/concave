@@ -5,7 +5,7 @@
 using namespace std;
 
 
-class cellular
+class Cellular
 {
 private:
 	bool ReturnMap[mapHeight][mapWidth];
@@ -17,22 +17,21 @@ private:
 	//chance fo the cell to stay alive
 
 public:
-	cellular();
-	~cellular();
+	Cellular();
+	~Cellular();
 	float getAlive() { return chanceAlive; }
 
 	//function to randomly select alive or dead cells
-	
 	void initializeMap(bool map[mapWidth][mapHeight]);
 
 	//generates a random float
 	float randomFloat(float max);
 
 	//checking the rules of cellular automa
-	void doSimlulationStep(bool map[mapWidth][mapHeight], bool newMap[mapHeight][mapWidth]); //we do not want to alter the original copy
+	void doSimulationStep(bool map[mapWidth][mapHeight], bool newMap[mapHeight][mapWidth]); //we do not want to alter the original copy
 
 	int countNeighboursAlive(bool map[mapWidth][mapHeight], int x, int y);
 
-	void generateMap(bool map[mapWidth][mapHeight]);
+	void generateMap(bool generateMap[mapWidth][mapHeight]);
 };
 

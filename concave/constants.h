@@ -20,6 +20,8 @@ enum DIRECTION8 { SOUTH, SOUTH_WEST, WEST, NORTH_WEST, NORTH, NORTH_EAST, EAST, 
 //-----------------------------------------------
 const int TILE_WIDTH = 128;
 const int TILE_HEIGHT = 64;
+const int mapWidth = 48;
+const int mapHeight = 48;
 
 //-----------------------------------------------
 //                   Units

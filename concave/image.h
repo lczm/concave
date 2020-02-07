@@ -42,7 +42,8 @@ public:
 	Image();
 	~Image();
 	void initialize(Texture* texture, GridMask gridMask);
-	void getSpriteData(SpriteData& SpriteData, CoordI coord);
+	SpriteData getSpriteData(CoordI coord);
+	//void getSpriteData(SpriteData& SpriteData, CoordI coord);
 };
 
 class AnimImage
@@ -55,7 +56,8 @@ public:
 	AnimImage();
 	~AnimImage();
 	void initialize(Texture* texture, vector<GridMask> gridMask, vector<int> endFrames);
-	void getSpriteData(SpriteData& SpriteData, int state, int direction, int frameNo);
+	SpriteData getSpriteData(int state, int direction, int frameNo);
+	//void getSpriteData(SpriteData& SpriteData, int state, int direction, int frameNo);
 	int getEndFrame(int state);
 };
 

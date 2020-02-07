@@ -193,6 +193,11 @@ public:
     HRESULT loadTexture(const char* filename, COLOR_ARGB transcolor,
         UINT& width, UINT& height, LP_TEXTURE& texture);
 
+	// Sprite Begin
+	void spriteBegin() { sprite->Begin(D3DXSPRITE_ALPHABLEND); }
+	// Sprite End
+	void spriteEnd() { sprite->End(); }
+
 	// Draw sprite
 	//void drawSprite(const SpriteData& spriteData, 
 	//	COLOR_ARGB color = graphicsNS::WHITE);
@@ -201,8 +206,7 @@ public:
 		float screenX, float screenY, float scale,
 		COLOR_ARGB color = graphicsNS::WHITE);
 
-    // Sprite Begin
-    void spriteBegin() { sprite->Begin(D3DXSPRITE_ALPHABLEND); }
-    // Sprite End
-    void spriteEnd() { sprite->End(); }
+	void drawSprite(const SpriteData& spriteData,
+		CoordF coord, float scale,
+		COLOR_ARGB color = graphicsNS::WHITE);
 };

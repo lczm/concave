@@ -14,8 +14,8 @@ namespace Component
 
 	struct Position: Base
 	{
-		float gx, gy;
-		float sx, sy;
+		CoordF grid;
+		CoordF screen;
 	};
 
 	struct Collision: Base

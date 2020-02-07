@@ -17,7 +17,8 @@ private:
 	vector<Collision> collisions;
 	vector<Render> renders;
 	// Camera
-	float camX, camY, camScale;
+	CoordF camCoord;
+	float camScale;
 	// Tiles
 	Texture tileTexture; GridMask tileGridMask; Image tileImage;
 	vector<Tile> tiles;
@@ -35,4 +36,6 @@ public:
 
 	CoordF gridToScreen(float gx, float gy);
 	CoordF screenToGrid(float sx, float sy);
+	CoordF gridToScreen(CoordF gridCoord);
+	CoordF screenToGrid(CoordF screenCoord);
 };

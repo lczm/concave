@@ -14,6 +14,11 @@ void Tile::initialize(Image* image, CoordI coord, vector<Tile::Line> hLines, vec
 	Tile::vLines = vLines;
 }
 
+SpriteData Tile::getSpriteData()
+{
+	return image->getSpriteData(coord);
+}
+
 TileGrid::TileGrid()
 {}
 

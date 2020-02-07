@@ -2,7 +2,7 @@
 
 Level::Level()
 {
-	camX = 0; camY = 0; camScale = 1;
+	camScale = 1;
 }
 
 Level::~Level()
@@ -24,15 +24,15 @@ void Level::initialize()
 	tiles[1].initialize(&tileImage, CoordI{ 6, 0 },
 		vector<Tile::Line> { {0, 1, 0} }, vector<Tile::Line> {});
 	tileGrid.initialize(10, 10);
-	for (int x = 0; x < 10; x++)
-		for (int y = 0; y < 10; y++)
+	for (int y = 0; y < tileGrid.getRows(); y++)
+		for (int x = 0; x < tileGrid.getCols(); x++)
 			tileGrid.set(x, y, &tiles[1]);
-	for (int x = 1; x < 9; x++) 
-		for (int y = 1; y < 9; y++) 
+	for (int y = 1; y < tileGrid.getRows() - 1; y++)
+		for (int x = 1; x < tileGrid.getCols() - 1; x++)
 			tileGrid.set(x, y, &tiles[0]);
 	// Player
 	positions.resize(1); collisions.resize(1); renders.resize(1);
-	positions[0].gx = 5; positions[0].gy = 5;
+	positions[0].grid = CoordF{ 5, 5 };
 	collisions[0].hLines = vector<Collision::Line>{
 		{ -0.4, 0.4, -0.2, &collisions[0] }, { -0.4, 0.4, 0.2, &collisions[0] } };
 	collisions[0].vLines = vector<Collision::Line>{
@@ -50,15 +50,38 @@ void Level::resetAll()
 {}
 
 void Level::update()
-{}
+{
+	// Player
+	if (input->isKeyDown('W')) player.position->grid.y -= 0.01;
+	if (input->isKeyDown('S')) player.position->grid.y += 0.01;
+	if (input->isKeyDown('A')) player.position->grid.x -= 0.01;
+	if (input->isKeyDown('D')) player.position->grid.x += 0.01;
+	// Camera
+	camCoord = player.position->grid;
+	if (input->isKeyDown('O')) camScale -= 0.01;
+	if (input->isKeyDown('P')) camScale += 0.01;
+}
 
 void Level::render()
-{}
+{
+	// Tiles
+	for (int y = 0; y < tileGrid.getRows(); y++)
+		for (int x = 0; x < tileGrid.getCols(); x++)
+			graphics->drawSprite(
+				tileGrid.get(x, y)->getSpriteData(), 
+				gridToScreen(x, y), camScale);
+	// Player
+	player.position->screen = gridToScreen(player.position->grid);
+	graphics->drawSprite(
+		player.render->image->getSpriteData(player.render->coord),
+		player.position->screen, camScale
+	);
+}
 
 CoordF Level::gridToScreen(float gx, float gy)
 {
-	float rx = gx - camX;
-	float ry = gy - camY;
+	float rx = gx - camCoord.x;
+	float ry = gy - camCoord.y;
 	float vx = TILE_WIDTH / 2 * (rx - ry);
 	float vy = TILE_HEIGHT / 2 * (rx + ry);
 	float sx = vx * camScale + GAME_WIDTH / 2;
@@ -74,7 +97,17 @@ CoordF Level::screenToGrid(float sx, float sy)
 	float vy2 = vy / (TILE_HEIGHT / 2);
 	float rx = (vy2 - vx2) / 2;
 	float ry = (vy2 + vx2) / 2;
-	float gx = rx + camX;
-	float gy = ry + camY;
+	float gx = rx + camCoord.x;
+	float gy = ry + camCoord.y;
 	return CoordF{ gx, gy };
+}
+
+CoordF Level::gridToScreen(CoordF gridCoord)
+{
+	return gridToScreen(gridCoord.x, gridCoord.y);
+}
+
+CoordF Level::screenToGrid(CoordF screenCoord)
+{
+	return screenToGrid(screenCoord.x, screenCoord.y);	
 }

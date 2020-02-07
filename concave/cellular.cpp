@@ -43,11 +43,11 @@ void Cellular::doSimulationStep(bool map[mapWidth][mapHeight], bool newMap[mapHe
 			{
 				if (cellNb < deathLimit)
 				{
-					newMap[x][y] == false;
+					newMap[x][y] = false;
 				}
 
 				else {
-					newMap[x][y] == true;
+					newMap[x][y] = true;
 				}
 			}
 			//if cell is dead and has numberof neighbours to be alive
@@ -94,6 +94,14 @@ int Cellular::countNeighboursAlive(bool map[mapWidth][mapHeight], int x, int y)
 void Cellular::generateMap(bool generateMap[mapWidth][mapHeight])
 {
 	bool cellMap[mapWidth][mapHeight];
+
+	for (int x = 0; x < mapWidth; x++)
+	{
+		for (int y = 0; y < mapHeight; y++)
+		{
+			cellMap[x][y] = false;
+		}
+	}
 	initializeMap(cellMap);
 	for (int i = 0; i < numSteps; i++)
 	{

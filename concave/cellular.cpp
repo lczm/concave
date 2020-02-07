@@ -95,8 +95,30 @@ void Cellular::generateMap(bool(&generateMap)[mapWidth][mapHeight])
 {
 	initializeMap(generateMap);
 	for (int i = 0; i < numSteps; i++)
-	{
-		doSimulationStep(generateMap, generateMap);
+	{	
+		//set this to all false, we do not want the previous iteration to corrupt the new iteration
+		bool newArray[mapWidth][mapHeight];
+
+		//set new array values to false
+		for (int x = 0; x < mapWidth; x++)
+		{
+			for (int y = 0; y < mapHeight; y++)
+			{
+				newArray[x][y] = false;
+			}
+		}
+
+		//process
+		doSimulationStep(generateMap, newArray);
+
+		//Copy newArray to generateMap
+		for (int x = 0; x < mapWidth; x++)
+		{
+			for (int y = 0; y < mapHeight; y++)
+			{
+				generateMap[x][y] = newArray[x][y];
+			}
+		}
 	}
 		
 }

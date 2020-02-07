@@ -1,0 +1,50 @@
+#include "warrior.h"
+
+Warrior::Warrior()
+{
+}
+
+Warrior::~Warrior()
+{
+}
+
+void Warrior::initialize(Graphics* graphics)
+{
+	Warrior::graphics = graphics;
+	unitTexture.initialize(Warrior::graphics, IMAGE_UNIT_WARRIOR);
+	unitAttackGridMask.initialize(0, 7, 128, 128, 0, 1, 58, 114);
+	unitDieGridMask.initialize(2049, 7, 128, 95, 0, 1, 59, 71);
+	unitIdleGridMask.initialize(0, 1046, 96, 94, 0, 1, 43, 81);
+	unitWalkGridMask.initialize(2882, 1045, 96, 96, 0, 1, 44, 80);
+
+	vector<GridMask> unitGridMasks = {
+		unitAttackGridMask,
+		unitDieGridMask,
+		unitIdleGridMask,
+		unitWalkGridMask
+	};
+	vector<int> unitEndFrames = { 16, 21, 10, 8 };
+	unitImage.initialize(&unitTexture, unitGridMasks, unitEndFrames);
+
+	cout << "Finished Initializing Warrior" << endl;
+}
+
+void Warrior::render(CoordF screenPos, float camScale)
+{
+	SpriteData sd;
+	unitImage.getSpriteData(sd, 0, DIRECTION8::NORTH, 0);
+	graphics->drawSprite(
+		sd,
+		screenPos.x, screenPos.y, camScale
+	);
+}
+
+void Warrior::onLostDevice()
+{
+	unitTexture.onLostDevice();
+}
+
+void Warrior::onResetDevice()
+{
+	unitTexture.onResetDevice(graphics);
+}

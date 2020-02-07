@@ -9,19 +9,28 @@ Level::~Level()
 {}
 
 void Level::initialize()
-{}
+{
+	warrior.initialize(graphics);
+}
 
 void Level::releaseAll()
-{}
+{
+	warrior.onLostDevice();
+}
 
 void Level::resetAll()
-{}
+{
+	warrior.onLostDevice();
+}
 
 void Level::update()
 {}
 
 void Level::render()
-{}
+{
+	CoordF screenPos = gridToScreen(camX, camY);
+	warrior.render(screenPos, camScale);
+}
 
 CoordF Level::gridToScreen(float gx, float gy)
 {

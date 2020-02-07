@@ -2,6 +2,7 @@
 #include "window.h"
 #include "component.h"
 #include "image.h"
+#include "warrior.h"
 #include <vector>
 using namespace std;
 using namespace Component;
@@ -15,6 +16,9 @@ private:
 	vector<Collision> collisions;
 	// Camera
 	float camX, camY, camScale;
+
+	Warrior warrior;
+
 public:
 	Level();
 	~Level();

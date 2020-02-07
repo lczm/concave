@@ -18,8 +18,7 @@ void Level::initialize()
 
 	//Cellular cellgenerate;
 	//cellgenerate.generateMap(map);
-
-	readFromFile("save.txt", map, 8677);
+	readFromFile("save.txt", map, mapNo);
 }
 
 void Level::releaseAll()
@@ -33,7 +32,10 @@ void Level::update()
 
 	if (input->isKeyDown('P')) camScale += 0.01;
 	if (input->isKeyDown('O')) camScale -= 0.01;
+
+
 	levelEdit();
+	changeLevel();
 	
 }
 
@@ -147,10 +149,6 @@ void Level::levelEdit()
 	{
 		writeToFile(map);
 	}
-}
-
-void Level::save()
-{
 
 }
 
@@ -167,7 +165,6 @@ void Level::readFromFile(std::string mapString, int map[mapWidth][mapHeight], in
 
 void Level::writeToFile(int map[mapWidth][mapHeight])
 {	
-
 	int random = rand();
 	string filepath =  "text\\" + to_string(random) + "save.txt";
 	ofstream outputfile((filepath));
@@ -179,4 +176,14 @@ void Level::writeToFile(int map[mapWidth][mapHeight])
 		outputfile << endl;
 	}
 	outputfile.close();
+}
+
+void Level::changeLevel()
+{
+	if (input->wasKeyPressed(0x45))
+	{
+		//woahh
+		mapNo = 15776;
+		level.initialize();
+	}
 }

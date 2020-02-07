@@ -27,6 +27,8 @@ private:
 	// Camera
 	float camX, camY, camScale;
 	int map[mapWidth][mapHeight];
+
+	int mapNo = 12873;
 public:
 	Level();
 	~Level();
@@ -40,7 +42,7 @@ public:
 	CoordF screenToGrid(float sx, float sy);
 
 	void levelEdit();
-	void save();
+	void changeLevel();
 	void readFromFile(std::string mapString, int map[mapWidth][mapHeight], int level);
 	void writeToFile(int map[mapWidth][mapHeight]);
 };

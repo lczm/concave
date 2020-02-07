@@ -18,7 +18,7 @@ void Level::initialize()
 
 	//Cellular cellgenerate;
 	//cellgenerate.generateMap(map);
-	readFromFile("save.txt", map, mapNo);
+	readFromFile();
 }
 
 void Level::releaseAll()
@@ -40,72 +40,9 @@ void Level::update()
 }
 
 void Level::render()
-{
-		for (int x = 0; x < mapWidth; x++) {
-			for (int y = 0; y < mapHeight; y++) {
-				CoordF screenPos = gridToScreen(x, y);
-				SpriteData sd; 
-
-				switch (x)
-				{
-				case 0:
-					tileImage.getSpriteData(sd, CoordI{ 5, 0 });
-					graphics->drawSprite(
-						sd,
-						screenPos.x, screenPos.y, camScale);
-					break;
-				}
-				switch (y)
-				{
-				case 0:
-					tileImage.getSpriteData(sd, CoordI{ 6, 0 });
-					graphics->drawSprite(
-						sd,
-						screenPos.x, screenPos.y, camScale);
-					break;
-				}
-
-				switch (map[x][y])
-				{
-				case 0:
-					tileImage.getSpriteData(sd, CoordI{ 10, 8 });
-					graphics->drawSprite(
-						sd,
-						screenPos.x, screenPos.y, camScale);
-					break;
-				case 1:
-					tileImage.getSpriteData(sd, CoordI{ 12,0 });
-					graphics->drawSprite(
-						sd,
-						screenPos.x, screenPos.y, camScale);
-					break;
-				case 2:
-					tileImage.getSpriteData(sd, CoordI{ 4,1 });
-					graphics->drawSprite(
-						sd,
-						screenPos.x, screenPos.y, camScale);
-					break;
-				case 3:
-					tileImage.getSpriteData(sd, CoordI{ 10 ,6 });
-					graphics->drawSprite(
-						sd,
-						screenPos.x, screenPos.y, camScale);
-					break;
-				case 4:
-					tileImage.getSpriteData(sd, CoordI{  19,3 });
-					graphics->drawSprite(
-						sd,
-						screenPos.x, screenPos.y, camScale);
-					break;
-				case 5:
-					tileImage.getSpriteData(sd, CoordI{ 18,3 });
-					graphics->drawSprite(
-						sd,
-						screenPos.x, screenPos.y, camScale);
-					break;
-				}
-			}
-		}
+{	
+	//will be moved to another file I hope
+	renderSprites();
 }
 
 CoordF Level::gridToScreen(float gx, float gy)
@@ -138,7 +75,7 @@ void Level::levelEdit()
 	if (input->getMouseLButton() && input->isKeyDown(0x51))
 	{	
 		input->setMouseLButton(false);
-		CoordF mouse = { input->getMouseX(), input->getMouseY() };
+		CoordF mouse = { input->getMouseX(), input->getMouseY()};
 		CoordF gridPos1 = screenToGrid(mouse.x, mouse.y);
 		CoordI gridPos = { gridPos1.x, gridPos1.y };
 		++map[gridPos.y][gridPos.x] %= 6;
@@ -152,30 +89,14 @@ void Level::levelEdit()
 
 }
 
-void Level::readFromFile(std::string mapString, int map[mapWidth][mapHeight], int level)
+void Level::readFromFile()
 {
-	std::ifstream file("text\\" + std::to_string(level) + mapString);
-	for (int r = 0; r < mapWidth; r++)
-	{
-		for (int c = 0; c < mapHeight; c++) {
-			file >> map[r][c];
-		}
-	}
+	editComponent->readFromFile("save.txt", map, mapNo);
 }
 
 void Level::writeToFile(int map[mapWidth][mapHeight])
 {	
-	int random = rand();
-	string filepath =  "text\\" + to_string(random) + "save.txt";
-	ofstream outputfile((filepath));
-	for (int r = 0; r < mapWidth; r++)
-	{
-		for (int c = 0; c < mapHeight; c++) {
-			outputfile << map[r][c] << " ";
-		}
-		outputfile << endl;
-	}
-	outputfile.close();
+	editComponent->writeToFile(map);
 }
 
 void Level::changeLevel()
@@ -185,5 +106,74 @@ void Level::changeLevel()
 		//woahh
 		mapNo = 15776;
 		level.initialize();
+	}
+}
+
+void Level::renderSprites()
+{
+	for (int x = 0; x < mapWidth; x++) {
+		for (int y = 0; y < mapHeight; y++) {
+			CoordF screenPos = gridToScreen(x, y);
+			SpriteData sd;
+
+			switch (x)
+			{
+			case 0:
+				tileImage.getSpriteData(sd, CoordI{ 5, 0 });
+				graphics->drawSprite(
+					sd,
+					screenPos.x, screenPos.y, camScale);
+				break;
+			}
+			switch (y)
+			{
+			case 0:
+				tileImage.getSpriteData(sd, CoordI{ 6, 0 });
+				graphics->drawSprite(
+					sd,
+					screenPos.x, screenPos.y, camScale);
+				break;
+			}
+
+			switch (map[x][y])
+			{
+			case 0:
+				tileImage.getSpriteData(sd, IMAGE_MAP.at(ImageType::churchBlood));
+				graphics->drawSprite(
+					sd,
+					screenPos.x, screenPos.y, camScale);
+				break;
+			case 1:
+				tileImage.getSpriteData(sd, IMAGE_MAP.at(ImageType::churchFloor));
+				graphics->drawSprite(
+					sd,
+					screenPos.x, screenPos.y, camScale);
+				break;
+			case 2:
+				tileImage.getSpriteData(sd, IMAGE_MAP.at(ImageType::churchDoor));
+				graphics->drawSprite(
+					sd,
+					screenPos.x, screenPos.y, camScale);
+				break;
+			case 3:
+				tileImage.getSpriteData(sd, IMAGE_MAP.at(ImageType::churchChest));
+				graphics->drawSprite(
+					sd,
+					screenPos.x, screenPos.y, camScale);
+				break;
+			case 4:
+				tileImage.getSpriteData(sd, IMAGE_MAP.at(ImageType::chruchWallEast));
+				graphics->drawSprite(
+					sd,
+					screenPos.x, screenPos.y, camScale);
+				break;
+			case 5:
+				tileImage.getSpriteData(sd, IMAGE_MAP.at(ImageType::chruchWallWest));
+				graphics->drawSprite(
+					sd,
+					screenPos.x, screenPos.y, camScale);
+				break;
+			}
+		}
 	}
 }

@@ -87,3 +87,31 @@ const float FRAME_RATE = 200.0f;               // the target frame rate (frames/
 const float MIN_FRAME_RATE = 10.0f;             // the minimum frame rate
 const float MIN_FRAME_TIME = 1.0f / FRAME_RATE;   // minimum desired time for 1 frame
 const float MAX_FRAME_TIME = 1.0f / MIN_FRAME_RATE; // maximum time used in calculations
+
+enum class ImageType {
+	//church
+	chruchWallEast,
+	chruchWallWest,
+	churchBlood,
+	churchDoor,
+	churchFloor,
+	churchChest
+
+	//cave
+
+};
+
+//enum
+#include <map>
+const std::map<ImageType, CoordI> IMAGE_MAP
+{	
+	//name - coordinates
+
+	//church tiles
+	{ImageType::chruchWallEast,  CoordI{ 19,3 }},
+	{ImageType::chruchWallWest, CoordI{ 18,3 }},
+	{ImageType::churchBlood, CoordI{ 10, 8 }},
+	{ImageType::churchDoor, CoordI{ 4,1 }},
+	{ImageType::churchFloor,  CoordI{ 12,0 }},
+	{ImageType::churchChest, CoordI{ 10, 6 }},
+};

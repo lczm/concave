@@ -4,6 +4,7 @@
 #include "constants.h"
 #include "image.h"
 #include "cellular.h"
+#include "EditComponent.h"
 #include <vector>
 #include <fstream>
 #include <string>
@@ -29,6 +30,9 @@ private:
 	int map[mapWidth][mapHeight];
 
 	int mapNo = 12873;
+
+	//prob need to change it to read component
+	EditComponent * editComponent;
 public:
 	Level();
 	~Level();
@@ -43,6 +47,7 @@ public:
 
 	void levelEdit();
 	void changeLevel();
-	void readFromFile(std::string mapString, int map[mapWidth][mapHeight], int level);
+	void readFromFile();
+	void renderSprites();
 	void writeToFile(int map[mapWidth][mapHeight]);
 };

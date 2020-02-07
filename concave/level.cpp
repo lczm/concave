@@ -12,7 +12,7 @@ void Level::initialize()
 {
 	// Image
 	tileTexture.initialize(graphics, IMAGE_TILES_DUNGEON);
-	tileGridMask.initialize(0, 0, 128, 192, 1, 1, 128 / 2, 192 - TILE_HEIGHT - 1);
+	tileGridMask.initialize(0, 0, 128, 192, 1, 1, 64, 127);
 	tileImage.initialize(&tileTexture, tileGridMask);
 	unitTexture.initialize(graphics, IMAGE_UNIT_WARRIOR);
 	unitGridMask.initialize(0, 1046, 96, 94, 0, 1, 43, 81);

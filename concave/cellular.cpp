@@ -5,7 +5,7 @@ Cellular::Cellular() {};
 Cellular::~Cellular() {};
 
 //randomly selecting if cells are dead or alive
-void Cellular::initializeMap(bool map[mapWidth][mapHeight])
+void Cellular::initializeMap(bool(&map)[mapWidth][mapHeight])
 {
 	for (int x = 0; x < mapWidth; x++)
 	{
@@ -28,7 +28,7 @@ float Cellular::randomFloat(float max)
 	return generated;
 }
 
-void Cellular::doSimulationStep(bool map[mapWidth][mapHeight], bool newMap[mapHeight][mapWidth])
+void Cellular::doSimulationStep(bool(&map)[mapWidth][mapHeight], bool(&newMap)[mapWidth][mapHeight])
 {
 	//to not alter the old map
 	//loop over rows and cols
@@ -91,20 +91,12 @@ int Cellular::countNeighboursAlive(bool map[mapWidth][mapHeight], int x, int y)
 	return count;
 }
 
-void Cellular::generateMap(bool generateMap[mapWidth][mapHeight])
+void Cellular::generateMap(bool(&generateMap)[mapWidth][mapHeight])
 {
-	bool cellMap[mapWidth][mapHeight];
-
-	for (int x = 0; x < mapWidth; x++)
-	{
-		for (int y = 0; y < mapHeight; y++)
-		{
-			cellMap[x][y] = false;
-		}
-	}
-	initializeMap(cellMap);
+	initializeMap(generateMap);
 	for (int i = 0; i < numSteps; i++)
 	{
-		doSimulationStep(cellMap, generateMap);
+		doSimulationStep(generateMap, generateMap);
 	}
+		
 }

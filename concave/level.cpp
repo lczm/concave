@@ -36,13 +36,18 @@ void Level::update()
 
 void Level::render()
 {
-
 		for (int x = 0; x < mapWidth; x++) {
 			for (int y = 0; y < mapHeight; y++) {
+				CoordF screenPos = gridToScreen(x, y);
+				SpriteData sd; 
 				if (map[x][y])
 				{
-					CoordF screenPos = gridToScreen(x, y);
-					SpriteData sd; 
+					tileImage.getSpriteData(sd, CoordI{10,8 });
+					graphics->drawSprite(
+						sd,
+						screenPos.x, screenPos.y, camScale);
+				}
+				else {
 					tileImage.getSpriteData(sd, CoordI{12,0});
 					graphics->drawSprite(
 						sd,

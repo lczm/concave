@@ -51,7 +51,8 @@ const int IMAGE_TILES_HEIGHT = 192;
 const int IMAGE_TILES_GAP_WIDTH = 1;
 const int IMAGE_TILES_GAP_HEIGHT = 1;
 
-const char IMAGE_TILES_DUNGEON[] = "sprites/tiles_church_dungeon.png";
+//const char IMAGE_TILES_DUNGEON[] = "sprites/tiles_church_dungeon.png";
+const char IMAGE_TILES_DUNGEON[] = "sprites/tiles_cave_dungeon.png";
 //-----------------------------------------------
 //                Image (Units)
 //-----------------------------------------------

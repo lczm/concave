@@ -10,9 +10,9 @@ class Cellular
 private:
 	bool ReturnMap[mapHeight][mapWidth];
 	float chanceAlive = 0.4f;
-	int deathLimit = 3;
+	int deathLimit = 2;
 	int birthLimit = 4;
-	int numSteps = 4;
+	int numSteps = 8;
 
 	//chance fo the cell to stay alive
 
@@ -33,5 +33,9 @@ public:
 	int countNeighboursAlive(bool map[mapWidth][mapHeight], int x, int y);
 
 	void generateMap(bool (&generateMap)[mapWidth][mapHeight]);
+
+	void floodFill();
+
+	void placeItem();
 };
 

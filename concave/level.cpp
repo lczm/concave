@@ -40,21 +40,39 @@ void Level::render()
 			for (int y = 0; y < mapHeight; y++) {
 				CoordF screenPos = gridToScreen(x, y);
 				SpriteData sd; 
+
+				switch (y)
+				{
+					case 0:
+						tileImage.getSpriteData(sd, CoordI{ 9 ,0});
+						graphics->drawSprite(
+							sd,
+							screenPos.x, screenPos.y, camScale);
+				}
+
+				switch (x)
+				{
+					case 0:
+						tileImage.getSpriteData(sd, CoordI{ 8,0 });
+						graphics->drawSprite(
+							sd,
+							screenPos.x, screenPos.y, camScale);
+						break;
+				}
+
 				if (map[x][y])
 				{
-					tileImage.getSpriteData(sd, CoordI{10,8 });
-					graphics->drawSprite(
-						sd,
-						screenPos.x, screenPos.y, camScale);
+					tileImage.getSpriteData(sd, CoordI{6,0 });
 				}
 				else {
-					tileImage.getSpriteData(sd, CoordI{12,0});
-					graphics->drawSprite(
-						sd,
-						screenPos.x, screenPos.y, camScale);
+					tileImage.getSpriteData(sd, CoordI{12,1});
 				}
+
+				graphics->drawSprite(
+					sd,
+					screenPos.x, screenPos.y, camScale);
+			}
 		}
-	}
 }
 
 CoordF Level::gridToScreen(float gx, float gy)

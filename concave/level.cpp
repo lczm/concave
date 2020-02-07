@@ -10,7 +10,9 @@ Level::~Level()
 
 void Level::initialize()
 {
-	warrior.initialize(graphics, input);
+	Position warriorPositionComponent;
+	positions.push_back(warriorPositionComponent);
+	warrior.initialize(graphics, input, &warriorPositionComponent);
 }
 
 void Level::releaseAll()

@@ -4,17 +4,17 @@ Warrior::Warrior()
 {
 	direction = DIRECTION8::NORTH;
 	state = new WarriorStateManager();
-	healthComponent.health, healthComponent.maxHealth = 100;
 }
 
 Warrior::~Warrior()
 {
 }
 
-void Warrior::initialize(Graphics* graphics, Input* input)
+void Warrior::initialize(Graphics* graphics, Input* input, Component::Position* positionComponent)
 {
 	Warrior::graphics = graphics;
 	Warrior::input = input;
+	Warrior::positionComponent = positionComponent;
 	unitTexture.initialize(Warrior::graphics, IMAGE_UNIT_WARRIOR);
 	// TODO : unitGetHitGridMask
 	unitAttackGridMask.initialize(0, 7, 128, 128, 0, 1, 58, 114);

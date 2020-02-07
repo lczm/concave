@@ -25,14 +25,14 @@ private:
 	vector<int> unitEndFrames;
 	AnimImage unitImage;
 
-    Component::Health healthComponent;
+    Component::Position* positionComponent;
     int direction;
 
 public:
     Warrior();
     ~Warrior();
 
-    void initialize(Graphics* graphics, Input* input);
+    void initialize(Graphics* graphics, Input* input, Component::Position* positionComponent);
     void update(float frameTime);
     SpriteData getSpriteData();
     CoordF getGridCoords();

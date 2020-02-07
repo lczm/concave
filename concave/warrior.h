@@ -4,8 +4,7 @@
 #include <iostream>
 #include <vector>
 
-#include "warriorState.h"
-#include "warriorAttackState.h"
+#include "warriorStateManager.h"
 using namespace std;
 
 class Warrior
@@ -13,9 +12,8 @@ class Warrior
 private:
     Graphics* graphics;
     Input* input;
+    WarriorStateManager* state;
 
-    WarriorState* state;
-    int currentEnumState;
     int direction;
 
     // Textures

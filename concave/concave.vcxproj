@@ -161,7 +161,8 @@
     <ClCompile Include="mainMenu.cpp" />
     <ClCompile Include="warrior.cpp" />
     <ClCompile Include="warriorAttackState.cpp" />
-    <ClCompile Include="warriorState.cpp" />
+    <ClCompile Include="warriorIdleState.cpp" />
+    <ClCompile Include="warriorStateManager.cpp" />
     <ClCompile Include="window.cpp" />
     <ClCompile Include="winmain.cpp" />
   </ItemGroup>
@@ -179,7 +180,9 @@
     <ClInclude Include="mainMenu.h" />
     <ClInclude Include="warrior.h" />
     <ClInclude Include="warriorAttackState.h" />
-    <ClInclude Include="warriorState.h" />
+    <ClInclude Include="warriorIdleState.h" />
+    <ClInclude Include="state.h" />
+    <ClInclude Include="warriorStateManager.h" />
     <ClInclude Include="window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

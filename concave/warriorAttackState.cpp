@@ -2,7 +2,6 @@
 
 WarriorAttackState::WarriorAttackState()
 {
-    cout << "Setting state to 0" << endl;
     state = 0;
     frameNo = 0;
     endFrame = 16;
@@ -15,8 +14,13 @@ WarriorAttackState::~WarriorAttackState()
 {
 }
 
-void WarriorAttackState::update(float frameTime)
+void WarriorAttackState::update(Input* input, float frameTime)
 {
+    if (input->getMouseLButton()) {
+        warriorStateManager->changeState(UNITSTATE::IDLE);
+        input->setMouseLButton(false);
+    }
+
 	timer += frameTime;
 	if (timer >= delay) {
 		timer -= delay;
@@ -25,6 +29,11 @@ void WarriorAttackState::update(float frameTime)
 			frameNo = 0;
 		}
 	}
+}
+
+void WarriorAttackState::initialize(WarriorStateManager* warriorStateManager)
+{
+    WarriorAttackState::warriorStateManager = warriorStateManager;
 }
 
 void WarriorAttackState::enter()

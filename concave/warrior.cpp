@@ -2,8 +2,8 @@
 
 Warrior::Warrior()
 {
-	currentEnumState = UNITSTATE::ATTACK;
 	direction = DIRECTION8::NORTH;
+	state = new WarriorStateManager();
 }
 
 Warrior::~Warrior()
@@ -28,19 +28,18 @@ void Warrior::initialize(Graphics* graphics, Input* input)
 	};
 	vector<int> unitEndFrames = { 16, 21, 10, 8 };
 	unitImage.initialize(&unitTexture, unitGridMasks, unitEndFrames);
-	state = new WarriorAttackState();
 }
 
 void Warrior::update(float frameTime)
 {
-	state->update(frameTime);
+	state->update(input, frameTime);
 }
 
 void Warrior::render(CoordF screenPos, float camScale)
 {
 	SpriteData sd;
 	unitImage.getSpriteData(sd, state->getState(), direction, state->getFrameNo());
-	graphics->drawSprite( sd, screenPos.x, screenPos.y, camScale );
+	graphics->drawSprite(sd, screenPos.x, screenPos.y, camScale);
 }
 
 void Warrior::onLostDevice()

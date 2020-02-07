@@ -54,10 +54,13 @@
     <ClCompile Include="warrior.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="warriorState.cpp">
+    <ClCompile Include="warriorAttackState.cpp">
       <Filter>Source Files\WarriorStates</Filter>
     </ClCompile>
-    <ClCompile Include="warriorAttackState.cpp">
+    <ClCompile Include="warriorIdleState.cpp">
+      <Filter>Source Files\WarriorStates</Filter>
+    </ClCompile>
+    <ClCompile Include="warriorStateManager.cpp">
       <Filter>Source Files\WarriorStates</Filter>
     </ClCompile>
   </ItemGroup>
@@ -101,10 +104,16 @@
     <ClInclude Include="warrior.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="warriorState.h">
+    <ClInclude Include="warriorAttackState.h">
       <Filter>Header Files\WarriorStates</Filter>
     </ClInclude>
-    <ClInclude Include="warriorAttackState.h">
+    <ClInclude Include="warriorIdleState.h">
+      <Filter>Header Files\WarriorStates</Filter>
+    </ClInclude>
+    <ClInclude Include="state.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="warriorStateManager.h">
       <Filter>Header Files\WarriorStates</Filter>
     </ClInclude>
   </ItemGroup>

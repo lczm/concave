@@ -3,7 +3,7 @@
 
 class WarriorStateManager;
 
-class WarriorAttackState : public State
+class WarriorIdleState : public State
 {
 private:
     int state;
@@ -15,8 +15,8 @@ private:
     WarriorStateManager* warriorStateManager;
 
 public:
-    WarriorAttackState();
-    ~WarriorAttackState();
+    WarriorIdleState();
+    ~WarriorIdleState();
     void update(Input* input, float frameTime);
     void initialize(WarriorStateManager* warriorStateManager);
     void enter();

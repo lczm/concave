@@ -12,10 +12,11 @@ void Cellular::initializeMap(bool map[mapWidth][mapHeight])
 		for (int y = 0; y < mapWidth; y++)
 		{	
 			float num = randomFloat(1);
-			if ( num < getAlive())
+			if (num < getAlive())
 			{
 				map[x][y] = false;
 			}
+			
 		}
 	}
 }
@@ -27,8 +28,8 @@ float Cellular::randomFloat(float max)
 	return generated;
 }
 
-void Cellular::doSimulationStep(bool map[mapWidth][mapHeight], bool newMap[mapWidth][mapHeight])
-{	
+void Cellular::doSimulationStep(bool map[mapWidth][mapHeight], bool newMap[mapHeight][mapWidth])
+{
 	//to not alter the old map
 	//loop over rows and cols
 	for (int x = 0; x < mapWidth; x++)
@@ -37,11 +38,11 @@ void Cellular::doSimulationStep(bool map[mapWidth][mapHeight], bool newMap[mapWi
 		{
 			int cellNb = countNeighboursAlive(map, x, y);
 
-			//if cell has no enough neighbours eliminate it
-			if (map[x][y])
+			//if cell has not enough neighbours eliminate it
+			if (!map[x][y] == false)
 			{
-				if (cellNb < deathLimit) 
-				{ 
+				if (cellNb < deathLimit)
+				{
 					newMap[x][y] == true;
 				}
 
@@ -63,7 +64,6 @@ void Cellular::doSimulationStep(bool map[mapWidth][mapHeight], bool newMap[mapWi
 			}
 		}
 	}
-
 }
 
 int Cellular::countNeighboursAlive(bool map[mapWidth][mapHeight], int x, int y)
@@ -76,7 +76,8 @@ int Cellular::countNeighboursAlive(bool map[mapWidth][mapHeight], int x, int y)
 			int neighbourX = x + i;
 			int neighbourY = y + j;
 
-			if (neighbourX < 0 || neighbourY < 0 || neighbourX >= mapWidth || neighbourY >= mapHeight)
+			if (i == 0 && j == 0) {}
+			else if (neighbourX < 0 || neighbourY < 0 || neighbourX >= mapWidth || neighbourY >= mapHeight)
 			{
 				count += 1;
 			}

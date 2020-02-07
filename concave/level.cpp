@@ -16,8 +16,10 @@ void Level::initialize()
 	tileGridMask.initialize(0, 0, 128, 192, 1, 1, 128 / 2, 192 - TILE_HEIGHT - 1);
 	tileImage.initialize(&tileTexture, tileGridMask);
 
-	Cellular cellgenerate;
-	cellgenerate.generateMap(map);
+	//Cellular cellgenerate;
+	//cellgenerate.generateMap(map);
+
+	readFromFile("save.txt", map, 8677);
 }
 
 void Level::releaseAll()
@@ -141,7 +143,7 @@ void Level::levelEdit()
 		input->clearCharIn();
 	}
 
-	if (input->isKeyDown(0x52))
+	if (input->wasKeyPressed(0x52))
 	{
 		writeToFile(map);
 	}
@@ -164,14 +166,17 @@ void Level::readFromFile(std::string mapString, int map[mapWidth][mapHeight], in
 }
 
 void Level::writeToFile(int map[mapWidth][mapHeight])
-{
-	ofstream outputfile("save.txt");
+{	
+
+	int random = rand();
+	string filepath =  "text\\" + to_string(random) + "save.txt";
+	ofstream outputfile((filepath));
 	for (int r = 0; r < mapWidth; r++)
 	{
 		for (int c = 0; c < mapHeight; c++) {
 			outputfile << map[r][c] << " ";
 		}
-
 		outputfile << endl;
 	}
+	outputfile.close();
 }

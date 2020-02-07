@@ -88,14 +88,14 @@ const float MIN_FRAME_RATE = 10.0f;             // the minimum frame rate
 const float MIN_FRAME_TIME = 1.0f / FRAME_RATE;   // minimum desired time for 1 frame
 const float MAX_FRAME_TIME = 1.0f / MIN_FRAME_RATE; // maximum time used in calculations
 
-enum class ImageType {
+enum ImageType {
 	//church
-	chruchWallEast,
-	chruchWallWest,
-	churchBlood,
-	churchDoor,
-	churchFloor,
-	churchChest
+	chruchWallEast = 4,
+	chruchWallWest = 5,
+	churchBlood = 0,
+	churchDoor = 2,
+	churchFloor = 1,
+	churchChest = 3
 
 	//cave
 
@@ -115,3 +115,5 @@ const std::map<ImageType, CoordI> IMAGE_MAP
 	{ImageType::churchFloor,  CoordI{ 12,0 }},
 	{ImageType::churchChest, CoordI{ 10, 6 }},
 };
+
+

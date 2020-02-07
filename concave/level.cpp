@@ -120,60 +120,44 @@ void Level::renderSprites()
 			{
 			case 0:
 				tileImage.getSpriteData(sd, CoordI{ 5, 0 });
-				graphics->drawSprite(
-					sd,
-					screenPos.x, screenPos.y, camScale);
 				break;
 			}
 			switch (y)
 			{
 			case 0:
 				tileImage.getSpriteData(sd, CoordI{ 6, 0 });
-				graphics->drawSprite(
-					sd,
-					screenPos.x, screenPos.y, camScale);
 				break;
 			}
 
+			graphics->drawSprite(
+				sd,
+				screenPos.x, screenPos.y, camScale);
+
 			switch (map[x][y])
 			{
-			case 0:
+			case ImageType::churchBlood:
+
 				tileImage.getSpriteData(sd, IMAGE_MAP.at(ImageType::churchBlood));
-				graphics->drawSprite(
-					sd,
-					screenPos.x, screenPos.y, camScale);
 				break;
-			case 1:
+			case ImageType::churchFloor:
 				tileImage.getSpriteData(sd, IMAGE_MAP.at(ImageType::churchFloor));
-				graphics->drawSprite(
-					sd,
-					screenPos.x, screenPos.y, camScale);
 				break;
-			case 2:
+			case ImageType::churchDoor:
 				tileImage.getSpriteData(sd, IMAGE_MAP.at(ImageType::churchDoor));
-				graphics->drawSprite(
-					sd,
-					screenPos.x, screenPos.y, camScale);
 				break;
-			case 3:
+			case ImageType::churchChest:
 				tileImage.getSpriteData(sd, IMAGE_MAP.at(ImageType::churchChest));
-				graphics->drawSprite(
-					sd,
-					screenPos.x, screenPos.y, camScale);
 				break;
-			case 4:
+			case ImageType::chruchWallEast:
 				tileImage.getSpriteData(sd, IMAGE_MAP.at(ImageType::chruchWallEast));
-				graphics->drawSprite(
-					sd,
-					screenPos.x, screenPos.y, camScale);
 				break;
-			case 5:
+			case ImageType::chruchWallWest:
 				tileImage.getSpriteData(sd, IMAGE_MAP.at(ImageType::chruchWallWest));
-				graphics->drawSprite(
-					sd,
-					screenPos.x, screenPos.y, camScale);
 				break;
 			}
+			graphics->drawSprite(
+				sd,
+				screenPos.x, screenPos.y, camScale);
 		}
 	}
 }

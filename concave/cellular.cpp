@@ -5,7 +5,7 @@ Cellular::Cellular() {};
 Cellular::~Cellular() {};
 
 //randomly selecting if cells are dead or alive
-void Cellular::initializeMap(bool(&map)[mapWidth][mapHeight])
+void Cellular::initializeMap(int(&map)[mapWidth][mapHeight])
 {
 	for (int x = 0; x < mapWidth; x++)
 	{
@@ -14,7 +14,7 @@ void Cellular::initializeMap(bool(&map)[mapWidth][mapHeight])
 			float num = randomFloat(1);
 			if (num < getAlive())
 			{
-				map[x][y] = true;
+				map[x][y] = 1;
 			}
 			
 		}
@@ -28,7 +28,7 @@ float Cellular::randomFloat(float max)
 	return generated;
 }
 
-void Cellular::doSimulationStep(bool(&map)[mapWidth][mapHeight], bool(&newMap)[mapWidth][mapHeight])
+void Cellular::doSimulationStep(int(&map)[mapWidth][mapHeight], int(&newMap)[mapWidth][mapHeight])
 {
 	//to not alter the old map
 	//loop over rows and cols
@@ -39,15 +39,15 @@ void Cellular::doSimulationStep(bool(&map)[mapWidth][mapHeight], bool(&newMap)[m
 			int cellNb = countNeighboursAlive(map, x, y);
 
 			//if cell has not enough neighbours eliminate it
-			if (map[x][y] == true)
+			if (map[x][y] == 1)
 			{
 				if (cellNb < deathLimit)
 				{
-					newMap[x][y] = false;
+					newMap[x][y] = 0;
 				}
 
 				else {
-					newMap[x][y] = true;
+					newMap[x][y] = 1;
 				}
 			}
 			//if cell is dead and has numberof neighbours to be alive
@@ -55,18 +55,18 @@ void Cellular::doSimulationStep(bool(&map)[mapWidth][mapHeight], bool(&newMap)[m
 			{
 				if (cellNb > birthLimit)
 				{
-					newMap[x][y] = true;
+					newMap[x][y] = 1;
 				}
 				else
 				{
-					newMap[x][y] = false;
+					newMap[x][y] = 0;
 				}
 			}
 		}
 	}
 }
 
-int Cellular::countNeighboursAlive(bool map[mapWidth][mapHeight], int x, int y)
+int Cellular::countNeighboursAlive(int map[mapWidth][mapHeight], int x, int y)
 {
 	int count = 0;
 	for (int i = -1; i < 2; i++)
@@ -91,20 +91,20 @@ int Cellular::countNeighboursAlive(bool map[mapWidth][mapHeight], int x, int y)
 	return count;
 }
 
-void Cellular::generateMap(bool(&generateMap)[mapWidth][mapHeight])
+void Cellular::generateMap(int(&generateMap)[mapWidth][mapHeight])
 {
 	initializeMap(generateMap);
 	for (int i = 0; i < numSteps; i++)
 	{	
-		//set this to all false, we do not want the previous iteration to corrupt the new iteration
-		bool newArray[mapWidth][mapHeight];
+		//set this to all 0, we do not want the previous iteration to corrupt the new iteration
+		int newArray[mapWidth][mapHeight];
 
-		//set new array values to false
+		//set new array values to 0
 		for (int x = 0; x < mapWidth; x++)
 		{
 			for (int y = 0; y < mapHeight; y++)
 			{
-				newArray[x][y] = false;
+				newArray[x][y] = 0;
 			}
 		}
 

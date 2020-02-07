@@ -24,7 +24,7 @@ private:
 
 	// Camera
 	float camX, camY, camScale;
-	bool map[mapWidth][mapHeight];
+	int map[mapWidth][mapHeight];
 public:
 	Level();
 	~Level();
@@ -37,5 +37,6 @@ public:
 	CoordF gridToScreen(float gx, float gy);
 	CoordF screenToGrid(float sx, float sy);
 
-	CoordF ToGrid(float sx, float sy);
+	void levelEdit();
+	void save();
 };

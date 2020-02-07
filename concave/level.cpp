@@ -31,15 +31,8 @@ void Level::update()
 
 	if (input->isKeyDown('P')) camScale += 0.01;
 	if (input->isKeyDown('O')) camScale -= 0.01;
-
-	if (input->getMouseLButton())
-	{
-		CoordF mouse = { input->getMouseX(), input->getMouseY()};
-		CoordF gridPos1 = screenToGrid(mouse.x, mouse.y);
-		CoordI gridPos = { gridPos1.x, gridPos1.y };
-
-		map[gridPos.y][gridPos.x] = true;
-	}
+	levelEdit();
+	
 }
 
 void Level::render()
@@ -49,38 +42,34 @@ void Level::render()
 				CoordF screenPos = gridToScreen(x, y);
 				SpriteData sd; 
 
-				/*
-				switch (y)
-				{
-					case 0:
-						tileImage.getSpriteData(sd, CoordI{9,0});
-						graphics->drawSprite(
-							sd,
-							screenPos.x, screenPos.y, camScale);
-				}
 
-				switch (x)
+				switch (map[x][y])
 				{
-					case 0:
-						tileImage.getSpriteData(sd, CoordI{8,0});
-						graphics->drawSprite(
-							sd,
-							screenPos.x, screenPos.y, camScale);
-						break;
+				case 0:
+					tileImage.getSpriteData(sd, CoordI{ 12,1 });
+					graphics->drawSprite(
+						sd,
+						screenPos.x, screenPos.y, camScale);
+					break;
+				case 1:
+					tileImage.getSpriteData(sd, CoordI{ 6,0 });
+					graphics->drawSprite(
+						sd,
+						screenPos.x, screenPos.y, camScale);
+					break;
+				case 2:
+					tileImage.getSpriteData(sd, CoordI{ 14,2 });
+					graphics->drawSprite(
+						sd,
+						screenPos.x, screenPos.y, camScale);
+					break;
+				case 3:
+					tileImage.getSpriteData(sd, CoordI{ 9,7 });
+					graphics->drawSprite(
+						sd,
+						screenPos.x, screenPos.y, camScale);
+					break;
 				}
-				*/
-
-				if (map[x][y])
-				{
-					tileImage.getSpriteData(sd, CoordI{6,0});
-				}
-				else {
-					tileImage.getSpriteData(sd, CoordI{12,1});
-				}
-
-				graphics->drawSprite(
-					sd,
-					screenPos.x, screenPos.y, camScale);
 			}
 		}
 }
@@ -107,4 +96,23 @@ CoordF Level::screenToGrid(float sx, float sy)
 	float gx = rx + camX;
 	float gy = ry + camY;
 	return CoordF{ gx, gy };
+}
+
+
+void Level::levelEdit()
+{	
+	if (input->getMouseLButton() && input->isKeyDown(0x51))
+	{	
+		input->setMouseLButton(false);
+		CoordF mouse = { input->getMouseX(), input->getMouseY() };
+		CoordF gridPos1 = screenToGrid(mouse.x, mouse.y);
+		CoordI gridPos = { gridPos1.x, gridPos1.y };
+		++map[gridPos.y][gridPos.x] %= 4;
+		input->clearCharIn();
+	}
+}
+
+void Level::save()
+{
+
 }

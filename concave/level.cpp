@@ -32,6 +32,14 @@ void Level::update()
 	if (input->isKeyDown('P')) camScale += 0.01;
 	if (input->isKeyDown('O')) camScale -= 0.01;
 
+	if (input->getMouseLButton())
+	{
+		CoordF mouse = { input->getMouseX(), input->getMouseY()};
+		CoordF gridPos1 = screenToGrid(mouse.x, mouse.y);
+		CoordI gridPos = { gridPos1.x, gridPos1.y };
+
+		map[gridPos.y][gridPos.x] = true;
+	}
 }
 
 void Level::render()
@@ -41,10 +49,11 @@ void Level::render()
 				CoordF screenPos = gridToScreen(x, y);
 				SpriteData sd; 
 
+				/*
 				switch (y)
 				{
 					case 0:
-						tileImage.getSpriteData(sd, CoordI{ 9 ,0});
+						tileImage.getSpriteData(sd, CoordI{9,0});
 						graphics->drawSprite(
 							sd,
 							screenPos.x, screenPos.y, camScale);
@@ -53,16 +62,17 @@ void Level::render()
 				switch (x)
 				{
 					case 0:
-						tileImage.getSpriteData(sd, CoordI{ 8,0 });
+						tileImage.getSpriteData(sd, CoordI{8,0});
 						graphics->drawSprite(
 							sd,
 							screenPos.x, screenPos.y, camScale);
 						break;
 				}
+				*/
 
 				if (map[x][y])
 				{
-					tileImage.getSpriteData(sd, CoordI{6,0 });
+					tileImage.getSpriteData(sd, CoordI{6,0});
 				}
 				else {
 					tileImage.getSpriteData(sd, CoordI{12,1});

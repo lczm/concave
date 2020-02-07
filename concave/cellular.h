@@ -12,7 +12,7 @@ private:
 	float chanceAlive = 0.4f;
 	int deathLimit = 2;
 	int birthLimit = 4;
-	int numSteps = 8;
+	int numSteps = 12;
 
 	//chance fo the cell to stay alive
 

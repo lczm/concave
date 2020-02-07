@@ -36,4 +36,6 @@ public:
 
 	CoordF gridToScreen(float gx, float gy);
 	CoordF screenToGrid(float sx, float sy);
+
+	CoordF ToGrid(float sx, float sy);
 };

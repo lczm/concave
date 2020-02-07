@@ -16,14 +16,7 @@ WarriorIdleState::~WarriorIdleState()
 
 void WarriorIdleState::update(Input* input, float frameTime)
 {
-	timer += frameTime;
-	if (timer >= delay) {
-		timer -= delay;
-		frameNo++;
-		if (frameNo >= endFrame) {
-			frameNo = 0;
-		}
-	}
+    updateFrameNo(frameTime);
 }
 
 void WarriorIdleState::initialize(WarriorStateManager* warriorStateManager)

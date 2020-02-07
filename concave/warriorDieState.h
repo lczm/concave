@@ -6,12 +6,6 @@ class WarriorStateManager;
 class WarriorDieState : public State
 {
 private:
-    int state;
-    int frameNo;
-    int endFrame;
-
-    float timer;
-    float delay;
     WarriorStateManager* warriorStateManager;
 
 public:

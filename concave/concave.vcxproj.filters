@@ -51,9 +51,6 @@
     <ClCompile Include="image.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="warrior.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="warriorAttackState.cpp">
       <Filter>Source Files\WarriorStates</Filter>
     </ClCompile>
@@ -67,6 +64,12 @@
       <Filter>Source Files\WarriorStates</Filter>
     </ClCompile>
     <ClCompile Include="warriorWalkState.cpp">
+      <Filter>Source Files\WarriorStates</Filter>
+    </ClCompile>
+    <ClCompile Include="state.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="warrior.cpp">
       <Filter>Source Files\WarriorStates</Filter>
     </ClCompile>
   </ItemGroup>
@@ -116,9 +119,6 @@
     <ClInclude Include="warriorIdleState.h">
       <Filter>Header Files\WarriorStates</Filter>
     </ClInclude>
-    <ClInclude Include="state.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="warriorStateManager.h">
       <Filter>Header Files\WarriorStates</Filter>
     </ClInclude>
@@ -126,6 +126,9 @@
       <Filter>Header Files\WarriorStates</Filter>
     </ClInclude>
     <ClInclude Include="warriorWalkState.h">
+      <Filter>Header Files\WarriorStates</Filter>
+    </ClInclude>
+    <ClInclude Include="state.h">
       <Filter>Header Files\WarriorStates</Filter>
     </ClInclude>
   </ItemGroup>

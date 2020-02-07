@@ -16,14 +16,7 @@ WarriorWalkState::~WarriorWalkState()
 
 void WarriorWalkState::update(Input* input, float frameTime)
 {
-	timer += frameTime;
-	if (timer >= delay) {
-		timer -= delay;
-		frameNo++;
-		if (frameNo >= endFrame) {
-			frameNo = 0;
-		}
-	}
+    updateFrameNo(frameTime);
 }
 
 void WarriorWalkState::initialize(WarriorStateManager* warriorStateManager)

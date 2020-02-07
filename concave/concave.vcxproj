@@ -159,6 +159,7 @@
     <ClCompile Include="input.cpp" />
     <ClCompile Include="level.cpp" />
     <ClCompile Include="mainMenu.cpp" />
+    <ClCompile Include="state.cpp" />
     <ClCompile Include="warrior.cpp" />
     <ClCompile Include="warriorAttackState.cpp" />
     <ClCompile Include="warriorDieState.cpp" />

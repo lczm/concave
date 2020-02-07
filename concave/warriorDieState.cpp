@@ -16,14 +16,7 @@ WarriorDieState::~WarriorDieState()
 
 void WarriorDieState::update(Input* input, float frameTime)
 {
-	timer += frameTime;
-	if (timer >= delay) {
-		timer -= delay;
-		frameNo++;
-		if (frameNo >= endFrame) {
-			frameNo = 0;
-		}
-	}
+    updateFrameNo(frameTime);
 }
 
 void WarriorDieState::initialize(WarriorStateManager* warriorStateManager)

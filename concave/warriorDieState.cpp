@@ -16,12 +16,6 @@ WarriorDieState::~WarriorDieState()
 
 void WarriorDieState::update(Input* input, float frameTime)
 {
-    if (input->getMouseLButton()) {
-        warriorStateManager->changeState(UNITSTATE::IDLE);
-        input->setMouseLButton(false);
-        cout << "Changing state to IDLE" << endl;
-    }
-
 	timer += frameTime;
 	if (timer >= delay) {
 		timer -= delay;

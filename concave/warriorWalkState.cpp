@@ -16,12 +16,6 @@ WarriorWalkState::~WarriorWalkState()
 
 void WarriorWalkState::update(Input* input, float frameTime)
 {
-    if (input->getMouseLButton()) {
-        warriorStateManager->changeState(UNITSTATE::DIE);
-        input->setMouseLButton(false);
-        cout << "Changing state to die" << endl;
-    }
-
 	timer += frameTime;
 	if (timer >= delay) {
 		timer -= delay;

@@ -31,7 +31,26 @@ WarriorStateManager::~WarriorStateManager()
 
 void WarriorStateManager::update(Input* input, float frameTime)
 {
-    currentState->update(input, frameTime);
+    // TODO : Temporary solution to check the changing of states
+    if (input->isKeyDown('1')) {
+        changeState(0);
+        cout << "Changing state to attack" << endl;
+    }
+    else if (input->isKeyDown('2')) {
+        changeState(1);
+        cout << "Changing state to die" << endl;
+    }
+    else if (input->isKeyDown('3')) {
+        changeState(2);
+        cout << "Changing state to idle" << endl;
+    }
+    else if (input->isKeyDown('4')) {
+        changeState(3);
+        cout << "Changing state to walk" << endl;
+    }
+    else {
+        currentState->update(input, frameTime);
+    }
 }
 
 int WarriorStateManager::getState()

@@ -39,7 +39,7 @@ void Level::render()
 
 		for (int x = 0; x < mapWidth; x++) {
 			for (int y = 0; y < mapHeight; y++) {
-				if (map[x][y] == false)
+				if (map[x][y])
 				{
 					CoordF screenPos = gridToScreen(x, y);
 					SpriteData sd; 

@@ -7,46 +7,34 @@ class Entity;
 
 namespace Component
 {
-	struct Base
-	{
-		Entity* entity;
-	};
-
-	struct Position: Base
+	struct Position
 	{
 		CoordF grid;
 		CoordF screen;
 	};
 
-	struct Collision: Base
+	struct Collision
 	{
-		struct Line { float lower, upper, shift; Collision* cmpt; };
+		struct Line { float lower, upper, shift; };
 		vector<Line> hLines;
 		vector<Line> vLines;
 	};
 
-	struct Render : Base
+	struct Render
 	{
 		Image* image;
 		CoordI coord;
 	};
 
-	//struct Movement
-	//{
-	//	float velocity;
-	//	float rotation;
-	//};
+	struct Movement
+	{
+		float velocity;
+		float rotation;
+	};
 
-	//struct AnimRender
-	//{
-	//	AnimImage* image;
-	//	int state, direction, frameNo;
-	//};
+	struct AnimRender
+	{
+		AnimImage* image;
+		int state, direction, frameNo;
+	};
 }
-
-struct Entity
-{
-	Component::Position* position;
-	Component::Collision* collision;
-	Component::Render* render;
-};

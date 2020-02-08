@@ -30,7 +30,12 @@ void Level::initialize()
 			tiles.set(y, x, Collision{ {}, {} }, Render{ &floorSprite });
 	// Player
 	players.initialize(1);
-	players.insert(CoordF{ 5, 5 }, Collision{ {}, {} }, Render{ &unitSprite });
+	players.insert(
+		CoordF{ 5, 5 }, 
+		Collision{ 
+			{{ -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 }}, 
+			{{ -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 }} },
+		Render{ &unitSprite });
 }
 
 void Level::releaseAll()

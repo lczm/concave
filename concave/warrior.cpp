@@ -10,12 +10,17 @@ Warrior::~Warrior()
 {
 }
 
-void Warrior::initialize(Graphics* graphics, Input* input, Component::Position* positionComponent)
+void Warrior::initialize(Graphics* graphics, Input* input, Position* positionComponent, Movement* movementComponent)
 {
+	// State initialization
 	Warrior::graphics = graphics;
 	Warrior::input = input;
 	Warrior::positionComponent = positionComponent;
-	stateManager->setPositionComponent(positionComponent);
+	stateManager->initializePositionComponent(positionComponent);
+	Warrior::movementComponent = movementComponent;
+	stateManager->initializeMovementComponent(movementComponent);
+
+	// Image initialization
 	unitTexture.initialize(Warrior::graphics, IMAGE_UNIT_WARRIOR);
 	// TODO : unitGetHitGridMask
 	unitAttackGridMask.initialize(0, 7, 128, 128, 0, 1, 58, 114);

@@ -11,11 +11,18 @@ Level::~Level()
 void Level::initialize()
 {
 	Position warriorPositionComponent;
-	warriorPositionComponent.sx = 480;
+	warriorPositionComponent.sx = 720;
 	warriorPositionComponent.sy = 480;
 	positions.push_back(warriorPositionComponent);
 	Position* warriorPositionComponentPtr = &positions.back();
-	warrior.initialize(graphics, input, warriorPositionComponentPtr);
+
+	Movement warriorMovementComponent;
+	warriorMovementComponent.velocity = 0;
+	warriorMovementComponent.rotation = 0;
+	movements.push_back(warriorMovementComponent);
+	Movement* warriorMovementComponentPtr = &movements.back();
+
+	warrior.initialize(graphics, input, warriorPositionComponentPtr, warriorMovementComponentPtr);
 }
 
 void Level::releaseAll()
@@ -44,8 +51,6 @@ void Level::render()
 
 	float screenX = positions.back().sx;
 	float screenY = positions.back().sy;
-
-	cout << screenX << " : " << screenY << endl;
 
 	// Draw sprites
 	graphics->drawSprite(sd, screenX, screenY, camScale);

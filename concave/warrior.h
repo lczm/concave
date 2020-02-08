@@ -7,6 +7,7 @@
 #include <vector>
 
 using namespace std;
+using namespace Component;
 
 class Warrior
 {
@@ -25,17 +26,17 @@ private:
 	vector<int> unitEndFrames;
 	AnimImage unitImage;
 
-    Component::Position* positionComponent;
+    Position* positionComponent;
+    Movement* movementComponent;
     int direction;
 
 public:
     Warrior();
     ~Warrior();
 
-    void initialize(Graphics* graphics, Input* input, Component::Position* positionComponent);
+    void initialize(Graphics* graphics, Input* input, Position* positionComponent, Movement* movementComponent);
     void update(float frameTime);
     SpriteData getSpriteData();
-    CoordF getGridCoords();
 
     void onLostDevice();
     void onResetDevice();

@@ -1,5 +1,6 @@
 #pragma once
 #include "state.h"
+#include <cmath>
 
 class WarriorStateManager;
 
@@ -16,6 +17,8 @@ public:
     void enter();
     int getState();
     int getFrameNo();
+
+    bool equalFloat(float a, float b);
 };
 
 #include "warriorStateManager.h"

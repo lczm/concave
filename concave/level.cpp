@@ -11,8 +11,11 @@ Level::~Level()
 void Level::initialize()
 {
 	Position warriorPositionComponent;
+	warriorPositionComponent.sx = 480;
+	warriorPositionComponent.sy = 480;
 	positions.push_back(warriorPositionComponent);
-	warrior.initialize(graphics, input, &warriorPositionComponent);
+	Position* warriorPositionComponentPtr = &positions.back();
+	warrior.initialize(graphics, input, warriorPositionComponentPtr);
 }
 
 void Level::releaseAll()

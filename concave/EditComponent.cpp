@@ -34,8 +34,8 @@ void EditComponent::placeRoom(int map[mapWidth][mapHeight])
 
 	//temp placement
 	int maxRooms = 5;
-	int maxRoomSize = 5;
-	int minRoomSize = 2;
+	int maxRoomSize = 4;
+	int minRoomSize = 3;
 
 	for (int i = 0; i < maxRooms; i++)
 	{
@@ -62,11 +62,32 @@ void EditComponent::placeRoom(int map[mapWidth][mapHeight])
 			rooms.emplace_back(newRoom);
 
 			//setting four corners of the room (test)
-			map[newRoom.x1][newRoom.y1] = 3;
-			map[newRoom.x2][newRoom.y2] = 3;
-			map[newRoom.x2][newRoom.y1] = 3;
-			map[newRoom.x1][newRoom.y2] = 3;
+			placeWall(map, newRoom);
 		}
 
+	}
+}
+
+void EditComponent::placeWall(int map[mapWidth][mapHeight], Room newRoom)
+{	
+	//setting the four corners
+	map[newRoom.x1][newRoom.y1] = 6;
+	map[newRoom.x2][newRoom.y1] = 5;
+
+	map[newRoom.x1][newRoom.y2] = 4;
+	map[newRoom.x2][newRoom.y2] = 0;
+
+
+	for (int i = 1; i < (newRoom.roomWidth); i++)
+	{
+		map[newRoom.x1 + i][newRoom.y1] = 4;
+		map[newRoom.x1 + i][newRoom.y2] = 4;
+	}
+
+	for (int j = 1; j < (newRoom.roomHeight); j++)
+	{	
+		//to be explained
+		map[newRoom.x1][newRoom.y2 - j] = 5;
+		map[newRoom.x2][newRoom.y1 + j] = 5;
 	}
 }

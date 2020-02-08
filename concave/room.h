@@ -10,8 +10,6 @@ private:
 	//grid coordinates for each corner of the room
 
 	//width and height of the room
-	int roomWidth;
-	int roomHeight;
 
 	//center
 	CoordI center;
@@ -23,6 +21,8 @@ private:
 
 
 public:
+	int roomWidth;
+	int roomHeight;
 	int x1;
 	int x2;
 	int y1;

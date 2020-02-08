@@ -12,6 +12,7 @@ class EditComponent
 {
 public:
 	void placeRoom(int map[mapWidth][mapHeight]);
+	void placeWall(int map[mapWidth][mapHeight], Room newRoom);
 	void readFromFile(std::string mapString, int map[mapWidth][mapHeight], int level);
 	void writeToFile(int map[mapWidth][mapHeight]);
 };

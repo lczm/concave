@@ -20,8 +20,13 @@ enum DIRECTION8 { SOUTH, SOUTH_WEST, WEST, NORTH_WEST, NORTH, NORTH_EAST, EAST, 
 //-----------------------------------------------
 const int TILE_WIDTH = 128;
 const int TILE_HEIGHT = 64;
+/*
 const int mapWidth = 48;
 const int mapHeight = 48;
+*/
+
+const int mapWidth = 15;
+const int mapHeight = 15;
 
 //-----------------------------------------------
 //                   Units
@@ -99,8 +104,9 @@ enum ImageType {
 	churchFloor = 1,
 	churchDoor = 2,
 	churchChest = 3,
-	chruchWallEast = 4,
-	chruchWallWest = 5,
+	churchWallEast = 4,
+	churchWallWest = 5,
+	churchWallConnect = 6
 };
 
 enum ImageTypeCave
@@ -117,12 +123,13 @@ const std::map<ImageType, CoordI> IMAGE_MAP
 	//name - coordinates
 
 	//church tiles
-	{ImageType::chruchWallEast,  CoordI{ 19,3 }},
-	{ImageType::chruchWallWest, CoordI{ 18,3 }},
+	{ImageType::churchWallEast,  CoordI{ 19,3 }},
+	{ImageType::churchWallWest, CoordI{ 18,3 }},
 	{ImageType::churchBlood, CoordI{ 10, 8 }},
 	{ImageType::churchDoor, CoordI{ 4,1 }},
 	{ImageType::churchFloor,  CoordI{ 12,0 }},
 	{ImageType::churchChest, CoordI{ 10, 6 }},
+	{ImageType::churchWallConnect, CoordI{ 3, 0 }},
 
 };
 

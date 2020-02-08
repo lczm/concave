@@ -26,7 +26,7 @@ private:
 	float camX, camY, camScale;
 	int map[mapWidth][mapHeight];
 
-	int mapNo = 12873;
+	int mapNo = 29229;
 
 	//shld prob change this to another variable
 	int type = 0;

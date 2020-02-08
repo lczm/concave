@@ -37,7 +37,6 @@ void RenderLevel::renderMap(int map[mapWidth][mapHeight], int x, int y, SpriteDa
 	{
 		switch (map[x][y])
 		{
-
 			//changing between textures
 		case ImageType::churchBlood:
 			tileImage.getSpriteData(sd, IMAGE_MAP.at(ImageType::churchBlood));
@@ -51,11 +50,14 @@ void RenderLevel::renderMap(int map[mapWidth][mapHeight], int x, int y, SpriteDa
 		case ImageType::churchChest:
 			tileImage.getSpriteData(sd, IMAGE_MAP.at(ImageType::churchChest));
 			break;
-		case ImageType::chruchWallEast:
-			tileImage.getSpriteData(sd, IMAGE_MAP.at(ImageType::chruchWallEast));
+		case ImageType::churchWallEast:
+			tileImage.getSpriteData(sd, IMAGE_MAP.at(ImageType::churchWallEast));
 			break;
-		case ImageType::chruchWallWest:
-			tileImage.getSpriteData(sd, IMAGE_MAP.at(ImageType::chruchWallWest));
+		case ImageType::churchWallWest:
+			tileImage.getSpriteData(sd, IMAGE_MAP.at(ImageType::churchWallWest));
+			break;
+		case ImageType::churchWallConnect:
+			tileImage.getSpriteData(sd, IMAGE_MAP.at(ImageType::churchWallConnect));
 			break;
 		}
 	}
@@ -70,7 +72,6 @@ void RenderLevel::renderMap(int map[mapWidth][mapHeight], int x, int y, SpriteDa
 		case ImageTypeCave::caveFloor:
 			tileImage.getSpriteData(sd, IMAGE_MAP_CAVE.at(ImageTypeCave::caveFloor));
 			break;
-
 		}
 	}
 }

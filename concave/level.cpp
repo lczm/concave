@@ -15,12 +15,12 @@ void Level::initialize()
 	renderLevel.initialize(graphics, input, type);
 
 	/* No delete this code*/
-	//Cellular cellgenerate;
-	//cellgenerate.generateMap(map);
-	readFromFile();
+	Cellular cellgenerate;
+	cellgenerate.generateMap(map);
+	//readFromFile();
 
 	/* No delete this code*/
-	//placeRoom();
+	placeRoom();
 }
 
 void Level::releaseAll()
@@ -80,7 +80,7 @@ void Level::levelEdit()
 		CoordF mouse = { input->getMouseX(), input->getMouseY() };
 		CoordF gridPos1 = screenToGrid(mouse.x, mouse.y);
 		CoordI gridPos = { gridPos1.x, gridPos1.y };
-		++map[gridPos.y][gridPos.x] %= 6;
+		++map[gridPos.y][gridPos.x] %= 7;
 		input->clearCharIn();
 	}
 

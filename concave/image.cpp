@@ -133,25 +133,23 @@ int AnimImage::getEndFrame(int state)
 	return endFrames[state];
 }
 
-//Sprite::Sprite()
-//{}
-//
-//Sprite::~Sprite()
-//{}
-//
-//void Sprite::initialize(Image* image, CoordI coord)
-//{
-//	Sprite::image = image;
-//	Sprite::coord = coord;
-//}
-//
-//SpriteData Sprite::getSpriteData()
-//{
-//	SpriteData sd;
-//	image->getSpriteData(sd, coord);
-//	return sd;
-//}
-//
+Sprite::Sprite()
+{}
+
+Sprite::~Sprite()
+{}
+
+void Sprite::initialize(Image* image, CoordI coord)
+{
+	Sprite::image = image;
+	Sprite::coord = coord;
+}
+
+SpriteData Sprite::getSpriteData()
+{
+	return image->getSpriteData(coord);
+}
+
 //AnimSprite::AnimSprite()
 //{}
 //

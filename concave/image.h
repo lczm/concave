@@ -65,18 +65,22 @@ public:
 // NOTE: These classes shouldn't be used.
 // NOTE: Please tell me if you want to use these classes.
 //-------------------------------------------------------
-//class Sprite
-//{
-//private:
-//	Image* image;
-//	CoordI coord;
-//public:
-//	Sprite();
-//	~Sprite();
-//	void initialize(Image* image, CoordI coord);
-//	SpriteData getSpriteData();
-//};
-//
+class Sprite
+{
+private:
+	Image* image;
+	CoordI coord;
+public:
+	Sprite();
+	~Sprite();
+	void initialize(Image* image, CoordI coord);
+	SpriteData getSpriteData();
+};
+
+//-------------------------------------------------------
+// NOTE: These classes shouldn't be used.
+// NOTE: Please tell me if you want to use these classes.
+//-------------------------------------------------------
 //class AnimSprite
 //{
 //private:

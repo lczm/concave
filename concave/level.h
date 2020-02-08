@@ -1,25 +1,30 @@
 #pragma once
 #include "window.h"
-#include "component.h"
 #include "image.h"
+#include "component.h"
+#include "players.h"
+#include "tiles.h"
 #include <vector>
+#include <cassert>
 using namespace std;
 using namespace Component;
 
 class Level : public Window
 {
 private:
-	// Components
-	vector<Position> positions;
-	vector<Collision> collisions;
-	vector<Render> renders;
 	// Camera
-	CoordF camCoord;
-	float camScale;
+	CoordF camCoord; float camScale;
 	// Tiles
 	Texture tileTexture; GridMask tileGridMask; Image tileImage;
+	Sprite floorSprite, wallSprite;
 	// Player
 	Texture unitTexture; GridMask unitGridMask; Image unitImage;
+	Sprite unitSprite;
+	// Components
+	Tiles tiles;
+	Players players;
+	// Systems
+
 public:
 	Level();
 	~Level();

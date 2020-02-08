@@ -5,12 +5,6 @@ using namespace std;
 
 namespace Component
 {
-	struct Position
-	{
-		CoordF grid;
-		CoordF screen;
-	};
-
 	struct Collision
 	{
 		struct Line { float lower, upper, shift; };
@@ -20,19 +14,6 @@ namespace Component
 
 	struct Render
 	{
-		Image* image;
-		CoordI coord;
-	};
-
-	struct Movement
-	{
-		float velocity;
-		float rotation;
-	};
-
-	struct AnimRender
-	{
-		AnimImage* image;
-		int state, direction, frameNo;
+		Sprite* sprite;
 	};
 }

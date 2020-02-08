@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="concave.cpp" />
+    <ClCompile Include="players.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="graphics.cpp" />
     <ClCompile Include="hud.cpp" />
@@ -159,6 +160,7 @@
     <ClCompile Include="input.cpp" />
     <ClCompile Include="level.cpp" />
     <ClCompile Include="mainMenu.cpp" />
+    <ClCompile Include="tiles.cpp" />
     <ClCompile Include="window.cpp" />
     <ClCompile Include="winmain.cpp" />
   </ItemGroup>
@@ -166,6 +168,7 @@
     <ClInclude Include="component.h" />
     <ClInclude Include="concave.h" />
     <ClInclude Include="constants.h" />
+    <ClInclude Include="players.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="gameError.h" />
     <ClInclude Include="graphics.h" />
@@ -174,6 +177,7 @@
     <ClInclude Include="input.h" />
     <ClInclude Include="level.h" />
     <ClInclude Include="mainMenu.h" />
+    <ClInclude Include="tiles.h" />
     <ClInclude Include="window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

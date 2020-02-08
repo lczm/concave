@@ -10,13 +10,27 @@ Level::~Level()
 
 void Level::initialize()
 {
-	// Image
+	// Image / Sprite
 	tileTexture.initialize(graphics, IMAGE_TILES_DUNGEON);
 	tileGridMask.initialize(0, 0, 128, 192, 1, 1, 64, 127);
 	tileImage.initialize(&tileTexture, tileGridMask);
+	floorSprite.initialize(&tileImage, CoordI{ 12, 0 });
+	wallSprite.initialize(&tileImage, CoordI{ 6, 0 });
 	unitTexture.initialize(graphics, IMAGE_UNIT_WARRIOR);
 	unitGridMask.initialize(0, 1046, 96, 94, 0, 1, 43, 81);
 	unitImage.initialize(&unitTexture, unitGridMask);
+	unitSprite.initialize(&unitImage, CoordI{ 0, 0 });
+	// Tiles
+	tiles.initialize(10, 10);
+	for (int y = 0; y < tiles.getRows(); y++)
+		for (int x = 0; x < tiles.getCols(); x++)
+			tiles.set(y, x, Collision{ {{ 0, 1, 0 }}, {} }, Render{ &wallSprite });
+	for (int y = 1; y < tiles.getRows() - 1; y++)
+		for (int x = 1; x < tiles.getCols() - 1; x++)
+			tiles.set(y, x, Collision{ {}, {} }, Render{ &floorSprite });
+	// Player
+	players.initialize(1);
+	players.insert(CoordF{ 0, 0 }, Collision{ {}, {} }, Render{ &unitSprite });
 }
 
 void Level::releaseAll()
@@ -29,7 +43,16 @@ void Level::update()
 {}
 
 void Level::render()
-{}
+{
+	for (int y = 0; y < tiles.getRows(); y++)
+		for (int x = 0; x < tiles.getCols(); x++)
+			graphics->drawSprite(
+				tiles.getRender(y, x).sprite->getSpriteData(),
+				gridToScreen(x, y), camScale);
+	graphics->drawSprite(
+		players.getRender(0).sprite->getSpriteData(),
+		gridToScreen(players.getPosition(0)), camScale);
+}
 
 CoordF Level::gridToScreen(float gx, float gy)
 {

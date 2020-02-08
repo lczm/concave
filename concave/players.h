@@ -16,6 +16,9 @@ public:
 	void insert(CoordF position, Collision collision, Render render);
 	void insert(int size, CoordF* position, Collision* collision, Render* render);
 	void pop(int index);
+	void setPosition(int index, CoordF position);
+	void setCollision(int index, Collision collision);
+	void setRender(int index, Render render);
 	CoordF getPosition(int index);
 	Collision getCollision(int index);
 	Render getRender(int index);

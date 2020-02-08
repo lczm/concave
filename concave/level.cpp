@@ -30,7 +30,7 @@ void Level::initialize()
 			tiles.set(y, x, Collision{ {}, {} }, Render{ &floorSprite });
 	// Player
 	players.initialize(1);
-	players.insert(CoordF{ 0, 0 }, Collision{ {}, {} }, Render{ &unitSprite });
+	players.insert(CoordF{ 5, 5 }, Collision{ {}, {} }, Render{ &unitSprite });
 }
 
 void Level::releaseAll()
@@ -40,7 +40,17 @@ void Level::resetAll()
 {}
 
 void Level::update()
-{}
+{
+	CoordF coord = players.getPosition(0);
+	if (input->isKeyDown('W')) coord.y -= 0.01;
+	if (input->isKeyDown('S')) coord.y += 0.01;
+	if (input->isKeyDown('A')) coord.x -= 0.01;
+	if (input->isKeyDown('D')) coord.x += 0.01;
+	players.setPosition(0, coord);
+	camCoord = coord;
+	if (input->isKeyDown('O')) camScale *= 1 - 0.01;
+	if (input->isKeyDown('P')) camScale *= 1 + 0.01;
+}
 
 void Level::render()
 {

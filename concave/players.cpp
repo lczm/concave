@@ -45,6 +45,19 @@ void Players::pop(int index)
 	renders[index] = renders[size];
 }
 
+void Players::setPosition(int index, CoordF position)
+{
+	positions[index] = position;
+}
+void Players::setCollision(int index, Collision collision)
+{
+	collisions[index] = collision;
+}
+void Players::setRender(int index, Render render)
+{
+	renders[index] = render;
+}
+
 CoordF Players::getPosition(int index)
 {
 	return positions[index];

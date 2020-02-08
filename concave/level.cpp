@@ -36,11 +36,16 @@ void Level::render()
 	// warrior.render(screenPos, camScale);
 
 	SpriteData sd = warrior.getSpriteData();
-	CoordF warriorCoords = warrior.getGridCoords();
-	CoordF screenPos = gridToScreen(warriorCoords.x, warriorCoords.y);
+	// CoordF warriorCoords = warrior.getGridCoords();
+	// CoordF screenPos = gridToScreen(warriorCoords.x, warriorCoords.y);
+
+	float screenX = positions.back().sx;
+	float screenY = positions.back().sy;
+
+	cout << screenX << " : " << screenY << endl;
 
 	// Draw sprites
-	graphics->drawSprite(sd, screenPos.x, screenPos.y, camScale);
+	graphics->drawSprite(sd, screenX, screenY, camScale);
 }
 
 CoordF Level::gridToScreen(float gx, float gy)

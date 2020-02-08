@@ -1,11 +1,13 @@
 #pragma once
 #include "input.h"
 #include "state.h"
+#include "component.h"
 #include "warriorAttackState.h"
 #include "warriorIdleState.h"
 #include "warriorDieState.h"
 #include "warriorWalkState.h"
 using namespace std;
+using namespace Component;
 
 class WarriorStateManager
 {
@@ -19,6 +21,8 @@ private:
     WarriorIdleState* idleState;
     WarriorWalkState* walkState;
 
+    Position* positionComponent;
+
 public:
     WarriorStateManager();
     ~WarriorStateManager();
@@ -26,5 +30,7 @@ public:
     int getState();
     int getFrameNo();
     void changeState(int state);
-    CoordF getGridCoords();
+
+    void setPositionComponent(Position* positionComponent);
+    void updatePositionComponent(float screenX, float screenY);
 };

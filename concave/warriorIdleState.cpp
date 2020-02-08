@@ -17,7 +17,11 @@ WarriorIdleState::~WarriorIdleState()
 void WarriorIdleState::update(Input* input, float frameTime)
 {
     if (input->getMouseLButton()) {
-        cout << input->getMouseX() << " | " << input->getMouseY() << endl;
+        input->setMouseLButton(false);
+        float screenX = float(input->getMouseX());
+        float screenY = float(input->getMouseY());
+        warriorStateManager->updatePositionComponent(screenX, screenY);
+        cout << "Updating Position Component : " << screenX << " | " << screenY << endl;
     }
     updateFrameNo(frameTime);
 }

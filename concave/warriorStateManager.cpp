@@ -90,8 +90,14 @@ void WarriorStateManager::changeState(int state)
     }
 }
 
-CoordF WarriorStateManager::getGridCoords()
+void WarriorStateManager::setPositionComponent(Position* positionComponent)
 {
-    return CoordF { gridX, gridY };
+    WarriorStateManager::positionComponent = positionComponent;
+}
+
+void WarriorStateManager::updatePositionComponent(float screenX, float screenY)
+{
+    positionComponent->sx = screenX;
+    positionComponent->sy = screenY;
 }
 

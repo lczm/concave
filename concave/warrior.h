@@ -13,7 +13,7 @@ class Warrior
 private:
     Graphics* graphics;
     Input* input;
-    WarriorStateManager* state;
+    WarriorStateManager* stateManager;
 
     // Textures
     Texture unitTexture;

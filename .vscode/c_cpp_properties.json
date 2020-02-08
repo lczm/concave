@@ -5,15 +5,15 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "C:\\Program Files (x86)\\Microsoft DirectX SDK (June 2010)\\\\Include",
-                "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.23.28105\\include",
-                "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.23.28105\\atlmfc\\include",
+                "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.24.28314\\include",
+                "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.24.28314\\atlmfc\\include",
                 "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Auxiliary\\VS\\include",
-                "C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.17763.0\\ucrt",
-                "C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.17763.0\\um",
-                "C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.17763.0\\shared",
-                "C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.17763.0\\winrt",
-                "C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.17763.0\\cppwinrt",
-                "C:\\Program Files (x86)\\Windows Kits\\NETFXSDK\\4.7.2\\Include\\um"
+                "C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.18362.0\\ucrt",
+                "C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.18362.0\\um",
+                "C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.18362.0\\shared",
+                "C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.18362.0\\winrt",
+                "C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.18362.0\\cppwinrt",
+                "Include\\um"
             ],
             "defines": [
                 "_DEBUG",
@@ -21,10 +21,10 @@
                 "_UNICODE"
             ],
             "windowsSdkVersion": "10.0.17763.0",
-            "compilerPath": "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.23.28105/bin/Hostx64/x64/cl.exe",
+            "compilerPath": "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.24.28314/bin/Hostx64/x64/cl.exe",
             "cStandard": "c11",
             "cppStandard": "c++17",
-            "intelliSenseMode": "msvc-x64"
+            "intelliSenseMode": "msvc-x86"
         }
     ],
     "version": 4

@@ -3,7 +3,7 @@
 Warrior::Warrior()
 {
 	direction = DIRECTION8::NORTH;
-	state = new WarriorStateManager();
+	stateManager = new WarriorStateManager();
 }
 
 Warrior::~Warrior()
@@ -15,6 +15,7 @@ void Warrior::initialize(Graphics* graphics, Input* input, Component::Position* 
 	Warrior::graphics = graphics;
 	Warrior::input = input;
 	Warrior::positionComponent = positionComponent;
+	stateManager->setPositionComponent(positionComponent);
 	unitTexture.initialize(Warrior::graphics, IMAGE_UNIT_WARRIOR);
 	// TODO : unitGetHitGridMask
 	unitAttackGridMask.initialize(0, 7, 128, 128, 0, 1, 58, 114);
@@ -33,19 +34,14 @@ void Warrior::initialize(Graphics* graphics, Input* input, Component::Position* 
 
 void Warrior::update(float frameTime)
 {
-	state->update(input, frameTime);
+	stateManager->update(input, frameTime);
 }
 
 SpriteData Warrior::getSpriteData()
 {
 	SpriteData sd;
-	unitImage.getSpriteData(sd, state->getState(), direction, state->getFrameNo());
+	unitImage.getSpriteData(sd, stateManager->getState(), direction, stateManager->getFrameNo());
 	return sd;
-}
-
-CoordF Warrior::getGridCoords()
-{
-	return state->getGridCoords();
 }
 
 void Warrior::onLostDevice()

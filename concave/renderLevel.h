@@ -21,7 +21,7 @@ public:
 	RenderLevel();
 	~RenderLevel();
 
-	void initialize(Graphics* graphics, Input* input);
-	void renderMap(int map[mapWidth][mapHeight],int x, int y, SpriteData& sd);
+	void initialize(Graphics* graphics, Input* input, int type);
+	void renderMap(int map[mapWidth][mapHeight],int x, int y, SpriteData& sd, int type);
 
 };

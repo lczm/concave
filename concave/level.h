@@ -22,17 +22,14 @@ private:
 	vector<Movement> movements;
 	vector<Collision> collisions;
 
-	// Tiles
-	Texture tileTexture;
-	GridMask tileGridMask;
-	Image tileImage;
-
 	// Camera
 	float camX, camY, camScale;
 	int map[mapWidth][mapHeight];
 
 	int mapNo = 12873;
 
+	//shld prob change this to another variable
+	int type = 0;
 	//prob need to change it to read component
 	EditComponent * editComponent;
 	RenderLevel renderLevel;

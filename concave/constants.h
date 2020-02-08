@@ -52,7 +52,7 @@ const int IMAGE_TILES_GAP_WIDTH = 1;
 const int IMAGE_TILES_GAP_HEIGHT = 1;
 
 const char IMAGE_TILES_DUNGEON[] = "sprites/tiles_church_dungeon.png";
-//const char IMAGE_TILES_DUNGEON[] = "sprites/tiles_cave_dungeon.png";
+const char IMAGE_TILES_CAVE[] = "sprites/tiles_cave_dungeon.png";
 //-----------------------------------------------
 //                Image (Units)
 //-----------------------------------------------
@@ -88,17 +88,26 @@ const float MIN_FRAME_RATE = 10.0f;             // the minimum frame rate
 const float MIN_FRAME_TIME = 1.0f / FRAME_RATE;   // minimum desired time for 1 frame
 const float MAX_FRAME_TIME = 1.0f / MIN_FRAME_RATE; // maximum time used in calculations
 
+
+
+const int noSpritesChruch = 6;
+const int noSpritesCave = 2;
+
 enum ImageType {
 	//church
+	churchBlood = 0,
+	churchFloor = 1,
+	churchDoor = 2,
+	churchChest = 3,
 	chruchWallEast = 4,
 	chruchWallWest = 5,
-	churchBlood = 0,
-	churchDoor = 2,
-	churchFloor = 1,
-	churchChest = 3
+};
 
+enum ImageTypeCave
+{
 	//cave
-
+	caveLava = 0,
+	caveFloor = 1
 };
 
 //enum
@@ -114,5 +123,16 @@ const std::map<ImageType, CoordI> IMAGE_MAP
 	{ImageType::churchDoor, CoordI{ 4,1 }},
 	{ImageType::churchFloor,  CoordI{ 12,0 }},
 	{ImageType::churchChest, CoordI{ 10, 6 }},
+
 };
+
+const std::map<ImageTypeCave, CoordI> IMAGE_MAP_CAVE
+{
+	//name - coordinates
+
+	//cave tiles
+	{ImageTypeCave::caveLava,  CoordI{ 12,1 }},
+	{ImageTypeCave::caveFloor, CoordI{6,0}},
+};
+
 

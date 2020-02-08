@@ -7,12 +7,12 @@ Level::Level()
 
 Level::~Level()
 {
-	
+
 }
 
 void Level::initialize()
-{	
-	renderLevel.initialize(graphics, input);
+{
+	renderLevel.initialize(graphics, input, type);
 
 	/* No delete this code*/
 	//Cellular cellgenerate;
@@ -38,11 +38,11 @@ void Level::update()
 
 	levelEdit();
 	changeLevel();
-	
+
 }
 
 void Level::render()
-{	
+{
 	//will be moved to another file I hope
 	renderSprites();
 }
@@ -73,11 +73,11 @@ CoordF Level::screenToGrid(float sx, float sy)
 
 
 void Level::levelEdit()
-{	
+{
 	if (input->getMouseLButton() && input->isKeyDown(0x51))
-	{	
+	{
 		input->setMouseLButton(false);
-		CoordF mouse = { input->getMouseX(), input->getMouseY()};
+		CoordF mouse = { input->getMouseX(), input->getMouseY() };
 		CoordF gridPos1 = screenToGrid(mouse.x, mouse.y);
 		CoordI gridPos = { gridPos1.x, gridPos1.y };
 		++map[gridPos.y][gridPos.x] %= 6;
@@ -97,7 +97,7 @@ void Level::readFromFile()
 }
 
 void Level::writeToFile(int map[mapWidth][mapHeight])
-{	
+{
 	editComponent->writeToFile(map);
 }
 
@@ -106,7 +106,7 @@ void Level::changeLevel()
 	if (input->wasKeyPressed(0x45))
 	{
 		//woahh
-		mapNo = 15776;
+		mapNo = 7099;
 		level.initialize();
 	}
 }
@@ -119,7 +119,7 @@ void Level::renderSprites()
 			SpriteData sd;
 
 			//pass to renderLevel class
-			renderLevel.renderMap(map, x, y, sd);
+			renderLevel.renderMap(map, x, y, sd, type);
 			graphics->drawSprite(
 				sd,
 				screenPos.x, screenPos.y, camScale);
@@ -128,6 +128,6 @@ void Level::renderSprites()
 }
 
 void Level::placeRoom()
-{	
+{
 	editComponent->placeRoom(map);
 }

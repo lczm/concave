@@ -9,20 +9,36 @@ RenderLevel::~RenderLevel()
 {
 
 }
-void RenderLevel::initialize(Graphics* graphics, Input* input)
+void RenderLevel::initialize(Graphics* graphics, Input* input, int type)
 {
 	RenderLevel::graphics = graphics;
 	RenderLevel::input = input;
 
-	tileTexture.initialize(graphics, IMAGE_TILES_DUNGEON);
+
+	if (type == 0)
+	{
+		tileTexture.initialize(graphics, IMAGE_TILES_DUNGEON);
+	}
+	else
+	{
+		tileTexture.initialize(graphics, IMAGE_TILES_CAVE);
+	}
+
+
 	tileGridMask.initialize(0, 0, 128, 192, 1, 1, 128 / 2, 192 - TILE_HEIGHT - 1);
 	tileImage.initialize(&tileTexture, tileGridMask);
 }
 
-void RenderLevel::renderMap(int map[mapWidth][mapHeight], int x, int y, SpriteData &sd)
+void RenderLevel::renderMap(int map[mapWidth][mapHeight], int x, int y, SpriteData& sd, int type)
 {
-	switch (map[x][y])
+
+	//choose between the standard coordinates to load maps
+	if (type == 0)
 	{
+		switch (map[x][y])
+		{
+
+			//changing between textures
 		case ImageType::churchBlood:
 			tileImage.getSpriteData(sd, IMAGE_MAP.at(ImageType::churchBlood));
 			break;
@@ -41,7 +57,21 @@ void RenderLevel::renderMap(int map[mapWidth][mapHeight], int x, int y, SpriteDa
 		case ImageType::chruchWallWest:
 			tileImage.getSpriteData(sd, IMAGE_MAP.at(ImageType::chruchWallWest));
 			break;
+		}
 	}
+	else if (type == 1)
+	{
+		switch (map[x][y])
+		{
+			//changing between textures
+		case ImageTypeCave::caveLava:
+			tileImage.getSpriteData(sd, IMAGE_MAP_CAVE.at(ImageTypeCave::caveLava));
+			break;
+		case ImageTypeCave::caveFloor:
+			tileImage.getSpriteData(sd, IMAGE_MAP_CAVE.at(ImageTypeCave::caveFloor));
+			break;
 
+		}
+	}
 }
 

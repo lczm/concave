@@ -25,8 +25,8 @@ const int mapWidth = 48;
 const int mapHeight = 48;
 */
 
-const int mapWidth = 15;
-const int mapHeight = 15;
+const int mapWidth = 50;
+const int mapHeight = 50;
 
 //-----------------------------------------------
 //                   Units
@@ -106,7 +106,8 @@ enum ImageType {
 	churchChest = 3,
 	churchWallEast = 4,
 	churchWallWest = 5,
-	churchWallConnect = 6
+	churchWallConnect = 6,
+	churchWallPath = 7
 };
 
 enum ImageTypeCave
@@ -130,6 +131,7 @@ const std::map<ImageType, CoordI> IMAGE_MAP
 	{ImageType::churchFloor,  CoordI{ 12,0 }},
 	{ImageType::churchChest, CoordI{ 10, 6 }},
 	{ImageType::churchWallConnect, CoordI{ 3, 0 }},
+	{ImageType::churchWallPath, CoordI{ 14, 6 }},
 
 };
 

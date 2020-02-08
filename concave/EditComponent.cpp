@@ -33,9 +33,9 @@ void EditComponent::placeRoom(int map[mapWidth][mapHeight])
 	vector<Room> rooms;
 
 	//temp placement
-	int maxRooms = 5;
-	int maxRoomSize = 4;
-	int minRoomSize = 3;
+	int maxRooms = 10;
+	int maxRoomSize = 10;
+	int minRoomSize = 6;
 
 	for (int i = 0; i < maxRooms; i++)
 	{
@@ -63,6 +63,34 @@ void EditComponent::placeRoom(int map[mapWidth][mapHeight])
 
 			//setting four corners of the room (test)
 			placeWall(map, newRoom);
+
+			//building the corridors 
+			CoordI newCenter = newRoom.center;
+			if (rooms.size() != 1)
+			{
+				Room prevRoom = rooms[rooms.size() - 2];
+				CoordI prevCenter = prevRoom.center;
+
+
+				horizontalCorridor(prevCenter.x, newCenter.x, prevCenter.y, map);
+				verticalCorridor(prevCenter.y, newCenter.y, newCenter.x, map);
+
+				/*
+				int random = rand() % 2;
+				if (random == 1)
+				{
+					horizontalCorridor(prevCenter.x, newRoom.center.x, prevCenter.y, map);
+					verticalCorridor(prevCenter.y, newRoom.center.y, prevCenter.x, map);
+				}
+				else
+				{
+					verticalCorridor(prevCenter.y, newRoom.center.y, prevCenter.x, map);
+					horizontalCorridor(prevCenter.x, newRoom.center.x, prevCenter.y, map);
+				}
+				*/
+			}
+
+
 		}
 
 	}
@@ -89,5 +117,28 @@ void EditComponent::placeWall(int map[mapWidth][mapHeight], Room newRoom)
 		//to be explained
 		map[newRoom.x1][newRoom.y2 - j] = 5;
 		map[newRoom.x2][newRoom.y1 + j] = 5;
+	}
+}
+
+void EditComponent::horizontalCorridor(int x1, int x2, int y, int map[mapWidth][mapHeight])
+{
+	int minX = fmin(x1, x2);
+	int maxX = fmax(x1, x2);
+
+	for (int i = minX; i < maxX + 1; i++)
+	{
+		map[i][y] = 7;
+	}
+
+}
+
+void EditComponent::verticalCorridor(int y1, int y2, int x, int map[mapWidth][mapHeight])
+{	
+	int minY = (y1 < y2) ? y1 : y2;
+	int maxY = (y1 > y2) ? y1 : y2;
+
+	for (int i = minY; i < maxY + 1; i++)
+	{
+		map[x][i] = 7;
 	}
 }

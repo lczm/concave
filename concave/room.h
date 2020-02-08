@@ -12,17 +12,17 @@ private:
 	//width and height of the room
 
 	//center
-	CoordI center;
 
 	//temporary variables 
 	int maxRooms= 5;
 	int maxRoomSize = 10;
-	int minRoomSize = 5;
+	int minRoomSize = 8;
 
 
 public:
 	int roomWidth;
 	int roomHeight;
+	CoordI center;
 	int x1;
 	int x2;
 	int y1;

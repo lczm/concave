@@ -59,6 +59,9 @@ void RenderLevel::renderMap(int map[mapWidth][mapHeight], int x, int y, SpriteDa
 		case ImageType::churchWallConnect:
 			tileImage.getSpriteData(sd, IMAGE_MAP.at(ImageType::churchWallConnect));
 			break;
+		case ImageType::churchWallPath:
+			tileImage.getSpriteData(sd, IMAGE_MAP.at(ImageType::churchWallPath));
+			break;
 		}
 	}
 	else if (type == 1)

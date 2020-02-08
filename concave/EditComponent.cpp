@@ -27,3 +27,46 @@ void EditComponent::writeToFile(int map[mapWidth][mapHeight])
 	outputfile.close();
 
 }
+
+void EditComponent::placeRoom(int map[mapWidth][mapHeight])
+{	
+	vector<Room> rooms;
+
+	//temp placement
+	int maxRooms = 5;
+	int maxRoomSize = 5;
+	int minRoomSize = 2;
+
+	for (int i = 0; i < maxRooms; i++)
+	{
+		int w = minRoomSize + rand() % (maxRoomSize - minRoomSize + 1);
+		int h = minRoomSize + rand() % (maxRoomSize - minRoomSize + 1);
+		int x = rand() % (mapWidth - w - 1) + 1;
+		int y = rand() % (mapWidth - h - 1) + 1;
+
+		Room newRoom(x, y, w, h);
+
+		bool failed = false;
+		for (Room room : rooms)
+		{
+			if (newRoom.intersects(room))
+			{
+				failed = true;
+				break;
+			}
+		}
+
+		if (!failed)
+		{
+			//createRoom to carve the room
+			rooms.emplace_back(newRoom);
+
+			//setting four corners of the room (test)
+			map[newRoom.x1][newRoom.y1] = 3;
+			map[newRoom.x2][newRoom.y2] = 3;
+			map[newRoom.x2][newRoom.y1] = 3;
+			map[newRoom.x1][newRoom.y2] = 3;
+		}
+
+	}
+}

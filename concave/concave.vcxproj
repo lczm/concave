@@ -161,6 +161,8 @@
     <ClCompile Include="input.cpp" />
     <ClCompile Include="level.cpp" />
     <ClCompile Include="mainMenu.cpp" />
+    <ClCompile Include="renderLevel.cpp" />
+    <ClCompile Include="room.cpp" />
     <ClCompile Include="window.cpp" />
     <ClCompile Include="winmain.cpp" />
   </ItemGroup>
@@ -178,6 +180,8 @@
     <ClInclude Include="input.h" />
     <ClInclude Include="level.h" />
     <ClInclude Include="mainMenu.h" />
+    <ClInclude Include="renderLevel.h" />
+    <ClInclude Include="room.h" />
     <ClInclude Include="window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

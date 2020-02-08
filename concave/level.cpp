@@ -12,13 +12,15 @@ Level::~Level()
 
 void Level::initialize()
 {	
-	tileTexture.initialize(graphics, IMAGE_TILES_DUNGEON);
-	tileGridMask.initialize(0, 0, 128, 192, 1, 1, 128 / 2, 192 - TILE_HEIGHT - 1);
-	tileImage.initialize(&tileTexture, tileGridMask);
+	renderLevel.initialize(graphics, input);
 
+	/* No delete this code*/
 	//Cellular cellgenerate;
 	//cellgenerate.generateMap(map);
 	readFromFile();
+
+	/* No delete this code*/
+	//placeRoom();
 }
 
 void Level::releaseAll()
@@ -116,48 +118,16 @@ void Level::renderSprites()
 			CoordF screenPos = gridToScreen(x, y);
 			SpriteData sd;
 
-			switch (x)
-			{
-			case 0:
-				tileImage.getSpriteData(sd, CoordI{ 5, 0 });
-				break;
-			}
-			switch (y)
-			{
-			case 0:
-				tileImage.getSpriteData(sd, CoordI{ 6, 0 });
-				break;
-			}
-
-			graphics->drawSprite(
-				sd,
-				screenPos.x, screenPos.y, camScale);
-
-			switch (map[x][y])
-			{
-			case ImageType::churchBlood:
-
-				tileImage.getSpriteData(sd, IMAGE_MAP.at(ImageType::churchBlood));
-				break;
-			case ImageType::churchFloor:
-				tileImage.getSpriteData(sd, IMAGE_MAP.at(ImageType::churchFloor));
-				break;
-			case ImageType::churchDoor:
-				tileImage.getSpriteData(sd, IMAGE_MAP.at(ImageType::churchDoor));
-				break;
-			case ImageType::churchChest:
-				tileImage.getSpriteData(sd, IMAGE_MAP.at(ImageType::churchChest));
-				break;
-			case ImageType::chruchWallEast:
-				tileImage.getSpriteData(sd, IMAGE_MAP.at(ImageType::chruchWallEast));
-				break;
-			case ImageType::chruchWallWest:
-				tileImage.getSpriteData(sd, IMAGE_MAP.at(ImageType::chruchWallWest));
-				break;
-			}
+			//pass to renderLevel class
+			renderLevel.renderMap(map, x, y, sd);
 			graphics->drawSprite(
 				sd,
 				screenPos.x, screenPos.y, camScale);
 		}
 	}
+}
+
+void Level::placeRoom()
+{	
+	editComponent->placeRoom(map);
 }

@@ -4,7 +4,9 @@
 #include "constants.h"
 #include "image.h"
 #include "cellular.h"
+#include "room.h"
 #include "EditComponent.h"
+#include "renderLevel.h"
 #include <vector>
 #include <fstream>
 #include <string>
@@ -33,6 +35,7 @@ private:
 
 	//prob need to change it to read component
 	EditComponent * editComponent;
+	RenderLevel renderLevel;
 public:
 	Level();
 	~Level();
@@ -50,4 +53,5 @@ public:
 	void readFromFile();
 	void renderSprites();
 	void writeToFile(int map[mapWidth][mapHeight]);
+	void placeRoom();
 };

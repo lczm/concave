@@ -116,4 +116,3 @@ const std::map<ImageType, CoordI> IMAGE_MAP
 	{ImageType::churchChest, CoordI{ 10, 6 }},
 };
 
-

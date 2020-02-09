@@ -13,6 +13,7 @@ private:
 	vector<Position> positions;
 	vector<Movement> movements;
 	vector<Collision> collisions;
+	HUD* playerHUD;
 	// Camera
 	float camX, camY, camScale;
 public:

@@ -55,6 +55,12 @@ const char IMAGE_TILES_DUNGEON[] = "sprites/tiles_church_dungeon.png";
 //-----------------------------------------------
 const char IMAGE_UNIT_WARRIOR[] = "sprites/unit_warrior.png";
 
+
+//-----------------------------------------------
+//                Image (HUD)
+//-----------------------------------------------
+const char IMAGE_PLAYER_INFO[] = "sprites/hud_player_info.png";
+
 //-----------------------------------------------
 //					  Other
 //-----------------------------------------------

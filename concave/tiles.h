@@ -1,20 +1,21 @@
 #pragma once
 #include "component.h"
-using namespace Component;
 
 class Tiles
 {
 private:
 	int rows, cols;
-	Collision* collisions;
+	Collision* hCollisions;
+	Collision* vCollisions;
 	Render* renders;
 public:
 	Tiles(); ~Tiles();
 	void initialize(int rows, int cols);
-	void set(int row, int col, Collision collision, Render render);
-	void setCollision(int row, int col, Collision collision);
+	void set(int row, int col, Collision hCollision, Collision vCollision, Render render);
+	void setCollision(int row, int col, Collision hCollision, Collision vCollision);
 	void setRender(int row, int col, Render render);
-	Collision getCollision(int row, int col);
+	Collision getHCollision(int row, int col);
+	Collision getVCollision(int row, int col);
 	Render getRender(int row, int col);
 private:
 	int mapIndex(int row, int col);

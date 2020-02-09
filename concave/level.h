@@ -7,7 +7,6 @@
 #include <vector>
 #include <cassert>
 using namespace std;
-using namespace Component;
 
 class Level : public Window
 {

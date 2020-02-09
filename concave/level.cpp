@@ -24,18 +24,17 @@ void Level::initialize()
 	tiles.initialize(10, 10);
 	for (int y = 0; y < tiles.getRows(); y++)
 		for (int x = 0; x < tiles.getCols(); x++)
-			tiles.set(y, x, Collision{ {{ 0, 1, 0 }}, {} }, Render{ &wallSprite });
+			tiles.set(y, x, Collision{ { 0, 1, 0 } }, Collision{}, &wallSprite);
 	for (int y = 1; y < tiles.getRows() - 1; y++)
 		for (int x = 1; x < tiles.getCols() - 1; x++)
-			tiles.set(y, x, Collision{ {}, {} }, Render{ &floorSprite });
+			tiles.set(y, x, Collision{}, Collision{}, &floorSprite);
 	// Player
 	players.initialize(1);
-	players.insert(
+	players.push(
 		CoordF{ 5, 5 }, 
-		Collision{ 
-			{{ -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 }}, 
-			{{ -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 }} },
-		Render{ &unitSprite });
+		Collision{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } },
+		Collision{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } },
+		&unitSprite);
 }
 
 void Level::releaseAll()
@@ -54,13 +53,13 @@ void Level::update()
 	if (input->isKeyDown('D')) coord.x += 0.01;
 	players.setPosition(0, coord);
 	// Collision
-	for (int i = 0; i < players.getSize(); i++) {
+	/*for (int i = 0; i < players.getSize(); i++) {
 		CoordF pPosition = players.getPosition(i);
 		Collision pCollision = players.getCollision(i);
 		for (Collision::Line line : pCollision.hLines) {
 			Collision tCollision = tiles.getCollision(pPosition.y + line.shift, pPosition.x);
 		}
-	}
+	}*/
 
 	// Move Camera
 	camCoord = players.getPosition(0);
@@ -73,10 +72,10 @@ void Level::render()
 	for (int y = 0; y < tiles.getRows(); y++)
 		for (int x = 0; x < tiles.getCols(); x++)
 			graphics->drawSprite(
-				tiles.getRender(y, x).sprite->getSpriteData(),
+				tiles.getRender(y, x)->getSpriteData(),
 				gridToScreen(x, y), camScale);
 	graphics->drawSprite(
-		players.getRender(0).sprite->getSpriteData(),
+		players.getRender(0)->getSpriteData(),
 		gridToScreen(players.getPosition(0)), camScale);
 }
 

@@ -5,7 +5,8 @@ Tiles::Tiles()
 
 Tiles::~Tiles()
 {
-	delete[] collisions;
+	delete[] hCollisions;
+	delete[] vCollisions;
 	delete[] renders;
 }
 
@@ -13,20 +14,21 @@ void Tiles::initialize(int rows, int cols)
 {
 	Tiles::rows = rows;
 	Tiles::cols = cols;
-	collisions = new Collision[rows * cols];
+	hCollisions = new Collision[rows * cols];
+	vCollisions = new Collision[rows * cols];
 	renders = new Render[rows * cols];
 }
 
-void Tiles::set(int row, int col, Collision collision, Render render)
+void Tiles::set(int row, int col, Collision hCollision, Collision vCollision, Render render)
 {
-	int index = mapIndex(row, col);
-	collisions[index] = collision;
-	renders[index] = render;
+	setCollision(row, col, hCollision, vCollision);
+	setRender(row, col, render);
 }
 
-void Tiles::setCollision(int row, int col, Collision collision)
+void Tiles::setCollision(int row, int col, Collision hCollision, Collision vCollision)
 {
-	collisions[mapIndex(row, col)] = collision;
+	hCollisions[mapIndex(col, row)] = hCollision; // Done intentionally
+	vCollisions[mapIndex(row, col)] = vCollision;
 }
 
 void Tiles::setRender(int row, int col, Render render)
@@ -34,9 +36,14 @@ void Tiles::setRender(int row, int col, Render render)
 	renders[mapIndex(row, col)] = render;
 }
 
-Collision Tiles::getCollision(int row, int col)
+Collision Tiles::getHCollision(int row, int col)
 {
-	return collisions[mapIndex(row, col)];
+	return hCollisions[mapIndex(col, row)]; // (Again) Done intentionally
+}
+
+Collision Tiles::getVCollision(int row, int col)
+{
+	return vCollisions[mapIndex(row, col)];
 }
 
 Render Tiles::getRender(int row, int col)

@@ -80,7 +80,7 @@ void Level::levelEdit()
 		CoordF mouse = { input->getMouseX(), input->getMouseY() };
 		CoordF gridPos1 = screenToGrid(mouse.x, mouse.y);
 		CoordI gridPos = { gridPos1.x, gridPos1.y };
-		++map[gridPos.y][gridPos.x] %= 7;
+		++map[gridPos.y][gridPos.x] %= 8;
 		input->clearCharIn();
 	}
 
@@ -106,7 +106,7 @@ void Level::changeLevel()
 	if (input->wasKeyPressed(0x45))
 	{
 		//woahh
-		mapNo = 7099;
+		mapNo = 29229;
 		level.initialize();
 	}
 }

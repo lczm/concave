@@ -25,8 +25,8 @@ const int mapWidth = 48;
 const int mapHeight = 48;
 */
 
-const int mapWidth = 50;
-const int mapHeight = 50;
+const int mapWidth = 40;
+const int mapHeight = 40;
 
 //-----------------------------------------------
 //                   Units
@@ -95,7 +95,7 @@ const float MAX_FRAME_TIME = 1.0f / MIN_FRAME_RATE; // maximum time used in calc
 
 
 
-const int noSpritesChruch = 6;
+const int noSpritesChruch = 8;
 const int noSpritesCave = 2;
 
 enum ImageType {

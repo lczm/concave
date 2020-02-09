@@ -1,11 +1,11 @@
 #pragma once
-#include "component.h";
-#include "constants.h";
+#include "component.h"
+#include "constants.h"
 #include "room.h"
-#include<algorithm> 
-#include <string>;
-#include <fstream>;
-#include <vector>;
+#include<algorithm>
+#include <string>
+#include <fstream>
+#include <vector>
 
 using namespace std;
 

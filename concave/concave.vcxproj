@@ -151,6 +151,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="bag.cpp" />
+    <ClCompile Include="components.cpp" />
     <ClCompile Include="concave.cpp" />
     <ClCompile Include="players.cpp" />
     <ClCompile Include="game.cpp" />
@@ -165,6 +167,7 @@
     <ClCompile Include="winmain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="bag.h" />
     <ClInclude Include="component.h" />
     <ClInclude Include="concave.h" />
     <ClInclude Include="constants.h" />

@@ -46,13 +46,24 @@ void Level::resetAll()
 
 void Level::update()
 {
+	// Move Player
 	CoordF coord = players.getPosition(0);
 	if (input->isKeyDown('W')) coord.y -= 0.01;
 	if (input->isKeyDown('S')) coord.y += 0.01;
 	if (input->isKeyDown('A')) coord.x -= 0.01;
 	if (input->isKeyDown('D')) coord.x += 0.01;
 	players.setPosition(0, coord);
-	camCoord = coord;
+	// Collision
+	for (int i = 0; i < players.getSize(); i++) {
+		CoordF pPosition = players.getPosition(i);
+		Collision pCollision = players.getCollision(i);
+		for (Collision::Line line : pCollision.hLines) {
+			Collision tCollision = tiles.getCollision(pPosition.y + line.shift, pPosition.x);
+		}
+	}
+
+	// Move Camera
+	camCoord = players.getPosition(0);
 	if (input->isKeyDown('O')) camScale *= 1 - 0.01;
 	if (input->isKeyDown('P')) camScale *= 1 + 0.01;
 }

@@ -3,17 +3,30 @@
 #include <vector>
 using namespace std;
 
-namespace Component
+class Components
 {
-	struct Collision
-	{
-		struct Line { float lower, upper, shift; };
-		vector<Line> hLines;
-		vector<Line> vLines;
-	};
+	virtual void initialize(int size) = 0;
+	virtual void pop(int index) = 0;
+};
 
-	struct Render
-	{
-		Sprite* sprite;
-	};
-}
+class Collisions: Components
+{
+private:
+	vector<Line>* hLinesArray;
+	vector<Line>* vLinesArray;
+public:
+	void initialize(int size);
+	void pop(int index);
+	vector<Line> getHLines(int index);
+	vector<Line> getVLines(int index);
+};
+
+class Renders: Components
+{
+private:
+	Sprite* spriteArray;
+public:
+	void initialize(int size);
+	void pop(int index);
+	Sprite getSprite(int index);
+};

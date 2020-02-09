@@ -7,6 +7,7 @@
 //-----------------------------------------------
 struct CoordI { int x, y; };
 struct CoordF { float x, y; };
+struct Line { float lower, upper, shift; };
 
 enum DIRECTION8 { SOUTH, SOUTH_WEST, WEST, NORTH_WEST, NORTH, NORTH_EAST, EAST, SOUTH_EAST };
 // enum DIRECTION16 { SOUTH, SOUTH_WEST, WEST, NORTH_WEST, NORTH, NORTH_EAST, EAST, SOUTH_EAST };

@@ -1,7 +1,6 @@
 #pragma once
 #include "component.h"
 #include <cstring>
-using namespace Component;
 
 class Players
 {

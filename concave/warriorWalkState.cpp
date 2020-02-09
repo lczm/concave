@@ -31,56 +31,37 @@ void WarriorWalkState::update(Input* input, float frameTime)
     if (!equalFloat(currentX, destinationX) && !equalFloat(currentY, destinationY)) {
         // Move unit towards it
         float radAngle = atan2(abs(currentX - destinationX), abs(currentY - destinationY));
-        float degAngle = float(radAngle * (180 / PI));
         cout << "Rad Angle : " << radAngle << endl;
-        cout << "Deg Angle : " << degAngle << endl;
-        if (destinationX > currentX && destinationY < currentY) {
-            degAngle += 0;
-        }
-        else if (destinationX > currentX && destinationY > currentY) {
-            degAngle += 90;
-        }
-        else if (destinationX < currentX && destinationY > currentY) {
-            degAngle += 180;
-        }
-        else if (destinationX < currentX && destinationY < currentY) {
-            degAngle += 270;
-        }
 
         float moveX = velocity * sin(radAngle) * frameTime;
         float moveY = velocity * cos(radAngle) * frameTime;
         cout << "MoveX : " << moveX << endl;
         cout << "MoveY : " << moveY << endl;
 
-        radAngle = tan(degAngle * (PI / 180));
-
-        // Assigning quadrant negative/positive values
-        if (degAngle <= 90) {
+        if (destinationX > currentX && destinationY < currentY) {
             moveX = moveX;
             moveY = -moveY;
         }
-        else if (degAngle <= 180) {
+        else if (destinationX > currentX && destinationY > currentY) {
             moveX = moveX;
             moveY = moveY;
         }
-        else if (degAngle <= 270) {
+        else if (destinationX < currentX && destinationY > currentY) {
             moveX = -moveX;
             moveY = moveY;
         }
-        else {
+        else if (destinationX < currentX && destinationY < currentY) {
             moveX = -moveX;
             moveY = -moveY;
         }
 
         warriorStateManager->updatePositionComponent(currentX + moveX, currentY + moveY);
         warriorStateManager->updateMovementComponentRotation(radAngle);
-        // warriorStateManager->updatePositionComponent(calculatedX, calculatedY);
         updateFrameNo(frameTime);
     }
     else {
         warriorStateManager->changeState(UNITSTATE::IDLE);
     }
-    // updateFrameNo(frameTime);
 }
 
 void WarriorWalkState::initialize(WarriorStateManager* warriorStateManager)

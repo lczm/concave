@@ -16,7 +16,13 @@ WarriorAttackState::~WarriorAttackState()
 
 void WarriorAttackState::update(Input* input, float frameTime)
 {
-    updateFrameNo(frameTime);
+    if (frameNo == endFrame - 1) {
+        updateFrameNo(frameTime);
+        warriorStateManager->changeState(UNITSTATE::IDLE);
+    }
+    else {
+        updateFrameNo(frameTime);
+    }
 }
 
 void WarriorAttackState::initialize(WarriorStateManager* warriorStateManager)

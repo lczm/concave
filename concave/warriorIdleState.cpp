@@ -23,11 +23,11 @@ void WarriorIdleState::update(Input* input, float frameTime)
         float screenY = float(input->getMouseY());
 
         warriorStateManager->updateDestinationPositionComponent(screenX, screenY);
-        cout << "IDLE : Updating Destination Position Component " << screenX << " | " << screenY << endl;
         warriorStateManager->updateMovementComponentVelocity(2000);
-        cout << "IDLE : Setting Movement Component " << 1.0 << endl;
-
         warriorStateManager->changeState(UNITSTATE::WALK);
+    }
+    else if (input->getMouseRButton()) {
+        warriorStateManager->changeState(UNITSTATE::ATTACK);
     }
     updateFrameNo(frameTime);
 }

@@ -24,6 +24,7 @@ private:
     // Pointers to Warrior.h 
     Position* positionComponent;
     Movement* movementComponent;
+    int* direction;
 
 public:
     WarriorStateManager();
@@ -32,6 +33,8 @@ public:
     int getState();
     int getFrameNo();
     void changeState(int state);
+
+    void initializeDirectionPtr(int* direction);
 
     void initializePositionComponent(Position* positionComponent);
     void updatePositionComponent(float screenX, float screenY);

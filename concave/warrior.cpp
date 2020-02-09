@@ -20,6 +20,9 @@ void Warrior::initialize(Graphics* graphics, Input* input, Position* positionCom
 	Warrior::movementComponent = movementComponent;
 	stateManager->initializeMovementComponent(movementComponent);
 
+	int* directionPtr = &direction;
+	stateManager->initializeDirectionPtr(directionPtr);
+
 	// Image initialization
 	unitTexture.initialize(Warrior::graphics, IMAGE_UNIT_WARRIOR);
 	// TODO : unitGetHitGridMask

@@ -16,51 +16,51 @@ WarriorWalkState::~WarriorWalkState()
 
 void WarriorWalkState::update(Input* input, float frameTime)
 {
-    Position* currentPosition = warriorStateManager->getPositionComponent();
-    float currentX = currentPosition->sx;
-    float currentY = currentPosition->sy;
-
-    Position* destinationPosition = warriorStateManager->getDestinationComponent();
-    float destinationX = destinationPosition->sx;
-    float destinationY = destinationPosition->sy;
-
-    Movement* movement = warriorStateManager->getMovementComponent();
-    float velocity = movement->velocity;
-
-    // While current position is not destination position
-    if (!equalFloat(currentX, destinationX) && !equalFloat(currentY, destinationY)) {
-        // Move unit towards it
-        float radAngle = atan2(abs(currentX - destinationX), abs(currentY - destinationY));
-        cout << "Rad Angle : " << radAngle << endl;
-
-        float moveX = velocity * sin(radAngle) * frameTime;
-        float moveY = velocity * cos(radAngle) * frameTime;
-        cout << "MoveX : " << moveX << endl;
-        cout << "MoveY : " << moveY << endl;
-
-        if (destinationX > currentX && destinationY < currentY) {
-            moveX = moveX;
-            moveY = -moveY;
-        }
-        else if (destinationX > currentX && destinationY > currentY) {
-            moveX = moveX;
-            moveY = moveY;
-        }
-        else if (destinationX < currentX && destinationY > currentY) {
-            moveX = -moveX;
-            moveY = moveY;
-        }
-        else if (destinationX < currentX && destinationY < currentY) {
-            moveX = -moveX;
-            moveY = -moveY;
-        }
-
-        warriorStateManager->updatePositionComponent(currentX + moveX, currentY + moveY);
-        warriorStateManager->updateMovementComponentRotation(radAngle);
-        updateFrameNo(frameTime);
+    if (input->getMouseRButton()) {
+        warriorStateManager->changeState(UNITSTATE::ATTACK);
     }
     else {
-        warriorStateManager->changeState(UNITSTATE::IDLE);
+        Position* currentPosition = warriorStateManager->getPositionComponent();
+        float currentX = currentPosition->sx;
+        float currentY = currentPosition->sy;
+
+        Position* destinationPosition = warriorStateManager->getDestinationComponent();
+        float destinationX = destinationPosition->sx;
+        float destinationY = destinationPosition->sy;
+
+        Movement* movement = warriorStateManager->getMovementComponent();
+        float velocity = movement->velocity;
+
+        // While current position is not destination position
+        if (!equalFloat(currentX, destinationX) && !equalFloat(currentY, destinationY)) {
+            // Move unit towards it
+            float radAngle = atan2(abs(currentX - destinationX), abs(currentY - destinationY));
+            float moveX = velocity * sin(radAngle) * frameTime;
+            float moveY = velocity * cos(radAngle) * frameTime;
+
+            if (destinationX > currentX && destinationY < currentY) {
+                moveX = moveX;
+                moveY = -moveY;
+            }
+            else if (destinationX > currentX && destinationY > currentY) {
+                moveX = moveX;
+                moveY = moveY;
+            }
+            else if (destinationX < currentX && destinationY > currentY) {
+                moveX = -moveX;
+                moveY = moveY;
+            }
+            else if (destinationX < currentX && destinationY < currentY) {
+                moveX = -moveX;
+                moveY = -moveY;
+            }
+
+            warriorStateManager->updatePositionComponent(currentX + moveX, currentY + moveY);
+            updateFrameNo(frameTime);
+        }
+        else {
+            warriorStateManager->changeState(UNITSTATE::IDLE);
+        }
     }
 }
 
@@ -90,6 +90,6 @@ bool WarriorWalkState::equalFloat(float a, float b)
     // Multiply epsilon by a big number to get a decent estimate
     // else, it would take a long time to centralize the position to
     // the exact epsilon difference
-    return fabs(a - b) < (FLT_EPSILON * 50000000);
+    return fabs(a - b) < (FLT_EPSILON * 20000000);
 }
 

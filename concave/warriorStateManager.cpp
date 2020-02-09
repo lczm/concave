@@ -93,6 +93,11 @@ void WarriorStateManager::changeState(int state)
     }
 }
 
+void WarriorStateManager::initializeDirectionPtr(int* direction)
+{
+    WarriorStateManager::direction = direction;
+}
+
 void WarriorStateManager::initializePositionComponent(Position* positionComponent)
 {
     WarriorStateManager::positionComponent = positionComponent;
@@ -133,6 +138,43 @@ void WarriorStateManager::updateMovementComponentVelocity(float velocity)
 void WarriorStateManager::updateMovementComponentRotation(float rotation)
 {
     movementComponent->rotation = rotation;
+    // When updating the rotation, check for direction updates
+    if (rotation <= 22.5) {
+        *direction = DIRECTION8::NORTH;
+        cout << "Changing direction to North" << endl;
+    }
+    else if (rotation <= 67.5) {
+        *direction = DIRECTION8::NORTH_EAST;
+        cout << "Changing direction to North East" << endl;
+    }
+    else if (rotation <= 112.5) {
+        *direction = DIRECTION8::EAST;
+        cout << "Changing direction to East" << endl;
+    }
+    else if (rotation <= 157.5) {
+        *direction = DIRECTION8::SOUTH_EAST;
+        cout << "Changing direction to South East" << endl;
+    }
+    else if (rotation <= 202.5) {
+        *direction = DIRECTION8::SOUTH;
+        cout << "Changing direction to South" << endl;
+    }
+    else if (rotation <= 247.5) {
+        *direction = DIRECTION8::SOUTH_WEST;
+        cout << "Changing direction to South West" << endl;
+    }
+    else if (rotation <= 292.5) {
+        *direction = DIRECTION8::WEST;
+        cout << "Changing direction to West" << endl;
+    }
+    else if (rotation <= 337.5) {
+        *direction = DIRECTION8::NORTH_WEST;
+        cout << "Changing direction to North West" << endl;
+    }
+    else {
+        *direction = DIRECTION8::NORTH;
+        cout << "Changing direction to North" << endl;
+    }
 }
 
 Movement* WarriorStateManager::getMovementComponent()

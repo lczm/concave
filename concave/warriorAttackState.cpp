@@ -2,7 +2,7 @@
 
 WarriorAttackState::WarriorAttackState()
 {
-    state = 0;
+    state = UNITSTATE::ATTACK;
     frameNo = 0;
     endFrame = 16;
 
@@ -14,15 +14,14 @@ WarriorAttackState::~WarriorAttackState()
 {
 }
 
-void WarriorAttackState::update(Input* input, float frameTime)
+UNITSTATE WarriorAttackState::update(Input* input, float frameTime)
 {
     if (frameNo == endFrame - 1) {
         updateFrameNo(frameTime);
-        warriorStateManager->changeState(UNITSTATE::IDLE);
+        return UNITSTATE::IDLE;
     }
-    else {
-        updateFrameNo(frameTime);
-    }
+    updateFrameNo(frameTime);
+    return UNITSTATE::ATTACK;
 }
 
 void WarriorAttackState::initialize(WarriorStateManager* warriorStateManager)
@@ -34,11 +33,6 @@ void WarriorAttackState::enter()
 {
     frameNo = 0;
     timer = 0;
-}
-
-int WarriorAttackState::getState()
-{
-    return state;
 }
 
 int WarriorAttackState::getFrameNo()

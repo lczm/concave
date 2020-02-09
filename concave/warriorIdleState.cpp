@@ -2,7 +2,7 @@
 
 WarriorIdleState::WarriorIdleState()
 {
-    state = 2;
+    state = UNITSTATE::IDLE;
     frameNo = 0;
     endFrame = 10;
 
@@ -14,10 +14,9 @@ WarriorIdleState::~WarriorIdleState()
 {
 }
 
-void WarriorIdleState::update(Input* input, float frameTime)
+UNITSTATE WarriorIdleState::update(Input* input, float frameTime)
 {
     if (input->getMouseLButton()) {
-        // Temporary setting it false
         input->setMouseLButton(false);
 
         Position* currentPosition = warriorStateManager->getPositionComponent();
@@ -48,12 +47,15 @@ void WarriorIdleState::update(Input* input, float frameTime)
         warriorStateManager->updateMovementComponentRotation(degAngle);
         warriorStateManager->updateDestinationPositionComponent(destinationX, destinationY);
         warriorStateManager->updateMovementComponentVelocity(100);
-        warriorStateManager->changeState(UNITSTATE::WALK);
+        return UNITSTATE::WALK;
     }
-    else if (input->getMouseRButton()) {
-        warriorStateManager->changeState(UNITSTATE::ATTACK);
+
+    if (input->getMouseRButton()) {
+        return UNITSTATE::ATTACK;
     }
+
     updateFrameNo(frameTime);
+    return UNITSTATE::IDLE;
 }
 
 void WarriorIdleState::initialize(WarriorStateManager* warriorStateManager)
@@ -65,11 +67,6 @@ void WarriorIdleState::enter()
 {
     frameNo = 0;
     timer = 0;
-}
-
-int WarriorIdleState::getState()
-{
-    return state;
 }
 
 int WarriorIdleState::getFrameNo()

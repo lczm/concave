@@ -33,31 +33,33 @@ WarriorStateManager::~WarriorStateManager()
 
 void WarriorStateManager::update(Input* input, float frameTime)
 {
-    // TODO : Temporary solution to check the changing of states
-    if (input->isKeyDown('1')) {
-        changeState(0);
-        cout << "Changing state to Attack" << endl;
+    UNITSTATE state = currentState->update(input, frameTime);
+    if (currentState->state == state) {
+        return;
     }
-    else if (input->isKeyDown('2')) {
-        changeState(1);
-        cout << "Changing state to Die" << endl;
-    }
-    else if (input->isKeyDown('3')) {
-        changeState(2);
-        cout << "Changing state to Idle" << endl;
-    }
-    else if (input->isKeyDown('4')) {
-        changeState(3);
-        cout << "Changing state to Walk" << endl;
-    }
-    else {
-        currentState->update(input, frameTime);
-    }
-}
 
-int WarriorStateManager::getState()
-{
-    return currentState->getState();
+    switch (state) {
+    case UNITSTATE::ATTACK:
+        currentState = attackState;
+        currentState->enter();
+        cout << "Changing state to Attack" << endl;
+        break;
+    case UNITSTATE::DIE:
+        currentState = dieState;
+        currentState->enter();
+        cout << "Changing state to Die" << endl;
+        break;
+    case UNITSTATE::IDLE:
+        currentState = idleState;
+        currentState->enter();
+        cout << "Changing state to Idle" << endl;
+        break;
+    case UNITSTATE::WALK:
+        currentState = walkState;
+        currentState->enter();
+        cout << "Changing state to Walk" << endl;
+        break;
+    }
 }
 
 int WarriorStateManager::getFrameNo()
@@ -65,30 +67,20 @@ int WarriorStateManager::getFrameNo()
     return currentState->getFrameNo();
 }
 
-void WarriorStateManager::changeState(int state)
+int WarriorStateManager::getState()
 {
-    switch (state) {
-    case 0:
-        currentState = attackState;
-        currentState->enter();
-        cout << "Changing state to Attack" << endl;
+    switch (currentState->state) {
+    case UNITSTATE::ATTACK:
+        return 0;
         break;
-    case 1:
-        currentState = dieState;
-        currentState->enter();
-        cout << "Changing state to Die" << endl;
+    case UNITSTATE::DIE:
+        return 1;
         break;
-    case 2:
-        currentState = idleState;
-        currentState->enter();
-        cout << "Changing state to Idle" << endl;
+    case UNITSTATE::IDLE:
+        return 2;
         break;
-    case 3:
-        currentState = walkState;
-        currentState->enter();
-        cout << "Changing state to Walk" << endl;
-        break;
-    default:
+    case UNITSTATE::WALK:
+        return 3;
         break;
     }
 }

@@ -8,16 +8,15 @@ class WarriorStateManager;
 class State
 {
 public:
-    int state;
+    UNITSTATE state;
     int frameNo;
     int endFrame;
 
     float timer;
     float delay;
-    virtual void update(Input* input, float frameTime) = 0;
+    virtual UNITSTATE update(Input* input, float frameTime) = 0;
     virtual void initialize(WarriorStateManager* warriorStateManager) = 0;
     virtual void enter() = 0;
-    virtual int getState() = 0;
     virtual int getFrameNo() = 0;
     void updateFrameNo(float frameTime);
 };

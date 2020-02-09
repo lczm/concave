@@ -2,7 +2,7 @@
 
 WarriorDieState::WarriorDieState()
 {
-    state = 1;
+    state = UNITSTATE::DIE;
     frameNo = 0;
     endFrame = 21;
 
@@ -14,9 +14,10 @@ WarriorDieState::~WarriorDieState()
 {
 }
 
-void WarriorDieState::update(Input* input, float frameTime)
+UNITSTATE WarriorDieState::update(Input* input, float frameTime)
 {
     updateFrameNo(frameTime);
+    return UNITSTATE::DIE;
 }
 
 void WarriorDieState::initialize(WarriorStateManager* warriorStateManager)
@@ -28,11 +29,6 @@ void WarriorDieState::enter()
 {
     frameNo = 0;
     timer = 0;
-}
-
-int WarriorDieState::getState()
-{
-    return state;
 }
 
 int WarriorDieState::getFrameNo()

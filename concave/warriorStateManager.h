@@ -30,9 +30,8 @@ public:
     WarriorStateManager();
     ~WarriorStateManager();
     void update(Input* input, float frameTime);
-    int getState();
     int getFrameNo();
-    void changeState(int state);
+    int getState();
 
     void initializeDirectionPtr(int* direction);
 

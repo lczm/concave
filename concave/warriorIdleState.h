@@ -11,10 +11,9 @@ private:
 public:
     WarriorIdleState();
     ~WarriorIdleState();
-    void update(Input* input, float frameTime);
+    UNITSTATE update(Input* input, float frameTime);
     void initialize(WarriorStateManager* warriorStateManager);
     void enter();
-    int getState();
     int getFrameNo();
 };
 

@@ -29,7 +29,7 @@ const int TILE_HEIGHT = 64;
 // const int UNIT_STATE_IDLE = 2;
 // const int UNIT_STATE_WALK = 3;
 // const int UNIT_STATE_GET_HIT = 4;
-enum UNITSTATE { ATTACK, DIE, IDLE, WALK, GET_HIT };
+enum class UNITSTATE { ATTACK, DIE, IDLE, WALK, GET_HIT };
 // Players
 const int PLAYER_STATE_MAGIC_FIRE = 5;
 const int PLAYER_STATE_MAGIC_LIGHTNING = 6;

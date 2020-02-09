@@ -31,16 +31,49 @@ void WarriorWalkState::update(Input* input, float frameTime)
     if (!equalFloat(currentX, destinationX) && !equalFloat(currentY, destinationY)) {
         // Move unit towards it
         float radAngle = atan2(abs(currentX - destinationX), abs(currentY - destinationY));
-        float degAngle = radAngle * 180 / PI;
+        float degAngle = float(radAngle * (180 / PI));
         cout << "Rad Angle : " << radAngle << endl;
         cout << "Deg Angle : " << degAngle << endl;
-        // cout << "Angle : " << angle * 180 / atan(1)*4 << endl;
+        if (destinationX > currentX && destinationY < currentY) {
+            degAngle += 0;
+        }
+        else if (destinationX > currentX && destinationY > currentY) {
+            degAngle += 90;
+        }
+        else if (destinationX < currentX && destinationY > currentY) {
+            degAngle += 180;
+        }
+        else if (destinationX < currentX && destinationY < currentY) {
+            degAngle += 270;
+        }
+
         float moveX = velocity * sin(radAngle) * frameTime;
         float moveY = velocity * cos(radAngle) * frameTime;
         cout << "MoveX : " << moveX << endl;
         cout << "MoveY : " << moveY << endl;
 
+        radAngle = tan(degAngle * (PI / 180));
+
+        // Assigning quadrant negative/positive values
+        if (degAngle <= 90) {
+            moveX = moveX;
+            moveY = -moveY;
+        }
+        else if (degAngle <= 180) {
+            moveX = moveX;
+            moveY = moveY;
+        }
+        else if (degAngle <= 270) {
+            moveX = -moveX;
+            moveY = moveY;
+        }
+        else {
+            moveX = -moveX;
+            moveY = -moveY;
+        }
+
         warriorStateManager->updatePositionComponent(currentX + moveX, currentY + moveY);
+        warriorStateManager->updateMovementComponentRotation(radAngle);
         // warriorStateManager->updatePositionComponent(calculatedX, calculatedY);
         updateFrameNo(frameTime);
     }
@@ -73,6 +106,9 @@ int WarriorWalkState::getFrameNo()
 
 bool WarriorWalkState::equalFloat(float a, float b)
 {
-    return fabs(a - b) < (FLT_EPSILON * 5000000);
+    // Multiply epsilon by a big number to get a decent estimate
+    // else, it would take a long time to centralize the position to
+    // the exact epsilon difference
+    return fabs(a - b) < (FLT_EPSILON * 50000000);
 }
 

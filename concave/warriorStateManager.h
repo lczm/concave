@@ -41,6 +41,7 @@ public:
     Position* getDestinationComponent();
 
     void initializeMovementComponent(Movement* movementComponent);
-    void updateMovementComponent(float velocity);
+    void updateMovementComponentVelocity(float velocity);
+    void updateMovementComponentRotation(float rotation);
     Movement* getMovementComponent();
 };

@@ -24,7 +24,7 @@ void WarriorIdleState::update(Input* input, float frameTime)
 
         warriorStateManager->updateDestinationPositionComponent(screenX, screenY);
         cout << "IDLE : Updating Destination Position Component " << screenX << " | " << screenY << endl;
-        warriorStateManager->updateMovementComponent(500);
+        warriorStateManager->updateMovementComponentVelocity(2000);
         cout << "IDLE : Setting Movement Component " << 1.0 << endl;
 
         warriorStateManager->changeState(UNITSTATE::WALK);

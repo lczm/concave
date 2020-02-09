@@ -125,9 +125,14 @@ void WarriorStateManager::initializeMovementComponent(Movement* movementComponen
     WarriorStateManager::movementComponent = movementComponent;
 }
 
-void WarriorStateManager::updateMovementComponent(float velocity)
+void WarriorStateManager::updateMovementComponentVelocity(float velocity)
 {
     movementComponent->velocity = velocity;
+}
+
+void WarriorStateManager::updateMovementComponentRotation(float rotation)
+{
+    movementComponent->rotation = rotation;
 }
 
 Movement* WarriorStateManager::getMovementComponent()

@@ -30,15 +30,19 @@ UNITSTATE WarriorIdleState::update(Input* input, float frameTime)
         float degAngle = float(radAngle * (180 / PI));
 
         if (destinationX > currentX && destinationY < currentY) {
+            cout << "Angle adding 0 " << endl;
             degAngle += 0;
         }
         else if (destinationX > currentX && destinationY > currentY) {
+            cout << "Angle adding 90 " << endl;
             degAngle += 90;
         }
         else if (destinationX < currentX && destinationY > currentY) {
+            cout << "Angle adding 180 " << endl;
             degAngle += 180;
         }
         else if (destinationX < currentX && destinationY < currentY) {
+            cout << "Angle adding 270 " << endl;
             degAngle += 270;
         }
 
@@ -46,7 +50,7 @@ UNITSTATE WarriorIdleState::update(Input* input, float frameTime)
 
         warriorStateManager->updateMovementComponentRotation(degAngle);
         warriorStateManager->updateDestinationPositionComponent(destinationX, destinationY);
-        warriorStateManager->updateMovementComponentVelocity(100);
+        warriorStateManager->updateMovementComponentVelocity(1000);
         return UNITSTATE::WALK;
     }
 

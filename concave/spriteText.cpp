@@ -25,7 +25,7 @@ SpriteText::SpriteText() : Image()
 			fontData[row][col].right = 0;
 		}
 	}
-	proportional = false;
+	proportional = true;
 	proportionalSpacing = textNS::PROPORTIONAL_SPACING;
 	underline = false;
 	bold = false;
@@ -117,7 +117,7 @@ bool SpriteText::initialize(Graphics* g, const char* file)
 		SAFE_RELEASE(textureData);
 
 		// prepare the font image
-		fontGridMask.initialize(0, 0, 0, 0, 0, 0, 0, 0);
+		fontGridMask.initialize(0, 0, 256, 256, 0, 0, 0, 0);
 		fontTexture.initialize(graphics, IMAGE_HUD_FONT);
 		fontImage.initialize(&fontTexture, fontGridMask);
 		fontImage.getSpriteData(spriteData, test);
@@ -215,7 +215,7 @@ void SpriteText::print(const std::string & str, int x, int y)
 				spriteData.rect.right = spriteData.rect.left + textNS::FONT_WIDTH;
 				drawChar(ch);
 			}
-			spriteData.pivotX -= scaledWidth;
+			spriteData.pivotX += scaledWidth;
 		}
 		else    // else, non displayable character
 		{
@@ -228,13 +228,13 @@ void SpriteText::print(const std::string & str, int x, int y)
 					scaledWidth = static_cast<int>(width * scale);
 				}
 				drawChar(' ');
-				spriteData.pivotX -= scaledWidth;
+				spriteData.pivotX += scaledWidth;
 				break;
 				// newline advances 1 line down and sets left edge to starting x screen position,
 				// not left edge of screen
 			case '\n':                            // newline
 				spriteData.pivotX = (float)x;
-				spriteData.pivotY -= static_cast<int>(height * scale);
+				spriteData.pivotY += static_cast<int>(height * scale);
 				saveY = spriteData.pivotY;
 				str2 = str.substr(i, str.length());
 				doAlign(str2);
@@ -464,7 +464,7 @@ void SpriteText::drawChar(UCHAR ch)
 	// display character
 	if (ch > textNS::MIN_CHAR && ch <= textNS::MAX_CHAR) // if displayable character
 	{
-		graphics->drawSprite(spriteData, 0, 0, scale);
+		graphics->drawSprite(spriteData, spriteData.pivotX * 2, spriteData.pivotY * 2, scale);
 		if (bold)   // bold is done by displaying the character twice with offset x
 		{
 			spriteData.pivotX += textNS::BOLD_SIZE * scale;

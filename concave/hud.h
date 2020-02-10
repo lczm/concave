@@ -11,11 +11,16 @@ private:
 	SpriteText spriteText;
 	SpriteData manaSpriteData;
 	SpriteData healthSpriteData;
+	SpriteData inventorySpriteData;
 
 public:
 	HUD();
 	~HUD();
 	SpriteData imageToSpriteData(const char* file, UINT imageWidth, UINT imageHeight);
+	SpriteData imageToSpriteData(const char* file, UINT imageWidth, UINT imageHeight, 
+								GridMask imageGridMask, CoordI imageCoord);
+	SpriteData getInventorySpriteData();
+	void drawInventory(UINT x, UINT y);
 	void initialize();
 	void releaseAll();
 	void resetAll();

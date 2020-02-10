@@ -49,8 +49,8 @@ void Level::render()
 	// CoordF warriorCoords = warrior.getGridCoords();
 	// CoordF screenPos = gridToScreen(warriorCoords.x, warriorCoords.y);
 
-	float screenX = positions.back().sx;
-	float screenY = positions.back().sy;
+	int screenX = int(positions.back().sx);
+	int screenY = int(positions.back().sy);
 
 	// Draw sprites
 	graphics->drawSprite(sd, screenX, screenY, camScale);

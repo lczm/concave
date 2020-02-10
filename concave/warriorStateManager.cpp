@@ -82,6 +82,8 @@ int WarriorStateManager::getState()
     case UNITSTATE::WALK:
         return 3;
         break;
+    default:
+        break;
     }
 }
 

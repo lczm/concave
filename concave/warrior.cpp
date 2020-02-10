@@ -2,7 +2,7 @@
 
 Warrior::Warrior()
 {
-	direction = DIRECTION8::NORTH;
+	direction = DIRECTION8::SOUTH_WEST;
 	stateManager = new WarriorStateManager();
 }
 
@@ -28,7 +28,7 @@ void Warrior::initialize(Graphics* graphics, Input* input, Position* positionCom
 	// TODO : unitGetHitGridMask
 	unitAttackGridMask.initialize(0, 7, 128, 128, 0, 1, 58, 114);
 	unitDieGridMask.initialize(2049, 7, 128, 95, 0, 1, 59, 71);
-	unitIdleGridMask.initialize(0, 1046, 96, 94, 0, 1, 43, 81);
+	unitIdleGridMask.initialize(0, 1045, 96, 96, 0, 1, 43, 81);
 	unitWalkGridMask.initialize(2882, 1045, 96, 96, 0, 1, 44, 80);
 	vector<GridMask> unitGridMasks = {
 		unitAttackGridMask,

@@ -23,4 +23,8 @@ public:
 	Render getRender(int index);
 public:
 	int getSize() { return size; }
+	CoordF* getPositions() { return positions; }
+	Collision* getHCollisions() { return hCollisions; }
+	Collision* getVCollisions() { return vCollisions; }
+	Render* getRenders() { return renders; }
 };

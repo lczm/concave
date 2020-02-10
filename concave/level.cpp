@@ -24,42 +24,66 @@ void Level::initialize()
 	tiles.initialize(10, 10);
 	for (int y = 0; y < tiles.getRows(); y++)
 		for (int x = 0; x < tiles.getCols(); x++)
-			tiles.set(y, x, Collision{ { 0, 1, 0 } }, Collision{}, &wallSprite);
+			tiles.set(y, x, 
+				translateHCollision(Collision{ { 0, 1, 0 } }, x, y), 
+				translateVCollision(Collision{}, x, y),
+				&wallSprite);
 	for (int y = 1; y < tiles.getRows() - 1; y++)
 		for (int x = 1; x < tiles.getCols() - 1; x++)
-			tiles.set(y, x, Collision{}, Collision{}, &floorSprite);
+			tiles.set(y, x, 
+				translateHCollision(Collision{}, x, y),
+				translateVCollision(Collision{}, x, y), 
+				&floorSprite);
 	// Player
 	players.initialize(1);
+	CoordF pPos = CoordF{ 5, 5 };
 	players.push(
-		CoordF{ 5, 5 }, 
-		Collision{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } },
-		Collision{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } },
+		pPos, 
+		translateHCollision(Collision{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, pPos), 
+		translateVCollision(Collision{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, pPos),
 		&unitSprite);
 }
 
 void Level::releaseAll()
-{}
+{
+	tileTexture.onLostDevice();
+	unitTexture.onLostDevice();
+}
 
 void Level::resetAll()
-{}
+{
+	tileTexture.onResetDevice(graphics);
+	unitTexture.onResetDevice(graphics);
+}
 
 void Level::update()
 {
 	// Move Player
-	CoordF coord = players.getPosition(0);
-	if (input->isKeyDown('W')) coord.y -= 0.01;
-	if (input->isKeyDown('S')) coord.y += 0.01;
-	if (input->isKeyDown('A')) coord.x -= 0.01;
-	if (input->isKeyDown('D')) coord.x += 0.01;
-	players.setPosition(0, coord);
-	// Collision
-	/*for (int i = 0; i < players.getSize(); i++) {
-		CoordF pPosition = players.getPosition(i);
-		Collision pCollision = players.getCollision(i);
-		for (Collision::Line line : pCollision.hLines) {
-			Collision tCollision = tiles.getCollision(pPosition.y + line.shift, pPosition.x);
-		}
-	}*/
+	CoordF moveDelta{ 0, 0 };
+	if (input->isKeyDown('W')) moveDelta.y = -0.01;
+	if (input->isKeyDown('S')) moveDelta.y = 0.01;
+	if (input->isKeyDown('A')) moveDelta.x = -0.01;
+	if (input->isKeyDown('D')) moveDelta.x = 0.01;
+	players.getPositions()[0] += moveDelta;
+	// Move Player Collision
+	updateHCollision(players.getHCollisions()[0], moveDelta);
+	updateVCollision(players.getVCollisions()[0], moveDelta);
+	//// Collision
+	CoordF* pPositions = players.getPositions();
+	Collision* pHCollisions = players.getHCollisions();
+	Collision* pVCollisions = players.getVCollisions();
+	for (int i = 0; i < players.getSize(); i++) {
+		CoordF pPosition = pPositions[i];
+		CoordF delta{ 0, 0 };
+		Line hLine, vLine;
+		if (checkHCollisionToWallCollision(tiles, hLine, vLine, pHCollisions[i]))
+			delta.x = getDeltaXResponse(hLine, vLine, pPosition);
+		if (checkVCollisionToWallCollision(tiles, vLine, hLine, pVCollisions[i]))
+			delta.y = getDeltaYResponse(vLine, hLine, pPosition);
+		pPositions[i] += delta;
+		updateHCollision(pHCollisions[i], delta);
+		updateVCollision(pVCollisions[i], delta);
+	}
 
 	// Move Camera
 	camCoord = players.getPosition(0);

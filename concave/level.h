@@ -4,6 +4,7 @@
 #include "component.h"
 #include "players.h"
 #include "tiles.h"
+#include "collisionSystem.h"
 #include <vector>
 #include <cassert>
 using namespace std;

@@ -160,6 +160,7 @@
     <ClCompile Include="input.cpp" />
     <ClCompile Include="level.cpp" />
     <ClCompile Include="mainMenu.cpp" />
+    <ClCompile Include="collisionSystem.cpp" />
     <ClCompile Include="tiles.cpp" />
     <ClCompile Include="window.cpp" />
     <ClCompile Include="winmain.cpp" />
@@ -177,6 +178,7 @@
     <ClInclude Include="input.h" />
     <ClInclude Include="level.h" />
     <ClInclude Include="mainMenu.h" />
+    <ClInclude Include="collisionSystem.h" />
     <ClInclude Include="tiles.h" />
     <ClInclude Include="window.h" />
   </ItemGroup>

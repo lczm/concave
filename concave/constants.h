@@ -5,8 +5,18 @@
 //-----------------------------------------------
 //                   Data
 //-----------------------------------------------
-struct CoordI { int x, y; };
-struct CoordF { float x, y; };
+template<typename T>
+struct Coord
+{
+	T x, y;
+	Coord operator+(const Coord& coord) { return Coord{ x + coord.x, y + coord.y }; }
+	Coord operator-(const Coord& coord) { return Coord{ x - coord.x, y - coord.y }; }
+	Coord& operator+=(const Coord& coord) { x += coord.x; y += coord.y; return *this; }
+	Coord& operator-=(const Coord& coord) { x -= coord.x; y -= coord.y; return *this; }
+};
+typedef Coord<int> CoordI;
+typedef Coord<float> CoordF;
+
 struct Line { float lower, upper, shift; };
 
 enum DIRECTION8 { SOUTH, SOUTH_WEST, WEST, NORTH_WEST, NORTH, NORTH_EAST, EAST, SOUTH_EAST };

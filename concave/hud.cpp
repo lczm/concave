@@ -12,7 +12,9 @@ void HUD::initialize()
 	HUD::input = Window::input;
 	spriteText.initialize(graphics, IMAGE_HUD_FONT);
 	manaSpriteData = imageToSpriteData(IMAGE_HUD_MANA, 530, 230);
+	manaOrbSpriteData = imageToSpriteData(IMAGE_HUD_MANAORB, 230, 230);
 	healthSpriteData = imageToSpriteData(IMAGE_HUD_HEALTH, 530, 230);
+	healthOrbSpriteData = imageToSpriteData(IMAGE_HUD_HEALTHORB, 230, 230);
 	inventorySpriteData = getInventorySpriteData();
 }
 
@@ -66,6 +68,16 @@ void HUD::print()
 	spriteText.print("HELP ME GPP IS\nSUFFERING", 0, 0);
 }
 
+void HUD::drawHUD()
+{
+	graphics->drawSprite(manaOrbSpriteData, GAME_WIDTH - 230, GAME_HEIGHT - 230, 1);
+	graphics->drawSprite(healthOrbSpriteData, 0, GAME_HEIGHT - 230, 1);
+	graphics->drawSprite(manaSpriteData, GAME_WIDTH - 530, GAME_HEIGHT - 230, 1);
+	graphics->drawSprite(healthSpriteData, 0, GAME_HEIGHT - 230, 1);
+	spriteText.print("HP: 100/100", 50, GAME_HEIGHT - 300);
+	spriteText.print("MP: 100/100", GAME_WIDTH - 250, GAME_HEIGHT - 300);
+}
+
 void HUD::releaseAll()
 {}
 
@@ -77,8 +89,7 @@ void HUD::update()
 
 void HUD::render()
 {
-	graphics->drawSprite(manaSpriteData, GAME_WIDTH - 530, GAME_HEIGHT - 230, 1);
-	graphics->drawSprite(healthSpriteData, 0, GAME_HEIGHT - 230, 1);
+	drawHUD();
 	drawInventory(GAME_WIDTH - 320, 0);
 	print();
 }

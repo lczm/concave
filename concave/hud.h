@@ -10,7 +10,9 @@ private:
 	Input* input;
 	SpriteText spriteText;
 	SpriteData manaSpriteData;
+	SpriteData manaOrbSpriteData;
 	SpriteData healthSpriteData;
+	SpriteData healthOrbSpriteData;
 	SpriteData inventorySpriteData;
 
 public:
@@ -21,6 +23,7 @@ public:
 								GridMask imageGridMask, CoordI imageCoord);
 	SpriteData getInventorySpriteData();
 	void drawInventory(UINT x, UINT y);
+	void drawHUD();
 	void initialize();
 	void releaseAll();
 	void resetAll();

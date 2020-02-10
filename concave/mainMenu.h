@@ -3,10 +3,15 @@
 
 class MainMenu : public Window
 {
+private:
+	
+
+
+
 public:
 	MainMenu();
 	~MainMenu();
-	void initialize();
+	void initialize(Graphics* graphics, Input* input);
 	void releaseAll();
 	void resetAll();
 	void update();

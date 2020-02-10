@@ -6,8 +6,10 @@ MainMenu::MainMenu()
 MainMenu::~MainMenu()
 {}
 
-void MainMenu::initialize()
-{}
+void MainMenu::initialize(Graphics* graphics, Input* input)
+{	
+}
+
 
 void MainMenu::releaseAll()
 {}

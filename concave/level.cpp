@@ -14,6 +14,13 @@ void Level::initialize()
 {
 	renderLevel.initialize(graphics, input, type);
 
+	for (int x = 0; x < mapWidth; x++)
+	{
+		for (int y = 0; y < mapHeight; y++)
+		{
+			map[x][y] = 0;
+		}
+	}
 	/* No delete this code*/
 	Cellular cellgenerate;
 	cellgenerate.generateMap(map);
@@ -83,7 +90,7 @@ void Level::levelEdit()
 		CoordF mouse = { input->getMouseX(), input->getMouseY() };
 		CoordF gridPos1 = screenToGrid(mouse.x, mouse.y);
 		CoordI gridPos = { gridPos1.x, gridPos1.y };
-		++map[gridPos.y][gridPos.x] %= 8;
+		++map[gridPos.y][gridPos.x] %= 9;
 		input->clearCharIn();
 	}
 
@@ -109,13 +116,28 @@ void Level::changeLevel()
 	if (input->wasKeyPressed(0x45))
 	{
 		//woahh
-		mapNo = 29229;
+		//mapNo = 29229;
 		level.initialize();
 	}
 }
 
 void Level::renderSprites()
-{
+{	
+	//Must be a more elegant way to write this
+	for (int x = 0; x < mapWidth; x++) {
+		for (int y = 0; y < mapHeight; y++) {
+			CoordF screenPos = gridToScreen(x, y);
+			SpriteData sd;
+
+			//pass to renderLevel class
+			renderLevel.getTileImage().getSpriteData(sd, IMAGE_MAP.at(ImageType::churchFloor));
+			graphics->drawSprite(
+				sd,
+				screenPos.x, screenPos.y, camScale);
+		}
+	}
+
+
 	for (int x = 0; x < mapWidth; x++) {
 		for (int y = 0; y < mapHeight; y++) {
 			CoordF screenPos = gridToScreen(x, y);

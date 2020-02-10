@@ -20,13 +20,10 @@ enum DIRECTION8 { SOUTH, SOUTH_WEST, WEST, NORTH_WEST, NORTH, NORTH_EAST, EAST, 
 //-----------------------------------------------
 const int TILE_WIDTH = 128;
 const int TILE_HEIGHT = 64;
-/*
+
 const int mapWidth = 48;
 const int mapHeight = 48;
-*/
 
-const int mapWidth = 40;
-const int mapHeight = 40;
 
 //-----------------------------------------------
 //                   Units
@@ -58,6 +55,11 @@ const int IMAGE_TILES_GAP_HEIGHT = 1;
 
 const char IMAGE_TILES_DUNGEON[] = "sprites/tiles_church_dungeon.png";
 const char IMAGE_TILES_CAVE[] = "sprites/tiles_cave_dungeon.png";
+
+//const char IMAGE_ITEMS_DUNGEON[] = "sprites/items.png";
+const char IMAGE_ITEMS_DUNGEON[] = "sprites/items2.png";
+
+
 //-----------------------------------------------
 //                Image (Units)
 //-----------------------------------------------
@@ -120,7 +122,7 @@ enum ImageTypeCave
 //enum
 #include <map>
 const std::map<ImageType, CoordI> IMAGE_MAP
-{	
+{
 	//name - coordinates
 
 	//church tiles

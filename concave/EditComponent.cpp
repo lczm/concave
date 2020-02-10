@@ -90,7 +90,10 @@ void EditComponent::placeRoom(int map[mapWidth][mapHeight])
 				}
 			}
 
+			placeItemRoom(newRoom, map);
 		}
+
+
 
 	}
 
@@ -119,8 +122,9 @@ void EditComponent::placeWall(int map[mapWidth][mapHeight], Room newRoom)
 		map[newRoom.x1][newRoom.y2 - j] = 5;
 		map[newRoom.x2][newRoom.y1 + j] = 5;
 	}
-}
 
+}
+//switch names 
 void EditComponent::horizontalCorridor(int x1, int x2, int y, int map[mapWidth][mapHeight])
 {
 	int minX = fmin(x1, x2);
@@ -146,7 +150,50 @@ void EditComponent::verticalCorridor(int y1, int y2, int x, int map[mapWidth][ma
 
 //add code to place items into rooms
 //specify boss/loot rooms maybe NPC rooms
-void EditComponent::placeItemRoom()
-{
+void EditComponent::placeItemRoom(Room room, int map[mapWidth][mapHeight])
+{	
 
+	/* First iteration: place some random chest */
+	/* second iteration specitfy rooms to place specific items*/
+	/* 3rd iteration specify what type of objects can spawn where*/
+
+
+	//boundary within the room
+	/*--------------------------> (X)
+	|
+	|	(X1, Y1)			(X2, Y1)
+	|		-------------------
+	|		- ############### -		
+	|		- ############### -	
+	|		- ############### -	
+	|		-------------------
+	|	(X1, Y2)			(X2, Y2)
+	|
+	(Y)
+
+	*/
+	int x1 = room.x1 + 1;
+	int y1 = room.y1 + 1;
+	int x2 = room.x2 - 1;
+	int y2 = room.y2 - 1;
+			
+	//walls occupy the first and last Y positions 
+	//walls occupy the first and last X values
+	int areaToPlace = ((room.roomWidth - 2)* (room.roomHeight - 2))/4;
+
+	for (int i = 0; i < areaToPlace; i++)
+	{
+		//Testing code
+		int randX = random(x1, x2);
+		int randY = random(y1, y2);
+
+		//test item (not final)
+		map[randX][randY] = 3;
+	}
+}
+
+int EditComponent::random(int min, int max) {
+	int random = rand() % (max + 1 - min) + min;
+
+	return random;
 }

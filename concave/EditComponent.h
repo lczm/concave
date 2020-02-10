@@ -13,7 +13,8 @@ class EditComponent
 {
 public:
 	void placeRoom(int map[mapWidth][mapHeight]);
-	void placeItemRoom();
+	void placeItemRoom(Room room, int map[mapWidth][mapHeight]);
+	int  random(int min, int max);
 	void horizontalCorridor(int x1, int x2, int y, int map[mapWidth][mapHeight]);
 	void verticalCorridor(int y1, int y2, int x, int map[mapWidth][mapHeight]);
 	void placeWall(int map[mapWidth][mapHeight], Room newRoom);

@@ -18,15 +18,22 @@ void RenderLevel::initialize(Graphics* graphics, Input* input, int type)
 	if (type == 0)
 	{
 		tileTexture.initialize(graphics, IMAGE_TILES_DUNGEON);
+		
 	}
 	else
 	{
 		tileTexture.initialize(graphics, IMAGE_TILES_CAVE);
 	}
 
-
 	tileGridMask.initialize(0, 0, 128, 192, 1, 1, 128 / 2, 192 - TILE_HEIGHT - 1);
 	tileImage.initialize(&tileTexture, tileGridMask);
+
+	//reference to yh code
+	//void initialize(int originX, int originY, int perWidth, int perHeight, int gapWidth, int gapHeight, int pivotX, int pivotY);
+	//In game items
+	itemTexture.initialize(graphics, IMAGE_ITEMS_DUNGEON);
+	itemGridMask.initialize(0, 0, 130, 130, 1, 1, 59, 59);
+	itemImage.initialize(&itemTexture, itemGridMask);
 }
 
 void RenderLevel::renderMap(int map[mapWidth][mapHeight], int x, int y, SpriteData& sd, int type)
@@ -61,6 +68,9 @@ void RenderLevel::renderMap(int map[mapWidth][mapHeight], int x, int y, SpriteDa
 			break;
 		case ImageType::churchWallPath:
 			tileImage.getSpriteData(sd, IMAGE_MAP.at(ImageType::churchWallPath));
+			break;
+		case 8:
+			itemImage.getSpriteData(sd, CoordI{0,0});
 			break;
 		}
 	}

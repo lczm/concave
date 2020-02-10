@@ -36,9 +36,6 @@ public:
 		y1 = y;
 		y2 = y + height;
 
-		x = x * TILE_WIDTH;
-		y = y * TILE_HEIGHT;
-
 		roomWidth = width;
 		roomHeight = height;
 

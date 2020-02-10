@@ -16,6 +16,10 @@ private:
 	GridMask tileGridMask;
 	Image tileImage;
 
+	Texture itemTexture;
+	GridMask itemGridMask;
+	Image itemImage;
+
 
 public:
 	RenderLevel();
@@ -23,5 +27,9 @@ public:
 
 	void initialize(Graphics* graphics, Input* input, int type);
 	void renderMap(int map[mapWidth][mapHeight],int x, int y, SpriteData& sd, int type);
+
+	Image getTileImage() {
+		return tileImage;
+	}
 
 };

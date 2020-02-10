@@ -1,7 +1,8 @@
 #include "button.h"
 Button::Button()
 {
-
+	x = 0;
+	y = 0;
 }
 
 Button::~Button()
@@ -16,10 +17,16 @@ void Button::initialize(Graphics* graphics, Input* input, Texture* texture)
 	Button::y = y;
 
 }
+SpriteData Button::getSpriteData() 
+{
+	SpriteData sd;
+    texture->getSpriteData(sd);
+	return sd;
+}
 void Button::draw()
 {
 
-	graphics->drawSprite();
+	graphics->drawSprite(getSpriteData(), x, y, NULL);
 	
 }
 

@@ -1,10 +1,14 @@
 #pragma once
 #include "window.h"
+#include "button.h"
 
 class MainMenu : public Window
 {
 private:
-	
+	Texture playbtnTexture;
+	GridMask playbtnGM;
+	Button playbtn;
+
 
 
 

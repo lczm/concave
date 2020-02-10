@@ -5,10 +5,11 @@ class Button
 private:
 	Graphics* graphics;
 	Input* input;
-	Texture* texture;
+	Texture *texture;
 	GridMask gridMask;
-	int x;
-	int y;
+	SpriteData spriteData;
+	float x;
+	float y;
 
 
 public:

@@ -56,6 +56,11 @@ const char IMAGE_TILES_DUNGEON[] = "sprites/tiles_church_dungeon.png";
 const char IMAGE_UNIT_WARRIOR[] = "sprites/unit_warrior.png";
 
 //-----------------------------------------------
+//                Image (Menu)
+//-----------------------------------------------
+const char PLAY_BTN_TEXTURE[] = "sprites/playsprite.png";
+
+//-----------------------------------------------
 //					  Other
 //-----------------------------------------------
 // Safely delete pointer referenced item

@@ -3,21 +3,20 @@
 #include "image.h"
 #include "spriteText.h"
 
-class HUD
+class HUD : public Window
 {
 private:
 	Graphics* graphics;
 	Input* input;
-	Texture hudTexture;
-	GridMask playerInfoGM;
-	Image playerInfoImage;
-	SpriteText* spriteText;
-	CoordI test = { 0, 0 };
+	SpriteText spriteText;
+	SpriteData manaSpriteData;
+	SpriteData healthSpriteData;
 
 public:
 	HUD();
 	~HUD();
-	void initialize(Graphics* graphics, Input* input);
+	SpriteData imageToSpriteData(const char* file, UINT imageWidth, UINT imageHeight);
+	void initialize();
 	void releaseAll();
 	void resetAll();
 	void update();

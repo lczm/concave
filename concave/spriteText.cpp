@@ -117,7 +117,7 @@ bool SpriteText::initialize(Graphics* g, const char* file)
 		SAFE_RELEASE(textureData);
 
 		// prepare the font image
-		fontGridMask.initialize(0, 0, 32, 32, 0, 0, 0, -200);
+		fontGridMask.initialize(0, 0, 0, 0, 0, 0, 0, 0);
 		fontTexture.initialize(graphics, IMAGE_HUD_FONT);
 		fontImage.initialize(&fontTexture, fontGridMask);
 		fontImage.getSpriteData(spriteData, test);

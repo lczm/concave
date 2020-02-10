@@ -3,7 +3,6 @@
 Level::Level()
 {
 	camX = 0; camY = 0; camScale = 1;
-	playerHUD = new HUD();
 }
 
 Level::~Level()
@@ -11,7 +10,6 @@ Level::~Level()
 
 void Level::initialize()
 {
-	playerHUD->initialize(graphics, input);
 }
 
 void Level::releaseAll()
@@ -25,9 +23,6 @@ void Level::update()
 
 void Level::render()
 {
-	SpriteData sd = playerHUD->getSpriteData();
-	graphics->drawSprite(sd, 0, 0, camScale);
-	playerHUD->print();
 }
 
 CoordF Level::gridToScreen(float gx, float gy)

@@ -19,7 +19,9 @@ void Concave::initialize(HWND hwnd)
 	Window::input = input;
 	Window::mainMenu.initialize();
 	Window::level.initialize();
+	Window::hud.initialize();
 	Window::windows.push_back(&Window::level);
+	Window::windows.push_back(&Window::hud);
 }
 
 void Concave::releaseAll()

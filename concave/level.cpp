@@ -31,7 +31,10 @@ void Level::resetAll()
 
 void Level::update()
 {
-
+	if (input->isKeyDown('W')) camY -= 0.1;
+	if (input->isKeyDown('S')) camY += 0.1;
+	if (input->isKeyDown('A')) camX -= 0.1;
+	if (input->isKeyDown('D')) camX += 0.1;
 	if (input->isKeyDown('P')) camScale += 0.01;
 	if (input->isKeyDown('O')) camScale -= 0.01;
 

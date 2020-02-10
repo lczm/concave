@@ -7,7 +7,7 @@ SpriteText::SpriteText() : Image()
 {
 	file = NULL;                        // font texture
 	graphics = NULL;                    // pointer to graphics
-	color = graphicsNS::WHITE;          // default to white font
+	color = graphicsNS::BLACK;          // default to white font
 	backColor = TRANSCOLOR;             // default to transparent (no) fill
 	align = textNS::LEFT;
 	width = textNS::GRID_WIDTH - 3;     // -2 for transparent border and -1 for divider line
@@ -117,8 +117,10 @@ bool SpriteText::initialize(Graphics* g, const char* file)
 		SAFE_RELEASE(textureData);
 
 		// prepare the font image
-		if (!Image::initialize(graphics, FONT_IMAGE, textNS::FONT_WIDTH, textNS::FONT_HEIGHT))
-			return false;                   // if failed
+		fontGridMask.initialize(0, 0, 32, 32, 0, 0, 0, -200);
+		fontTexture.initialize(graphics, IMAGE_HUD_FONT);
+		fontImage.initialize(&fontTexture, fontGridMask);
+		fontImage.getSpriteData(spriteData, test);
 	}
 	catch (...)
 	{
@@ -135,8 +137,8 @@ void SpriteText::setXY(int x2, int y2)
 {
 	if (x2 < 0 || y2 < 0)
 		return;
-	spriteData.x = (float)x2;
-	spriteData.y = (float)y2;
+	spriteData.pivotX = (float)x2;
+	spriteData.pivotY = (float)y2;
 }
 
 //=============================================================================
@@ -146,7 +148,7 @@ void SpriteText::setXY(int x2, int y2)
 //=============================================================================
 void SpriteText::print(const std::string & str)
 {
-	print(str, (int)spriteData.x, (int)spriteData.y);
+	print(str, (int)spriteData.pivotX, (int)spriteData.pivotX);
 }
 
 //=============================================================================
@@ -173,12 +175,12 @@ void SpriteText::print(const std::string & str, int x, int y)
 	UCHAR ch = 0, chN = 0;
 	std::string str2;
 	width = textNS::FONT_WIDTH;
-	int scaledWidth = static_cast<int>(textNS::FONT_WIDTH * spriteData.scale);
+	int scaledWidth = static_cast<int>(textNS::FONT_WIDTH * scale);
 	float saveY = 0;
 	int tabX = 0, tabW = 0;
 
-	spriteData.x = (float)x;
-	spriteData.y = (float)y;
+	spriteData.pivotX = (float)x;
+	spriteData.pivotY = (float)y;
 	doAlign(str);
 
 	for (UINT i = 0; i < str.length(); i++)
@@ -203,7 +205,7 @@ void SpriteText::print(const std::string & str, int x, int y)
 				}
 				else    // not full width so add spacing between characters
 					width += proportionalSpacing;
-				scaledWidth = static_cast<int>(width * spriteData.scale);
+				scaledWidth = static_cast<int>(width * scale);
 				drawChar(ch);
 			}
 			else    // fixed pitch
@@ -213,7 +215,7 @@ void SpriteText::print(const std::string & str, int x, int y)
 				spriteData.rect.right = spriteData.rect.left + textNS::FONT_WIDTH;
 				drawChar(ch);
 			}
-			spriteData.x += scaledWidth;
+			spriteData.pivotX -= scaledWidth;
 		}
 		else    // else, non displayable character
 		{
@@ -223,63 +225,63 @@ void SpriteText::print(const std::string & str, int x, int y)
 				if (proportional)
 				{
 					width = textNS::FONT_WIDTH / 2;
-					scaledWidth = static_cast<int>(width * spriteData.scale);
+					scaledWidth = static_cast<int>(width * scale);
 				}
 				drawChar(' ');
-				spriteData.x += scaledWidth;
+				spriteData.pivotX -= scaledWidth;
 				break;
 				// newline advances 1 line down and sets left edge to starting x screen position,
 				// not left edge of screen
 			case '\n':                            // newline
-				spriteData.x = (float)x;
-				spriteData.y += static_cast<int>(height * spriteData.scale);
-				saveY = spriteData.y;
+				spriteData.pivotX = (float)x;
+				spriteData.pivotY -= static_cast<int>(height * scale);
+				saveY = spriteData.pivotY;
 				str2 = str.substr(i, str.length());
 				doAlign(str2);
-				spriteData.y = saveY;
+				spriteData.pivotY = saveY;
 				break;
 			case '\r':                            // return to starting x position
-				spriteData.x = (float)x;
+				spriteData.pivotX = (float)x;
 				str2 = str.substr(i, str.length());
 				doAlign(str2);
 				break;
 			case '\t':                            // tab
 				width = textNS::FONT_WIDTH;
-				scaledWidth = static_cast<int>(width * spriteData.scale);
-				tabX = static_cast<int>(spriteData.x) / (scaledWidth * tabSize);
+				scaledWidth = static_cast<int>(width * scale);
+				tabX = static_cast<int>(spriteData.pivotX) / (scaledWidth * tabSize);
 				tabX = (tabX + 1) * scaledWidth * tabSize;
-				tabW = tabX - static_cast<int>(spriteData.x);
+				tabW = tabX - static_cast<int>(spriteData.pivotX);
 				while (tabW > 0)
 				{
 					if (tabW >= scaledWidth)
 					{
 						drawChar(' ');
-						spriteData.x += scaledWidth;
+						spriteData.pivotX += scaledWidth;
 					}
 					else
 					{
 						width = tabW;        // fractional part of character to align with tab stop
 						drawChar(' ');
-						spriteData.x += tabW;
+						spriteData.pivotX += tabW;
 					}
 					tabW -= scaledWidth;
 				}
 				break;
 			case '\b':                            // backspace
-				spriteData.x -= scaledWidth;
-				if (spriteData.x < 0)
-					spriteData.x = 0;
+				spriteData.pivotX -= scaledWidth;
+				if (spriteData.pivotX < 0)
+					spriteData.pivotX = 0;
 				break;
 			case '\v':                            // vertical tab
-				spriteData.y += static_cast<int>(height * spriteData.scale);
+				spriteData.pivotY += static_cast<int>(height * scale);
 				break;
 			case 0x01:                            // font signature character
 				spriteData.rect.top = 1;
 				spriteData.rect.bottom = 1 + textNS::FONT_HEIGHT;
 				spriteData.rect.left = 1;
 				spriteData.rect.right = 1 + textNS::FONT_WIDTH;
-				graphics->drawSprite(spriteData);
-				spriteData.x += scaledWidth;
+				graphics->drawSprite(spriteData, spriteData.pivotX, spriteData.pivotY, scale);
+				spriteData.pivotX += scaledWidth;
 				break;
 			}
 		}
@@ -288,7 +290,7 @@ void SpriteText::print(const std::string & str, int x, int y)
 }
 
 //=============================================================================
-// Set spriteData.x,spriteData.y for current string and alignment.
+// Set spriteData.pivotX,spriteData.pivotY for current string and alignment.
 // The default alignment is LEFT.
 //=============================================================================
 void SpriteText::doAlign(const std::string & str)
@@ -300,30 +302,30 @@ void SpriteText::doAlign(const std::string & str)
 	switch (align) {
 	case textNS::CENTER:            // center at x and align top to y
 		getWidthHeight(str, w, h);
-		spriteData.x -= w / 2;
+		spriteData.pivotX -= w / 2;
 		break;
 	case textNS::RIGHT:             // right justify at x,y
 		getWidthHeight(str, w, h);
-		spriteData.x -= w;
+		spriteData.pivotX -= w;
 		break;
 	case textNS::CENTER_MIDDLE:     // center at x and vertical middle to y
 		getWidthHeight(str, w, h);
-		spriteData.x -= w / 2;
-		spriteData.y -= h / 2;
+		spriteData.pivotX -= w / 2;
+		spriteData.pivotY -= h / 2;
 		break;
 	case textNS::CENTER_BOTTOM:     // center at x and align bottom to y
 		getWidthHeight(str, w, h);
-		spriteData.x -= w / 2;
-		spriteData.y -= h;
+		spriteData.pivotX -= w / 2;
+		spriteData.pivotY -= h;
 		break;
 	case textNS::LEFT_BOTTOM:       // left justify at x and align bottom to y
 		getWidthHeight(str, w, h);
-		spriteData.y -= h;
+		spriteData.pivotY -= h;
 		break;
 	case textNS::RIGHT_BOTTOM:      // right justify at x and align bottom to y
 		getWidthHeight(str, w, h);
-		spriteData.x -= w;
-		spriteData.y -= h;
+		spriteData.pivotX -= w;
+		spriteData.pivotY -= h;
 		break;
 	}
 }
@@ -340,7 +342,7 @@ void SpriteText::getWidthHeight(const std::string & str, UINT & w, UINT & h)
 
 	UCHAR ch = 0, chN = 0;
 	width = textNS::FONT_WIDTH;
-	int scaledWidth = static_cast<int>(width * spriteData.scale);
+	int scaledWidth = static_cast<int>(width * scale);
 	int strW = 0;
 	h = 0;
 	int stringWidth = 0;
@@ -358,7 +360,7 @@ void SpriteText::getWidthHeight(const std::string & str, UINT & w, UINT & h)
 				// +1 for DirectX sprite width
 				spriteData.rect.right = fontData[chN / textNS::COLUMNS][chN % textNS::COLUMNS].right + 1;
 				width = spriteData.rect.right - spriteData.rect.left + proportionalSpacing;
-				scaledWidth = static_cast<int>(width * spriteData.scale);
+				scaledWidth = static_cast<int>(width * scale);
 			}
 			else    // fixed pitch
 			{
@@ -376,7 +378,7 @@ void SpriteText::getWidthHeight(const std::string & str, UINT & w, UINT & h)
 				if (proportional)
 				{
 					width = (textNS::FONT_WIDTH) / 2;
-					scaledWidth = static_cast<int>(width * spriteData.scale);
+					scaledWidth = static_cast<int>(width * scale);
 				}
 				stringWidth += scaledWidth;
 				break;
@@ -384,7 +386,7 @@ void SpriteText::getWidthHeight(const std::string & str, UINT & w, UINT & h)
 				if (strW == 0)
 					strW = stringWidth;
 				stringWidth = 0;
-				h += static_cast<int>(height * spriteData.scale);
+				h += static_cast<int>(height * scale);
 				break;
 			case '\r':  // return
 				if (strW == 0)
@@ -394,10 +396,10 @@ void SpriteText::getWidthHeight(const std::string & str, UINT & w, UINT & h)
 			case '\t':  // tab
 			{
 				width = textNS::FONT_WIDTH;
-				scaledWidth = static_cast<int>(width * spriteData.scale);
-				int tabX = static_cast<int>(spriteData.x) / (scaledWidth * tabSize);
+				scaledWidth = static_cast<int>(width * scale);
+				int tabX = static_cast<int>(spriteData.pivotX) / (scaledWidth * tabSize);
 				tabX = (tabX + 1) * scaledWidth * tabSize;
-				int tabW = tabX - static_cast<int>(spriteData.x);
+				int tabW = tabX - static_cast<int>(spriteData.pivotX);
 				while (tabW > 0)
 				{
 					if (tabW >= scaledWidth)
@@ -455,19 +457,19 @@ void SpriteText::drawChar(UCHAR ch)
 		spriteData.rect.bottom = spriteData.rect.top + textNS::GRID_HEIGHT - 2;
 		spriteData.rect.left = (textNS::UNDERLINE - textNS::MIN_CHAR) % textNS::COLUMNS * textNS::GRID_WIDTH + 1;
 		spriteData.rect.right = spriteData.rect.left + width;
-		graphics->drawSprite(spriteData);
+		graphics->drawSprite(spriteData, spriteData.pivotX, spriteData.pivotY, scale);
 		spriteData.rect = sd2.rect;     // restore character rect
 	}
 
 	// display character
 	if (ch > textNS::MIN_CHAR && ch <= textNS::MAX_CHAR) // if displayable character
 	{
-		graphics->drawSprite(spriteData);
+		graphics->drawSprite(spriteData, 0, 0, scale);
 		if (bold)   // bold is done by displaying the character twice with offset x
 		{
-			spriteData.x += textNS::BOLD_SIZE * spriteData.scale;
-			graphics->drawSprite(spriteData);
-			spriteData.x = sd2.x;
+			spriteData.pivotX += textNS::BOLD_SIZE * scale;
+			graphics->drawSprite(spriteData, spriteData.width, spriteData.height, scale);
+			spriteData.pivotX = sd2.pivotX;
 		}
 	}
 }
@@ -478,12 +480,6 @@ void SpriteText::drawChar(UCHAR ch)
 //=============================================================================
 void SpriteText::onLostDevice()
 {
-	try {
-		if (!initialized)
-			return;
-		//fontTexture.onLostDevice();
-	}
-	catch (...) {}
 }
 
 //=============================================================================
@@ -491,10 +487,4 @@ void SpriteText::onLostDevice()
 //=============================================================================
 void SpriteText::onResetDevice()
 {
-	try {
-		if (!initialized)
-			return;
-		//	fontTexture.onResetDevice();
-	}
-	catch (...) {}
 }

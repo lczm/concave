@@ -1,6 +1,7 @@
 #pragma once
 #include "window.h"
 #include "image.h"
+#include "spriteText.h"
 
 class HUD
 {
@@ -10,6 +11,7 @@ private:
 	Texture hudTexture;
 	GridMask playerInfoGM;
 	Image playerInfoImage;
+	SpriteText* spriteText;
 	CoordI test = { 0, 0 };
 
 public:
@@ -20,5 +22,6 @@ public:
 	void resetAll();
 	void update();
 	void render();
+	void print();
 	SpriteData getSpriteData();
 };

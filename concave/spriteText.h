@@ -15,13 +15,13 @@ namespace textNS
 		UINT right;
 	};
 
-	const int FONT_BORDER = 3; // transparent border around font
-	const int FONT_WIDTH = 51;
-	const int FONT_HEIGHT = 51;
+	const int FONT_BORDER = 0; // transparent border around font
+	const int FONT_WIDTH = 32;
+	const int FONT_HEIGHT = 32;
 	const int GRID_WIDTH = FONT_WIDTH + FONT_BORDER;
 	const int GRID_HEIGHT = FONT_HEIGHT + FONT_BORDER;
-	const int COLUMNS = 32;		// number of columns in font image
-	const int ROWS = 3;		// number of rows in font image
+	const int COLUMNS = 8;		// number of columns in font image
+	const int ROWS = 8;		// number of rows in font image
 	const int FRAMES = 1;		// frames of animation; 1 = not animated
 	const double ANIM_DELAY = 0.0;	// delay between animation frames
 	const int MAX_FONT_HEIGHT = 1000;
@@ -51,6 +51,11 @@ private:
 	bool proportional;
 	bool underline;
 	bool bold;
+	UINT scale = 1;
+	CoordI test = { 0,0 };
+	Texture fontTexture;
+	GridMask fontGridMask;
+	Image fontImage;
 	textNS::Alignment align;
 	SpriteData spriteData;
 
@@ -96,7 +101,7 @@ public:
 		if (height == 0 || height > textNS::MAX_FONT_HEIGHT)	// invalid size
 			return;
 		fontHeight = height;
-		spriteData.scale = (float)height / (float)textNS::FONT_HEIGHT;
+		scale = (float)height / (float)textNS::FONT_HEIGHT;
 	}
 
 	// get font height

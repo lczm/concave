@@ -59,7 +59,9 @@ const char IMAGE_UNIT_WARRIOR[] = "sprites/unit_warrior.png";
 //-----------------------------------------------
 //                Image (HUD)
 //-----------------------------------------------
-const char IMAGE_PLAYER_INFO[] = "sprites/hud_player_info.png";
+const char IMAGE_HUD_PLAYER_INFO[] = "sprites/hud_player_info.png";
+const char IMAGE_HUD_FONT[] = "sprites/hud_diablo_font.bmp";
+const char IMAGE_HUD_INVENTORY[] = "sprites/hud_inventory.png";
 
 //-----------------------------------------------
 //					  Other

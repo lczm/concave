@@ -27,6 +27,7 @@ void Level::render()
 {
 	SpriteData sd = playerHUD->getSpriteData();
 	graphics->drawSprite(sd, 0, 0, camScale);
+	playerHUD->print();
 }
 
 CoordF Level::gridToScreen(float gx, float gy)

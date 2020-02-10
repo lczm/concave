@@ -1,6 +1,7 @@
 #pragma once
 #include "window.h"
 #include "button.h"
+#include "image.h"
 
 class MainMenu : public Window
 {

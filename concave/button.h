@@ -1,5 +1,6 @@
 #pragma once
 #include "window.h"
+#include "image.h"
 class Button
 {
 private:

@@ -152,6 +152,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="concave.cpp" />
+    <ClCompile Include="playerAttackState.cpp" />
+    <ClCompile Include="playerDieState.cpp" />
+    <ClCompile Include="playerIdleState.cpp" />
     <ClCompile Include="players.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="graphics.cpp" />
@@ -161,6 +164,7 @@
     <ClCompile Include="level.cpp" />
     <ClCompile Include="mainMenu.cpp" />
     <ClCompile Include="collisionSystem.cpp" />
+    <ClCompile Include="playerWalkState.cpp" />
     <ClCompile Include="tiles.cpp" />
     <ClCompile Include="window.cpp" />
     <ClCompile Include="winmain.cpp" />
@@ -169,6 +173,7 @@
     <ClInclude Include="component.h" />
     <ClInclude Include="concave.h" />
     <ClInclude Include="constants.h" />
+    <ClInclude Include="playerDieState.h" />
     <ClInclude Include="players.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="gameError.h" />
@@ -179,7 +184,11 @@
     <ClInclude Include="level.h" />
     <ClInclude Include="mainMenu.h" />
     <ClInclude Include="collisionSystem.h" />
+    <ClInclude Include="playerWalkState.h" />
+    <ClInclude Include="state.h" />
     <ClInclude Include="tiles.h" />
+    <ClInclude Include="playerAttackState.h" />
+    <ClInclude Include="playerIdleState.h" />
     <ClInclude Include="window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

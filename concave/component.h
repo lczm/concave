@@ -1,6 +1,7 @@
 #pragma once
 #include "constants.h"
 #include "image.h"
+#include "state.h"
 #include <vector>
 using namespace std;
 

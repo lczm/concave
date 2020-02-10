@@ -19,6 +19,12 @@ typedef Coord<float> CoordF;
 
 struct Line { float lower, upper, shift; };
 
+struct Movement
+{
+	float moveX;
+	float moveY;
+};
+
 enum DIRECTION8 { SOUTH, SOUTH_WEST, WEST, NORTH_WEST, NORTH, NORTH_EAST, EAST, SOUTH_EAST };
 // enum DIRECTION16 { SOUTH, SOUTH_WEST, WEST, NORTH_WEST, NORTH, NORTH_EAST, EAST, SOUTH_EAST };
 //namespace DIRECTION8 {
@@ -40,6 +46,7 @@ const int UNIT_STATE_DIE = 1;
 const int UNIT_STATE_IDLE = 2;
 const int UNIT_STATE_WALK = 3;
 const int UNIT_STATE_GET_HIT = 4;
+enum class PLAYER_STATE { ATTACK, DIE, IDLE, WALK, GET_HIT };
 // Players
 const int PLAYER_STATE_MAGIC_FIRE = 5;
 const int PLAYER_STATE_MAGIC_LIGHTNING = 6;

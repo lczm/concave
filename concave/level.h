@@ -7,6 +7,10 @@
 #include "collisionSystem.h"
 #include <vector>
 #include <cassert>
+#include "playerAttackState.h"
+#include "playerDieState.h"
+#include "playerIdleState.h"
+#include "playerWalkState.h"
 using namespace std;
 
 class Level : public Window
@@ -24,6 +28,8 @@ private:
 	Tiles tiles;
 	Players players;
 	// Systems
+
+	vector<State*> states;
 
 public:
 	Level();

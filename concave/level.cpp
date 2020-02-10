@@ -34,14 +34,25 @@ void Level::initialize()
 				translateHCollision(Collision{}, x, y),
 				translateVCollision(Collision{}, x, y), 
 				&floorSprite);
+	// States
+	PlayerAttackState* playerAttackState = new PlayerAttackState(input);
+	PlayerDieState* playerDieState = new PlayerDieState(input);
+	PlayerIdleState* playerIdleState = new PlayerIdleState(input);
+	PlayerWalkState* playerWalkState = new PlayerWalkState(input);
+	states.push_back(playerAttackState);
+	states.push_back(playerDieState);
+	states.push_back(playerIdleState);
+	states.push_back(playerWalkState);
+
 	// Player
 	players.initialize(1);
-	CoordF pPos = CoordF{ 5, 5 };
+	CoordF pPos = CoordF{ 2, 5 };
 	players.push(
-		pPos, 
-		translateHCollision(Collision{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, pPos), 
+		pPos,
+		translateHCollision(Collision{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, pPos),
 		translateVCollision(Collision{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, pPos),
-		&unitSprite);
+		&unitSprite,
+		playerIdleState);
 }
 
 void Level::releaseAll()
@@ -60,19 +71,46 @@ void Level::update()
 {
 	// Move Player
 	CoordF moveDelta{ 0, 0 };
-	if (input->isKeyDown('W')) moveDelta.y = -0.01;
-	if (input->isKeyDown('S')) moveDelta.y = 0.01;
-	if (input->isKeyDown('A')) moveDelta.x = -0.01;
-	if (input->isKeyDown('D')) moveDelta.x = 0.01;
-	players.getPositions()[0] += moveDelta;
+	// if (input->isKeyDown('W')) moveDelta.y = -0.01;
+	// if (input->isKeyDown('S')) moveDelta.y = 0.01;
+	// if (input->isKeyDown('A')) moveDelta.x = -0.01;
+	// if (input->isKeyDown('D')) moveDelta.x = 0.01;
+	// players.getPositions()[0] += moveDelta;
 	// Move Player Collision
 	updateHCollision(players.getHCollisions()[0], moveDelta);
 	updateVCollision(players.getVCollisions()[0], moveDelta);
-	//// Collision
+	// Collision
 	CoordF* pPositions = players.getPositions();
+	CoordF* pDestPositions = players.getDestPositions();
 	Collision* pHCollisions = players.getHCollisions();
 	Collision* pVCollisions = players.getVCollisions();
+	Movement* pMovements = players.getMovements();
+	vector<State*> pStates = players.getStates();
 	for (int i = 0; i < players.getSize(); i++) {
+		PLAYER_STATE state = pStates[i]->update(frameTime, &pPositions[i], &pDestPositions[i], &pMovements[i]);
+		if (pStates[i]->state == PLAYER_STATE::IDLE && state == PLAYER_STATE::WALK) {
+			players.setDestPosition(i, screenToGrid(players.getDestPositions(i)));
+		}
+		if (state != pStates[i]->state) {
+			switch (state) {
+			case PLAYER_STATE::ATTACK:
+				players.setState(i, states[0]);
+				break;
+			case PLAYER_STATE::DIE:
+				players.setState(i, states[1]);
+				break;
+			case PLAYER_STATE::IDLE:
+				std::cout << "Switching states to idle" << std::endl;
+				players.setState(i, states[2]);
+				break;
+			case PLAYER_STATE::WALK:
+				std::cout << "Switching states to walk" << std::endl;
+				players.setState(i, states[3]);
+				break;
+			default:
+				break;
+			}
+		}
 		CoordF pPosition = pPositions[i];
 		CoordF delta{ 0, 0 };
 		Line hLine, vLine;

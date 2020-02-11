@@ -46,6 +46,6 @@ void Inventory::render()
 	graphics->drawSprite(inventorySpriteData, inventoryX, inventoryY, 1);
 	for (int i = 0; i < playerInventory.size(); i++)
 	{
-		graphics->drawSprite(playerInventory.at(i)->getItemSpriteData(), inventoryX + (30 * (i+1)), inventorySpriteData.rect.bottom * 0.7, 1);
+		graphics->drawSprite(playerInventory.at(i)->getItemSpriteData(), (inventoryX + 20) + (30 * (i)), inventorySpriteData.rect.bottom * 0.63, 1);
 	}
 }

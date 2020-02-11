@@ -15,7 +15,6 @@ private:
 	SpriteData healthSpriteData;
 	SpriteData healthOrbSpriteData;
 	SpriteData inventorySpriteData;
-	vector<Item> playerInventory;
 
 public:
 	HUD();

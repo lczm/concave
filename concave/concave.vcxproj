@@ -158,6 +158,7 @@
     <ClCompile Include="image.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="inventory.cpp" />
+    <ClCompile Include="item.cpp" />
     <ClCompile Include="level.cpp" />
     <ClCompile Include="mainMenu.cpp" />
     <ClCompile Include="spriteText.cpp" />

@@ -15,6 +15,9 @@ public:
             if (abs(currY - destY) < 0.1) {
                 return true;
             }
+            return false;
         }
+        return false;
     }
+    bool isAtPosition(CoordF* current, CoordF* destination);
 };

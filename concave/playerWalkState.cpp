@@ -12,25 +12,20 @@ PLAYER_STATE PlayerWalkState::update(float frameTime, int index, Players* player
     // Move towards the direction
     // std::cout << "Current Position : " << position->x << " | " << position->y << std::endl;
     // std::cout << "Destination Position : " << destPosition->x << " | " << destPosition->y << std::endl;
+
     CoordF* position = &players->getPosition(index);
     CoordF* destPosition = &players->getDestPositions(index);
-
-    // if (!equalFloat(position->x, destPosition->x) && !equalFloat(position->y, destPosition->y)) {
-    if (equalFloat2(position->x, position->y, destPosition->x, destPosition->y)) {
+    if (!isAtPosition(position, destPosition)) {
         float currentX = position->x;
         float currentY = position->y;
         float destX = destPosition->x;
         float destY = destPosition->y;
 
         float radAngle = atan2(abs(currentX - destX), abs(currentY - destY));
-        float moveX = 1.50 * sin(radAngle) * frameTime;
-        float moveY = 1.50 * cos(radAngle) * frameTime;
 
-        std::cout << "Rad Angle " << radAngle << std::endl;
-        std::cout << "Current X , Y " << currentX << " | " << currentY << std::endl;
-        std::cout << "Destination X , Y " << destX << " | " << destY << std::endl;
-        std::cout << "Move X  : " << moveX << std::endl;
-        std::cout << "Move Y  : " << moveY << std::endl;
+        // TODO : 1.50 is the current velcoity
+        float moveX = 3.00 * sin(radAngle) * frameTime;
+        float moveY = 3.00 * cos(radAngle) * frameTime;
 
         if (destX > currentX && destY < currentY) {
             moveX = moveX;
@@ -49,9 +44,6 @@ PLAYER_STATE PlayerWalkState::update(float frameTime, int index, Players* player
             moveY = -moveY;
         }
 
-        // movement->moveX = moveX;
-        // movement->moveY = moveY;
-
         position->x += moveX;
         position->y += moveY;
         float newX = position->x += moveX;
@@ -62,3 +54,12 @@ PLAYER_STATE PlayerWalkState::update(float frameTime, int index, Players* player
     return PLAYER_STATE::IDLE;
 
 }
+
+bool PlayerWalkState::isAtPosition(CoordF* current, CoordF* destination)
+{
+    if ((abs(current->x - destination->x) < 0.1) && (abs(current->y - destination->y))) {
+        return true;
+    }
+    return false;
+}
+

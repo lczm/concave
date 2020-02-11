@@ -20,8 +20,10 @@ void Concave::initialize(HWND hwnd)
 	Window::mainMenu.initialize();
 	Window::level.initialize();
 	Window::hud.initialize();
+	Window::inventory.initialize();
 	Window::windows.push_back(&Window::level);
 	Window::windows.push_back(&Window::hud);
+	Window::windows.push_back(&Window::inventory);
 }
 
 void Concave::releaseAll()

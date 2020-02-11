@@ -157,6 +157,7 @@
     <ClCompile Include="hud.cpp" />
     <ClCompile Include="image.cpp" />
     <ClCompile Include="input.cpp" />
+    <ClCompile Include="inventory.cpp" />
     <ClCompile Include="level.cpp" />
     <ClCompile Include="mainMenu.cpp" />
     <ClCompile Include="spriteText.cpp" />
@@ -173,6 +174,8 @@
     <ClInclude Include="hud.h" />
     <ClInclude Include="image.h" />
     <ClInclude Include="input.h" />
+    <ClInclude Include="inventory.h" />
+    <ClInclude Include="item.h" />
     <ClInclude Include="level.h" />
     <ClInclude Include="mainMenu.h" />
     <ClInclude Include="spriteText.h" />

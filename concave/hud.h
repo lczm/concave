@@ -2,6 +2,7 @@
 #include "window.h"
 #include "image.h"
 #include "spriteText.h"
+#include "item.h"
 
 class HUD : public Window
 {
@@ -14,6 +15,7 @@ private:
 	SpriteData healthSpriteData;
 	SpriteData healthOrbSpriteData;
 	SpriteData inventorySpriteData;
+	vector<Item> playerInventory;
 
 public:
 	HUD();

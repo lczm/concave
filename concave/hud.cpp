@@ -48,10 +48,6 @@ SpriteData HUD::imageToSpriteData(const char* file, UINT imageWidth, UINT imageH
 	return imageSpriteData;
 }
 
-void HUD::drawInventory(UINT x, UINT y)
-{
-	graphics->drawSprite(inventorySpriteData, x, y, 1);
-}
 
 SpriteData HUD::getInventorySpriteData()
 {
@@ -90,6 +86,5 @@ void HUD::update()
 void HUD::render()
 {
 	drawHUD();
-	drawInventory(GAME_WIDTH - 320, 0);
 	print();
 }

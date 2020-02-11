@@ -7,6 +7,7 @@ using namespace std;
 class MainMenu;
 class Level;
 class HUD;
+class Inventory;
 
 class Window
 {
@@ -20,6 +21,8 @@ public:
 	static MainMenu mainMenu;
 	static Level level;
 	static HUD hud;
+	static Inventory inventory;
+
 public:
 	Window();
 	~Window();
@@ -33,3 +36,4 @@ public:
 #include "mainMenu.h"
 #include "level.h"
 #include "hud.h"
+#include "inventory.h"

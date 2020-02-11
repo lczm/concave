@@ -9,6 +9,7 @@ vector<Window*> Window::windows;
 MainMenu Window::mainMenu;
 Level Window::level;
 HUD Window::hud;
+Inventory Window::inventory;
 
 Window::Window()
 {}

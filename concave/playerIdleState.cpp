@@ -17,16 +17,16 @@ PLAYER_STATE PlayerIdleState::update(float frameTime, int index, Level* level)
     if (input->getMouseLButton()) {
         players->setDestPosition(index, level->screenToGrid(CoordF{float(level->input->getMouseX()), float(input->getMouseY())}));
         players->setMovement(index, calculateMovement(frameTime, players->getPosition(index), players->getDestPositions(index)));
+        renderInfo->timer = 0;
+        renderInfo->frameNo = 0;
         return PLAYER_STATE::WALK;
     }
-    renderInfo->timer += frameTime;
-    if (renderInfo->timer >= renderInfo->delay) {
-        renderInfo->timer -= renderInfo->delay;
-        renderInfo->frameNo++;
-        if (renderInfo->frameNo == players->getRender(index)->getEndFrame(renderInfo->state)) {
-            renderInfo->frameNo = 0;
-        }
+    else if (input->getMouseRButton()) {
+        renderInfo->timer = 0;
+        renderInfo->frameNo = 0;
+        return PLAYER_STATE::ATTACK;
     }
+    updateFrameNo(frameTime, index, players, renderInfo);
     return PLAYER_STATE::IDLE;
 }
 

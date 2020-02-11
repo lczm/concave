@@ -150,14 +150,7 @@ void Level::render()
 			graphics->drawSprite(
 				tiles.getRender(y, x)->getSpriteData(),
 				gridToScreen(x, y), camScale);
-	// graphics->drawSprite(
-	// 	players.getRender(0)->getSpriteData(PLAYER_STATE::ATTACK, NORTH_EAST, 0),
-	// 	gridToScreen(players.getPosition(0)), camScale);
 	for (int i = 0; i < players.getSize(); i++) {
-        // graphics->drawSprite(
-        //     players.getRender(i)->getSpriteData(PLAYER_STATE::ATTACK, NORTH_EAST, 0),
-        //     gridToScreen(players.getPosition(i)), camScale);
-
 		// Temporary solution to make it not blurry
 		CoordF screenCoords = gridToScreen(players.getPosition(i));
         graphics->drawSprite(

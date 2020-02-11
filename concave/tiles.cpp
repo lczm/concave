@@ -4,51 +4,47 @@ Tiles::Tiles()
 {}
 
 Tiles::~Tiles()
-{
-	delete[] hCollisions;
-	delete[] vCollisions;
-	delete[] renders;
-}
+{}
 
 void Tiles::initialize(int rows, int cols)
 {
 	Tiles::rows = rows;
 	Tiles::cols = cols;
-	hCollisions = new Collision[rows * cols];
-	vCollisions = new Collision[rows * cols];
-	renders = new Render[rows * cols];
+	hLinesArray.resize(rows * cols);
+	vLinesArray.resize(rows * cols);
+	spriteArray.resize(rows * cols);
 }
 
-void Tiles::set(int row, int col, Collision hCollision, Collision vCollision, Render render)
+void Tiles::set(int row, int col, Lines hLines, Lines vLines, Sprite* sprite)
 {
-	setCollision(row, col, hCollision, vCollision);
-	setRender(row, col, render);
+	setLines(row, col, hLines, vLines);
+	setSprite(row, col, sprite);
 }
 
-void Tiles::setCollision(int row, int col, Collision hCollision, Collision vCollision)
+void Tiles::setLines(int row, int col, Lines hLines, Lines vLines)
 {
-	hCollisions[mapIndex(col, row)] = hCollision; // Done intentionally
-	vCollisions[mapIndex(row, col)] = vCollision;
+	hLinesArray[mapIndex(col, row)] = hLines; // Done intentionally
+	vLinesArray[mapIndex(row, col)] = vLines;
 }
 
-void Tiles::setRender(int row, int col, Render render)
+void Tiles::setSprite(int row, int col, Sprite* sprite)
 {
-	renders[mapIndex(row, col)] = render;
+	spriteArray[mapIndex(row, col)] = sprite;
 }
 
-Collision Tiles::getHCollision(int row, int col)
+Lines& Tiles::getHLines(int row, int col)
 {
-	return hCollisions[mapIndex(col, row)]; // (Again) Done intentionally
+	return hLinesArray[mapIndex(col, row)]; // (Again) Done intentionally
 }
 
-Collision Tiles::getVCollision(int row, int col)
+Lines& Tiles::getVLines(int row, int col)
 {
-	return vCollisions[mapIndex(row, col)];
+	return vLinesArray[mapIndex(row, col)];
 }
 
-Render Tiles::getRender(int row, int col)
+Sprite*& Tiles::getSprite(int row, int col)
 {
-	return renders[mapIndex(row, col)];
+	return spriteArray[mapIndex(row, col)];
 }
 
 int Tiles::mapIndex(int row, int col)

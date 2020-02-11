@@ -25,22 +25,22 @@ void Level::initialize()
 	for (int y = 0; y < tiles.getRows(); y++)
 		for (int x = 0; x < tiles.getCols(); x++)
 			tiles.set(y, x, 
-				translateHCollision(Collision{ { 0, 1, 0 } }, x, y), 
-				translateVCollision(Collision{}, x, y),
+				translateHLines(Lines{ { 0, 1, 0 } }, x, y), 
+				translateVLines(Lines{}, x, y),
 				&wallSprite);
 	for (int y = 1; y < tiles.getRows() - 1; y++)
 		for (int x = 1; x < tiles.getCols() - 1; x++)
 			tiles.set(y, x, 
-				translateHCollision(Collision{}, x, y),
-				translateVCollision(Collision{}, x, y), 
+				translateHLines(Lines{}, x, y),
+				translateVLines(Lines{}, x, y), 
 				&floorSprite);
 	// Player
 	players.initialize(1);
 	CoordF pPos = CoordF{ 5, 5 };
 	players.push(
 		pPos, 
-		translateHCollision(Collision{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, pPos), 
-		translateVCollision(Collision{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, pPos),
+		translateHLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, pPos), 
+		translateVLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, pPos),
 		&unitSprite);
 }
 
@@ -64,29 +64,29 @@ void Level::update()
 	if (input->isKeyDown('S')) moveDelta.y = 0.01;
 	if (input->isKeyDown('A')) moveDelta.x = -0.01;
 	if (input->isKeyDown('D')) moveDelta.x = 0.01;
-	players.getPositions()[0] += moveDelta;
-	// Move Player Collision
-	updateHCollision(players.getHCollisions()[0], moveDelta);
-	updateVCollision(players.getVCollisions()[0], moveDelta);
-	// Collision
-	CoordF* pPositions = players.getPositions();
-	Collision* pHCollisions = players.getHCollisions();
-	Collision* pVCollisions = players.getVCollisions();
+	players.getPositionArray()[0] += moveDelta;
+	// Move Player Lines
+	updateHLines(players.getHLinesArray()[0], moveDelta);
+	updateVLines(players.getVLinesArray()[0], moveDelta);
+	// Lines
+	vector<CoordF>& pPositionArray = players.getPositionArray();
+	vector<Lines>& pHLinesArray = players.getHLinesArray();
+	vector<Lines>& pVLinesArray = players.getVLinesArray();
 	for (int i = 0; i < players.getSize(); i++) {
-		CoordF pPosition = pPositions[i];
+		CoordF pPosition = pPositionArray[i];
 		CoordF delta{ 0, 0 };
 		Line hLine, vLine;
-		if (checkHCollisionToWallCollision(tiles, hLine, vLine, pHCollisions[i]))
+		if (checkHLinesToWallCollision(tiles, hLine, vLine, pHLinesArray[i]))
 			delta.x = getDeltaXResponse(hLine, vLine, pPosition);
-		if (checkVCollisionToWallCollision(tiles, vLine, hLine, pVCollisions[i]))
+		if (checkVLinesToWallCollision(tiles, vLine, hLine, pVLinesArray[i]))
 			delta.y = getDeltaYResponse(vLine, hLine, pPosition);
-		pPositions[i] += delta;
-		updateHCollision(pHCollisions[i], delta);
-		updateVCollision(pVCollisions[i], delta);
+		pPositionArray[i] += delta;
+		updateHLines(pHLinesArray[i], delta);
+		updateVLines(pVLinesArray[i], delta);
 	}
 
 	// Move Camera
-	camCoord = players.getPosition(0);
+	camCoord = players.getPositionArray()[0];
 	if (input->isKeyDown('O')) camScale *= 1 - 0.01;
 	if (input->isKeyDown('P')) camScale *= 1 + 0.01;
 }
@@ -96,11 +96,11 @@ void Level::render()
 	for (int y = 0; y < tiles.getRows(); y++)
 		for (int x = 0; x < tiles.getCols(); x++)
 			graphics->drawSprite(
-				tiles.getRender(y, x)->getSpriteData(),
+				tiles.getSprite(y, x)->getSpriteData(),
 				gridToScreen(x, y), camScale);
 	graphics->drawSprite(
-		players.getRender(0)->getSpriteData(),
-		gridToScreen(players.getPosition(0)), camScale);
+		players.getSpriteArray()[0]->getSpriteData(),
+		gridToScreen(players.getPositionArray()[0]), camScale);
 }
 
 CoordF Level::gridToScreen(float gx, float gy)
@@ -134,5 +134,5 @@ CoordF Level::gridToScreen(CoordF gridCoord)
 
 CoordF Level::screenToGrid(CoordF screenCoord)
 {
-	return screenToGrid(screenCoord.x, screenCoord.y);	
+	return screenToGrid(screenCoord.x, screenCoord.y);
 }

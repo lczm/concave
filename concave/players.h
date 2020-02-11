@@ -5,26 +5,19 @@ class Players
 {
 private:
 	int capacity, size;
-	CoordF* positions;
-	Collision* hCollisions;
-	Collision* vCollisions;
-	Render* renders;
+	vector<CoordF> positionArray;
+	vector<Lines> hLinesArray;
+	vector<Lines> vLinesArray;
+	vector<Sprite*> spriteArray;
 public:
 	Players(); ~Players();
 	void initialize(int capacity);
-	void push(CoordF position, Collision hCollision, Collision vCollision, Render render);
+	void push(CoordF position, Lines hLines, Lines vLines, Sprite* sprite);
 	void pop(int index);
-	void setPosition(int index, CoordF position);
-	void setCollision(int index, Collision hCollision, Collision vCollision);
-	void setRender(int index, Render render);
-	CoordF getPosition(int index);
-	Collision getHCollision(int index);
-	Collision getVCollision(int index);
-	Render getRender(int index);
 public:
 	int getSize() { return size; }
-	CoordF* getPositions() { return positions; }
-	Collision* getHCollisions() { return hCollisions; }
-	Collision* getVCollisions() { return vCollisions; }
-	Render* getRenders() { return renders; }
+	vector<CoordF>& getPositionArray() { return positionArray; }
+	vector<Lines>& getHLinesArray() { return hLinesArray; }
+	vector<Lines>& getVLinesArray() { return vLinesArray; }
+	vector<Sprite*>& getSpriteArray() { return spriteArray; }
 };

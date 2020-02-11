@@ -122,6 +122,14 @@ SpriteData AnimImage::getSpriteData(int state, int direction, int frameNo)
 	return spriteData;
 }
 
+SpriteData AnimImage::getSpriteData(RenderInfo renderInfo)
+{
+	SpriteData spriteData;
+	texture->getSpriteData(spriteData);
+	gridMasks[renderInfo.state].getSpriteData(spriteData, CoordI{ renderInfo.frameNo, renderInfo.direction });
+	return spriteData;
+}
+
 //void AnimImage::getSpriteData(SpriteData& spriteData, int state, int direction, int frameNo)
 //{
 //	texture->getSpriteData(spriteData);

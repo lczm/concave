@@ -57,6 +57,7 @@ public:
 	~AnimImage();
 	void initialize(Texture* texture, vector<GridMask> gridMask, vector<int> endFrames);
 	SpriteData getSpriteData(int state, int direction, int frameNo);
+	SpriteData getSpriteData(RenderInfo renderInfo);
 	//void getSpriteData(SpriteData& SpriteData, int state, int direction, int frameNo);
 	int getEndFrame(int state);
 };

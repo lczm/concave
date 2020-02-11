@@ -12,7 +12,8 @@ private:
 	CoordF* destinationPositions;
 	Collision* hCollisions;
 	Collision* vCollisions;
-	Render* renders;
+	RenderAnim* renders;
+	RenderInfo* rendersInfos;
 
 	vector<State*> states;
     // vector<Movement> movements;
@@ -21,32 +22,30 @@ public:
 	Players(); ~Players();
 	void initialize(int capacity);
 	void push(CoordF position, Collision hCollision, Collision vCollision, 
-		Render render, State* initialState);
+		RenderAnim render, RenderInfo renderInfo, State* initialState);
 	void pop(int index);
 	void setPosition(int index, CoordF position);
 	void setDestPosition(int index, CoordF position);
 	void setCollision(int index, Collision hCollision, Collision vCollision);
-	void setRender(int index, Render render);
+	void setRender(int index, RenderAnim);
+	void setState(int index, State* state);
+    void setMovement(int index, Movement movement);
 	CoordF getPosition(int index);
+	CoordF getDestPositions(int index);
 	Collision getHCollision(int index);
 	Collision getVCollision(int index);
-	Render getRender(int index);
+	RenderAnim getRender(int index);
+	RenderInfo getRenderInfo(int index);
+    Movement getMovements(int index);
 public:
 	int getSize() { return size; }
 	CoordF* getPositions() { return positions; }
 	CoordF* getDestPositions() { return destinationPositions; }
-	CoordF getDestPositions(int index) { return destinationPositions[index]; }
 	Collision* getHCollisions() { return hCollisions; }
 	Collision* getVCollisions() { return vCollisions; }
-	Render* getRenders() { return renders; }
-
-	void setState(int index, State* state);
 	vector<State*> getStates() { return states; }
-
-    void setMovement(int index, Movement movement);
-	//vector<Movement> getMovements() { return movements; }
-    Movement getMovements(int index);
-	// vector<Movement*> getMovements() { return movements; }
+	RenderAnim* getRenders() { return renders; }
+	RenderInfo* getRenderInfos() { return rendersInfos; }
 };
 
 #include "state.h"

@@ -18,18 +18,20 @@ void Players::initialize(int capacity)
 	Players::destinationPositions = new CoordF[capacity];
 	Players::hCollisions = new Collision[capacity];
 	Players::vCollisions = new Collision[capacity];
-	Players::renders = new Render[capacity];
+	Players::renders = new RenderAnim[capacity];
+	Players::rendersInfos = new RenderInfo[capacity];
 	Players::movements = new Movement[capacity];
 }
 
 void Players::push(CoordF position, Collision hCollision, Collision vCollision, 
-	Render render, State* initialState)
+	RenderAnim render, RenderInfo renderInfo, State* initialState)
 {
 	positions[size] = position;
 	destinationPositions[size] = position;
 	hCollisions[size] = hCollision;
 	vCollisions[size] = vCollision;
 	renders[size] = render;
+	rendersInfos[size] = renderInfo;
 	movements[size] = Movement{ 0, 0 };
 	states.push_back(initialState);
 	size++;
@@ -57,7 +59,7 @@ void Players::setCollision(int index, Collision hCollision, Collision vCollision
 	hCollisions[index] = hCollision;
 	vCollisions[index] = vCollision;
 }
-void Players::setRender(int index, Render render)
+void Players::setRender(int index, RenderAnim render)
 {
 	renders[index] = render;
 }
@@ -65,6 +67,11 @@ void Players::setRender(int index, Render render)
 CoordF Players::getPosition(int index)
 {
 	return positions[index];
+}
+
+CoordF Players::getDestPositions(int index)
+{
+	return destinationPositions[index];
 }
 
 Collision Players::getHCollision(int index)
@@ -77,9 +84,14 @@ Collision Players::getVCollision(int index)
 	return vCollisions[index];
 }
 
-Render Players::getRender(int index)
+RenderAnim Players::getRender(int index)
 {
 	return renders[index];
+}
+
+RenderInfo Players::getRenderInfo(int index)
+{
+	return rendersInfos[index];
 }
 
 void Players::setState(int index, State* state)

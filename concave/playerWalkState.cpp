@@ -19,7 +19,6 @@ PLAYER_STATE PlayerWalkState::update(float frameTime, int index, Level* level)
     CoordF* destPosition = &players->getDestPositions(index);
     if (!isAtPosition(position, destPosition)) {
         Movement movement = players->getMovements(index);
-        // players->setPosition(index, CoordF{ newX, newY });
         players->setPosition(index, CoordF{ position->x += movement.moveX,
                                             position->y += movement.moveY });
         return PLAYER_STATE::WALK;

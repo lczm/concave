@@ -22,8 +22,12 @@ private:
 	Texture tileTexture; GridMask tileGridMask; Image tileImage;
 	Sprite floorSprite, wallSprite;
 	// Player
-	Texture unitTexture; GridMask unitGridMask; Image unitImage;
-	Sprite unitSprite;
+	Texture unitTexture; AnimImage unitImage;
+	GridMask unitAttackGridMask;
+	GridMask unitDieGridMask;
+	GridMask unitIdleGridMask;
+	GridMask unitWalkGridMask;
+	// Sprite unitSprite;
 	// Components
 	Tiles tiles;
 	Players players;

@@ -8,8 +8,8 @@ Movement State::calculateMovement(float frameTime, CoordF position, CoordF destP
      float destX = destPosition.x;
      float destY = destPosition.y;
      float radAngle = atan2(abs(currentX - destX), abs(currentY - destY));
-     float moveX = 3.0 * sin(radAngle) * frameTime;
-     float moveY = 3.0 * cos(radAngle) * frameTime;
+     float moveX = float(3.0 * sin(radAngle) * frameTime);
+     float moveY = float(3.0 * cos(radAngle) * frameTime);
  
      if (destX > currentX && destY < currentY) {
          moveX = moveX;

@@ -6,3 +6,4 @@ using namespace std;
 
 typedef vector<Line> Collision;
 typedef Sprite* Render;
+typedef AnimImage* RenderAnim;

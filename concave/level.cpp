@@ -16,10 +16,21 @@ void Level::initialize()
 	tileImage.initialize(&tileTexture, tileGridMask);
 	floorSprite.initialize(&tileImage, CoordI{ 12, 0 });
 	wallSprite.initialize(&tileImage, CoordI{ 6, 0 });
+
 	unitTexture.initialize(graphics, IMAGE_UNIT_WARRIOR);
-	unitGridMask.initialize(0, 1046, 96, 94, 0, 1, 43, 81);
-	unitImage.initialize(&unitTexture, unitGridMask);
-	unitSprite.initialize(&unitImage, CoordI{ 0, 0 });
+    unitAttackGridMask.initialize(0, 7, 128, 128, 0, 1, 58, 114);
+	unitDieGridMask.initialize(2049, 7, 128, 95, 0, 1, 59, 71);
+	unitIdleGridMask.initialize(0, 1045, 96, 96, 0, 1, 43, 81);
+	unitWalkGridMask.initialize(2882, 1045, 96, 96, 0, 1, 44, 80);
+	vector<GridMask> unitGridMasks = {
+        unitAttackGridMask,
+        unitDieGridMask,
+        unitIdleGridMask,
+        unitWalkGridMask
+	};
+    vector<int> unitEndFrames = { 16, 21, 10, 8 };
+	unitImage.initialize(&unitTexture, unitGridMasks, unitEndFrames);
+
 	// Tiles
 	tiles.initialize(10, 10);
 	for (int y = 0; y < tiles.getRows(); y++)
@@ -51,7 +62,8 @@ void Level::initialize()
 		pPos,
 		translateHCollision(Collision{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, pPos),
 		translateVCollision(Collision{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, pPos),
-		&unitSprite,
+		&unitImage,
+		RenderInfo{ PLAYER_STATE::IDLE, 0, 0, 0, 0.03 },
 		playerIdleState);
 }
 
@@ -86,26 +98,25 @@ void Level::update()
 	Collision* pHCollisions = players.getHCollisions();
 	Collision* pVCollisions = players.getVCollisions();
 	vector<State*> pStates = players.getStates();
+	RenderInfo* pRenderInfos = players.getRenderInfos();
 	for (int i = 0; i < players.getSize(); i++) {
         PLAYER_STATE state = pStates[i]->update(frameTime, i, this);
-		// if (pStates[i]->state == PLAYER_STATE::IDLE && state == PLAYER_STATE::WALK) {
-		// 	CoordF position = screenToGrid(players.getDestPositions(i));
-		// 	std::cout << "Grid position : " << position.x << " | " << position.y << std::endl;
-		// 	players.setDestPosition(i, screenToGrid(players.getDestPositions(i)));
-		// }
-		// if (state != pStates[i]->state) {
         switch (state) {
         case PLAYER_STATE::ATTACK:
+			pRenderInfos[i].state = PLAYER_STATE::ATTACK;
             players.setState(i, states[0]);
             break;
         case PLAYER_STATE::DIE:
+			pRenderInfos[i].state = PLAYER_STATE::DIE;
             players.setState(i, states[1]);
             break;
         case PLAYER_STATE::IDLE:
+			pRenderInfos[i].state = PLAYER_STATE::IDLE;
             std::cout << "Switching states to idle" << std::endl;
             players.setState(i, states[2]);
             break;
         case PLAYER_STATE::WALK:
+			pRenderInfos[i].state = PLAYER_STATE::WALK;
             std::cout << "Switching states to walk" << std::endl;
             CoordF position = gridToScreen(players.getPosition(i));
             players.setState(i, states[3]);
@@ -139,9 +150,20 @@ void Level::render()
 			graphics->drawSprite(
 				tiles.getRender(y, x)->getSpriteData(),
 				gridToScreen(x, y), camScale);
-	graphics->drawSprite(
-		players.getRender(0)->getSpriteData(),
-		gridToScreen(players.getPosition(0)), camScale);
+	// graphics->drawSprite(
+	// 	players.getRender(0)->getSpriteData(PLAYER_STATE::ATTACK, NORTH_EAST, 0),
+	// 	gridToScreen(players.getPosition(0)), camScale);
+	for (int i = 0; i < players.getSize(); i++) {
+        // graphics->drawSprite(
+        //     players.getRender(i)->getSpriteData(PLAYER_STATE::ATTACK, NORTH_EAST, 0),
+        //     gridToScreen(players.getPosition(i)), camScale);
+
+		// Temporary solution to make it not blurry
+		CoordF screenCoords = gridToScreen(players.getPosition(i));
+        graphics->drawSprite(
+            players.getRender(i)->getSpriteData(players.getRenderInfo(i)),
+            int(screenCoords.x), int(screenCoords.y), camScale);
+	}
 }
 
 CoordF Level::gridToScreen(float gx, float gy)

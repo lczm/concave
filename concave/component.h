@@ -12,6 +12,7 @@ struct Line {
 };
 struct LineI : Line {
 	int id;
+	LineI(Line line, int id) : Line(line) { LineI::id = id; }
 	LineI(float lower, float upper, float shift, int id): Line(lower, upper, shift) { LineI::id = id; }
 };
 typedef vector<Line> Lines;

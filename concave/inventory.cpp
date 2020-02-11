@@ -16,9 +16,9 @@ void Inventory::initialize()
 	inventoryImage.initialize(&inventoryTexture, inventoryGridMask);
 	inventoryImage.getSpriteData(inventorySpriteData, inventoryCoord);
 	vector<int> testInven;
+	testInven.push_back(0);
 	testInven.push_back(1);
 	testInven.push_back(2);
-	testInven.push_back(3);
 	populateInventory(testInven);
 }
 
@@ -46,6 +46,6 @@ void Inventory::render()
 	graphics->drawSprite(inventorySpriteData, inventoryX, inventoryY, 1);
 	for (int i = 0; i < playerInventory.size(); i++)
 	{
-		graphics->drawSprite(playerInventory.at(i)->getItemSpriteData(), inventoryX + (30 * (i+1)), inventoryY, 1);
+		graphics->drawSprite(playerInventory.at(i)->getItemSpriteData(), inventoryX + (30 * (i+1)), inventorySpriteData.rect.bottom * 0.7, 1);
 	}
 }

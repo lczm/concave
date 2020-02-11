@@ -69,8 +69,17 @@ void RenderLevel::renderMap(int map[mapWidth][mapHeight], int x, int y, SpriteDa
 		case ImageType::churchWallPath:
 			tileImage.getSpriteData(sd, IMAGE_MAP.at(ImageType::churchWallPath));
 			break;
+
+		//test objects
 		case 8:
 			itemImage.getSpriteData(sd, CoordI{0,0});
+			break;
+		case 9:
+			itemImage.getSpriteData(sd, CoordI{ 21,0 });
+			break;
+
+		case 10:
+			tileImage.getSpriteData(sd, CoordI{14,8});
 			break;
 		}
 	}

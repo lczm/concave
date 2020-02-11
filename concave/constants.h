@@ -97,7 +97,7 @@ const float MAX_FRAME_TIME = 1.0f / MIN_FRAME_RATE; // maximum time used in calc
 
 
 
-const int noSpritesChruch = 8;
+const int noSpritesChruch = 11;
 const int noSpritesCave = 2;
 const int itemsToSpawn = 1;
 
@@ -119,6 +119,7 @@ enum ImageType {
 	churchWallWest = 5,
 	churchWallConnect = 6,
 	churchWallPath = 7
+	//add church door open here
 };
 
 enum ImageTypeCave

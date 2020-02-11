@@ -89,7 +89,7 @@ void Level::levelEdit()
 		CoordF mouse = { input->getMouseX(), input->getMouseY() };
 		CoordF gridPos1 = screenToGrid(mouse.x, mouse.y);
 		CoordI gridPos = { gridPos1.x, gridPos1.y };
-		++map[gridPos.y][gridPos.x] %= 9;
+		++map[gridPos.y][gridPos.x] %= noSpritesChruch;
 		input->clearCharIn();
 	}
 
@@ -97,6 +97,22 @@ void Level::levelEdit()
 	{
 		writeToFile(map);
 	}
+
+
+	if (input->getMouseLButton())
+	{
+		input->setMouseLButton(false);
+		CoordF mouse = { input->getMouseX(), input->getMouseY() };
+		CoordF gridPos1 = screenToGrid(mouse.x, mouse.y);
+		CoordI gridPos = { gridPos1.x, gridPos1.y };
+
+		//door
+		// 10 is open door (add to constants)
+		editComponent->changeObjects(ImageType::churchDoor, 10, map, gridPos.y, gridPos.x);
+
+		input->clearCharIn();
+	}
+
 }
 
 void Level::readFromFile()

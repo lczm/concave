@@ -4,8 +4,7 @@
 class PlayerAttackState : public State
 {
 public:
-    PlayerAttackState(Level* level);
+    PlayerAttackState();
     ~PlayerAttackState();
-    // PLAYER_STATE update(float frameTime, CoordF* position, CoordF* destPosition, Movement* movement);
-    PLAYER_STATE update(float frameTime, int index, Players* players);
+    PLAYER_STATE update(float frameTime, int index, Level* level);
 };

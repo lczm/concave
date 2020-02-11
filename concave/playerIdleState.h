@@ -5,8 +5,7 @@
 class PlayerIdleState : public State
 {
 public:
-    PlayerIdleState(Level* level);
+    PlayerIdleState();
     ~PlayerIdleState();
-    PLAYER_STATE update(float frameTime, int index, Players* players);
-    Movement calculateMovement(float frameTime, CoordF position, CoordF destPosition);
+    PLAYER_STATE update(float frameTime, int index, Level* level);
 };

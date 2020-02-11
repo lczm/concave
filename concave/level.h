@@ -44,4 +44,6 @@ public:
 	CoordF screenToGrid(float sx, float sy);
 	CoordF gridToScreen(CoordF gridCoord);
 	CoordF screenToGrid(CoordF screenCoord);
+
+	Players* getPlayers() { return &players; }
 };

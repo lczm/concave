@@ -165,6 +165,7 @@
     <ClCompile Include="mainMenu.cpp" />
     <ClCompile Include="collisionSystem.cpp" />
     <ClCompile Include="playerWalkState.cpp" />
+    <ClCompile Include="state.cpp" />
     <ClCompile Include="tiles.cpp" />
     <ClCompile Include="window.cpp" />
     <ClCompile Include="winmain.cpp" />

@@ -35,10 +35,10 @@ void Level::initialize()
 				translateVCollision(Collision{}, x, y), 
 				&floorSprite);
 	// States
-	PlayerAttackState* playerAttackState = new PlayerAttackState(this);
-	PlayerDieState* playerDieState = new PlayerDieState(this);
-	PlayerIdleState* playerIdleState = new PlayerIdleState(this);
-	PlayerWalkState* playerWalkState = new PlayerWalkState(this);
+	PlayerAttackState* playerAttackState = new PlayerAttackState();
+	PlayerDieState* playerDieState = new PlayerDieState();
+	PlayerIdleState* playerIdleState = new PlayerIdleState();
+	PlayerWalkState* playerWalkState = new PlayerWalkState();
 	states.push_back(playerAttackState);
 	states.push_back(playerDieState);
 	states.push_back(playerIdleState);
@@ -87,32 +87,32 @@ void Level::update()
 	Collision* pVCollisions = players.getVCollisions();
 	vector<State*> pStates = players.getStates();
 	for (int i = 0; i < players.getSize(); i++) {
-        PLAYER_STATE state = pStates[i]->update(frameTime, i, &players);
+        PLAYER_STATE state = pStates[i]->update(frameTime, i, this);
 		// if (pStates[i]->state == PLAYER_STATE::IDLE && state == PLAYER_STATE::WALK) {
 		// 	CoordF position = screenToGrid(players.getDestPositions(i));
 		// 	std::cout << "Grid position : " << position.x << " | " << position.y << std::endl;
 		// 	players.setDestPosition(i, screenToGrid(players.getDestPositions(i)));
 		// }
-		if (state != pStates[i]->state) {
-			switch (state) {
-			case PLAYER_STATE::ATTACK:
-				players.setState(i, states[0]);
-				break;
-			case PLAYER_STATE::DIE:
-				players.setState(i, states[1]);
-				break;
-			case PLAYER_STATE::IDLE:
-				std::cout << "Switching states to idle" << std::endl;
-				players.setState(i, states[2]);
-				break;
-			case PLAYER_STATE::WALK:
-				std::cout << "Switching states to walk" << std::endl;
-                CoordF position = gridToScreen(players.getPosition(i));
-				players.setState(i, states[3]);
-				break;
-			default:
-				break;
-			}
+		// if (state != pStates[i]->state) {
+        switch (state) {
+        case PLAYER_STATE::ATTACK:
+            players.setState(i, states[0]);
+            break;
+        case PLAYER_STATE::DIE:
+            players.setState(i, states[1]);
+            break;
+        case PLAYER_STATE::IDLE:
+            std::cout << "Switching states to idle" << std::endl;
+            players.setState(i, states[2]);
+            break;
+        case PLAYER_STATE::WALK:
+            std::cout << "Switching states to walk" << std::endl;
+            CoordF position = gridToScreen(players.getPosition(i));
+            players.setState(i, states[3]);
+            break;
+        default:
+            break;
+			// }
 		}
 		// CoordF pPosition = pPositions[i];
 		// CoordF delta{ 0, 0 };

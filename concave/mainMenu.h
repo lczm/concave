@@ -1,8 +1,7 @@
 #pragma once
 #include "window.h"
-#include "button.h"
 #include "image.h"
-
+#include "button.h"
 class MainMenu : public Window
 {
 private:
@@ -16,7 +15,7 @@ private:
 public:
 	MainMenu();
 	~MainMenu();
-	void initialize(Graphics* graphics, Input* input);
+	void initialize();
 	void releaseAll();
 	void resetAll();
 	void update();

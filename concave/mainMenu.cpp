@@ -8,12 +8,11 @@ MainMenu::MainMenu()
 MainMenu::~MainMenu()
 {}
 
-void MainMenu::initialize(Graphics* graphics, Input* input)
+void MainMenu::initialize()
 {	
-	playbtnTexture.initialize(MainMenu::graphics, PLAY_BTN_TEXTURE);
-	playbtn.initialize(graphics, input, &playbtnTexture);
+	playbtnTexture.initialize(Window::graphics, PLAY_BTN_TEXTURE);
+	playbtn.initialize(Window::graphics, Window::input, &playbtnTexture, 0, 0);
 	playbtnGM.initialize(0, 0, 351, 138, 0, 0, 0, 0);
-	Window::initialize();
 }
 
 

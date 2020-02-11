@@ -1,14 +1,13 @@
 #include "button.h"
 Button::Button()
 {
-	x = 0;
-	y = 0;
+	
 }
 
 Button::~Button()
 {}
 
-void Button::initialize(Graphics* graphics, Input* input, Texture* texture)
+void Button::initialize(Graphics* graphics, Input* input, Texture* texture, float x, float y)
 {
 	Button::graphics = graphics;
 	Button::input = input;
@@ -26,7 +25,7 @@ SpriteData Button::getSpriteData()
 void Button::draw()
 {
 
-	graphics->drawSprite(getSpriteData(), x, y, NULL);
+	graphics->drawSprite(getSpriteData(), x, y, 1);
 	
 }
 

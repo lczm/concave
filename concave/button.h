@@ -1,6 +1,9 @@
 #pragma once
-#include "window.h"
+#include "graphics.h"
+#include "input.h"
 #include "image.h"
+
+
 class Button
 {
 private:
@@ -8,7 +11,6 @@ private:
 	Input* input;
 	Texture *texture;
 	GridMask gridMask;
-	SpriteData spriteData;
 	float x;
 	float y;
 
@@ -16,7 +18,7 @@ private:
 public:
 	Button();
 	~Button();
-	void initialize(Graphics* graphics, Input* input, Texture* texture);
+	void initialize(Graphics* graphics, Input* input, Texture* texture, float x, float y);
 	SpriteData getSpriteData();
 	void draw();
 	

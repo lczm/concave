@@ -17,9 +17,9 @@ void Concave::initialize(HWND hwnd)
 	Game::initialize(hwnd);
 	Window::graphics = graphics;
 	Window::input = input;
-	Window::mainMenu.initialize(graphics, input);
+	Window::mainMenu.initialize();
 	Window::level.initialize();
-	Window::windows.push_back(&Window::level);
+	Window::windows.push_back(&Window::mainMenu);
 }
 
 void Concave::releaseAll()

@@ -24,16 +24,14 @@ void Level::initialize()
 	tiles.initialize(10, 10);
 	for (int y = 0; y < tiles.getRows(); y++)
 		for (int x = 0; x < tiles.getCols(); x++)
-			tiles.set(y, x, 
-				translateHLines(Lines{ { 0, 1, 0 } }, x, y), 
-				translateVLines(Lines{}, x, y),
-				&wallSprite);
+			tiles.set(y, x, &wallSprite,
+				translateHLines(Lines{ { 0, 1, 0 } }, x, y),
+				translateVLines(Lines{}, x, y));
 	for (int y = 1; y < tiles.getRows() - 1; y++)
 		for (int x = 1; x < tiles.getCols() - 1; x++)
-			tiles.set(y, x, 
+			tiles.set(y, x, &floorSprite,
 				translateHLines(Lines{}, x, y),
-				translateVLines(Lines{}, x, y), 
-				&floorSprite);
+				translateVLines(Lines{}, x, y));
 	// Player
 	players.initialize(1);
 	CoordF pPos = CoordF{ 5, 5 };

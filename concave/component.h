@@ -5,8 +5,15 @@
 using namespace std;
 
 // Lines (Collisions)
-struct Line { float lower, upper, shift; };
-struct LineI : Line { int id; };
+struct Line {
+	float lower, upper, shift;
+	Line() {}
+	Line(float lower, float upper, float shift) { Line::lower = lower; Line::upper = upper; Line::shift = shift; }
+};
+struct LineI : Line {
+	int id;
+	LineI(float lower, float upper, float shift, int id): Line(lower, upper, shift) { LineI::id = id; }
+};
 typedef vector<Line> Lines;
 
 // Directions

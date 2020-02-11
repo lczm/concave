@@ -1,8 +1,8 @@
 #include "playerDieState.h"
 
-PlayerDieState::PlayerDieState(Input* input)
+PlayerDieState::PlayerDieState(Level* level)
 {
-    PlayerDieState::input = input;
+    PlayerDieState::level = level;
     state = PLAYER_STATE::DIE;
 }
 

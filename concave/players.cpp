@@ -86,3 +86,13 @@ void Players::setState(int index, State* state)
 {
 	states[index] = state;
 }
+
+void Players::setMovement(int index, Movement movement)
+{
+    movements[index] = movement;
+}
+
+Movement Players::getMovements(int index)
+{
+    return movements[index];
+}

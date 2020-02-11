@@ -1,8 +1,8 @@
 #include "playerAttackState.h"
 
-PlayerAttackState::PlayerAttackState(Input* input)
+PlayerAttackState::PlayerAttackState(Level* level)
 {
-    PlayerAttackState::input = input;
+    PlayerAttackState::level = level;
     state = PLAYER_STATE::ATTACK;
 }
 

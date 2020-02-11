@@ -5,7 +5,7 @@
 class PlayerWalkState : public State
 {
 public:
-    PlayerWalkState(Input* input);
+    PlayerWalkState(Level* level);
     ~PlayerWalkState();
     // PLAYER_STATE update(float frameTime, CoordF* position, CoordF* destPosition, Movement* movement);
     PLAYER_STATE update(float frameTime, int index, Players* players);

@@ -14,8 +14,9 @@ private:
 	Collision* vCollisions;
 	Render* renders;
 
-	Movement* movements;
 	vector<State*> states;
+    // vector<Movement> movements;
+    Movement* movements;
 public:
 	Players(); ~Players();
 	void initialize(int capacity);
@@ -42,7 +43,9 @@ public:
 	void setState(int index, State* state);
 	vector<State*> getStates() { return states; }
 
-	Movement* getMovements() { return movements; }
+    void setMovement(int index, Movement movement);
+	//vector<Movement> getMovements() { return movements; }
+    Movement getMovements(int index);
 	// vector<Movement*> getMovements() { return movements; }
 };
 

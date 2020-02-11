@@ -8,6 +8,7 @@ Movement State::calculateMovement(float frameTime, CoordF position, CoordF destP
      float destX = destPosition.x;
      float destY = destPosition.y;
      float radAngle = atan2(abs(currentX - destX), abs(currentY - destY));
+     float degAngle = radAngle * (180 / PI);
      float moveX = float(3.0 * sin(radAngle) * frameTime);
      float moveY = float(3.0 * cos(radAngle) * frameTime);
  
@@ -16,19 +17,22 @@ Movement State::calculateMovement(float frameTime, CoordF position, CoordF destP
          moveY = -moveY;
      }
      else if (destX > currentX && destY > currentY) {
+         degAngle += 90;
          moveX = moveX;
          moveY = moveY;
      }
      else if (destX < currentX && destY > currentY) {
+         degAngle += 180;
          moveX = -moveX;
          moveY = moveY;
      }
      else if (destX < currentX && destY < currentY) {
+         degAngle += 270;
          moveX = -moveX;
          moveY = -moveY;
      }
  
-     return Movement{ moveX, moveY };
+     return Movement{ moveX, moveY, degAngle };
 }
 
 void State::updateFrameNo(float frameTime, int index, Players* players, RenderInfo* renderInfo)

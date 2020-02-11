@@ -6,9 +6,9 @@ class Players
 private:
 	int capacity, size;
 	vector<CoordF> positionArray;
+	vector<Sprite*> spriteArray;
 	vector<Lines> hLinesArray;
 	vector<Lines> vLinesArray;
-	vector<Sprite*> spriteArray;
 public:
 	Players(); ~Players();
 	void initialize(int capacity);
@@ -17,7 +17,7 @@ public:
 public:
 	int getSize() { return size; }
 	vector<CoordF>& getPositionArray() { return positionArray; }
+	vector<Sprite*>& getSpriteArray() { return spriteArray; }
 	vector<Lines>& getHLinesArray() { return hLinesArray; }
 	vector<Lines>& getVLinesArray() { return vLinesArray; }
-	vector<Sprite*>& getSpriteArray() { return spriteArray; }
 };

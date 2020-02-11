@@ -11,7 +11,7 @@ private:
 	UINT itemID;
 
 public:
-	Item(UINT id, Graphics* graphics);
+	Item(UINT id, Graphics* graphics, ItemType itemType);
 	~Item();
 	SpriteData getItemSpriteData() { return itemSpriteData; }
 };

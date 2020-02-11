@@ -26,7 +26,7 @@ void Inventory::populateInventory(vector<int> playerInven)
 {
 	for (int i = 0; i < playerInven.size(); i++)
 	{
-		Item* item = new Item(playerInven.at(i), Window::graphics);
+		Item* item = new Item(playerInven.at(i), Window::graphics, ItemType::Elixr);
 		playerInventory.push_back(item);
 	}
 }
@@ -46,6 +46,6 @@ void Inventory::render()
 	graphics->drawSprite(inventorySpriteData, inventoryX, inventoryY, 1);
 	for (int i = 0; i < playerInventory.size(); i++)
 	{
-		graphics->drawSprite(playerInventory.at(i)->getItemSpriteData(), (inventoryX + 20) + (30 * (i)), inventorySpriteData.rect.bottom * 0.63, 1);
+		graphics->drawSprite(playerInventory.at(i)->getItemSpriteData(), (inventoryX + 18) + (30 * (i)), inventorySpriteData.rect.bottom * 0.63, 0.8);
 	}
 }

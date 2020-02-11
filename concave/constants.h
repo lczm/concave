@@ -9,6 +9,8 @@ struct CoordI { int x, y; };
 struct CoordF { float x, y; };
 
 enum DIRECTION8 { SOUTH, SOUTH_WEST, WEST, NORTH_WEST, NORTH, NORTH_EAST, EAST, SOUTH_EAST };
+
+enum class ItemType { Elixr, Sword, Shield, Armor };
 // enum DIRECTION16 { SOUTH, SOUTH_WEST, WEST, NORTH_WEST, NORTH, NORTH_EAST, EAST, SOUTH_EAST };
 //namespace DIRECTION8 {
 //	const int

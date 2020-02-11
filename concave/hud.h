@@ -19,7 +19,7 @@ private:
 public:
 	HUD();
 	~HUD();
-	SpriteData imageToSpriteData(const char* file, UINT imageWidth, UINT imageHeight);
+	SpriteData imageToSpriteData(const char* file);
 	SpriteData imageToSpriteData(const char* file, UINT imageWidth, UINT imageHeight, 
 								GridMask imageGridMask, CoordI imageCoord);
 	SpriteData getInventorySpriteData();

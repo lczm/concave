@@ -11,25 +11,20 @@ void HUD::initialize()
 	HUD::graphics = Window::graphics;
 	HUD::input = Window::input;
 	spriteText.initialize(graphics, IMAGE_HUD_FONT);
-	manaSpriteData = imageToSpriteData(IMAGE_HUD_MANA, 530, 230);
-	manaOrbSpriteData = imageToSpriteData(IMAGE_HUD_MANAORB, 230, 230);
-	healthSpriteData = imageToSpriteData(IMAGE_HUD_HEALTH, 530, 230);
-	healthOrbSpriteData = imageToSpriteData(IMAGE_HUD_HEALTHORB, 230, 230);
+	manaSpriteData = imageToSpriteData(IMAGE_HUD_MANA);
+	manaOrbSpriteData = imageToSpriteData(IMAGE_HUD_MANAORB);
+	healthSpriteData = imageToSpriteData(IMAGE_HUD_HEALTH);
+	healthOrbSpriteData = imageToSpriteData(IMAGE_HUD_HEALTHORB);
 	inventorySpriteData = getInventorySpriteData();
 }
 
-SpriteData HUD::imageToSpriteData(const char* file, UINT imageWidth, UINT imageHeight)
+SpriteData HUD::imageToSpriteData(const char* file)
 {
 	Texture imageTexture;
-	GridMask imageGridMask;
-	Image image;
 	SpriteData imageSpriteData;
-	CoordI imageCoord = { 0,0 };
 
 	imageTexture.initialize(Window::graphics, file);
-	imageGridMask.initialize(0, 0, imageWidth, imageHeight, 0, 0, 0, 0);
-	image.initialize(&imageTexture, imageGridMask);
-	image.getSpriteData(imageSpriteData, imageCoord);
+	imageTexture.getSpriteData(imageSpriteData);
 
 	return imageSpriteData;
 }

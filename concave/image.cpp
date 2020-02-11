@@ -64,6 +64,12 @@ void Texture::getSpriteData(SpriteData& spriteData)
 	spriteData.width = width;
 	spriteData.height = height;
 	spriteData.texture = texture;
+	spriteData.rect.left = 0;
+	spriteData.rect.top = 0;
+	spriteData.rect.right = width;
+	spriteData.rect.bottom = height;
+	spriteData.pivotX = 0;
+	spriteData.pivotY = 0;
 }
 
 GridMask::GridMask()

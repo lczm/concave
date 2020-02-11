@@ -68,7 +68,7 @@ void Level::update()
 	// Move Player Collision
 	updateHCollision(players.getHCollisions()[0], moveDelta);
 	updateVCollision(players.getVCollisions()[0], moveDelta);
-	//// Collision
+	// Collision
 	CoordF* pPositions = players.getPositions();
 	Collision* pHCollisions = players.getHCollisions();
 	Collision* pVCollisions = players.getVCollisions();

@@ -32,4 +32,6 @@ public:
 		return tileImage;
 	}
 
+	void renderMiniMap(int map[mapWidth][mapHeight]);
+
 };

@@ -25,7 +25,6 @@ void EditComponent::writeToFile(int map[mapWidth][mapHeight])
 		outputfile << endl;
 	}
 	outputfile.close();
-
 }
 
 void EditComponent::placeRoom(int map[mapWidth][mapHeight])
@@ -33,7 +32,7 @@ void EditComponent::placeRoom(int map[mapWidth][mapHeight])
 	vector<Room> rooms;
 
 	//temp placement
-	int maxRooms = 4;
+	int maxRooms = 7;
 	int maxRoomSize = 10;
 	int minRoomSize = 8;
 
@@ -90,14 +89,10 @@ void EditComponent::placeRoom(int map[mapWidth][mapHeight])
 				}
 			}
 
+			//place items into the room
 			placeItemRoom(newRoom, map);
 		}
-
-
-
 	}
-
-	//}
 }
 
 void EditComponent::placeWall(int map[mapWidth][mapHeight], Room newRoom)
@@ -154,12 +149,11 @@ void EditComponent::placeItemRoom(Room room, int map[mapWidth][mapHeight])
 {	
 
 	/* First iteration: place some random chest */
-	/* second iteration specitfy rooms to place specific items*/
-	/* 3rd iteration specify what type of objects can spawn where*/
+	/* second iteration specitfy rooms to place specific items */
+	/* 3rd iteration specify what type of objects can spawn where */
 
-
-	//boundary within the room
-	/*--------------------------> (X)
+	// boundary within the room
+	/* --------------------------> (X)
 	|
 	|	(X1, Y1)			(X2, Y1)
 	|		-------------------
@@ -179,7 +173,7 @@ void EditComponent::placeItemRoom(Room room, int map[mapWidth][mapHeight])
 			
 	//walls occupy the first and last Y positions 
 	//walls occupy the first and last X values
-	int areaToPlace = ((room.roomWidth - 2)* (room.roomHeight - 2))/4;
+	int areaToPlace = ((room.roomWidth - 2) * (room.roomHeight - 2))/4;
 
 	for (int i = 0; i < areaToPlace; i++)
 	{
@@ -192,8 +186,8 @@ void EditComponent::placeItemRoom(Room room, int map[mapWidth][mapHeight])
 	}
 }
 
+//Random number
 int EditComponent::random(int min, int max) {
 	int random = rand() % (max + 1 - min) + min;
-
 	return random;
 }

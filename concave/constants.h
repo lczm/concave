@@ -99,6 +99,15 @@ const float MAX_FRAME_TIME = 1.0f / MIN_FRAME_RATE; // maximum time used in calc
 
 const int noSpritesChruch = 8;
 const int noSpritesCave = 2;
+const int itemsToSpawn = 1;
+
+
+enum RoomType
+{
+	chestRoom,
+	trapRoom,
+	someRoom
+};
 
 enum ImageType {
 	//church

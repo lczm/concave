@@ -17,7 +17,7 @@ private:
 	int maxRooms= 5;
 	int maxRoomSize = 10;
 	int minRoomSize = 8;
-
+	RoomType room;
 
 public:
 	int roomWidth;

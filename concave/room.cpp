@@ -12,6 +12,6 @@ Room::~Room()
 bool Room::intersects(Room room)
 {
 	return(x1 < room.x2 && x2 >= room.x1 && 
-		y1 <= room.y2 && room.y2 >= room.y1);
+		y1 <= room.y2 && y2 >= room.y1);
 }
 

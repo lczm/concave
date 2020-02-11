@@ -11,9 +11,9 @@ Level::~Level()
 }
 
 void Level::initialize()
-{
+{	
+	//initialize the values
 	renderLevel.initialize(graphics, input, type);
-
 	for (int x = 0; x < mapWidth; x++)
 	{
 		for (int y = 0; y < mapHeight; y++)
@@ -44,7 +44,6 @@ void Level::update()
 	if (input->isKeyDown('D')) camX += 0.1;
 	if (input->isKeyDown('P')) camScale += 0.01;
 	if (input->isKeyDown('O')) camScale -= 0.01;
-
 
 	levelEdit();
 	changeLevel();
@@ -98,7 +97,6 @@ void Level::levelEdit()
 	{
 		writeToFile(map);
 	}
-
 }
 
 void Level::readFromFile()

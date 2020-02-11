@@ -1,8 +1,6 @@
 #pragma once
-#include "component.h"
 #include "constants.h"
 #include "room.h"
-#include<algorithm>
 #include <string>
 #include <fstream>
 #include <vector>
@@ -14,6 +12,7 @@ class EditComponent
 public:
 	void placeRoom(int map[mapWidth][mapHeight]);
 	void placeItemRoom(Room room, int map[mapWidth][mapHeight]);
+	void determineRoomTypes();
 	int  random(int min, int max);
 	void horizontalCorridor(int x1, int x2, int y, int map[mapWidth][mapHeight]);
 	void verticalCorridor(int y1, int y2, int x, int map[mapWidth][mapHeight]);

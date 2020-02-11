@@ -89,3 +89,7 @@ void RenderLevel::renderMap(int map[mapWidth][mapHeight], int x, int y, SpriteDa
 	}
 }
 
+void RenderLevel::renderMiniMap(int map[mapWidth][mapHeight])
+{
+
+}

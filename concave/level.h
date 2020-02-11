@@ -32,6 +32,7 @@ private:
 	int type = 0;
 	//prob need to change it to read component
 	EditComponent * editComponent;
+
 	RenderLevel renderLevel;
 public:
 	Level();

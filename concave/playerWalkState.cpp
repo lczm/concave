@@ -19,10 +19,15 @@ PLAYER_STATE PlayerWalkState::update(float frameTime, CoordF* position, CoordF* 
         float destX = destPosition->x;
         float destY = destPosition->y;
 
-        float radAngle = atan2(abs(currentX - destX), abs(currentY - destY));
+        float radAngle = atan2(abs(currentX - destX), abs(currentY - destY)) + 1.57;
         float moveX = 1.50 * sin(radAngle) * frameTime;
         float moveY = 1.50 * cos(radAngle) * frameTime;
 
+        std::cout << "Rad Angle " << radAngle << std::endl;
+        std::cout << "Current X , Y " << currentX << " | " << currentY << std::endl;
+        std::cout << "Destination X , Y " << destX << " | " << destY << std::endl;
+        std::cout << "Move X  : " << moveX << std::endl;
+        std::cout << "Move Y  : " << moveY << std::endl;
 
         if (destX > currentX && destY < currentY) {
             moveX = moveX;
@@ -41,13 +46,11 @@ PLAYER_STATE PlayerWalkState::update(float frameTime, CoordF* position, CoordF* 
             moveY = -moveY;
         }
 
-        // std::cout << "Move X  : " << moveX << std::endl;
-        // std::cout << "Move Y  : " << moveY << std::endl;
+        // movement->moveX = moveX;
+        // movement->moveY = moveY;
 
-        movement->moveX = moveX;
-        movement->moveY = moveY;
-        position->x += moveY;
-        position->y += moveX;
+        position->x += moveX;
+        position->y += moveY;
         return PLAYER_STATE::WALK;
     }
     return PLAYER_STATE::IDLE;

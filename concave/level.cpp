@@ -46,7 +46,7 @@ void Level::initialize()
 
 	// Player
 	players.initialize(1);
-	CoordF pPos = CoordF{ 2, 5 };
+	CoordF pPos = CoordF{ 3, 3 };
 	players.push(
 		pPos,
 		translateHCollision(Collision{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, pPos),
@@ -89,6 +89,8 @@ void Level::update()
 	for (int i = 0; i < players.getSize(); i++) {
 		PLAYER_STATE state = pStates[i]->update(frameTime, &pPositions[i], &pDestPositions[i], &pMovements[i]);
 		if (pStates[i]->state == PLAYER_STATE::IDLE && state == PLAYER_STATE::WALK) {
+			CoordF position = screenToGrid(players.getDestPositions(i));
+			std::cout << "Grid position : " << position.x << " | " << position.y << std::endl;
 			players.setDestPosition(i, screenToGrid(players.getDestPositions(i)));
 		}
 		if (state != pStates[i]->state) {
@@ -111,16 +113,16 @@ void Level::update()
 				break;
 			}
 		}
-		CoordF pPosition = pPositions[i];
-		CoordF delta{ 0, 0 };
-		Line hLine, vLine;
-		if (checkHCollisionToWallCollision(tiles, hLine, vLine, pHCollisions[i]))
-			delta.x = getDeltaXResponse(hLine, vLine, pPosition);
-		if (checkVCollisionToWallCollision(tiles, vLine, hLine, pVCollisions[i]))
-			delta.y = getDeltaYResponse(vLine, hLine, pPosition);
-		pPositions[i] += delta;
-		updateHCollision(pHCollisions[i], delta);
-		updateVCollision(pVCollisions[i], delta);
+		// CoordF pPosition = pPositions[i];
+		// CoordF delta{ 0, 0 };
+		// Line hLine, vLine;
+		// if (checkHCollisionToWallCollision(tiles, hLine, vLine, pHCollisions[i]))
+		// 	delta.x = getDeltaXResponse(hLine, vLine, pPosition);
+		// if (checkVCollisionToWallCollision(tiles, vLine, hLine, pVCollisions[i]))
+		// 	delta.y = getDeltaYResponse(vLine, hLine, pPosition);
+		// pPositions[i] += delta;
+		// updateHCollision(pHCollisions[i], delta);
+		// updateVCollision(pVCollisions[i], delta);
 	}
 
 	// Move Camera

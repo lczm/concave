@@ -6,12 +6,14 @@ PlayerWalkState::PlayerWalkState(Input* input)
     state = PLAYER_STATE::WALK;
 }
 
-PLAYER_STATE PlayerWalkState::update(float frameTime, CoordF* position, CoordF* destPosition, Movement* movement)
+PLAYER_STATE PlayerWalkState::update(float frameTime, int index, Players* players)
 {
     // std::cout << "IN WALK STATE : " << std::endl;
     // Move towards the direction
     // std::cout << "Current Position : " << position->x << " | " << position->y << std::endl;
     // std::cout << "Destination Position : " << destPosition->x << " | " << destPosition->y << std::endl;
+    CoordF* position = &players->getPosition(index);
+    CoordF* destPosition = &players->getDestPositions(index);
 
     if (!equalFloat(position->x, destPosition->x) && !equalFloat(position->y, destPosition->y)) {
         float currentX = position->x;

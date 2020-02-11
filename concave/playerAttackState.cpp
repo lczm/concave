@@ -10,7 +10,7 @@ PlayerAttackState::~PlayerAttackState()
 {
 }
 
-PLAYER_STATE PlayerAttackState::update(float frameTime, CoordF* position, CoordF* destPosition, Movement* movement)
+PLAYER_STATE PlayerAttackState::update(float frameTime, int index, Players* players)
 {
     return PLAYER_STATE::ATTACK;
 }

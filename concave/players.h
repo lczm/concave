@@ -2,6 +2,8 @@
 #include "input.h"
 #include "component.h"
 
+class State;
+
 class Players
 {
 private:
@@ -43,3 +45,5 @@ public:
 	Movement* getMovements() { return movements; }
 	// vector<Movement*> getMovements() { return movements; }
 };
+
+#include "state.h"

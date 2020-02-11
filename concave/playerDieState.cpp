@@ -10,7 +10,7 @@ PlayerDieState::~PlayerDieState()
 {
 }
 
-PLAYER_STATE PlayerDieState::update(float frameTime, CoordF* position, CoordF* destPosition, Movement* movement)
+PLAYER_STATE PlayerDieState::update(float frameTime, int index, Players* players)
 {
     return PLAYER_STATE::DIE;
 }

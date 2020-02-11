@@ -87,7 +87,7 @@ void Level::update()
 	Movement* pMovements = players.getMovements();
 	vector<State*> pStates = players.getStates();
 	for (int i = 0; i < players.getSize(); i++) {
-		PLAYER_STATE state = pStates[i]->update(frameTime, &pPositions[i], &pDestPositions[i], &pMovements[i]);
+        PLAYER_STATE state = pStates[i]->update(frameTime, i, &players);
 		if (pStates[i]->state == PLAYER_STATE::IDLE && state == PLAYER_STATE::WALK) {
 			CoordF position = screenToGrid(players.getDestPositions(i));
 			std::cout << "Grid position : " << position.x << " | " << position.y << std::endl;
@@ -107,6 +107,7 @@ void Level::update()
 				break;
 			case PLAYER_STATE::WALK:
 				std::cout << "Switching states to walk" << std::endl;
+                CoordF position = gridToScreen(players.getPosition(i));
 				players.setState(i, states[3]);
 				break;
 			default:

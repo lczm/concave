@@ -15,13 +15,14 @@ PLAYER_STATE PlayerWalkState::update(float frameTime, int index, Players* player
     CoordF* position = &players->getPosition(index);
     CoordF* destPosition = &players->getDestPositions(index);
 
-    if (!equalFloat(position->x, destPosition->x) && !equalFloat(position->y, destPosition->y)) {
+    // if (!equalFloat(position->x, destPosition->x) && !equalFloat(position->y, destPosition->y)) {
+    if (equalFloat2(position->x, position->y, destPosition->x, destPosition->y)) {
         float currentX = position->x;
         float currentY = position->y;
         float destX = destPosition->x;
         float destY = destPosition->y;
 
-        float radAngle = atan2(abs(currentX - destX), abs(currentY - destY)) + 1.57;
+        float radAngle = atan2(abs(currentX - destX), abs(currentY - destY));
         float moveX = 1.50 * sin(radAngle) * frameTime;
         float moveY = 1.50 * cos(radAngle) * frameTime;
 
@@ -53,6 +54,9 @@ PLAYER_STATE PlayerWalkState::update(float frameTime, int index, Players* player
 
         position->x += moveX;
         position->y += moveY;
+        float newX = position->x += moveX;
+        float newY = position->y += moveY;
+        players->setPosition(index, CoordF{ newX, newY });
         return PLAYER_STATE::WALK;
     }
     return PLAYER_STATE::IDLE;

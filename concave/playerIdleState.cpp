@@ -16,10 +16,7 @@ PLAYER_STATE PlayerIdleState::update(float frameTime, int index, Players* player
         CoordF* dest = &players->getDestPositions(index);
         input->setMouseLButton(false);
         std::cout << "Mouse is down" << input->getMouseX() << input->getMouseY() << std::endl;
-        dest->x = input->getMouseX();
-        dest->y = input->getMouseY();
-        // destPosition->x = input->getMouseX();
-        // destPosition->y = input->getMouseY();
+        players->setDestPosition(index, CoordF{ float(input->getMouseX()), float(input->getMouseY()) });
         return PLAYER_STATE::WALK;
     }
     return PLAYER_STATE::IDLE;

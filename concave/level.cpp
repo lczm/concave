@@ -161,8 +161,8 @@ CoordF Level::screenToGrid(float sx, float sy)
 	float vy = (sy - GAME_HEIGHT / 2) / camScale;
 	float vx2 = vx / (TILE_WIDTH / 2);
 	float vy2 = vy / (TILE_HEIGHT / 2);
-	float rx = (vy2 - vx2) / 2;
-	float ry = (vy2 + vx2) / 2;
+	float rx = (vy2 + vx2) / 2;
+	float ry = (vy2 - vx2) / 2;
 	float gx = rx + camCoord.x;
 	float gy = ry + camCoord.y;
 	return CoordF{ gx, gy };

@@ -73,8 +73,8 @@ CoordF Level::screenToGrid(float sx, float sy)
 	float vy = (sy - GAME_HEIGHT / 2) / camScale;
 	float vx2 = vx / (TILE_WIDTH / 2);
 	float vy2 = vy / (TILE_HEIGHT / 2);
-	float rx = (vy2 - vx2) / 2;
-	float ry = (vy2 + vx2) / 2;
+	float rx = (vy2 + vx2) / 2;
+	float ry = (vy2 - vx2) / 2;
 	float gx = rx + camX;
 	float gy = ry + camY;
 	return CoordF{ gx, gy };
@@ -89,7 +89,7 @@ void Level::levelEdit()
 		CoordF mouse = { input->getMouseX(), input->getMouseY() };
 		CoordF gridPos1 = screenToGrid(mouse.x, mouse.y);
 		CoordI gridPos = { gridPos1.x, gridPos1.y };
-		++map[gridPos.y][gridPos.x] %= 9;
+		++map[gridPos.x][gridPos.y] %= 13;
 		input->clearCharIn();
 	}
 
@@ -97,6 +97,22 @@ void Level::levelEdit()
 	{
 		writeToFile(map);
 	}
+
+
+	if (input->getMouseLButton())
+	{
+		input->setMouseLButton(false);
+		CoordF mouse = { input->getMouseX(), input->getMouseY() };
+		CoordF gridPos1 = screenToGrid(mouse.x, mouse.y);
+		CoordI gridPos = { gridPos1.x, gridPos1.y };
+
+		//door
+		// 10 is open door (add to constants)
+		editComponent->changeObjects(ImageType::churchDoor, 10, map, gridPos.x, gridPos.y);
+
+		input->clearCharIn();
+	}
+
 }
 
 void Level::readFromFile()

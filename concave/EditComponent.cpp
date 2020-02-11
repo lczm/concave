@@ -32,9 +32,9 @@ void EditComponent::placeRoom(int map[mapWidth][mapHeight])
 	vector<Room> rooms;
 
 	//temp placement
-	int maxRooms = 7;
-	int maxRoomSize = 10;
-	int minRoomSize = 8;
+	int maxRooms = 9;
+	int maxRoomSize = 12;
+	int minRoomSize = 9;
 
 	//for (int i = 0; i < maxRooms; i++)
 	//{
@@ -51,7 +51,7 @@ void EditComponent::placeRoom(int map[mapWidth][mapHeight])
 
 		bool failed = false;
 		for (Room room : rooms)
-		{	
+		{
 			//modify intersects algo design
 			if (newRoom.intersects(room))
 			{
@@ -76,7 +76,9 @@ void EditComponent::placeRoom(int map[mapWidth][mapHeight])
 				Room prevRoom = rooms[rooms.size() - 2];
 				CoordI prevCenter = prevRoom.center;
 
+				/*
 				int random = rand() % 2;
+
 				if (random == 1)
 				{
 					horizontalCorridor(prevCenter.x, newCenter.x, prevCenter.y, map);
@@ -87,6 +89,7 @@ void EditComponent::placeRoom(int map[mapWidth][mapHeight])
 					verticalCorridor(prevCenter.y, newCenter.y, newCenter.x, map);
 					horizontalCorridor(prevCenter.x, newCenter.x, prevCenter.y, map);
 				}
+				*/
 			}
 
 			//place items into the room
@@ -98,24 +101,24 @@ void EditComponent::placeRoom(int map[mapWidth][mapHeight])
 void EditComponent::placeWall(int map[mapWidth][mapHeight], Room newRoom)
 {
 	//setting the four corners
-	map[newRoom.x1][newRoom.y1] = 6;
-	map[newRoom.x2][newRoom.y1] = 5;
+	map[newRoom.x1][newRoom.y1] = ImageType::churchWallConnect;
+	map[newRoom.x2][newRoom.y1] = ImageType::churchWallWest;
 
-	map[newRoom.x1][newRoom.y2] = 4;
-	map[newRoom.x2][newRoom.y2] = 0;
+	map[newRoom.x1][newRoom.y2] = ImageType::churchWallEast;
+	map[newRoom.x2][newRoom.y2] = ImageType::churchFloor;
 
 
 	for (int i = 1; i < (newRoom.roomWidth); i++)
 	{
-		map[newRoom.x1 + i][newRoom.y1] = 4;
-		map[newRoom.x1 + i][newRoom.y2] = 4;
+		map[newRoom.x1 + i][newRoom.y1] = ImageType::churchWallEast;
+		map[newRoom.x1 + i][newRoom.y2] = ImageType::churchWallEast;
 	}
 
 	for (int j = 1; j < (newRoom.roomHeight); j++)
 	{
 		//to be explained
-		map[newRoom.x1][newRoom.y2 - j] = 5;
-		map[newRoom.x2][newRoom.y1 + j] = 5;
+		map[newRoom.x1][newRoom.y2 - j] = ImageType::churchWallWest;
+		map[newRoom.x2][newRoom.y1 + j] = ImageType::churchWallWest;
 	}
 
 }
@@ -127,9 +130,8 @@ void EditComponent::horizontalCorridor(int x1, int x2, int y, int map[mapWidth][
 
 	for (int i = minX; i < maxX + 1; i++)
 	{
-		map[i][y] = 7;
+		map[i][y] = ImageType::churchWallPath;
 	}
-
 }
 
 void EditComponent::verticalCorridor(int y1, int y2, int x, int map[mapWidth][mapHeight])
@@ -138,15 +140,15 @@ void EditComponent::verticalCorridor(int y1, int y2, int x, int map[mapWidth][ma
 	int maxY = (y1 > y2) ? y1 : y2;
 
 	for (int i = minY; i < maxY + 1; i++)
-	{
-		map[x][i] = 7;
+	{	
+		map[x][i] = ImageType::churchWallPath;
 	}
 }
 
 //add code to place items into rooms
 //specify boss/loot rooms maybe NPC rooms
 void EditComponent::placeItemRoom(Room room, int map[mapWidth][mapHeight])
-{	
+{
 
 	/* First iteration: place some random chest */
 	/* second iteration specitfy rooms to place specific items */
@@ -157,9 +159,9 @@ void EditComponent::placeItemRoom(Room room, int map[mapWidth][mapHeight])
 	|
 	|	(X1, Y1)			(X2, Y1)
 	|		-------------------
-	|		- ############### -		
-	|		- ############### -	
-	|		- ############### -	
+	|		- ############### -
+	|		- ############### -
+	|		- ############### -
 	|		-------------------
 	|	(X1, Y2)			(X2, Y2)
 	|
@@ -170,19 +172,23 @@ void EditComponent::placeItemRoom(Room room, int map[mapWidth][mapHeight])
 	int y1 = room.y1 + 1;
 	int x2 = room.x2 - 1;
 	int y2 = room.y2 - 1;
-			
+
 	//walls occupy the first and last Y positions 
 	//walls occupy the first and last X values
-	int areaToPlace = ((room.roomWidth - 2) * (room.roomHeight - 2))/4;
+	int areaToPlace = ((room.roomWidth - 2) * (room.roomHeight - 2)) * 0.2;
 
-	for (int i = 0; i < areaToPlace; i++)
+	//percentage of chests 
+	int noChests = areaToPlace * 0.2;
+
+	for (int i = 0; i < noChests; i++)
 	{
 		//Testing code
 		int randX = random(x1, x2);
 		int randY = random(y1, y2);
 
-		//test item (not final)
-		map[randX][randY] = 3;
+		//chests
+		map[x1][randY] = 3;
+		map[randX][randY] = 11;
 	}
 }
 
@@ -190,4 +196,22 @@ void EditComponent::placeItemRoom(Room room, int map[mapWidth][mapHeight])
 int EditComponent::random(int min, int max) {
 	int random = rand() % (max + 1 - min) + min;
 	return random;
+}
+
+//changes object look
+void EditComponent::changeObjects(int initial, int changeTo, int map[mapWidth][mapHeight], int PosX, int PosY)
+{
+	int mapPos = map[PosX][PosY];
+	//door code
+	if (mapPos == initial) { mapPos = changeTo; }
+	else if(mapPos == changeTo) { mapPos = initial; }
+
+	//set to intended
+	map[PosX][PosY] = mapPos;
+}
+
+//changes object look
+void EditComponent::animateObjects()
+{
+
 }

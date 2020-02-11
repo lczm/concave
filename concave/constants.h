@@ -60,6 +60,8 @@ const char IMAGE_TILES_CAVE[] = "sprites/tiles_cave_dungeon.png";
 const char IMAGE_ITEMS_DUNGEON[] = "sprites/items2.png";
 
 
+const char IMAGE_ITEMS_TEST[] = "sprites/items.png";
+
 //-----------------------------------------------
 //                Image (Units)
 //-----------------------------------------------
@@ -97,16 +99,18 @@ const float MAX_FRAME_TIME = 1.0f / MIN_FRAME_RATE; // maximum time used in calc
 
 
 
-const int noSpritesChruch = 8;
+const int noSpritesChruch = 12;
 const int noSpritesCave = 2;
 const int itemsToSpawn = 1;
 
 
-enum RoomType
+enum class RoomType
 {
 	chestRoom,
 	trapRoom,
-	someRoom
+	someRoom,
+	bossRoom,
+	npcRoom
 };
 
 enum ImageType {
@@ -119,6 +123,7 @@ enum ImageType {
 	churchWallWest = 5,
 	churchWallConnect = 6,
 	churchWallPath = 7
+	//add church door open here
 };
 
 enum ImageTypeCave

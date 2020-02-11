@@ -20,6 +20,9 @@ private:
 	GridMask itemGridMask;
 	Image itemImage;
 
+	Texture manyItemsTexture;
+	GridMask manyItemsGridMask;
+	Image manyItemsImage;
 
 public:
 	RenderLevel();

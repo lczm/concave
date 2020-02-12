@@ -23,6 +23,7 @@ PLAYER_STATE PlayerWalkState::update(int index, Level* level)
     }
     CoordF* position = &players->getPosition(index);
     CoordF* destPosition = &players->getDestPositions(index);
+    Movement movement = players->getMovements(index);
     if (!isAtPosition(position, destPosition)) {
         Movement movement = players->getMovements(index);
         players->setPosition(index, CoordF{ position->x += movement.moveX,
@@ -30,7 +31,7 @@ PLAYER_STATE PlayerWalkState::update(int index, Level* level)
         updateFrameNo(frameTime, index, players, renderInfo);
         return PLAYER_STATE::WALK;
     }
-    players->setMovement(index, Movement{ 0, 0 });
+    players->setMovement(index, Movement{ 0, 0, movement.rotation });
     renderInfo->timer = 0;
     renderInfo->frameNo = 0;
     return PLAYER_STATE::IDLE;

@@ -112,12 +112,10 @@ void Level::update()
             break;
         case PLAYER_STATE::IDLE:
 			pRenderInfos[i].state = PLAYER_STATE::IDLE;
-            std::cout << "Switching states to idle" << std::endl;
             players.setState(i, states[2]);
             break;
         case PLAYER_STATE::WALK:
 			pRenderInfos[i].state = PLAYER_STATE::WALK;
-            std::cout << "Switching states to walk" << std::endl;
             CoordF position = gridToScreen(players.getPosition(i));
             players.setState(i, states[3]);
             break;

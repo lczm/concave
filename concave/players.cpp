@@ -102,6 +102,33 @@ void Players::setState(int index, State* state)
 void Players::setMovement(int index, Movement movement)
 {
     movements[index] = movement;
+    if (movement.rotation <= 22.5) {
+        rendersInfos[index].direction = DIRECTION8::NORTH;
+    }
+    else if (movement.rotation <= 67.5) {
+        rendersInfos[index].direction = DIRECTION8::NORTH_EAST;
+    }
+    else if (movement.rotation <= 112.5) {
+        rendersInfos[index].direction = DIRECTION8::EAST;
+    }
+    else if (movement.rotation <= 157.5) {
+        rendersInfos[index].direction = DIRECTION8::SOUTH_EAST;
+    }
+    else if (movement.rotation <= 202.5) {
+        rendersInfos[index].direction = DIRECTION8::SOUTH;
+    }
+    else if (movement.rotation <= 247.5) {
+        rendersInfos[index].direction = DIRECTION8::SOUTH_WEST;
+    }
+    else if (movement.rotation <= 292.5) {
+        rendersInfos[index].direction = DIRECTION8::WEST;
+    }
+    else if (movement.rotation <= 337.5) {
+        rendersInfos[index].direction = DIRECTION8::NORTH_WEST;
+    }
+    else {
+        rendersInfos[index].direction = DIRECTION8::NORTH;
+    }
 }
 
 Movement Players::getMovements(int index)

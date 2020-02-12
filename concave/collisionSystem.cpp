@@ -43,6 +43,28 @@ void updateLines(Lines& lines, float deltaA, float deltaB)
 	}
 }
 
+void updateHLines(LineSet& lineSet, LineSetIters& lineSetIters, CoordF delta)
+{
+	updateLines(lineSet, lineSetIters, delta.x, delta.y);
+}
+
+void updateVLines(LineSet& lineSet, LineSetIters& lineSetIters, CoordF delta)
+{
+	updateLines(lineSet, lineSetIters, delta.y, delta.x);
+}
+
+void updateLines(LineSet& lineSet, LineSetIters& lineSetIters, float deltaA, float deltaB)
+{
+	for (LineSetIter& lineSetIter : lineSetIters) {
+		LineI lineI = *lineSetIter;
+		lineI.lower += deltaA;
+		lineI.upper += deltaA;
+		lineI.shift += deltaB;
+		LineSetIter hint = lineSet.erase(lineSetIter);
+		lineSetIter = lineSet.insert(hint, lineI);
+	}
+}
+
 bool checkLineToLineCollision(Line hLine, Line vLine)
 {
 	// Compiler please do your optimisation
@@ -99,6 +121,26 @@ bool checkVLinesToWallCollision(Tiles& tiles, Line& vLine, Line& hLine, Lines vL
 		}
 	}
 	return false;
+}
+
+bool checkHLinesToWallCollision(Tiles& tiles, LineI& hLine, Line& vLine, LinesI hLines)
+{
+	for (LineI _hLine : hLines) {
+		if (checkHLineToWallCollision(tiles, vLine, _hLine)) {
+			hLine = _hLine;
+			return true;
+		}
+	}
+}
+
+bool checkVLinesToWallCollision(Tiles& tiles, LineI& vLine, Line& hLine, LinesI vLines)
+{
+	for (LineI _vLine : vLines) {
+		if (checkVLineToWallCollision(tiles, hLine, _vLine)) {
+			vLine = _vLine;
+			return true;
+		}
+	}
 }
 
 float getDeltaXResponse(Line rHLine, Line bVLine, CoordF pos)

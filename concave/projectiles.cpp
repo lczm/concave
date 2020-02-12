@@ -17,23 +17,20 @@ void Projectiles::initialize(int capacity)
 
 void Projectiles::push(CoordF position, Sprite* sprite, Lines hLines, Lines vLines)
 {
-	vector<set<LineI>::iterator> hLineIters, vLineIters;
-	for (Line line : hLines) {
-		auto lineIter = hLineSet.insert(LineI{ line, size }).first;
-		hLineIters.push_back(lineIter);
-	}
-	//for (Line line : vLines) vLineIters.push_back(vLineSet.insert(LineI{ line, size }).first);
+	LineSetIters hLineIters, vLineIters;
+	for (Line line : hLines) vLineIters.push_back(hLineSet.insert(LineI{ line, size }).first);
+	for (Line line : vLines) vLineIters.push_back(vLineSet.insert(LineI{ line, size }).first);
 	positionArray[size] = position;
 	spriteArray[size] = sprite;
-	//hLineItersArray[size] = hLineIters;
-	//vLineItersArray[size] = vLineIters;
+	hLineItersArray[size] = hLineIters;
+	vLineItersArray[size] = vLineIters;
 	size++;
 }
 
 void Projectiles::pop(int index)
 {
-	for (set<LineI>::iterator lineIter : hLineItersArray[index]) hLineSet.erase(lineIter);
-	for (set<LineI>::iterator lineIter : vLineItersArray[index]) vLineSet.erase(lineIter);
+	for (LineSetIter lineIter : hLineItersArray[index]) hLineSet.erase(lineIter);
+	for (LineSetIter lineIter : vLineItersArray[index]) vLineSet.erase(lineIter);
 	size--;
 	positionArray[index] = positionArray[size];
 	spriteArray[index] = spriteArray[size];

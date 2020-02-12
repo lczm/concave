@@ -75,6 +75,9 @@
     <ClCompile Include="state.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="playerGetHitState.cpp">
+      <Filter>Source Files\PlayerStates</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="constants.h">
@@ -136,6 +139,9 @@
     </ClInclude>
     <ClInclude Include="state.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="playerGetHitState.h">
+      <Filter>Header Files\PlayerStates</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

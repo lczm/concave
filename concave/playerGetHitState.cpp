@@ -1,6 +1,6 @@
-#include "playerDieState.h"
+#include "playerGetHitState.h"
 
-PLAYER_STATE PlayerDieState::update(int index, Level* level)
+PLAYER_STATE PlayerGetHitState::update(int index, Level* level)
 {
     float frameTime = level->frameTime;
     Input* input = level->input;
@@ -13,5 +13,5 @@ PLAYER_STATE PlayerDieState::update(int index, Level* level)
         return PLAYER_STATE::IDLE;
     }
     updateFrameNo(frameTime, index, players, renderInfo);
-    return PLAYER_STATE::DIE;
+    return PLAYER_STATE::GET_HIT;
 }

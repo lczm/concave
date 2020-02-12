@@ -2,10 +2,10 @@
 
 PLAYER_STATE PlayerWalkState::update(int index, Level* level)
 {
+    float frameTime = level->frameTime;
     Input* input = level->input;
     Players* players = level->getPlayers();
     RenderInfo* renderInfo = &players->getRenderInfos()[index];
-    float frameTime = level->frameTime;
     if (input->getMouseLButton()) {
         players->setDestPosition(index, level->screenToGrid(CoordF{float(level->input->getMouseX()), float(input->getMouseY())}));
         players->setMovement(index, calculateMovement(frameTime, players->getPosition(index), players->getDestPositions(index)));

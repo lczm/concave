@@ -11,6 +11,7 @@
 #include "playerDieState.h"
 #include "playerIdleState.h"
 #include "playerWalkState.h"
+#include "playerGetHitState.h"
 using namespace std;
 
 class Level : public Window
@@ -27,6 +28,7 @@ private:
 	GridMask unitDieGridMask;
 	GridMask unitIdleGridMask;
 	GridMask unitWalkGridMask;
+	GridMask unitGetHitGridMask;
 	// Sprite unitSprite;
 	// Components
 	Tiles tiles;

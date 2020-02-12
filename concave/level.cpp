@@ -22,13 +22,15 @@ void Level::initialize()
 	unitDieGridMask.initialize(2049, 7, 128, 95, 0, 1, 59, 71);
 	unitIdleGridMask.initialize(0, 1045, 96, 96, 0, 1, 43, 81);
 	unitWalkGridMask.initialize(2882, 1045, 96, 96, 0, 1, 44, 80);
+	unitGetHitGridMask.initialize(4420, 1045, 96, 96, 0, 1, 44, 80);
 	vector<GridMask> unitGridMasks = {
         unitAttackGridMask,
         unitDieGridMask,
         unitIdleGridMask,
-        unitWalkGridMask
+        unitWalkGridMask,
+		unitGetHitGridMask
 	};
-    vector<int> unitEndFrames = { 16, 21, 10, 8 };
+    vector<int> unitEndFrames = { 16, 21, 10, 8, 6 };
 	unitImage.initialize(&unitTexture, unitGridMasks, unitEndFrames);
 
 	// Tiles
@@ -50,10 +52,12 @@ void Level::initialize()
 	PlayerDieState* playerDieState = new PlayerDieState();
 	PlayerIdleState* playerIdleState = new PlayerIdleState();
 	PlayerWalkState* playerWalkState = new PlayerWalkState();
+	PlayerGetHitState* playerGetHitState = new PlayerGetHitState();
 	states.push_back(playerAttackState);
 	states.push_back(playerDieState);
 	states.push_back(playerIdleState);
 	states.push_back(playerWalkState);
+	states.push_back(playerGetHitState);
 
 	// Player
 	players.initialize(1);
@@ -119,6 +123,9 @@ void Level::update()
             CoordF position = gridToScreen(players.getPosition(i));
             players.setState(i, states[3]);
             break;
+		case PLAYER_STATE::GET_HIT:
+			pRenderInfos[i].state = PLAYER_STATE::GET_HIT;
+			players.setState(i, states[4]);
         default:
             break;
 			// }

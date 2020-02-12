@@ -1,14 +1,5 @@
 #include "playerAttackState.h"
 
-PlayerAttackState::PlayerAttackState()
-{
-    state = PLAYER_STATE::ATTACK;
-}
-
-PlayerAttackState::~PlayerAttackState()
-{
-}
-
 PLAYER_STATE PlayerAttackState::update(int index, Level* level)
 {
     Input* input = level->input;

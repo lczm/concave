@@ -1,10 +1,5 @@
 #include "playerWalkState.h"
 
-PlayerWalkState::PlayerWalkState()
-{
-    state = PLAYER_STATE::WALK;
-}
-
 PLAYER_STATE PlayerWalkState::update(int index, Level* level)
 {
     Input* input = level->input;

@@ -1,14 +1,5 @@
 #include "playerIdleState.h"
 
-PlayerIdleState::PlayerIdleState()
-{
-    state = PLAYER_STATE::IDLE;
-}
-
-PlayerIdleState::~PlayerIdleState()
-{
-}
-
 PLAYER_STATE PlayerIdleState::update(int index, Level* level)
 {
     Input* input = level->input;

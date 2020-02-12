@@ -39,8 +39,8 @@ bool Button::isHovered()
 	int mouseX = input->getMouseRawX();
 	int mouseY = input->getMouseRawY();
 
-	int left = x - sd.width;
-	int top = y - sd.height;
+	int left = x - sd.width / 2;
+	int top = y - sd.height / 2;
 	int relX = mouseX - left;
 	int relY = mouseY - top;
 	return (0 < relX && relX < sd.width &&

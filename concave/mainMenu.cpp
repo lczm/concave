@@ -40,7 +40,7 @@ void MainMenu::update()
 {
 	if (playbtn.isHovered()) 
 	{
-		playHoverbtn.draw();
+		
 	}
 }
 

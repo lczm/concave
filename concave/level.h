@@ -29,6 +29,13 @@ private:
 	GridMask unitIdleGridMask;
 	GridMask unitWalkGridMask;
 	GridMask unitGetHitGridMask;
+
+	Texture unitMageTexture; AnimImage unitMageImage;
+	GridMask unitMageAttackGridMask;
+	GridMask unitMageDieGridMask;
+	GridMask unitMageIdleGridMask;
+	GridMask unitMageWalkGridMask;
+	GridMask unitMageGetHitGridMask;
 	// Sprite unitSprite;
 	// Components
 	Tiles tiles;

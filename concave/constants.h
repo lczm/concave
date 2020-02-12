@@ -82,6 +82,7 @@ const char IMAGE_TILES_DUNGEON[] = "sprites/tiles_church_dungeon.png";
 //                Image (Units)
 //-----------------------------------------------
 const char IMAGE_UNIT_WARRIOR[] = "sprites/unit_warrior.png";
+const char IMAGE_UNIT_MAGE[] = "sprites/unit_mage.png";
 
 //-----------------------------------------------
 //					  Other

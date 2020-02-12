@@ -17,6 +17,9 @@ void Level::initialize()
 	floorSprite.initialize(&tileImage, CoordI{ 12, 0 });
 	wallSprite.initialize(&tileImage, CoordI{ 6, 0 });
 
+	// Initializing both warrior and mage is temporary
+	// It should be initialized whenever the character picks whichever
+	// they are playing
 	unitTexture.initialize(graphics, IMAGE_UNIT_WARRIOR);
     unitAttackGridMask.initialize(0, 7, 128, 128, 0, 1, 58, 114);
 	unitDieGridMask.initialize(2049, 7, 128, 95, 0, 1, 59, 71);
@@ -32,6 +35,22 @@ void Level::initialize()
 	};
     vector<int> unitEndFrames = { 16, 21, 10, 8, 6 };
 	unitImage.initialize(&unitTexture, unitGridMasks, unitEndFrames);
+
+	unitMageTexture.initialize(graphics, IMAGE_UNIT_MAGE);
+    unitMageAttackGridMask.initialize(0, 7, 128, 128, 0, 1, 63, 110);
+	unitMageDieGridMask.initialize(2049, 7, 128, 95, 0, 1, 61, 81);
+	unitMageIdleGridMask.initialize(0, 1045, 96, 96, 0, 1, 47, 79);
+	unitMageWalkGridMask.initialize(2690, 1045, 96, 96, 0, 1, 47, 79);
+	unitMageGetHitGridMask.initialize(4228, 1045, 96, 96, 0, 1, 47, 79);
+	vector<GridMask> unitMageGridMasks = {
+        unitMageAttackGridMask,
+        unitMageDieGridMask,
+        unitMageIdleGridMask,
+        unitMageWalkGridMask,
+		unitMageGetHitGridMask
+	};
+	vector<int> unitMageEndFrames = { 16, 20, 8, 8, 8 };
+	unitMageImage.initialize(&unitMageTexture, unitMageGridMasks, unitMageEndFrames);
 
 	// Tiles
 	tiles.initialize(10, 10);
@@ -66,7 +85,7 @@ void Level::initialize()
 		pPos,
 		translateHCollision(Collision{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, pPos),
 		translateVCollision(Collision{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, pPos),
-		&unitImage,
+		&unitMageImage,
 		RenderInfo{ PLAYER_STATE::IDLE, 0, 0, 0, 0.03 },
 		playerIdleState);
 }

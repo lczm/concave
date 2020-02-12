@@ -29,3 +29,19 @@ void Button::draw()
 	
 }
 
+bool Button::isHovered()
+{
+	int mouseX = input->getMouseX();
+	int mouseY = input->getMouseY();
+	
+	SpriteData sd = getSpriteData();
+
+	if (!mouseX && !mouseY) return false;
+	int left = x - sd.width;
+	int top = y - sd.height;
+	int relX = mouseX - left;
+	int relY = mouseY - top;
+	return (0 < relX && relX < sd.width &&
+		0 < relY && relY < sd.height);
+}
+

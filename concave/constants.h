@@ -56,9 +56,13 @@ const char IMAGE_TILES_DUNGEON[] = "sprites/tiles_church_dungeon.png";
 const char IMAGE_UNIT_WARRIOR[] = "sprites/unit_warrior.png";
 
 //-----------------------------------------------
-//                Image (Menu)
+//                Texture (Menu)
 //-----------------------------------------------
-const char PLAY_BTN_TEXTURE[] = "sprites/playsprite.png";
+const char PLAY_BTN_TEXTURE[] = "sprites/play.png";
+const char PLAY_HOVER_TEXTURE[] = "sprites/playhover.png";
+const char INS_BTN_TEXTURE[] = "sprites/instruction.png";
+const char OPT_BTN_TEXTURE[] = "sprites/options.png";
+const char CR_BTN_TEXTURE[] = "sprites/credits.png";
 
 //-----------------------------------------------
 //					  Other

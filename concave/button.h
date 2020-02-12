@@ -10,7 +10,7 @@ private:
 	Graphics* graphics;
 	Input* input;
 	Texture *texture;
-	GridMask gridMask;
+	//GridMask gridMask;
 	float x;
 	float y;
 
@@ -21,6 +21,7 @@ public:
 	void initialize(Graphics* graphics, Input* input, Texture* texture, float x, float y);
 	SpriteData getSpriteData();
 	void draw();
+	bool isHovered();
 	
 };
 

@@ -6,8 +6,16 @@ class MainMenu : public Window
 {
 private:
 	Texture playbtnTexture;
-	GridMask playbtnGM;
+	Texture playHoverTexture;
+	Texture insbtnTexture;
+	Texture optbtnTexture;
+	Texture crbtnTexture;
+	//GridMask playbtnGM;
 	Button playbtn;
+	Button playHoverbtn;
+	Button insbtn;
+	Button optbtn;
+	Button crbtn;
 
 
 

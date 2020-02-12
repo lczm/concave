@@ -31,12 +31,14 @@ void Button::draw()
 
 bool Button::isHovered()
 {
-	int mouseX = input->getMouseX();
-	int mouseY = input->getMouseY();
 	
 	SpriteData sd = getSpriteData();
 
-	if (!mouseX && !mouseY) return false;
+	/*if (input->mouseRawIn) return false;*/
+
+	int mouseX = input->getMouseRawX();
+	int mouseY = input->getMouseRawY();
+
 	int left = x - sd.width;
 	int top = y - sd.height;
 	int relX = mouseX - left;

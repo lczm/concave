@@ -22,7 +22,7 @@ PLAYER_STATE PlayerIdleState::update(int index, Level* level)
     else if (input->getMouseMButton()) {
         renderInfo->timer = 0;
         renderInfo->frameNo = 0;
-        return PLAYER_STATE::GET_HIT;
+        return PLAYER_STATE::FIRE;
     }
     updateFrameNo(frameTime, index, players, renderInfo);
     return PLAYER_STATE::IDLE;

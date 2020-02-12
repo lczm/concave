@@ -154,6 +154,7 @@
     <ClCompile Include="concave.cpp" />
     <ClCompile Include="playerAttackState.cpp" />
     <ClCompile Include="playerDieState.cpp" />
+    <ClCompile Include="playerFireState.cpp" />
     <ClCompile Include="playerGetHitState.cpp" />
     <ClCompile Include="playerIdleState.cpp" />
     <ClCompile Include="players.cpp" />
@@ -176,6 +177,7 @@
     <ClInclude Include="concave.h" />
     <ClInclude Include="constants.h" />
     <ClInclude Include="playerDieState.h" />
+    <ClInclude Include="playerFireState.h" />
     <ClInclude Include="playerGetHitState.h" />
     <ClInclude Include="players.h" />
     <ClInclude Include="game.h" />

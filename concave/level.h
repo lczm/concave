@@ -12,6 +12,7 @@
 #include "playerIdleState.h"
 #include "playerWalkState.h"
 #include "playerGetHitState.h"
+#include "playerFireState.h"
 using namespace std;
 
 class Level : public Window
@@ -36,6 +37,7 @@ private:
 	GridMask unitMageIdleGridMask;
 	GridMask unitMageWalkGridMask;
 	GridMask unitMageGetHitGridMask;
+	GridMask unitMageFireGridMask;
 	// Sprite unitSprite;
 	// Components
 	Tiles tiles;

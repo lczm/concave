@@ -78,6 +78,9 @@
     <ClCompile Include="playerGetHitState.cpp">
       <Filter>Source Files\PlayerStates</Filter>
     </ClCompile>
+    <ClCompile Include="playerFireState.cpp">
+      <Filter>Source Files\PlayerStates</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="constants.h">
@@ -141,6 +144,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="playerGetHitState.h">
+      <Filter>Header Files\PlayerStates</Filter>
+    </ClInclude>
+    <ClInclude Include="playerFireState.h">
       <Filter>Header Files\PlayerStates</Filter>
     </ClInclude>
   </ItemGroup>

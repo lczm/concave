@@ -42,14 +42,16 @@ void Level::initialize()
 	unitMageIdleGridMask.initialize(0, 1045, 96, 96, 0, 1, 47, 79);
 	unitMageWalkGridMask.initialize(2690, 1045, 96, 96, 0, 1, 47, 79);
 	unitMageGetHitGridMask.initialize(4228, 1045, 96, 96, 0, 1, 47, 79);
+	unitMageFireGridMask.initialize(0, 1827, 128, 128, 0, 1, 61, 108);
 	vector<GridMask> unitMageGridMasks = {
         unitMageAttackGridMask,
         unitMageDieGridMask,
         unitMageIdleGridMask,
         unitMageWalkGridMask,
-		unitMageGetHitGridMask
+		unitMageGetHitGridMask,
+		unitMageFireGridMask
 	};
-	vector<int> unitMageEndFrames = { 16, 20, 8, 8, 8 };
+	vector<int> unitMageEndFrames = { 16, 20, 8, 8, 8, 12 };
 	unitMageImage.initialize(&unitMageTexture, unitMageGridMasks, unitMageEndFrames);
 
 	// Tiles
@@ -72,11 +74,13 @@ void Level::initialize()
 	PlayerIdleState* playerIdleState = new PlayerIdleState();
 	PlayerWalkState* playerWalkState = new PlayerWalkState();
 	PlayerGetHitState* playerGetHitState = new PlayerGetHitState();
+	PlayerFireState* playerFireState = new PlayerFireState();
 	states.push_back(playerAttackState);
 	states.push_back(playerDieState);
 	states.push_back(playerIdleState);
 	states.push_back(playerWalkState);
 	states.push_back(playerGetHitState);
+	states.push_back(playerFireState);
 
 	// Player
 	players.initialize(1);
@@ -139,12 +143,14 @@ void Level::update()
             break;
         case PLAYER_STATE::WALK:
 			pRenderInfos[i].state = PLAYER_STATE::WALK;
-            CoordF position = gridToScreen(players.getPosition(i));
             players.setState(i, states[3]);
             break;
 		case PLAYER_STATE::GET_HIT:
 			pRenderInfos[i].state = PLAYER_STATE::GET_HIT;
 			players.setState(i, states[4]);
+		case PLAYER_STATE::FIRE:
+			pRenderInfos[i].state = PLAYER_STATE::FIRE;
+			players.setState(i, states[5]);
         default:
             break;
 			// }

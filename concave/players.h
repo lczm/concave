@@ -15,9 +15,8 @@ private:
 	RenderAnim* renders;
 	RenderInfo* rendersInfos;
 
-	vector<State*> states;
-    // vector<Movement> movements;
     Movement* movements;
+	vector<State*> states;
 public:
 	Players(); ~Players();
 	void initialize(int capacity);

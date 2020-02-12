@@ -9,10 +9,11 @@ PlayerAttackState::~PlayerAttackState()
 {
 }
 
-PLAYER_STATE PlayerAttackState::update(float frameTime, int index, Level* level)
+PLAYER_STATE PlayerAttackState::update(int index, Level* level)
 {
     Input* input = level->input;
     Players* players = level->getPlayers();
+    float frameTime = level->frameTime;
     RenderInfo* renderInfo = &players->getRenderInfos()[index];
     if (renderInfo->frameNo == players->getRender(index)->getEndFrame(renderInfo->state) - 1) {
         updateFrameNo(frameTime, index, players, renderInfo);

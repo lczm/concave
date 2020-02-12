@@ -9,7 +9,7 @@ PlayerDieState::~PlayerDieState()
 {
 }
 
-PLAYER_STATE PlayerDieState::update(float frameTime, int index, Level* level)
+PLAYER_STATE PlayerDieState::update(int index, Level* level)
 {
     return PLAYER_STATE::DIE;
 }

@@ -93,14 +93,14 @@ void Level::update()
 	// updateVCollision(players.getVCollisions()[0], moveDelta);
 
 	// Collision
-	CoordF* pPositions = players.getPositions();
-	CoordF* pDestPositions = players.getDestPositions();
-	Collision* pHCollisions = players.getHCollisions();
-	Collision* pVCollisions = players.getVCollisions();
+	// CoordF* pPositions = players.getPositions();
+	// CoordF* pDestPositions = players.getDestPositions();
+	// Collision* pHCollisions = players.getHCollisions();
+	// Collision* pVCollisions = players.getVCollisions();
 	vector<State*> pStates = players.getStates();
 	RenderInfo* pRenderInfos = players.getRenderInfos();
 	for (int i = 0; i < players.getSize(); i++) {
-        PLAYER_STATE state = pStates[i]->update(frameTime, i, this);
+        PLAYER_STATE state = pStates[i]->update(i, this);
         switch (state) {
         case PLAYER_STATE::ATTACK:
 			pRenderInfos[i].state = PLAYER_STATE::ATTACK;

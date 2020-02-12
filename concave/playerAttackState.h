@@ -6,5 +6,5 @@ class PlayerAttackState : public State
 public:
     PlayerAttackState();
     ~PlayerAttackState();
-    PLAYER_STATE update(float frameTime, int index, Level* level);
+    PLAYER_STATE update(int index, Level* level);
 };

@@ -4,46 +4,46 @@ void PlayerWalkState::update(Level* level, int index)
 {
     float frameTime = level->frameTime;
     Input* input = level->input;
-    Players* players = level->getPlayers();
-    RenderInfo* renderInfo = &players->getImageInfoArray()[index];
-    CoordF position = players->getPositionArray()[index];
-    CoordF destPosition = players->getDestPositionArray()[index];
+    Players& players = level->getPlayers();
+    RenderInfo& renderInfo = players.getImageInfoArray()[index];
+    CoordF position = players.getPositionArray()[index];
+    CoordF destPosition = players.getDestPositionArray()[index];
 
     if (input->getMouseLButton()) {
-        players->setDestPosition(index, level->screenToGrid(CoordF{float(input->getMouseX()), float(input->getMouseY())}));
-        players->setMovement(index, calculateMovement(frameTime, position, destPosition));
+        players.setDestPosition(index, level->screenToGrid(CoordF{float(input->getMouseX()), float(input->getMouseY())}));
+        players.setMovement(index, calculateMovement(frameTime, position, destPosition));
         return;
     }
     else if (input->getMouseRButton()) {
         // Change directions based on where mouse is 
         float rotation = calculateMovement(frameTime, position,
             level->screenToGrid(CoordF{ float(input->getMouseX()), float(input->getMouseY()) })).rotation;
-        players->setMovement(index, Movement{ 0, 0, rotation });
-        players->setState(index, level->getStates()->at(PLAYER::FIRE));
-        players->updateStateInfo(index, PLAYER::FIRE);
+        players.setMovement(index, Movement{ 0, 0, rotation });
+        players.setState(index, level->getStates()->at(PLAYER::FIRE));
+        players.updateStateInfo(index, PLAYER::FIRE);
         return;
     }
     else if (input->getMouseMButton()) {
         // Change directions based on where mouse is 
         float rotation = calculateMovement(frameTime, position,
             level->screenToGrid(CoordF{ float(input->getMouseX()), float(input->getMouseY()) })).rotation;
-        players->setMovement(index, Movement{ 0, 0, rotation });
-        players->setState(index, level->getStates()->at(PLAYER::FIRE));
-        players->updateStateInfo(index, PLAYER::FIRE);
+        players.setMovement(index, Movement{ 0, 0, rotation });
+        players.setState(index, level->getStates()->at(PLAYER::FIRE));
+        players.updateStateInfo(index, PLAYER::FIRE);
         return;
     }
 
-    Movement movement = players->getMovementArray()[index];
+    Movement movement = players.getMovementArray()[index];
     if (!isAtPosition(position, destPosition)) {
-        players->setPosition(index, CoordF{ position.x += movement.moveX,
+        players.setPosition(index, CoordF{ position.x += movement.moveX,
                                             position.y += movement.moveY });
-        updateFrameNo(frameTime, index, players, renderInfo);
+        updateFrameNo(frameTime, index, players, &renderInfo);
         return;
     }
 
-    players->setMovement(index, Movement{ 0, 0, movement.rotation });
-    players->setState(index, level->getStates()->at(PLAYER::IDLE));
-    players->updateStateInfo(index, PLAYER::IDLE);
+    players.setMovement(index, Movement{ 0, 0, movement.rotation });
+    players.setState(index, level->getStates()->at(PLAYER::IDLE));
+    players.updateStateInfo(index, PLAYER::IDLE);
     return;
 }
 

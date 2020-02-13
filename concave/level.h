@@ -68,6 +68,6 @@ public:
 	CoordF gridToScreen(CoordF gridCoord);
 	CoordF screenToGrid(CoordF screenCoord);
 
-	Players* getPlayers() { return &players; }
+	Players& getPlayers() { return players; }
 	vector<State*>* getStates() { return &states; }
 };

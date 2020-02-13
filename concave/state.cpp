@@ -39,13 +39,13 @@ Movement State::calculateMovement(float frameTime, CoordF position, CoordF destP
      return Movement{ moveX, moveY, degAngle };
 }
 
-void State::updateFrameNo(float frameTime, int index, Players* players, RenderInfo* renderInfo)
+void State::updateFrameNo(float frameTime, int index, Players players, RenderInfo* renderInfo)
 {
     renderInfo->timer += frameTime;
     if (renderInfo->timer >= renderInfo->delay) {
         renderInfo->timer -= renderInfo->delay;
         renderInfo->frameNo++;
-        if (renderInfo->frameNo == players->getImageArray()[index]->getEndFrame(renderInfo->state)) {
+        if (renderInfo->frameNo == players.getImageArray()[index]->getEndFrame(renderInfo->state)) {
             renderInfo->frameNo = 0;
         }
     }

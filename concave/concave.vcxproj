@@ -155,6 +155,7 @@
     <ClCompile Include="concave.cpp" />
     <ClCompile Include="EditComponent.cpp" />
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="gameInfoComponent.cpp" />
     <ClCompile Include="graphics.cpp" />
     <ClCompile Include="hud.cpp" />
     <ClCompile Include="image.cpp" />
@@ -174,6 +175,7 @@
     <ClInclude Include="EditComponent.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="gameError.h" />
+    <ClInclude Include="gameInfoComponent.h" />
     <ClInclude Include="graphics.h" />
     <ClInclude Include="hud.h" />
     <ClInclude Include="image.h" />

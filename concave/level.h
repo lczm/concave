@@ -6,6 +6,7 @@
 #include "cellular.h"
 #include "room.h"
 #include "EditComponent.h"
+#include "gameInfoComponent.h"
 #include "renderLevel.h"
 #include <vector>
 #include <fstream>
@@ -32,6 +33,7 @@ private:
 	int type = 0;
 	//prob need to change it to read component
 	EditComponent * editComponent;
+
 
 	RenderLevel renderLevel;
 public:

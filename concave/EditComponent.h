@@ -1,5 +1,6 @@
 #pragma once
 #include "constants.h"
+#include "gameInfoComponent.h"
 #include "room.h"
 #include <string>
 #include <fstream>
@@ -9,6 +10,9 @@ using namespace std;
 
 class EditComponent
 {
+private:
+	GameInfoComponent gm;
+
 public:
 	//room code
 	void placeRoom(int map[mapWidth][mapHeight]);

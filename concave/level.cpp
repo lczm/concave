@@ -52,12 +52,9 @@ void Level::update()
 	if (input->isKeyDown('P')) camScale += 0.01;
 	if (input->isKeyDown('O')) camScale -= 0.01;
 
+	
 	levelEdit();
 	changeLevel();
-
-	
-
-
 }
 
 void Level::render()

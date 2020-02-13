@@ -2,7 +2,7 @@
 #include "EditComponent.h"
 
 void EditComponent::readFromFile(std::string mapString, int map[mapWidth][mapHeight], int level)
-{
+{	
 	std::ifstream file("text\\" + std::to_string(level) + mapString);
 	for (int r = 0; r < mapWidth; r++)
 	{
@@ -17,6 +17,9 @@ void EditComponent::writeToFile(int map[mapWidth][mapHeight], int i)
 	int random = rand();
 	//string filepath = "text\\" + to_string(random) + "save.txt";
 	string filepath = "text\\" + to_string(i) + "save.txt";
+
+	gm.writeRecord("text\\gameInfo.csv",to_string(i) + "save.txt", "0", "No");
+
 	ofstream outputfile((filepath));
 	for (int r = 0; r < mapWidth; r++)
 	{

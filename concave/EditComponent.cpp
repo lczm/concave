@@ -224,4 +224,5 @@ void EditComponent::changeObjects(int initial, int changeTo, int map[mapWidth][m
 void EditComponent::animateObjects()
 {
 	gm.appendRecord("text\\gameInfo.csv",2, "0save.txt", "blah");
+	gm.appendRecord("text\\gameInfo.csv",2, "1save.txt", "blah");
 }

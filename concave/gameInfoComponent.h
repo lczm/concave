@@ -23,6 +23,7 @@ public:
 
 	std::vector<std::string> readRecord(std::string file_name, std::string search_term);
 	void read();
+	void skip(std::istream& is, size_t n, char delim);
 	//void create();
 	//void readRowCol(int row, int col);
 };

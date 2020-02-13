@@ -143,6 +143,7 @@ void Level::changeLevel()
 	{
 		//woahh
 		//mapNo = 29229;
+		input->clearKeyPress(0x45);
 		editComponent->animateObjects();
 		level.readFromFile();
 		//level.initialize();

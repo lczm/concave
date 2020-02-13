@@ -4,7 +4,7 @@ GameInfoComponent::GameInfoComponent()
 {
 
 }
-
+/*
 void GameInfoComponent::read()
 {
 	ifstream fout("text\\gameInfo.csv", std::ofstream::out | std::ofstream::trunc);;
@@ -24,12 +24,13 @@ void GameInfoComponent::read()
 
 	fout.close();
 }
+*/
 
 void GameInfoComponent::writeRecord(std::string file_name, std::vector<std::string> record)
 {
 
 	std::ofstream file;
-	file.open(file_name, std::ios_base::app);
+	file.open(file_name, ios::app | ios::out);
 
 	for (int i = 0; i < record.size(); i++)
 	{
@@ -79,7 +80,6 @@ std::vector<std::string> GameInfoComponent::readRecord(std::string file_name, st
 			record.push_back(field_three);
 		}
 	}
-	std::cout << record[0] << " " << record[1] << " " << record[2];
 	file.close();
 	return record;
 }
@@ -89,9 +89,13 @@ std::vector<std::string> GameInfoComponent::readRecord(std::string file_name, st
 void GameInfoComponent::appendRecord(std::string file_name, int col, std::string search_term, std::string newdata)
 {
 	//search for the record
-
 	std::vector<std::string> data = readRecord(file_name, search_term);
+
+	//duplication happends here
 	vector<std::vector<std::string>> allrecords = filterOutRecord(file_name, search_term);
+
+	std::ofstream ofs("text\\gameInfo.csv");
+	ofs.close();
 	for (int i = 0; i < data.size(); i++)
 	{
 		if (i == col)
@@ -102,11 +106,15 @@ void GameInfoComponent::appendRecord(std::string file_name, int col, std::string
 
 	allrecords.push_back(data);
 
-	ifstream fout("text\\gameInfo.csv", std::ofstream::out | std::ofstream::trunc);
 	for (int i = 0; i < allrecords.size(); i++)
 	{
 		writeRecord(file_name, allrecords[i]);
 	}
+
+
+	allrecords.clear();
+	data.clear();
+
 }
 
 
@@ -124,23 +132,40 @@ vector<std::vector<std::string>> GameInfoComponent::filterOutRecord(std::string 
 	std::string field_two;
 	std::string field_three;
 
-
-	while (!file.eof())
-	{
+	
+	while (file.good())
+	{		
+			
 			getline(file, field_one, ',');
-			getline(file, field_two, ',');
-			getline(file, field_three, '\n'); //states the end of the record
-			if (field_one != search_term)
+			if (field_one == search_term)
 			{
+				skip(file, 1, '\n');
+			}
+
+			else if (field_one != search_term)
+			{
+				getline(file, field_two, ',');
+				getline(file, field_three, '\n'); //states the end of the record
+
 				oneRecord.push_back(field_one);
 				oneRecord.push_back(field_two);
 				oneRecord.push_back(field_three);
+
 				records.push_back(oneRecord);
 				oneRecord.clear();
 			}
-		
 	}
 
 	file.close();
 	return records;
+}
+
+
+void  GameInfoComponent::skip(std::istream& is, size_t n, char delim)
+{
+	size_t i = 0;
+	while (i++ < n)
+		is.ignore(80, delim);
+	// ignores up to 80 chars but stops ignoring after delim
+	// istream stream position var is changed. (we want that)
 }

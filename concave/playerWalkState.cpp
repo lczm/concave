@@ -12,8 +12,6 @@ void PlayerWalkState::update(Level* level, int index)
     if (input->getMouseLButton()) {
         players->setDestPosition(index, level->screenToGrid(CoordF{float(input->getMouseX()), float(input->getMouseY())}));
         players->setMovement(index, calculateMovement(frameTime, position, destPosition));
-        players->getStateArray()[index] = level->getStates()->at(PLAYER_STATE::WALK);
-        players->getImageInfoArray()[index].state = PLAYER_STATE::WALK;
         return;
     }
     else if (input->getMouseRButton()) {
@@ -21,10 +19,8 @@ void PlayerWalkState::update(Level* level, int index)
         float rotation = calculateMovement(frameTime, position,
             level->screenToGrid(CoordF{ float(input->getMouseX()), float(input->getMouseY()) })).rotation;
         players->setMovement(index, Movement{ 0, 0, rotation });
-        renderInfo->timer = 0;
-        renderInfo->frameNo = 0;
-        players->getStateArray()[index] = level->getStates()->at(PLAYER_STATE::FIRE);
-        players->getImageInfoArray()[index].state = PLAYER_STATE::FIRE;
+        players->setState(index, level->getStates()->at(PLAYER_STATE::FIRE));
+        players->updateStateInfo(index, PLAYER_STATE::FIRE);
         return;
     }
     else if (input->getMouseMButton()) {
@@ -32,10 +28,8 @@ void PlayerWalkState::update(Level* level, int index)
         float rotation = calculateMovement(frameTime, position,
             level->screenToGrid(CoordF{ float(input->getMouseX()), float(input->getMouseY()) })).rotation;
         players->setMovement(index, Movement{ 0, 0, rotation });
-        renderInfo->timer = 0;
-        renderInfo->frameNo = 0;
-        players->getStateArray()[index] = level->getStates()->at(PLAYER_STATE::FIRE);
-        players->getImageInfoArray()[index].state = PLAYER_STATE::FIRE;
+        players->setState(index, level->getStates()->at(PLAYER_STATE::FIRE));
+        players->updateStateInfo(index, PLAYER_STATE::FIRE);
         return;
     }
 
@@ -48,10 +42,8 @@ void PlayerWalkState::update(Level* level, int index)
     }
 
     players->setMovement(index, Movement{ 0, 0, movement.rotation });
-    renderInfo->timer = 0;
-    renderInfo->frameNo = 0;
-    players->getStateArray()[index] = level->getStates()->at(PLAYER_STATE::IDLE);
-    players->getImageInfoArray()[index].state = PLAYER_STATE::IDLE;
+    players->setState(index, level->getStates()->at(PLAYER_STATE::IDLE));
+    players->updateStateInfo(index, PLAYER_STATE::IDLE);
     return;
 }
 

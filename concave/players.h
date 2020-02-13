@@ -41,4 +41,6 @@ public:
  	vector<AnimImage*>& getImageArray() { return imageArray; }
 	vector<RenderInfo>& getImageInfoArray() { return imageInfoArray; }
 	vector<Movement>& getMovementArray() { return movementArray; }
+public:
+	void updateStateInfo(int index, PLAYER_STATE state);
 };

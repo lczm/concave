@@ -84,7 +84,7 @@ bool Button::isClicked()
 
 }
 
-void Button::getWidth()
+int Button::getWidth()
 {
 	SpriteData sd = getSpriteData();
 

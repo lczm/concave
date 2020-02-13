@@ -125,9 +125,9 @@ void Level::update()
 		CoordF delta{ 0, 0 };
 		Line hLine, vLine;
 		LineI hLineI, vLineI;
-		if (checkHLinesToVLineISetCollision(projectiles.getVLineISet(), pHLinesArray[i], hLine, vLineI))
+		if (checkLinesToLineISetCollision(projectiles.getVLineISet(), pHLinesArray[i], hLine, vLineI))
 			delta.x = getDeltaXResponse(hLine, vLineI, pPos);
-		if (checkVLinesToHLineISetCollision(projectiles.getHLineISet(), pVLinesArray[i], vLine, hLineI))
+		if (checkLinesToLineISetCollision(projectiles.getHLineISet(), pVLinesArray[i], vLine, hLineI))
 			delta.y = getDeltaYResponse(vLine, hLineI, pPos);
 		pPositionArray[i] += delta;
 		updateHLines(pHLinesArray[i], delta);

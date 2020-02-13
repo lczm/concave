@@ -27,10 +27,15 @@ bool checkVLinesToWallCollision(Tiles& tiles, Lines& vLines, Line& vLine, Line& 
 bool checkHLineISetItersToWallCollision(Tiles& tiles, LineISetIters& hLineISetIters, LineI& hLineI, Line& vLine);
 bool checkVLineISetItersToWallCollision(Tiles& tiles, LineISetIters& vLineISetIters, LineI& vLineI, Line& hLine);
 
-bool checkHLineToVLineISetCollision(LineISet& vLineISet, Line hLine, LineI& vLineI);
-bool checkHLinesToVLineISetCollision(LineISet& vLineISet, Lines& hLines, Line& hLine, LineI& vLineI);
-bool checkVLineToHLineISetCollision(LineISet& hLineISet, Line vLine, LineI& hLineI);
-bool checkVLinesToHLineISetCollision(LineISet& hLineISet, Lines& vLines, Line& vLine, LineI& hLineI);
+//bool checkHLineToVLineISetCollision(LineISet& vLineISet, Line hLine, LineI& vLineI);
+//bool checkVLineToHLineISetCollision(LineISet& hLineISet, Line vLine, LineI& hLineI);
+bool checkLineToLineISetCollision(LineISet& lineISet, Line line, LineI& lineI);
+//bool checkHLinesToVLineISetCollision(LineISet& vLineISet, Lines& hLines, Line& hLine, LineI& vLineI);
+//bool checkVLinesToHLineISetCollision(LineISet& hLineISet, Lines& vLines, Line& vLine, LineI& hLineI);
+bool checkLinesToLineISetCollision(LineISet& lineISet, Lines& lines, Line& line, LineI& lineI);
+
+//bool checkHLineISetToVLineISetCollision(LineISet& vLineISet, LineISet& hLineISet, LineI& hLineI, LineI& vLineI);
+//bool checkVLineISetToHLineISetCollision(LineISet& hLineISet, LineISet& vLineISet, LineI& vLineI, LineI& hLineI);
 
 float getDeltaXResponse(Line rHLine, Line bVLine, CoordF pos);
 float getDeltaYResponse(Line rVLine, Line bHLine, CoordF pos);

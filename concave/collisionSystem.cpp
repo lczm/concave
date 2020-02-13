@@ -132,6 +132,7 @@ bool checkHLineISetItersToWallCollision(Tiles& tiles, LineISetIters& hLineISetIt
 			return true;
 		}
 	}
+	return false;
 }
 
 bool checkVLineISetItersToWallCollision(Tiles& tiles, LineISetIters& vLineISetIters, LineI& vLineI, Line& hLine)
@@ -143,51 +144,78 @@ bool checkVLineISetItersToWallCollision(Tiles& tiles, LineISetIters& vLineISetIt
 			return true;
 		}
 	}
+	return false;
 }
 
-bool checkHLineToVLineISetCollision(LineISet& vLineISet, Line hLine, LineI& vLineI)
+//bool checkHLineToVLineISetCollision(LineISet& vLineISet, Line hLine, LineI& vLineI)
+//{
+//	LineISetIter start = vLineISet.lower_bound(LineI{ -1, -1, hLine.lower, -1 });
+//	LineISetIter end = vLineISet.upper_bound(LineI{ -1, -1, hLine.upper, -1 });
+//	for (; start != end; start++) {
+//		LineI _vLineI = *start;
+//		if (_vLineI.lower < hLine.shift && hLine.shift < _vLineI.upper) {
+//			vLineI = _vLineI;
+//			return true;
+//		}
+//	}
+//	return false;
+//}
+//
+//bool checkVLineToHLineISetCollision(LineISet& hLineISet, Line vLine, LineI& hLineI)
+//{
+//	LineISetIter start = hLineISet.lower_bound(LineI{ -1, -1, vLine.lower, -1 });
+//	LineISetIter end = hLineISet.upper_bound(LineI{ -1, -1, vLine.upper, -1 });
+//	for (; start != end; start++) {
+//		LineI _hLineI = *start;
+//		if (_hLineI.lower < vLine.shift && vLine.shift < _hLineI.upper) {
+//			hLineI = _hLineI;
+//			return true;
+//		}
+//	}
+//	return false;
+//}
+
+bool checkLineToLineISetCollision(LineISet& lineISet, Line line, LineI& lineI)
 {
-	LineISetIter start = vLineISet.lower_bound(LineI{ -1, -1, hLine.lower, -1 });
-	LineISetIter end = vLineISet.upper_bound(LineI{ -1, -1, hLine.upper, -1 });
+	LineISetIter start = lineISet.lower_bound(LineI{ -1, -1, line.lower, -1 });
+	LineISetIter end = lineISet.upper_bound(LineI{ -1, -1, line.upper, -1 });
 	for (; start != end; start++) {
-		LineI _vLineI = *start;
-		if (_vLineI.lower < hLine.shift && hLine.shift < _vLineI.upper) {
-			vLineI = _vLineI;
+		LineI _lineI = *start;
+		if (_lineI.lower < line.shift && line.shift < _lineI.upper) {
+			lineI = _lineI;
 			return true;
 		}
 	}
 	return false;
 }
 
-bool checkVLineToHLineISetCollision(LineISet& hLineISet, Line vLine, LineI& hLineI)
-{
-	LineISetIter start = hLineISet.lower_bound(LineI{ -1, -1, vLine.lower, -1 });
-	LineISetIter end = hLineISet.upper_bound(LineI{ -1, -1, vLine.upper, -1 });
-	for (; start != end; start++) {
-		LineI _hLineI = *start;
-		if (_hLineI.lower < vLine.shift && vLine.shift < _hLineI.upper) {
-			hLineI = _hLineI;
-			return true;
-		}
-	}
-}
+//bool checkHLinesToVLineISetCollision(LineISet& vLineISet, Lines& hLines, Line& hLine, LineI& vLineI)
+//{
+//	for (Line _hLine : hLines) {
+//		if (checkHLineToVLineISetCollision(vLineISet, _hLine, vLineI)) {
+//			hLine = _hLine;
+//			return true;
+//		}
+//	}
+//	return false;
+//}
+//
+//bool checkVLinesToHLineISetCollision(LineISet& hLineISet, Lines& vLines, Line& vLine, LineI& hLineI)
+//{
+//	for (Line _vLine : vLines) {
+//		if (checkVLineToHLineISetCollision(hLineISet, _vLine, hLineI)) {
+//			vLine = _vLine;
+//			return true;
+//		}
+//	}
+//	return false;
+//}
 
-bool checkHLinesToVLineISetCollision(LineISet& vLineISet, Lines& hLines, Line& hLine, LineI& vLineI)
+bool checkLinesToLineISetCollision(LineISet& lineISet, Lines& lines, Line& line, LineI& lineI)
 {
-	for (Line _hLine : hLines) {
-		if (checkHLineToVLineISetCollision(vLineISet, _hLine, vLineI)) {
-			hLine = _hLine;
-			return true;
-		}
-	}
-	return false;
-}
-
-bool checkVLinesToHLineISetCollision(LineISet& hLineISet, Lines& vLines, Line& vLine, LineI& hLineI)
-{
-	for (Line _vLine : vLines) {
-		if (checkHLineToVLineISetCollision(hLineISet, _vLine, hLineI)) {
-			vLine = _vLine;
+	for (Line _line : lines) {
+		if (checkLineToLineISetCollision(lineISet, _line, lineI)) {
+			line = _line;
 			return true;
 		}
 	}

@@ -25,13 +25,33 @@ void GameInfoComponent::read()
 	fout.close();
 }
 
-void GameInfoComponent::writeRecord(std::string file_name, std::string field_one, std::string field_two, std::string field_three)
-{
+void GameInfoComponent::writeRecord(std::string file_name, std::vector<std::string> record)
+{	
+
 	std::ofstream file;
 	file.open(file_name, std::ios_base::app);
-	file << field_one << "," << field_two << "," << field_three << std::endl;
+
+	for (int i = 0; i < record.size(); i++)
+	{	
+		if (i < record.size() - 1)
+		{
+			file << record[i] << ",";
+		}
+		else {
+			file << record[i] << std::endl;
+		}
+
+	}
+	file.close();
 }
 
+/*
+	std::vector<std::string> data = gm->readRecord(std::string file_name, std::string search_term);
+
+	read the rows by indicating the index
+	eg data[0]
+
+*/
 std::vector<std::string> GameInfoComponent::readRecord(std::string file_name, std::string search_term)
 {
 	std::vector<std::string> record;

@@ -18,7 +18,14 @@ void EditComponent::writeToFile(int map[mapWidth][mapHeight], int i)
 	//string filepath = "text\\" + to_string(random) + "save.txt";
 	string filepath = "text\\" + to_string(i) + "save.txt";
 
-	gm.writeRecord("text\\gameInfo.csv",to_string(i) + "save.txt", "0", "No");
+	std::vector<std::string> record;
+
+	record.push_back(to_string(i) + "save.txt");
+	record.push_back("0");
+	record.push_back("No");
+
+	gm.writeRecord("text\\gameInfo.csv", record);
+	//gm.writeRecord("text\\gameInfo.csv",to_string(i) + "save.txt", "0", "No");
 
 	ofstream outputfile((filepath));
 	for (int r = 0; r < mapWidth; r++)

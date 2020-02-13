@@ -14,6 +14,9 @@ void Level::initialize()
 {	
 	//initialize the values
 	renderLevel.initialize(graphics, input, type);
+	ifstream fout("text\\gameInfo.csv", std::ofstream::out | std::ofstream::trunc);
+	fout.close();
+
 
 	for (int i = 0; i < 5; i++)
 	{
@@ -140,6 +143,7 @@ void Level::changeLevel()
 	{
 		//woahh
 		//mapNo = 29229;
+		editComponent->animateObjects();
 		level.readFromFile();
 		//level.initialize();
 	}

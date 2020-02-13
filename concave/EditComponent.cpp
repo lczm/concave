@@ -25,6 +25,7 @@ void EditComponent::writeToFile(int map[mapWidth][mapHeight], int i)
 	record.push_back("No");
 
 	gm.writeRecord("text\\gameInfo.csv", record);
+	
 	//gm.writeRecord("text\\gameInfo.csv",to_string(i) + "save.txt", "0", "No");
 
 	ofstream outputfile((filepath));
@@ -222,5 +223,5 @@ void EditComponent::changeObjects(int initial, int changeTo, int map[mapWidth][m
 //changes object look
 void EditComponent::animateObjects()
 {
-
+	gm.appendRecord("text\\gameInfo.csv",2, "0save.txt", "blah");
 }

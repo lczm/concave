@@ -18,7 +18,7 @@ void Projectiles::initialize(int capacity)
 void Projectiles::push(CoordF position, Sprite* sprite, Lines hLines, Lines vLines)
 {
 	LineSetIters hLineIters, vLineIters;
-	for (Line line : hLines) vLineIters.push_back(hLineSet.insert(LineI{ line, size }).first);
+	for (Line line : hLines) hLineIters.push_back(hLineSet.insert(LineI{ line, size }).first);
 	for (Line line : vLines) vLineIters.push_back(vLineSet.insert(LineI{ line, size }).first);
 	positionArray[size] = position;
 	spriteArray[size] = sprite;

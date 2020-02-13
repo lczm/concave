@@ -12,7 +12,7 @@ private:
 public:
 	Players(); ~Players();
 	void initialize(int capacity);
-	void push(CoordF position, Lines hLines, Lines vLines, Sprite* sprite);
+	void push(CoordF position, Sprite* sprite, Lines hLines, Lines vLines);
 	void pop(int index);
 public:
 	int getSize() { return size; }

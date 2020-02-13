@@ -14,11 +14,12 @@ struct Line {
 };
 struct LineI : Line {
 	int id;
+	LineI() {}
 	LineI(Line line, int id) : Line(line) { LineI::id = id; }
 	LineI(float lower, float upper, float shift, int id): Line(lower, upper, shift) { LineI::id = id; }
 };
 typedef vector<Line> Lines;
-typedef vector<LineI> LinesI;
+//typedef vector<LineI> LinesI;
 typedef set<LineI> LineSet;
 typedef LineSet::iterator LineSetIter;
 typedef vector<LineSetIter> LineSetIters;

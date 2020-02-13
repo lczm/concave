@@ -123,9 +123,10 @@ bool checkVLinesToWallCollision(Tiles& tiles, Line& vLine, Line& hLine, Lines vL
 	return false;
 }
 
-bool checkHLinesToWallCollision(Tiles& tiles, LineI& hLine, Line& vLine, LinesI hLines)
+bool checkHLinesToWallCollision(Tiles& tiles, LineI& hLine, Line& vLine, LineSetIters hLineSetIters)
 {
-	for (LineI _hLine : hLines) {
+	for (LineSetIter _hLineSetIter : hLineSetIters) {
+		LineI _hLine= *_hLineSetIter;
 		if (checkHLineToWallCollision(tiles, vLine, _hLine)) {
 			hLine = _hLine;
 			return true;
@@ -133,9 +134,10 @@ bool checkHLinesToWallCollision(Tiles& tiles, LineI& hLine, Line& vLine, LinesI 
 	}
 }
 
-bool checkVLinesToWallCollision(Tiles& tiles, LineI& vLine, Line& hLine, LinesI vLines)
+bool checkVLinesToWallCollision(Tiles& tiles, LineI& vLine, Line& hLine, LineSetIters vLineSetIters)
 {
-	for (LineI _vLine : vLines) {
+	for (LineSetIter _vLineSetIter : vLineSetIters) {
+		LineI _vLine = *_vLineSetIter;
 		if (checkVLineToWallCollision(tiles, hLine, _vLine)) {
 			vLine = _vLine;
 			return true;

@@ -15,7 +15,7 @@ void Players::initialize(int capacity)
 	Players::vLinesArray.resize(capacity);
 }
 
-void Players::push(CoordF position, Lines hLines, Lines vLines, Sprite* sprite)
+void Players::push(CoordF position, Sprite* sprite, Lines hLines, Lines vLines)
 {
 	positionArray[size] = position;
 	spriteArray[size] = sprite;

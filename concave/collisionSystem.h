@@ -24,8 +24,8 @@ bool checkHLineToWallCollision(Tiles& tiles, Line& vLine, Line hLine);
 bool checkVLineToWallCollision(Tiles& tiles, Line& hLine, Line vLine);
 bool checkHLinesToWallCollision(Tiles& tiles, Line& hLine, Line& vLine, Lines hLines);
 bool checkVLinesToWallCollision(Tiles& tiles, Line& vLine, Line& hLine, Lines vLines);
-bool checkHLinesToWallCollision(Tiles& tiles, LineI& hLine, Line& vLine, LinesI hLines);
-bool checkVLinesToWallCollision(Tiles& tiles, LineI& vLine, Line& hLine, LinesI vLines);
+bool checkHLinesToWallCollision(Tiles& tiles, LineI& hLine, Line& vLine, LineSetIters hLines);
+bool checkVLinesToWallCollision(Tiles& tiles, LineI& vLine, Line& hLine, LineSetIters vLines);
 
 float getDeltaXResponse(Line rHLine, Line bVLine, CoordF pos);
 float getDeltaYResponse(Line rVLine, Line bHLine, CoordF pos);

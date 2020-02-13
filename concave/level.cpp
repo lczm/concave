@@ -84,9 +84,9 @@ void Level::update()
 		CoordF pPosition = pPositionArray[i];
 		CoordF delta{ 0, 0 };
 		Line hLine, vLine;
-		if (checkHLinesToWallCollision(tiles, hLine, vLine, pHLinesArray[i]))
+		if (checkHLinesToWallCollision(tiles, pHLinesArray[i], hLine, vLine))
 			delta.x = getDeltaXResponse(hLine, vLine, pPosition);
-		if (checkVLinesToWallCollision(tiles, vLine, hLine, pVLinesArray[i]))
+		if (checkVLinesToWallCollision(tiles, pVLinesArray[i], vLine, hLine))
 			delta.y = getDeltaYResponse(vLine, hLine, pPosition);
 		pPositionArray[i] += delta;
 		updateHLines(pHLinesArray[i], delta);
@@ -110,9 +110,9 @@ void Level::update()
 		CoordF jPos = jPositionArray[i];
 		CoordF delta{ 0, 0 };
 		LineI hLineI, vLineI;
-		if (checkHLineISetItersToWallCollision(tiles, hLineI, vLineI, hLineISetItersArray[i]))
+		if (checkHLineISetItersToWallCollision(tiles, hLineISetItersArray[i], hLineI, vLineI))
 			delta.x = getDeltaXResponse(hLineI, vLineI, jPos);
-		if (checkVLineISetItersToWallCollision(tiles, vLineI, hLineI, vLineISetItersArray[i]))
+		if (checkVLineISetItersToWallCollision(tiles, vLineISetItersArray[i], vLineI, hLineI))
 			delta.y = getDeltaYResponse(vLineI, hLineI, jPos);
 		jPositionArray[i] += delta;
 		updateHLineISetIters(projectiles.getHLineISet(), hLineISetItersArray[i], delta);

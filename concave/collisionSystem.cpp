@@ -73,7 +73,7 @@ bool checkLineToLineCollision(Line hLine, Line vLine)
 	return xCollide && yCollide;
 }
 
-bool checkHLineToWallCollision(Tiles& tiles, Line& vLine, Line hLine)
+bool checkHLineToWallCollision(Tiles& tiles, Line hLine, Line& vLine)
 {
 	for (int start = (int)hLine.lower, end = (int)hLine.upper; start <= end; start++) {
 		Lines tVLines = tiles.getVLines(hLine.shift, start);
@@ -87,7 +87,7 @@ bool checkHLineToWallCollision(Tiles& tiles, Line& vLine, Line hLine)
 	return false;
 }
 
-bool checkVLineToWallCollision(Tiles& tiles, Line& hLine, Line vLine)
+bool checkVLineToWallCollision(Tiles& tiles, Line vLine, Line& hLine)
 {
 	for (int start = (int)vLine.lower, end = (int)vLine.upper; start <= end; start++) {
 		Lines tHLines = tiles.getHLines(start, vLine.shift);
@@ -101,10 +101,10 @@ bool checkVLineToWallCollision(Tiles& tiles, Line& hLine, Line vLine)
 	return false;
 }
 
-bool checkHLinesToWallCollision(Tiles& tiles, Line& hLine, Line& vLine, Lines hLines)
+bool checkHLinesToWallCollision(Tiles& tiles, Lines& hLines, Line& hLine, Line& vLine)
 {
 	for (Line _hLine : hLines) {
-		if (checkHLineToWallCollision(tiles, vLine, _hLine)) {
+		if (checkHLineToWallCollision(tiles, _hLine, vLine)) {
 			hLine = _hLine;
 			return true;
 		}
@@ -112,10 +112,10 @@ bool checkHLinesToWallCollision(Tiles& tiles, Line& hLine, Line& vLine, Lines hL
 	return false;
 }
 
-bool checkVLinesToWallCollision(Tiles& tiles, Line& vLine, Line& hLine, Lines vLines)
+bool checkVLinesToWallCollision(Tiles& tiles, Lines& vLines, Line& vLine, Line& hLine)
 {
 	for (Line _vLine : vLines) {
-		if (checkVLineToWallCollision(tiles, hLine, _vLine)) {
+		if (checkVLineToWallCollision(tiles, _vLine, hLine)) {
 			vLine = _vLine;
 			return true;
 		}
@@ -123,27 +123,43 @@ bool checkVLinesToWallCollision(Tiles& tiles, Line& vLine, Line& hLine, Lines vL
 	return false;
 }
 
-bool checkHLineISetItersToWallCollision(Tiles& tiles, LineI& hLineI, Line& vLine, LineISetIters hLineISetIters)
+bool checkHLineISetItersToWallCollision(Tiles& tiles, LineISetIters& hLineISetIters, LineI& hLineI, Line& vLine)
 {
 	for (LineISetIter _hLineISetIter : hLineISetIters) {
 		LineI _hLineI = *_hLineISetIter;
-		if (checkHLineToWallCollision(tiles, vLine, _hLineI)) {
+		if (checkHLineToWallCollision(tiles, _hLineI, vLine)) {
 			hLineI = _hLineI;
 			return true;
 		}
 	}
 }
 
-bool checkVLineISetItersToWallCollision(Tiles& tiles, LineI& vLineI, Line& hLine, LineISetIters vLineISetIters)
+bool checkVLineISetItersToWallCollision(Tiles& tiles, LineISetIters& vLineISetIters, LineI& vLineI, Line& hLine)
 {
 	for (LineISetIter _vLineISetIter : vLineISetIters) {
 		LineI _vLineI = *_vLineISetIter;
-		if (checkVLineToWallCollision(tiles, hLine, _vLineI)) {
+		if (checkVLineToWallCollision(tiles, _vLineI, hLine)) {
 			vLineI = _vLineI;
 			return true;
 		}
 	}
 }
+
+//bool checkHLineToVLineISetCollision(LineISet& vLineISet, Line& vLine, Line hLine)
+//{
+//	LineISetIter start = vLineISet.lower_bound()
+//}
+
+//bool checkHLinesToVLineISetCollision(LineISet& vLineISet, Line& hLine, LineI& vLineI, Lines hLines)
+//{
+//	for (Line _hLine : hLines) {
+//		if (checkHLineToVLineISetCollision(vLineISet, vLineI, _hLine)) {
+//			hLine = _hLine;
+//			return true;
+//		}
+//	}
+//	return false;
+//}
 
 float getDeltaXResponse(Line rHLine, Line bVLine, CoordF pos)
 {

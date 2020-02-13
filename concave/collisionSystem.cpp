@@ -222,6 +222,18 @@ bool checkLinesToLineISetCollision(LineISet& lineISet, Lines& lines, Line& line,
 	return false;
 }
 
+bool checkLineISetItersToLineISetCollision(LineISetIters& lineISetIters, LineISet& lineISet, LineI& rLineI, LineI& bLineI)
+{
+	for (LineISetIter lineISetIter : lineISetIters) {
+		LineI lineI = *lineISetIter;
+		if (checkLineToLineISetCollision(lineISet, lineI, bLineI)) {
+			rLineI = lineI;
+			return true;
+		}
+	}
+	return false;
+}
+
 float getDeltaXResponse(Line rHLine, Line bVLine, CoordF pos)
 {
 	assert(bVLine.shift != pos.x);

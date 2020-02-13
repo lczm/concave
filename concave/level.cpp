@@ -54,20 +54,29 @@ void Level::initialize()
 	vector<int> unitMageEndFrames = { 16, 20, 8, 8, 8, 12 };
 	unitMageImage.initialize(&unitMageTexture, unitMageGridMasks, unitMageEndFrames);
 
+	// unitGridMask.initialize(0, 1046, 96, 94, 0, 1, 43, 81);
+	// unitImage.initialize(&unitTexture, unitGridMask);
+	// unitSprite.initialize(&unitImage, CoordI{ 0, 0 });
+	projTexture.initialize(graphics, IMAGE_PROJECTILE_FIREBALL);
+	projGridMask.initialize(1, 1, 96, 96, 1, 1, 46, 46);
+	projImage.initialize(&projTexture, projGridMask);
+	projSprite.initialize(&projImage, CoordI { 0, 0 });
 	// Tiles
 	tiles.initialize(10, 10);
 	for (int y = 0; y < tiles.getRows(); y++)
 		for (int x = 0; x < tiles.getCols(); x++)
-			tiles.set(y, x, 
-				translateHCollision(Collision{ { 0, 1, 0 } }, x, y), 
-				translateVCollision(Collision{}, x, y),
-				&wallSprite);
+			tiles.set(y, x, &wallSprite,
+				translateHLines(Lines{ { 0, 1, 0 } }, x, y),
+				translateVLines(Lines{}, x, y));
 	for (int y = 1; y < tiles.getRows() - 1; y++)
 		for (int x = 1; x < tiles.getCols() - 1; x++)
-			tiles.set(y, x, 
-				translateHCollision(Collision{}, x, y),
-				translateVCollision(Collision{}, x, y), 
-				&floorSprite);
+			tiles.set(y, x, &floorSprite,
+				translateHLines(Lines{}, x, y),
+				translateVLines(Lines{}, x, y));
+			// tiles.set(y, x, 
+			// 	translateHCollision(Collision{}, x, y),
+			// 	translateVCollision(Collision{}, x, y), 
+			// 	&floorSprite);
 	// States
 	PlayerAttackState* playerAttackState = new PlayerAttackState();
 	PlayerDieState* playerDieState = new PlayerDieState();
@@ -86,12 +95,18 @@ void Level::initialize()
 	players.initialize(1);
 	CoordF pPos = CoordF{ 3, 3 };
 	players.push(
-		pPos,
-		translateHCollision(Collision{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, pPos),
-		translateVCollision(Collision{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, pPos),
-		&unitMageImage,
-		RenderInfo{ PLAYER_STATE::IDLE, 0, 0, 0, 0.03 },
-		playerIdleState);
+		pPos, &unitMageImage, RenderInfo{ PLAYER_STATE::IDLE, 0, 0, 0, 0.03 },
+		playerIdleState,
+		translateHLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, pPos), 
+		translateVLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, pPos));
+
+	// Projectiles
+	projectiles.initialize(1);
+	CoordF jPos = CoordF{ 5, 5 };
+	projectiles.push(
+		jPos, &projSprite,
+		translateHLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, jPos),
+		translateVLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, jPos));
 }
 
 void Level::releaseAll()
@@ -124,53 +139,109 @@ void Level::update()
 	// CoordF* pDestPositions = players.getDestPositions();
 	// Collision* pHCollisions = players.getHCollisions();
 	// Collision* pVCollisions = players.getVCollisions();
-	vector<State*> pStates = players.getStates();
-	RenderInfo* pRenderInfos = players.getRenderInfos();
+
+	vector<State*> pStates = players.getStateArray();
+	vector<RenderInfo> pRenderInfos = players.getImageInfoArray();
 	for (int i = 0; i < players.getSize(); i++) {
-        PLAYER_STATE state = pStates[i]->update(i, this);
-        switch (state) {
-        case PLAYER_STATE::ATTACK:
-			pRenderInfos[i].state = PLAYER_STATE::ATTACK;
-            players.setState(i, states[0]);
-            break;
-        case PLAYER_STATE::DIE:
-			pRenderInfos[i].state = PLAYER_STATE::DIE;
-            players.setState(i, states[1]);
-            break;
-        case PLAYER_STATE::IDLE:
-			pRenderInfos[i].state = PLAYER_STATE::IDLE;
-            players.setState(i, states[2]);
-            break;
-        case PLAYER_STATE::WALK:
-			pRenderInfos[i].state = PLAYER_STATE::WALK;
-            players.setState(i, states[3]);
-            break;
-		case PLAYER_STATE::GET_HIT:
-			pRenderInfos[i].state = PLAYER_STATE::GET_HIT;
-			players.setState(i, states[4]);
-		case PLAYER_STATE::FIRE:
-			pRenderInfos[i].state = PLAYER_STATE::FIRE;
-			players.setState(i, states[5]);
-        default:
-            break;
-			// }
+		PLAYER_STATE state = pStates[i]->update(i, this);
+		switch (state)
+		{
+		case ATTACK:
+	 		pRenderInfos[i].state = PLAYER_STATE::ATTACK;
+	 		pStates[i] = states[0];
+			break;
+		case DIE:
+	 		pRenderInfos[i].state = PLAYER_STATE::DIE;
+	 		pStates[i] = states[1];
+			break;
+		case IDLE:
+	 		pRenderInfos[i].state = PLAYER_STATE::IDLE;
+	 		pStates[i] = states[2];
+			break;
+		case WALK:
+	 		pRenderInfos[i].state = PLAYER_STATE::WALK;
+	 		pStates[i] = states[3];
+			break;
+		case GET_HIT:
+	 		pRenderInfos[i].state = PLAYER_STATE::GET_HIT;
+	 		pStates[i] = states[4];
+			break;
+		case FIRE:
+	 		pRenderInfos[i].state = PLAYER_STATE::FIRE;
+	 		pStates[i] = states[5];
+			break;
+		default:
+			break;
 		}
-		// CoordF pPosition = pPositions[i];
-		// CoordF delta{ 0, 0 };
-		// Line hLine, vLine;
-		// if (checkHCollisionToWallCollision(tiles, hLine, vLine, pHCollisions[i]))
-		// 	delta.x = getDeltaXResponse(hLine, vLine, pPosition);
-		// if (checkVCollisionToWallCollision(tiles, vLine, hLine, pVCollisions[i]))
-		// 	delta.y = getDeltaYResponse(vLine, hLine, pPosition);
-		// pPositions[i] += delta;
-		// updateHCollision(pHCollisions[i], delta);
-		// updateVCollision(pVCollisions[i], delta);
 	}
 
-	// Move Camera
-	camCoord = players.getPosition(0);
-	if (input->isKeyDown('O')) camScale *= 1 - 0.01;
-	if (input->isKeyDown('P')) camScale *= 1 + 0.01;
+    // CoordF pPosition = pPositions[i];
+    // CoordF delta{ 0, 0 };
+    // Line hLine, vLine;
+    // if (checkHCollisionToWallCollision(tiles, hLine, vLine, pHCollisions[i]))
+    // 	delta.x = getDeltaXResponse(hLine, vLine, pPosition);
+    // if (checkVCollisionToWallCollision(tiles, vLine, hLine, pVCollisions[i]))
+    // 	delta.y = getDeltaYResponse(vLine, hLine, pPosition);
+    // pPositions[i] += delta;
+    // updateHCollision(pHCollisions[i], delta);
+    // updateVCollision(pVCollisions[i], delta);
+
+	// CoordF moveDelta{ 0, 0 };
+	// if (input->isKeyDown('W')) moveDelta.y = -0.01;
+	// if (input->isKeyDown('S')) moveDelta.y = 0.01;
+	// if (input->isKeyDown('A')) moveDelta.x = -0.01;
+	// if (input->isKeyDown('D')) moveDelta.x = 0.01;
+	// players.getPositionArray()[0] += moveDelta;
+	// // Move Player Lines
+	// updateHLines(players.getHLinesArray()[0], moveDelta);
+	// updateVLines(players.getVLinesArray()[0], moveDelta);
+	// // Lines
+	// vector<CoordF>& pPositionArray = players.getPositionArray();
+	// vector<Lines>& pHLinesArray = players.getHLinesArray();
+	// vector<Lines>& pVLinesArray = players.getVLinesArray();
+	// for (int i = 0; i < players.getSize(); i++) {
+	// 	CoordF pPosition = pPositionArray[i];
+	// 	CoordF delta{ 0, 0 };
+	// 	Line hLine, vLine;
+	// 	if (checkHLinesToWallCollision(tiles, pHLinesArray[i], hLine, vLine))
+	// 		delta.x = getDeltaXResponse(hLine, vLine, pPosition);
+	// 	if (checkVLinesToWallCollision(tiles, pVLinesArray[i], vLine, hLine))
+	// 		delta.y = getDeltaYResponse(vLine, hLine, pPosition);
+	// 	pPositionArray[i] += delta;
+	// 	updateHLines(pHLinesArray[i], delta);
+	// 	updateVLines(pVLinesArray[i], delta);
+	// }
+
+	// // Move Projectiles
+	// moveDelta.x = 0; moveDelta.y = 0;
+	// if (input->isKeyDown('I')) moveDelta.y = -0.01;
+	// if (input->isKeyDown('K')) moveDelta.y = 0.01;
+	// if (input->isKeyDown('J')) moveDelta.x = -0.01;
+	// if (input->isKeyDown('L')) moveDelta.x = 0.01;
+	// projectiles.getPositionArray()[0] += moveDelta;
+	// updateHLineISetIters(projectiles.getHLineISet(), projectiles.getHLineISetItersArray()[0], moveDelta);
+	// updateVLineISetIters(projectiles.getVLineISet(), projectiles.getVLineISetItersArray()[0], moveDelta);
+	// // Projectiles Collision
+	// vector<CoordF>& jPositionArray = projectiles.getPositionArray();
+	// vector<LineISetIters>& hLineISetItersArray = projectiles.getHLineISetItersArray();
+	// vector<LineISetIters>& vLineISetItersArray = projectiles.getVLineISetItersArray();
+	// for (int i = 0; i < players.getSize(); i++) {
+	// 	CoordF jPos = jPositionArray[i];
+	// 	CoordF delta{ 0, 0 };
+	// 	LineI hLineI, vLineI;
+	// 	if (checkHLineISetItersToWallCollision(tiles, hLineISetItersArray[i], hLineI, vLineI))
+	// 		delta.x = getDeltaXResponse(hLineI, vLineI, jPos);
+	// 	if (checkVLineISetItersToWallCollision(tiles, vLineISetItersArray[i], vLineI, hLineI))
+	// 		delta.y = getDeltaYResponse(vLineI, hLineI, jPos);
+	// 	jPositionArray[i] += delta;
+	// 	updateHLineISetIters(projectiles.getHLineISet(), hLineISetItersArray[i], delta);
+	// 	updateVLineISetIters(projectiles.getVLineISet(), vLineISetItersArray[i], delta);
+	// }
+
+	// // Move Camera
+	// camCoord = players.getPositionArray()[0];
+	// if (input->isKeyDown('O')) camScale *= 1 - 0.01;
+	// if (input->isKeyDown('P')) camScale *= 1 + 0.01;
 }
 
 void Level::render()
@@ -178,15 +249,26 @@ void Level::render()
 	for (int y = 0; y < tiles.getRows(); y++)
 		for (int x = 0; x < tiles.getCols(); x++)
 			graphics->drawSprite(
-				tiles.getRender(y, x)->getSpriteData(),
+				tiles.getSprite(y, x)->getSpriteData(),
 				gridToScreen(x, y), camScale);
 	for (int i = 0; i < players.getSize(); i++) {
 		// Temporary solution to make it not blurry
-		CoordF screenCoords = gridToScreen(players.getPosition(i));
-        graphics->drawSprite(
-            players.getRender(i)->getSpriteData(players.getRenderInfo(i)),
-            int(screenCoords.x), int(screenCoords.y), camScale);
+		// CoordF screenCoords = gridToScreen(players.getPosition(i));
+		CoordF screenCoords = gridToScreen(players.getPositionArray()[i]);
+        // graphics->drawSprite(
+        //     players.getRender(i)->getSpriteData(players.getRenderInfo(i)),
+        //     int(screenCoords.x), int(screenCoords.y), camScale);
+		graphics->drawSprite(
+			players.getImageArray()[i]->getSpriteData(players.getImageInfoArray()[i]),
+			int(screenCoords.x), int(screenCoords.y), camScale);
 	}
+
+	// graphics->drawSprite(
+	// 	players.getSpriteArray()[0]->getSpriteData(),
+	// 	gridToScreen(players.getPositionArray()[0]), camScale);
+	graphics->drawSprite(
+		projectiles.getSpriteArray()[0]->getSpriteData(),
+		gridToScreen(projectiles.getPositionArray()[0]), camScale);
 }
 
 CoordF Level::gridToScreen(float gx, float gy)
@@ -220,5 +302,5 @@ CoordF Level::gridToScreen(CoordF gridCoord)
 
 CoordF Level::screenToGrid(CoordF screenCoord)
 {
-	return screenToGrid(screenCoord.x, screenCoord.y);	
+	return screenToGrid(screenCoord.x, screenCoord.y);
 }

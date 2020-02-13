@@ -168,6 +168,7 @@
     <ClCompile Include="collisionSystem.cpp" />
     <ClCompile Include="playerWalkState.cpp" />
     <ClCompile Include="state.cpp" />
+    <ClCompile Include="projectiles.cpp" />
     <ClCompile Include="tiles.cpp" />
     <ClCompile Include="window.cpp" />
     <ClCompile Include="winmain.cpp" />
@@ -191,6 +192,7 @@
     <ClInclude Include="collisionSystem.h" />
     <ClInclude Include="playerWalkState.h" />
     <ClInclude Include="state.h" />
+    <ClInclude Include="projectiles.h" />
     <ClInclude Include="tiles.h" />
     <ClInclude Include="playerAttackState.h" />
     <ClInclude Include="playerIdleState.h" />

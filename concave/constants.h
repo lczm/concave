@@ -5,6 +5,7 @@
 //-----------------------------------------------
 //                   Data
 //-----------------------------------------------
+// Coordinates / Positions
 template<typename T>
 struct Coord
 {
@@ -17,8 +18,7 @@ struct Coord
 typedef Coord<int> CoordI;
 typedef Coord<float> CoordF;
 
-struct Line { float lower, upper, shift; };
-
+// struct Line { float lower, upper, shift; };
 struct Movement
 {
 	float moveX;
@@ -47,7 +47,8 @@ struct Mana
 	int maxMana;
 };
 
-enum DIRECTION8 { SOUTH, SOUTH_WEST, WEST, NORTH_WEST, NORTH, NORTH_EAST, EAST, SOUTH_EAST };
+
+// enum DIRECTION8 { SOUTH, SOUTH_WEST, WEST, NORTH_WEST, NORTH, NORTH_EAST, EAST, SOUTH_EAST };
 // enum DIRECTION16 { SOUTH, SOUTH_WEST, WEST, NORTH_WEST, NORTH, NORTH_EAST, EAST, SOUTH_EAST };
 //namespace DIRECTION8 {
 //	const int
@@ -95,7 +96,11 @@ const char IMAGE_TILES_DUNGEON[] = "sprites/tiles_church_dungeon.png";
 //-----------------------------------------------
 const char IMAGE_UNIT_WARRIOR[] = "sprites/unit_warrior.png";
 const char IMAGE_UNIT_MAGE[] = "sprites/unit_mage.png";
-const char IMAGE_FIREBALL[] = "sprites/big_fireball.png";
+
+//-----------------------------------------------
+//              Image (Projectiles)
+//-----------------------------------------------
+const char IMAGE_PROJECTILE_FIREBALL[] = "sprites/projectile_fireball.png";
 
 //-----------------------------------------------
 //					  Other

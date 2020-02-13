@@ -4,6 +4,7 @@
 #include "component.h"
 #include "players.h"
 #include "tiles.h"
+#include "projectiles.h"
 #include "collisionSystem.h"
 #include <vector>
 #include <cassert>
@@ -39,11 +40,17 @@ private:
 	GridMask unitMageGetHitGridMask;
 	GridMask unitMageFireGridMask;
 
+	// Texture unitTexture; GridMask unitGridMask; Image unitImage;
+	// Sprite unitSprite;
+	// // Projectiles
+	Texture projTexture; GridMask projGridMask; Image projImage;
+	Sprite projSprite;
+
 	// Components
 	Tiles tiles;
 	Players players;
+	Projectiles projectiles;
 	// Systems
-
 	vector<State*> states;
 
 public:

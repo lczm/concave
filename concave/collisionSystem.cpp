@@ -1,45 +1,67 @@
 #include "collisionSystem.h"
 
-Collision translateHCollision(Collision collision, CoordF delta)
+Lines translateHLines(Lines lines, CoordF delta)
 {
-	updateCollision(collision, delta.x, delta.y);
-	return collision;
+	updateLines(lines, delta.x, delta.y);
+	return lines;
 }
 
-Collision translateVCollision(Collision collision, CoordF delta)
+Lines translateVLines(Lines lines, CoordF delta)
 {
-	updateCollision(collision, delta.y, delta.x);
-	return collision;
+	updateLines(lines, delta.y, delta.x);
+	return lines;
 }
 
-Collision translateHCollision(Collision collision, float x, float y)
+Lines translateHLines(Lines lines, float x, float y)
 {
-	updateCollision(collision, x, y);
-	return collision;
+	updateLines(lines, x, y);
+	return lines;
 }
 
-Collision translateVCollision(Collision collision, float x, float y)
+Lines translateVLines(Lines lines, float x, float y)
 {
-	updateCollision(collision, y, x);
-	return collision;
+	updateLines(lines, y, x);
+	return lines;
 }
 
-void updateHCollision(Collision& collision, CoordF delta)
+void updateHLines(Lines& lines, CoordF delta)
 {
-	updateCollision(collision, delta.x, delta.y);
+	updateLines(lines, delta.x, delta.y);
 }
 
-void updateVCollision(Collision& collision, CoordF delta)
+void updateVLines(Lines& lines, CoordF delta)
 {
-	updateCollision(collision, delta.y, delta.x);
+	updateLines(lines, delta.y, delta.x);
 }
 
-void updateCollision(Collision& collision, float deltaA, float deltaB)
+void updateLines(Lines& lines, float deltaA, float deltaB)
 {
-	for (Line& line : collision) {
+	for (Line& line : lines) {
 		line.lower += deltaA;
 		line.upper += deltaA;
 		line.shift += deltaB;
+	}
+}
+
+void updateHLineISetIters(LineISet& lineISet, LineISetIters& lineISetIters, CoordF delta)
+{
+	updateLineISetIters(lineISet, lineISetIters, delta.x, delta.y);
+}
+
+void updateVLineISetIters(LineISet& lineISet, LineISetIters& lineISetIters, CoordF delta)
+{
+	updateLineISetIters(lineISet, lineISetIters, delta.y, delta.x);
+}
+
+void updateLineISetIters(LineISet& lineISet, LineISetIters& lineISetIters, float deltaA, float deltaB)
+{
+	for (LineISetIter& lineISetIter : lineISetIters) {
+		LineI lineI = *lineISetIter;
+		lineI.lower += deltaA;
+		lineI.upper += deltaA;
+		lineI.shift += deltaB;
+		LineISetIter hint = lineISet.erase(lineISetIter);
+		lineISetIter = lineISet.insert(hint, lineI);
 	}
 }
 
@@ -51,11 +73,11 @@ bool checkLineToLineCollision(Line hLine, Line vLine)
 	return xCollide && yCollide;
 }
 
-bool checkHLineToWallCollision(Tiles &tiles, Line& vLine, Line hLine)
+bool checkHLineToWallCollision(Tiles& tiles, Line hLine, Line& vLine)
 {
 	for (int start = (int)hLine.lower, end = (int)hLine.upper; start <= end; start++) {
-		Collision tVCollision = tiles.getVCollision(hLine.shift, start);
-		for (Line tVLine : tVCollision) {
+		Lines tVLines = tiles.getVLines(hLine.shift, start);
+		for (Line tVLine : tVLines) {
 			if (checkLineToLineCollision(hLine, tVLine)) {
 				vLine = tVLine;
 				return true;
@@ -65,11 +87,11 @@ bool checkHLineToWallCollision(Tiles &tiles, Line& vLine, Line hLine)
 	return false;
 }
 
-bool checkVLineToWallCollision(Tiles& tiles, Line& hLine, Line vLine)
+bool checkVLineToWallCollision(Tiles& tiles, Line vLine, Line& hLine)
 {
 	for (int start = (int)vLine.lower, end = (int)vLine.upper; start <= end; start++) {
-		Collision tHCollision = tiles.getHCollision(start, vLine.shift);
-		for (Line tHLine : tHCollision) {
+		Lines tHLines = tiles.getHLines(start, vLine.shift);
+		for (Line tHLine : tHLines) {
 			if (checkLineToLineCollision(tHLine, vLine)) {
 				hLine = tHLine;
 				return true;
@@ -79,10 +101,10 @@ bool checkVLineToWallCollision(Tiles& tiles, Line& hLine, Line vLine)
 	return false;
 }
 
-bool checkHCollisionToWallCollision(Tiles& tiles, Line& hLine, Line& vLine, Collision hCollision)
+bool checkHLinesToWallCollision(Tiles& tiles, Lines& hLines, Line& hLine, Line& vLine)
 {
-	for (Line _hLine : hCollision) {
-		if (checkHLineToWallCollision(tiles, vLine, _hLine)) {
+	for (Line _hLine : hLines) {
+		if (checkHLineToWallCollision(tiles, _hLine, vLine)) {
 			hLine = _hLine;
 			return true;
 		}
@@ -90,16 +112,54 @@ bool checkHCollisionToWallCollision(Tiles& tiles, Line& hLine, Line& vLine, Coll
 	return false;
 }
 
-bool checkVCollisionToWallCollision(Tiles& tiles, Line& vLine, Line& hLine, Collision vCollision)
+bool checkVLinesToWallCollision(Tiles& tiles, Lines& vLines, Line& vLine, Line& hLine)
 {
-	for (Line _vLine : vCollision) {
-		if (checkVLineToWallCollision(tiles, hLine, _vLine)) {
+	for (Line _vLine : vLines) {
+		if (checkVLineToWallCollision(tiles, _vLine, hLine)) {
 			vLine = _vLine;
 			return true;
 		}
 	}
 	return false;
 }
+
+bool checkHLineISetItersToWallCollision(Tiles& tiles, LineISetIters& hLineISetIters, LineI& hLineI, Line& vLine)
+{
+	for (LineISetIter _hLineISetIter : hLineISetIters) {
+		LineI _hLineI = *_hLineISetIter;
+		if (checkHLineToWallCollision(tiles, _hLineI, vLine)) {
+			hLineI = _hLineI;
+			return true;
+		}
+	}
+}
+
+bool checkVLineISetItersToWallCollision(Tiles& tiles, LineISetIters& vLineISetIters, LineI& vLineI, Line& hLine)
+{
+	for (LineISetIter _vLineISetIter : vLineISetIters) {
+		LineI _vLineI = *_vLineISetIter;
+		if (checkVLineToWallCollision(tiles, _vLineI, hLine)) {
+			vLineI = _vLineI;
+			return true;
+		}
+	}
+}
+
+//bool checkHLineToVLineISetCollision(LineISet& vLineISet, Line& vLine, Line hLine)
+//{
+//	LineISetIter start = vLineISet.lower_bound()
+//}
+
+//bool checkHLinesToVLineISetCollision(LineISet& vLineISet, Line& hLine, LineI& vLineI, Lines hLines)
+//{
+//	for (Line _hLine : hLines) {
+//		if (checkHLineToVLineISetCollision(vLineISet, vLineI, _hLine)) {
+//			hLine = _hLine;
+//			return true;
+//		}
+//	}
+//	return false;
+//}
 
 float getDeltaXResponse(Line rHLine, Line bVLine, CoordF pos)
 {

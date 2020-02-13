@@ -18,8 +18,8 @@ private:
 	vector<RenderInfo> imageInfoArray;
 
 	vector<Movement> movementArray;
-	vector<Health> healthArray;
-	vector<Mana> manaArray;
+	vector<int> healthArray;
+	vector<int> manaArray;
 public:
 	Players(); ~Players();
 	void initialize(int capacity);

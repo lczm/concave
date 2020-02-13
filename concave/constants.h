@@ -19,12 +19,12 @@ typedef Coord<int> CoordI;
 typedef Coord<float> CoordF;
 
 // struct Line { float lower, upper, shift; };
-struct Movement
-{
-	float moveX;
-	float moveY;
-	float rotation;
-};
+// enum DIRECTION8 { SOUTH, SOUTH_WEST, WEST, NORTH_WEST, NORTH, NORTH_EAST, EAST, SOUTH_EAST };
+// enum DIRECTION16 { SOUTH, SOUTH_WEST, WEST, NORTH_WEST, NORTH, NORTH_EAST, EAST, SOUTH_EAST };
+//namespace DIRECTION8 {
+//	const int
+//		SOUTH = 0, SOUTH_WEST = 1, WEST = 2, NORTH_WEST = 3,
+//		NORTH = 4, NORTH_EAST = 5, EAST = 6, SOUTH_EAST = 7;}
 
 struct RenderInfo
 {
@@ -34,26 +34,6 @@ struct RenderInfo
 	float timer = 0;
 	float delay = float(1.00);
 };
-
-struct Health
-{
-	int health;
-	int maxHealth;
-};
-
-struct Mana
-{
-	int mana;
-	int maxMana;
-};
-
-
-// enum DIRECTION8 { SOUTH, SOUTH_WEST, WEST, NORTH_WEST, NORTH, NORTH_EAST, EAST, SOUTH_EAST };
-// enum DIRECTION16 { SOUTH, SOUTH_WEST, WEST, NORTH_WEST, NORTH, NORTH_EAST, EAST, SOUTH_EAST };
-//namespace DIRECTION8 {
-//	const int
-//		SOUTH = 0, SOUTH_WEST = 1, WEST = 2, NORTH_WEST = 3,
-//		NORTH = 4, NORTH_EAST = 5, EAST = 6, SOUTH_EAST = 7;}
 
 //-----------------------------------------------
 //                   Tiles

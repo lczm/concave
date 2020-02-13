@@ -31,3 +31,11 @@ typedef vector<LineISetIter> LineISetIters;
 // Directions
 enum DIRECTION8 { SOUTH, SOUTH_WEST, WEST, NORTH_WEST, NORTH, NORTH_EAST, EAST, SOUTH_EAST };
 // enum DIRECTION16 { SOUTH, SOUTH_WEST, WEST, NORTH_WEST, NORTH, NORTH_EAST, EAST, SOUTH_EAST };
+
+struct Movement
+{
+	float moveX;
+	float moveY;
+	float rotation;
+};
+

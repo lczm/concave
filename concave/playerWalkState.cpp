@@ -8,6 +8,7 @@ void PlayerWalkState::update(Level* level, int index)
     RenderInfo& renderInfo = players.getImageInfoArray()[index];
     CoordF position = players.getPositionArray()[index];
     CoordF destPosition = players.getDestPositionArray()[index];
+    Movement movement = players.getMovementArray()[index];
 
     if (input->getMouseLButton()) {
         players.setDestPosition(index, level->screenToGrid(CoordF{float(input->getMouseX()), float(input->getMouseY())}));
@@ -33,17 +34,17 @@ void PlayerWalkState::update(Level* level, int index)
         return;
     }
 
-    Movement movement = players.getMovementArray()[index];
-    if (!isAtPosition(position, destPosition)) {
-        players.setPosition(index, CoordF{ position.x += movement.moveX,
-                                            position.y += movement.moveY });
-        updateFrameNo(frameTime, index, players, &renderInfo);
+    if (isAtPosition(position, destPosition)) {
+        players.setMovement(index, Movement{ 0, 0, movement.rotation });
+        players.setState(index, level->getStates()->at(PLAYER::IDLE));
+        players.updateStateInfo(index, PLAYER::IDLE);
         return;
     }
 
-    players.setMovement(index, Movement{ 0, 0, movement.rotation });
-    players.setState(index, level->getStates()->at(PLAYER::IDLE));
-    players.updateStateInfo(index, PLAYER::IDLE);
+    // If none of the previous if conditions, update movement 
+    players.setPosition(index, CoordF{ position.x += movement.moveX,
+                                        position.y += movement.moveY });
+    updateFrameNo(frameTime, index, players, &renderInfo);
     return;
 }
 

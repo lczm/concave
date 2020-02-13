@@ -75,25 +75,19 @@ void Level::initialize()
 				translateVLines(Lines{}, x, y));
 
 	// States
-	PlayerAttackState* playerAttackState = new PlayerAttackState();
-	PlayerDieState* playerDieState = new PlayerDieState();
-	PlayerIdleState* playerIdleState = new PlayerIdleState();
-	PlayerWalkState* playerWalkState = new PlayerWalkState();
-	PlayerGetHitState* playerGetHitState = new PlayerGetHitState();
-	PlayerFireState* playerFireState = new PlayerFireState();
-	states.push_back(playerAttackState);
-	states.push_back(playerDieState);
-	states.push_back(playerIdleState);
-	states.push_back(playerWalkState);
-	states.push_back(playerGetHitState);
-	states.push_back(playerFireState);
+	states.push_back(new PlayerAttackState());
+	states.push_back(new PlayerDieState());
+	states.push_back(new PlayerIdleState());
+	states.push_back(new PlayerWalkState());
+	states.push_back(new PlayerGetHitState());
+	states.push_back(new PlayerFireState());
 
 	// Player
 	players.initialize(1);
 	CoordF pPos = CoordF{ 3, 3 };
 	players.push(
 		pPos, &unitMageImage, RenderInfo{ PLAYER::IDLE, 0, 0, 0, 0.03 },
-		playerIdleState,
+		states.at(PLAYER::IDLE),
 		translateHLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, pPos), 
 		translateVLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, pPos));
 

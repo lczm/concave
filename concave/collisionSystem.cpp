@@ -43,25 +43,25 @@ void updateLines(Lines& lines, float deltaA, float deltaB)
 	}
 }
 
-void updateHLines(LineSet& lineSet, LineSetIters& lineSetIters, CoordF delta)
+void updateHLinesI(LineISet& lineISet, LineISetIters& lineISetIters, CoordF delta)
 {
-	updateLines(lineSet, lineSetIters, delta.x, delta.y);
+	updateLinesI(lineISet, lineISetIters, delta.x, delta.y);
 }
 
-void updateVLines(LineSet& lineSet, LineSetIters& lineSetIters, CoordF delta)
+void updateVLinesI(LineISet& lineISet, LineISetIters& lineISetIters, CoordF delta)
 {
-	updateLines(lineSet, lineSetIters, delta.y, delta.x);
+	updateLinesI(lineISet, lineISetIters, delta.y, delta.x);
 }
 
-void updateLines(LineSet& lineSet, LineSetIters& lineSetIters, float deltaA, float deltaB)
+void updateLinesI(LineISet& lineISet, LineISetIters& lineISetIters, float deltaA, float deltaB)
 {
-	for (LineSetIter& lineSetIter : lineSetIters) {
-		LineI lineI = *lineSetIter;
+	for (LineISetIter& lineISetIter : lineISetIters) {
+		LineI lineI = *lineISetIter;
 		lineI.lower += deltaA;
 		lineI.upper += deltaA;
 		lineI.shift += deltaB;
-		LineSetIter hint = lineSet.erase(lineSetIter);
-		lineSetIter = lineSet.insert(hint, lineI);
+		LineISetIter hint = lineISet.erase(lineISetIter);
+		lineISetIter = lineISet.insert(hint, lineI);
 	}
 }
 
@@ -123,23 +123,23 @@ bool checkVLinesToWallCollision(Tiles& tiles, Line& vLine, Line& hLine, Lines vL
 	return false;
 }
 
-bool checkHLinesToWallCollision(Tiles& tiles, LineI& hLine, Line& vLine, LineSetIters hLineSetIters)
+bool checkHLinesToWallCollision(Tiles& tiles, LineI& hLineI, Line& vLine, LineISetIters hLineISetIters)
 {
-	for (LineSetIter _hLineSetIter : hLineSetIters) {
-		LineI _hLine= *_hLineSetIter;
-		if (checkHLineToWallCollision(tiles, vLine, _hLine)) {
-			hLine = _hLine;
+	for (LineISetIter _hLineISetIter : hLineISetIters) {
+		LineI _hLineI = *_hLineISetIter;
+		if (checkHLineToWallCollision(tiles, vLine, _hLineI)) {
+			hLineI = _hLineI;
 			return true;
 		}
 	}
 }
 
-bool checkVLinesToWallCollision(Tiles& tiles, LineI& vLine, Line& hLine, LineSetIters vLineSetIters)
+bool checkVLinesToWallCollision(Tiles& tiles, LineI& vLineI, Line& hLine, LineISetIters vLineISetIters)
 {
-	for (LineSetIter _vLineSetIter : vLineSetIters) {
-		LineI _vLine = *_vLineSetIter;
-		if (checkVLineToWallCollision(tiles, hLine, _vLine)) {
-			vLine = _vLine;
+	for (LineISetIter _vLineISetIter : vLineISetIters) {
+		LineI _vLineI = *_vLineISetIter;
+		if (checkVLineToWallCollision(tiles, hLine, _vLineI)) {
+			vLineI = _vLineI;
 			return true;
 		}
 	}

@@ -20,9 +20,9 @@ struct LineI : Line {
 };
 typedef vector<Line> Lines;
 //typedef vector<LineI> LinesI;
-typedef set<LineI> LineSet;
-typedef LineSet::iterator LineSetIter;
-typedef vector<LineSetIter> LineSetIters;
+typedef set<LineI> LineISet;
+typedef LineISet::iterator LineISetIter;
+typedef vector<LineISetIter> LineISetIters;
 
 // Directions
 enum DIRECTION8 { SOUTH, SOUTH_WEST, WEST, NORTH_WEST, NORTH, NORTH_EAST, EAST, SOUTH_EAST };

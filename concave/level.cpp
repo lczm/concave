@@ -100,23 +100,23 @@ void Level::update()
 	if (input->isKeyDown('J')) moveDelta.x = -0.01;
 	if (input->isKeyDown('L')) moveDelta.x = 0.01;
 	projectiles.getPositionArray()[0] += moveDelta;
-	updateHLines(projectiles.getHLinesSet(), projectiles.getHLineIteratorArray()[0], moveDelta);
-	updateVLines(projectiles.getVLinesSet(), projectiles.getVLineIteratorArray()[0], moveDelta);
+	updateHLinesI(projectiles.getHLineISet(), projectiles.getHLineISetItersArray()[0], moveDelta);
+	updateVLinesI(projectiles.getVLineISet(), projectiles.getVLineISetItersArray()[0], moveDelta);
 	// Projectiles Collision
 	vector<CoordF>& jPositionArray = projectiles.getPositionArray();
-	vector<LineSetIters>& hLineItersArray = projectiles.getHLineIteratorArray();
-	vector<LineSetIters>& vLineItersArray = projectiles.getVLineIteratorArray();
+	vector<LineISetIters>& hLineISetItersArray = projectiles.getHLineISetItersArray();
+	vector<LineISetIters>& vLineISetItersArray = projectiles.getVLineISetItersArray();
 	for (int i = 0; i < players.getSize(); i++) {
 		CoordF jPos = jPositionArray[i];
 		CoordF delta{ 0, 0 };
 		LineI hLineI, vLineI;
-		if (checkHLinesToWallCollision(tiles, hLineI, vLineI, hLineItersArray[i]))
+		if (checkHLinesToWallCollision(tiles, hLineI, vLineI, hLineISetItersArray[i]))
 			delta.x = getDeltaXResponse(hLineI, vLineI, jPos);
-		if (checkVLinesToWallCollision(tiles, vLineI, hLineI, vLineItersArray[i]))
+		if (checkVLinesToWallCollision(tiles, vLineI, hLineI, vLineISetItersArray[i]))
 			delta.y = getDeltaYResponse(vLineI, hLineI, jPos);
 		jPositionArray[i] += delta;
-		updateHLines(projectiles.getHLinesSet(), hLineItersArray[i], delta);
-		updateVLines(projectiles.getVLinesSet(), vLineItersArray[i], delta);
+		updateHLinesI(projectiles.getHLineISet(), hLineISetItersArray[i], delta);
+		updateVLinesI(projectiles.getVLineISet(), vLineISetItersArray[i], delta);
 	}
 
 	// Move Camera

@@ -15,17 +15,20 @@ Lines translateVLines(Lines lines, float x, float y);
 void updateHLines(Lines& lines, CoordF delta);
 void updateVLines(Lines& lines, CoordF delta);
 void updateLines(Lines& lines, float deltaA, float deltaB);
-void updateHLines(LineSet& lineSet, LineSetIters& lineSetIters, CoordF delta);
-void updateVLines(LineSet& lineSet, LineSetIters& lineSetIters, CoordF delta);
-void updateLines(LineSet& lineSet, LineSetIters& lineSetIters, float deltaA, float deltaB);
+void updateHLinesI(LineISet& lineISet, LineISetIters& lineISetIters, CoordF delta);
+void updateVLinesI(LineISet& lineISet, LineISetIters& lineISetIters, CoordF delta);
+void updateLinesI(LineISet& lineISet, LineISetIters& lineISetIters, float deltaA, float deltaB);
 
 bool checkLineToLineCollision(Line hLine, Line vLine);
 bool checkHLineToWallCollision(Tiles& tiles, Line& vLine, Line hLine);
 bool checkVLineToWallCollision(Tiles& tiles, Line& hLine, Line vLine);
 bool checkHLinesToWallCollision(Tiles& tiles, Line& hLine, Line& vLine, Lines hLines);
 bool checkVLinesToWallCollision(Tiles& tiles, Line& vLine, Line& hLine, Lines vLines);
-bool checkHLinesToWallCollision(Tiles& tiles, LineI& hLine, Line& vLine, LineSetIters hLines);
-bool checkVLinesToWallCollision(Tiles& tiles, LineI& vLine, Line& hLine, LineSetIters vLines);
+bool checkHLinesToWallCollision(Tiles& tiles, LineI& hLineI, Line& vLine, LineISetIters hLineISetIters);
+bool checkVLinesToWallCollision(Tiles& tiles, LineI& vLineI, Line& hLine, LineISetIters vLineISetIters);
+
+//bool checkHLinesToLineSetCollision()
+//bool checkHLinesToLineSetCollision()
 
 float getDeltaXResponse(Line rHLine, Line bVLine, CoordF pos);
 float getDeltaYResponse(Line rVLine, Line bHLine, CoordF pos);

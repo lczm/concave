@@ -10,10 +10,10 @@ private:
 	int capacity, size;
 	vector<CoordF> positionArray;
 	vector<Sprite*> spriteArray;
-	LineSet hLineSet;
-	LineSet vLineSet;
-	vector<LineSetIters> hLineItersArray;
-	vector<LineSetIters> vLineItersArray;
+	LineISet hLineISet;
+	LineISet vLineISet;
+	vector<LineISetIters> hLineISetItersArray;
+	vector<LineISetIters> vLineISetItersArray;
 public:
 	Projectiles(); ~Projectiles();
 	void initialize(int capacity);
@@ -23,8 +23,8 @@ public:
 	int getSize() { return size; }
 	vector<CoordF>& getPositionArray() { return positionArray; }
 	vector<Sprite*>& getSpriteArray() { return spriteArray; }
-	LineSet& getHLinesSet() { return hLineSet; }
-	LineSet& getVLinesSet() { return vLineSet; }
-	vector<LineSetIters>& getHLineIteratorArray() { return hLineItersArray; }
-	vector<LineSetIters>& getVLineIteratorArray() { return vLineItersArray; }
+	LineISet& getHLineISet() { return hLineISet; }
+	LineISet& getVLineISet() { return vLineISet; }
+	vector<LineISetIters>& getHLineISetItersArray() { return hLineISetItersArray; }
+	vector<LineISetIters>& getVLineISetItersArray() { return vLineISetItersArray; }
 };

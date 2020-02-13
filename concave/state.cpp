@@ -10,6 +10,7 @@ Movement State::calculateMovement(float frameTime, CoordF position, CoordF destP
 
      float radAngle = atan2(abs(currentX - destX), abs(currentY - destY));
      float degAngle = radAngle * (180 / PI);
+     // TODO : 3.0 is the speed
      float moveX = float(3.0 * sin(radAngle) * frameTime);
      float moveY = float(3.0 * cos(radAngle) * frameTime);
 
@@ -35,8 +36,6 @@ Movement State::calculateMovement(float frameTime, CoordF position, CoordF destP
 
      // Dimetric angle offset
      degAngle += 25.565;
-     // cout << degAngle << endl;
- 
      return Movement{ moveX, moveY, degAngle };
 }
 

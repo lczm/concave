@@ -21,6 +21,8 @@ void Players::initialize(int capacity)
 	Players::renders = new RenderAnim[capacity];
 	Players::rendersInfos = new RenderInfo[capacity];
 	Players::movements = new Movement[capacity];
+	Players::healths = new Health[capacity];
+	Players::manas = new Mana[capacity];
 }
 
 void Players::push(CoordF position, Collision hCollision, Collision vCollision, 
@@ -33,6 +35,8 @@ void Players::push(CoordF position, Collision hCollision, Collision vCollision,
 	renders[size] = render;
 	rendersInfos[size] = renderInfo;
 	movements[size] = Movement{ 0, 0 };
+	healths[size] = Health{ 100, 100 };
+	manas[size] = Mana{ 100, 100 };
 	states.push_back(initialState);
 	size++;
 }
@@ -134,4 +138,14 @@ void Players::setMovement(int index, Movement movement)
 Movement Players::getMovements(int index)
 {
     return movements[index];
+}
+
+Health Players::getHealth(int index)
+{
+	return healths[index];
+}
+
+Mana Players::getMana(int index)
+{
+	return manas[index];
 }

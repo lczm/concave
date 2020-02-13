@@ -38,7 +38,7 @@ private:
 	GridMask unitMageWalkGridMask;
 	GridMask unitMageGetHitGridMask;
 	GridMask unitMageFireGridMask;
-	// Sprite unitSprite;
+
 	// Components
 	Tiles tiles;
 	Players players;

@@ -16,6 +16,8 @@ private:
 	RenderInfo* rendersInfos;
 
     Movement* movements;
+	Health* healths;
+	Mana* manas;
 	vector<State*> states;
 public:
 	Players(); ~Players();
@@ -36,6 +38,8 @@ public:
 	RenderAnim getRender(int index);
 	RenderInfo getRenderInfo(int index);
     Movement getMovements(int index);
+	Health getHealth(int index);
+	Mana getMana(int index);
 public:
 	int getSize() { return size; }
 	CoordF* getPositions() { return positions; }
@@ -45,6 +49,8 @@ public:
 	vector<State*> getStates() { return states; }
 	RenderAnim* getRenders() { return renders; }
 	RenderInfo* getRenderInfos() { return rendersInfos; }
+	Health* getHealths() { return healths; }
+	Mana* getManas() { return manas; }
 };
 
 #include "state.h"

@@ -7,19 +7,27 @@ PLAYER_STATE PlayerIdleState::update(int index, Level* level)
     Players* players = level->getPlayers();
     RenderInfo* renderInfo = &players->getRenderInfos()[index];
     if (input->getMouseLButton()) {
-        players->setDestPosition(index, level->screenToGrid(CoordF{float(level->input->getMouseX()), float(input->getMouseY())}));
+        players->setDestPosition(index, level->screenToGrid(CoordF{float(input->getMouseX()), float(input->getMouseY())}));
         players->setMovement(index, calculateMovement(frameTime, players->getPosition(index), players->getDestPositions(index)));
         renderInfo->timer = 0;
         renderInfo->frameNo = 0;
         return PLAYER_STATE::WALK;
     }
     else if (input->getMouseRButton()) {
+        // Change directions based on where mouse is 
+        float rotation = calculateMovement(frameTime, players->getPosition(index),
+            level->screenToGrid(CoordF{ float(input->getMouseX()), float(input->getMouseY()) })).rotation;
+        players->setMovement(index, Movement{ 0, 0, rotation });
         renderInfo->timer = 0;
         renderInfo->frameNo = 0;
-        return PLAYER_STATE::ATTACK;
+        return PLAYER_STATE::FIRE;
     }
-    // Temporary, if middle click, set to die state for testing
+    // Temporary, middle click is to change between states
     else if (input->getMouseMButton()) {
+        // Change directions based on where mouse is 
+        float rotation = calculateMovement(frameTime, players->getPosition(index),
+            level->screenToGrid(CoordF{ float(input->getMouseX()), float(input->getMouseY()) })).rotation;
+        players->setMovement(index, Movement{ 0, 0, rotation });
         renderInfo->timer = 0;
         renderInfo->frameNo = 0;
         return PLAYER_STATE::FIRE;

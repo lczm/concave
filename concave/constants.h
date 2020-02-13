@@ -35,6 +35,18 @@ struct RenderInfo
 	float delay = float(1.00);
 };
 
+struct Health
+{
+	int health;
+	int maxHealth;
+};
+
+struct Mana
+{
+	int mana;
+	int maxMana;
+};
+
 enum DIRECTION8 { SOUTH, SOUTH_WEST, WEST, NORTH_WEST, NORTH, NORTH_EAST, EAST, SOUTH_EAST };
 // enum DIRECTION16 { SOUTH, SOUTH_WEST, WEST, NORTH_WEST, NORTH, NORTH_EAST, EAST, SOUTH_EAST };
 //namespace DIRECTION8 {
@@ -83,6 +95,7 @@ const char IMAGE_TILES_DUNGEON[] = "sprites/tiles_church_dungeon.png";
 //-----------------------------------------------
 const char IMAGE_UNIT_WARRIOR[] = "sprites/unit_warrior.png";
 const char IMAGE_UNIT_MAGE[] = "sprites/unit_mage.png";
+const char IMAGE_FIREBALL[] = "sprites/big_fireball.png";
 
 //-----------------------------------------------
 //					  Other

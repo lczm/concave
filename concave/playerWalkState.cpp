@@ -12,9 +12,22 @@ PLAYER_STATE PlayerWalkState::update(int index, Level* level)
         return PLAYER_STATE::WALK;
     }
     else if (input->getMouseRButton()) {
+        // Change directions based on where mouse is 
+        float rotation = calculateMovement(frameTime, players->getPosition(index),
+            level->screenToGrid(CoordF{ float(input->getMouseX()), float(input->getMouseY()) })).rotation;
+        players->setMovement(index, Movement{ 0, 0, rotation });
         renderInfo->timer = 0;
         renderInfo->frameNo = 0;
-        return PLAYER_STATE::ATTACK;
+        return PLAYER_STATE::FIRE;
+    }
+    else if (input->getMouseMButton()) {
+        // Change directions based on where mouse is 
+        float rotation = calculateMovement(frameTime, players->getPosition(index),
+            level->screenToGrid(CoordF{ float(input->getMouseX()), float(input->getMouseY()) })).rotation;
+        players->setMovement(index, Movement{ 0, 0, rotation });
+        renderInfo->timer = 0;
+        renderInfo->frameNo = 0;
+        return PLAYER_STATE::FIRE;
     }
     CoordF* position = &players->getPosition(index);
     CoordF* destPosition = &players->getDestPositions(index);

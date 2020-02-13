@@ -70,11 +70,11 @@ void EditComponent::placeRoom(int map[mapWidth][mapHeight])
 			placeWall(map, newRoom);
 
 			//building the corridors 
-			CoordI newCenter = newRoom.center;
+			CoordI newCenter = newRoom.getCenterRoom();
 			if (rooms.size() != 1)
 			{
 				Room prevRoom = rooms[rooms.size() - 2];
-				CoordI prevCenter = prevRoom.center;
+				CoordI prevCenter = prevRoom.getCenterRoom();
 
 				/*
 				int random = rand() % 2;
@@ -99,26 +99,26 @@ void EditComponent::placeRoom(int map[mapWidth][mapHeight])
 }
 
 void EditComponent::placeWall(int map[mapWidth][mapHeight], Room newRoom)
-{
+{	
 	//setting the four corners
-	map[newRoom.x1][newRoom.y1] = ImageType::churchWallConnect;
-	map[newRoom.x2][newRoom.y1] = ImageType::churchWallWest;
+	map[newRoom.getDimensions().x1][newRoom.getDimensions().y1] = ImageType::churchWallConnect;
+	map[newRoom.getDimensions().x2][newRoom.getDimensions().y1] = ImageType::churchWallWest;
 
-	map[newRoom.x1][newRoom.y2] = ImageType::churchWallEast;
-	map[newRoom.x2][newRoom.y2] = ImageType::churchFloor;
+	map[newRoom.getDimensions().x1][newRoom.getDimensions().y2] = ImageType::churchWallEast;
+	map[newRoom.getDimensions().x2][newRoom.getDimensions().y2] = ImageType::churchFloor;
 
 
-	for (int i = 1; i < (newRoom.roomWidth); i++)
+	for (int i = 1; i < (newRoom.getRoomWidth()); i++)
 	{
-		map[newRoom.x1 + i][newRoom.y1] = ImageType::churchWallEast;
-		map[newRoom.x1 + i][newRoom.y2] = ImageType::churchWallEast;
+		map[newRoom.getDimensions().x1 + i][newRoom.getDimensions().y1] = ImageType::churchWallEast;
+		map[newRoom.getDimensions().x1 + i][newRoom.getDimensions().y2] = ImageType::churchWallEast;
 	}
 
-	for (int j = 1; j < (newRoom.roomHeight); j++)
+	for (int j = 1; j < (newRoom.getRoomHeight()); j++)
 	{
 		//to be explained
-		map[newRoom.x1][newRoom.y2 - j] = ImageType::churchWallWest;
-		map[newRoom.x2][newRoom.y1 + j] = ImageType::churchWallWest;
+		map[newRoom.getDimensions().x1][newRoom.getDimensions().y2 - j] = ImageType::churchWallWest;
+		map[newRoom.getDimensions().x2][newRoom.getDimensions().y1 + j] = ImageType::churchWallWest;
 	}
 
 }
@@ -168,14 +168,14 @@ void EditComponent::placeItemRoom(Room room, int map[mapWidth][mapHeight])
 	(Y)
 
 	*/
-	int x1 = room.x1 + 1;
-	int y1 = room.y1 + 1;
-	int x2 = room.x2 - 1;
-	int y2 = room.y2 - 1;
+	int x1 = room.getDimensions().x1 + 1;
+	int y1 = room.getDimensions().y1 + 1;
+	int x2 = room.getDimensions().x2 - 1;
+	int y2 = room.getDimensions().y2 - 1;
 
 	//walls occupy the first and last Y positions 
 	//walls occupy the first and last X values
-	int areaToPlace = ((room.roomWidth - 2) * (room.roomHeight - 2)) * 0.2;
+	int areaToPlace = ((room.getRoomWidth() - 2) * (room.getRoomHeight() - 2)) * 0.2;
 
 	//percentage of chests 
 	int noChests = areaToPlace * 0.2;

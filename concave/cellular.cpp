@@ -112,13 +112,12 @@ void Cellular::generateMap(int(&generateMap)[mapWidth][mapHeight])
 		doSimulationStep(generateMap, newArray);
 
 		//Copy newArray to generateMap
-		for (int x = 0; x < mapWidth; x++)
-		{
-			for (int y = 0; y < mapHeight; y++)
-			{
-				generateMap[x][y] = newArray[x][y];
-			}
-		}
+		/*
+			first position -> destination where array is copied to 
+			second -> source of data to be copied
+			last -> number of bytes to be copied
+		*/
+		memcpy(generateMap,newArray, mapWidth*mapHeight*sizeof(int));
 	}
 		
 }

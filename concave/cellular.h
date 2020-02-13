@@ -1,5 +1,6 @@
 #pragma once
 #include "constants.h"
+#include<algorithm>
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       
 using namespace std;

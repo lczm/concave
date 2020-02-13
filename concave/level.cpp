@@ -48,6 +48,9 @@ void Level::update()
 	levelEdit();
 	changeLevel();
 
+	
+
+
 }
 
 void Level::render()
@@ -164,6 +167,8 @@ void Level::renderSprites()
 				screenPos.x, screenPos.y, camScale);
 		}
 	}
+
+	
 }
 
 void Level::placeRoom()

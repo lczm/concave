@@ -1,6 +1,7 @@
 #pragma once
 #include "constants.h"
 #include "players.h"
+using namespace STATE;
 
 class Level;
 class State 

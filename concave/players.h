@@ -1,9 +1,9 @@
 #pragma once
 #include "input.h"
 #include "component.h"
+using namespace STATE;
 
 class State;
-
 class Players
 {
 private:
@@ -42,5 +42,5 @@ public:
 	vector<RenderInfo>& getImageInfoArray() { return imageInfoArray; }
 	vector<Movement>& getMovementArray() { return movementArray; }
 public:
-	void updateStateInfo(int index, PLAYER_STATE state);
+	void updateStateInfo(int index, PLAYER state);
 };

@@ -15,6 +15,7 @@
 #include "playerGetHitState.h"
 #include "playerFireState.h"
 using namespace std;
+using namespace STATE;
 
 class Level : public Window
 {

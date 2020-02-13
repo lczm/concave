@@ -92,7 +92,7 @@ void Level::initialize()
 	players.initialize(1);
 	CoordF pPos = CoordF{ 3, 3 };
 	players.push(
-		pPos, &unitMageImage, RenderInfo{ PLAYER_STATE::IDLE, 0, 0, 0, 0.03 },
+		pPos, &unitMageImage, RenderInfo{ PLAYER::IDLE, 0, 0, 0, 0.03 },
 		playerIdleState,
 		translateHLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, pPos), 
 		translateVLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, pPos));

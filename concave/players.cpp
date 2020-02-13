@@ -94,7 +94,7 @@ void Players::setState(int index, State* state)
 	stateArray[index] = state;
 }
 
-void Players::updateStateInfo(int index, PLAYER_STATE state)
+void Players::updateStateInfo(int index, PLAYER state)
 {
 	RenderInfo* renderInfo = &imageInfoArray[index];
 	renderInfo->timer = 0;

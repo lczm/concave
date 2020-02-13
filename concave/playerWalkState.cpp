@@ -19,8 +19,8 @@ void PlayerWalkState::update(Level* level, int index)
         float rotation = calculateMovement(frameTime, position,
             level->screenToGrid(CoordF{ float(input->getMouseX()), float(input->getMouseY()) })).rotation;
         players->setMovement(index, Movement{ 0, 0, rotation });
-        players->setState(index, level->getStates()->at(PLAYER_STATE::FIRE));
-        players->updateStateInfo(index, PLAYER_STATE::FIRE);
+        players->setState(index, level->getStates()->at(PLAYER::FIRE));
+        players->updateStateInfo(index, PLAYER::FIRE);
         return;
     }
     else if (input->getMouseMButton()) {
@@ -28,8 +28,8 @@ void PlayerWalkState::update(Level* level, int index)
         float rotation = calculateMovement(frameTime, position,
             level->screenToGrid(CoordF{ float(input->getMouseX()), float(input->getMouseY()) })).rotation;
         players->setMovement(index, Movement{ 0, 0, rotation });
-        players->setState(index, level->getStates()->at(PLAYER_STATE::FIRE));
-        players->updateStateInfo(index, PLAYER_STATE::FIRE);
+        players->setState(index, level->getStates()->at(PLAYER::FIRE));
+        players->updateStateInfo(index, PLAYER::FIRE);
         return;
     }
 
@@ -42,8 +42,8 @@ void PlayerWalkState::update(Level* level, int index)
     }
 
     players->setMovement(index, Movement{ 0, 0, movement.rotation });
-    players->setState(index, level->getStates()->at(PLAYER_STATE::IDLE));
-    players->updateStateInfo(index, PLAYER_STATE::IDLE);
+    players->setState(index, level->getStates()->at(PLAYER::IDLE));
+    players->updateStateInfo(index, PLAYER::IDLE);
     return;
 }
 

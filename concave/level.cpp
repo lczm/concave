@@ -100,8 +100,8 @@ void Level::update()
 	if (input->isKeyDown('J')) moveDelta.x = -0.01;
 	if (input->isKeyDown('L')) moveDelta.x = 0.01;
 	projectiles.getPositionArray()[0] += moveDelta;
-	updateHLinesI(projectiles.getHLineISet(), projectiles.getHLineISetItersArray()[0], moveDelta);
-	updateVLinesI(projectiles.getVLineISet(), projectiles.getVLineISetItersArray()[0], moveDelta);
+	updateHLineISetIters(projectiles.getHLineISet(), projectiles.getHLineISetItersArray()[0], moveDelta);
+	updateVLineISetIters(projectiles.getVLineISet(), projectiles.getVLineISetItersArray()[0], moveDelta);
 	// Projectiles Collision
 	vector<CoordF>& jPositionArray = projectiles.getPositionArray();
 	vector<LineISetIters>& hLineISetItersArray = projectiles.getHLineISetItersArray();
@@ -110,13 +110,13 @@ void Level::update()
 		CoordF jPos = jPositionArray[i];
 		CoordF delta{ 0, 0 };
 		LineI hLineI, vLineI;
-		if (checkHLinesToWallCollision(tiles, hLineI, vLineI, hLineISetItersArray[i]))
+		if (checkHLineISetItersToWallCollision(tiles, hLineI, vLineI, hLineISetItersArray[i]))
 			delta.x = getDeltaXResponse(hLineI, vLineI, jPos);
-		if (checkVLinesToWallCollision(tiles, vLineI, hLineI, vLineISetItersArray[i]))
+		if (checkVLineISetItersToWallCollision(tiles, vLineI, hLineI, vLineISetItersArray[i]))
 			delta.y = getDeltaYResponse(vLineI, hLineI, jPos);
 		jPositionArray[i] += delta;
-		updateHLinesI(projectiles.getHLineISet(), hLineISetItersArray[i], delta);
-		updateVLinesI(projectiles.getVLineISet(), vLineISetItersArray[i], delta);
+		updateHLineISetIters(projectiles.getHLineISet(), hLineISetItersArray[i], delta);
+		updateVLineISetIters(projectiles.getVLineISet(), vLineISetItersArray[i], delta);
 	}
 
 	// Move Camera

@@ -43,17 +43,17 @@ void updateLines(Lines& lines, float deltaA, float deltaB)
 	}
 }
 
-void updateHLinesI(LineISet& lineISet, LineISetIters& lineISetIters, CoordF delta)
+void updateHLineISetIters(LineISet& lineISet, LineISetIters& lineISetIters, CoordF delta)
 {
-	updateLinesI(lineISet, lineISetIters, delta.x, delta.y);
+	updateLineISetIters(lineISet, lineISetIters, delta.x, delta.y);
 }
 
-void updateVLinesI(LineISet& lineISet, LineISetIters& lineISetIters, CoordF delta)
+void updateVLineISetIters(LineISet& lineISet, LineISetIters& lineISetIters, CoordF delta)
 {
-	updateLinesI(lineISet, lineISetIters, delta.y, delta.x);
+	updateLineISetIters(lineISet, lineISetIters, delta.y, delta.x);
 }
 
-void updateLinesI(LineISet& lineISet, LineISetIters& lineISetIters, float deltaA, float deltaB)
+void updateLineISetIters(LineISet& lineISet, LineISetIters& lineISetIters, float deltaA, float deltaB)
 {
 	for (LineISetIter& lineISetIter : lineISetIters) {
 		LineI lineI = *lineISetIter;
@@ -123,7 +123,7 @@ bool checkVLinesToWallCollision(Tiles& tiles, Line& vLine, Line& hLine, Lines vL
 	return false;
 }
 
-bool checkHLinesToWallCollision(Tiles& tiles, LineI& hLineI, Line& vLine, LineISetIters hLineISetIters)
+bool checkHLineISetItersToWallCollision(Tiles& tiles, LineI& hLineI, Line& vLine, LineISetIters hLineISetIters)
 {
 	for (LineISetIter _hLineISetIter : hLineISetIters) {
 		LineI _hLineI = *_hLineISetIter;
@@ -134,7 +134,7 @@ bool checkHLinesToWallCollision(Tiles& tiles, LineI& hLineI, Line& vLine, LineIS
 	}
 }
 
-bool checkVLinesToWallCollision(Tiles& tiles, LineI& vLineI, Line& hLine, LineISetIters vLineISetIters)
+bool checkVLineISetItersToWallCollision(Tiles& tiles, LineI& vLineI, Line& hLine, LineISetIters vLineISetIters)
 {
 	for (LineISetIter _vLineISetIter : vLineISetIters) {
 		LineI _vLineI = *_vLineISetIter;

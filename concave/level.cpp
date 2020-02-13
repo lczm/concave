@@ -136,37 +136,6 @@ void Level::update()
 	for (int i = 0; i < players.getSize(); i++) {
 		pStates[i]->update(this, i);
 	}
-	// Unused
-    // PLAYER_STATE state = pStates[i]->update(this, i);
-    // switch (state)
-    // {
-    // case ATTACK:
-    // 	pRenderInfos->at(i).state = PLAYER_STATE::ATTACK;
-    // 	players.setState(i, states[0]);
-    // 	break;
-    // case DIE:
-    // 	pRenderInfos->at(i).state = PLAYER_STATE::DIE;
-    // 	players.setState(i, states[1]);
-    // 	break;
-    // case IDLE:
-    // 	pRenderInfos->at(i).state = PLAYER_STATE::IDLE;
-    // 	players.setState(i, states[2]);
-    // 	break;
-    // case WALK:
-    // 	pRenderInfos->at(i).state = PLAYER_STATE::WALK;
-    // 	players.setState(i, states[3]);
-    // 	break;
-    // case GET_HIT:
-    // 	pRenderInfos->at(i).state = PLAYER_STATE::GET_HIT;
-    // 	players.setState(i, states[4]);
-    // 	break;
-    // case FIRE:
-    // 	pRenderInfos->at(i).state = PLAYER_STATE::FIRE;
-    // 	players.setState(i, states[5]);
-    // 	break;
-    // default:
-    // 	break;
-    // }
 
     // CoordF pPosition = pPositions[i];
     // CoordF delta{ 0, 0 };

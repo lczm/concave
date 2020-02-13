@@ -23,6 +23,7 @@ public:
 	void draw();
 	bool isHovered();
 	bool isClicked();
+	void getWidth();
 	
 };
 

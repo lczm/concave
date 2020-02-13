@@ -117,3 +117,4 @@ const float MIN_FRAME_TIME = 1.0f / FRAME_RATE;   // minimum desired time for 1 
 const float MAX_FRAME_TIME = 1.0f / MIN_FRAME_RATE; // maximum time used in calculations
 
 const double PI = 3.1415926535897;
+const float SPEED = 2.5;

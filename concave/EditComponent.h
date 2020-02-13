@@ -27,5 +27,5 @@ public:
 
 	//file functions
 	void readFromFile(std::string mapString, int map[mapWidth][mapHeight], int level);
-	void writeToFile(int map[mapWidth][mapHeight]);
+	void writeToFile(int map[mapWidth][mapHeight], int i);
 };

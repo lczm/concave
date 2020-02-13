@@ -12,10 +12,11 @@ void EditComponent::readFromFile(std::string mapString, int map[mapWidth][mapHei
 	}
 }
 
-void EditComponent::writeToFile(int map[mapWidth][mapHeight])
+void EditComponent::writeToFile(int map[mapWidth][mapHeight], int i)
 {
 	int random = rand();
-	string filepath = "text\\" + to_string(random) + "save.txt";
+	//string filepath = "text\\" + to_string(random) + "save.txt";
+	string filepath = "text\\" + to_string(i) + "save.txt";
 	ofstream outputfile((filepath));
 	for (int r = 0; r < mapWidth; r++)
 	{

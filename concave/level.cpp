@@ -14,20 +14,27 @@ void Level::initialize()
 {	
 	//initialize the values
 	renderLevel.initialize(graphics, input, type);
-	for (int x = 0; x < mapWidth; x++)
-	{
-		for (int y = 0; y < mapHeight; y++)
-		{
-			map[x][y] = 0;
-		}
-	}
-	/* No delete this code*/
-	Cellular cellgenerate;
-	cellgenerate.generateMap(map);
-	//readFromFile();
 
-	/* No delete this code*/
-	placeRoom();
+	for (int i = 0; i < 5; i++)
+	{
+		for (int x = 0; x < mapWidth; x++)
+		{
+			for (int y = 0; y < mapHeight; y++)
+			{
+				map[x][y] = 0;
+			}
+		}
+
+		/* No delete this code*/
+		Cellular cellgenerate;
+		cellgenerate.generateMap(map);
+		//readFromFile();
+
+		/* No delete this code*/
+		placeRoom();
+		editComponent->writeToFile(map, i);
+	}
+	editComponent->readFromFile("save.txt", map, 0);
 }
 
 void Level::releaseAll()
@@ -119,13 +126,15 @@ void Level::levelEdit()
 }
 
 void Level::readFromFile()
-{
+{	
+	++mapNo %= 4;
 	editComponent->readFromFile("save.txt", map, mapNo);
 }
 
 void Level::writeToFile(int map[mapWidth][mapHeight])
-{
-	editComponent->writeToFile(map);
+{	
+	int random = rand() % 1000;
+	editComponent->writeToFile(map, random);
 }
 
 void Level::changeLevel()

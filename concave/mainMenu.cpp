@@ -18,7 +18,7 @@ void MainMenu::initialize()
 	crbtnTexture.initialize(Window::graphics, CR_BTN_TEXTURE);
 
 
-	playbtn.initialize(Window::graphics, Window::input, &playbtnTexture, 0, 0);
+	playbtn.initialize(Window::graphics, Window::input, &playbtnTexture, 0,0);
 	playHoverbtn.initialize(Window::graphics, Window::input, &playHoverTexture, 0, 0);
 
 	insbtn.initialize(Window::graphics, Window::input, &insbtnTexture, 0, 56);

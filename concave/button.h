@@ -22,6 +22,7 @@ public:
 	SpriteData getSpriteData();
 	void draw();
 	bool isHovered();
+	bool isClicked();
 	
 };
 

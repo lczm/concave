@@ -35,19 +35,53 @@ bool Button::isHovered()
 {
 	
 	/*if (input->mouseRawIn) return false;*/
+	
+	
+	int mouseX = input->getMouseX();
+	int mouseY = input->getMouseY();
+
+
+	if (!mouseX && !mouseY)
+	{
+		return false;
+	}
+	else
+	{
+		SpriteData sd = getSpriteData();
+
+		int buttonWidth = x + sd.width;
+		int buttonHeight = y + sd.height;
+
+
+		return (mouseX > x && mouseX < buttonWidth &&
+			mouseY > y && mouseY < buttonHeight);
+	}
+}
+
+bool Button::isClicked()
+{
+
+	/*if (input->mouseRawIn) return false;*/
 
 	int mouseX = input->getMouseX();
 	int mouseY = input->getMouseY();
 
-	if (!mouseX && !mouseY) return false;
+	if (!input->getMouseLButton())
+	{
+		return false;
+	}
+	else
+	{
+		SpriteData sd = getSpriteData();
 
-	SpriteData sd = getSpriteData();
+		int buttonWidth = x + sd.width;
+		int buttonHeight = y + sd.height;
 
-	int left = x - sd.width / 2;
-	int top = y - sd.height / 2;
-	int relX = mouseX - left;
-	int relY = mouseY - top;
-	return (0 < relX && relX < sd.width &&
-		0 < relY && relY < sd.height);
+
+		return (mouseX > x && mouseX < buttonWidth &&
+			mouseY > y && mouseY < buttonHeight);
+	}
+
 }
+
 

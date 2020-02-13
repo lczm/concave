@@ -8,12 +8,13 @@
 #include "collisionSystem.h"
 #include <vector>
 #include <cassert>
-#include "playerAttackState.h"
-#include "playerDieState.h"
-#include "playerIdleState.h"
-#include "playerWalkState.h"
-#include "playerGetHitState.h"
-#include "playerFireState.h"
+// #include "playerAttackState.h"
+// #include "playerDieState.h"
+// #include "playerIdleState.h"
+// #include "playerWalkState.h"
+// #include "playerGetHitState.h"
+// #include "playerFireState.h"
+#include "playerState.h"
 using namespace std;
 using namespace STATE;
 

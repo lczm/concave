@@ -38,8 +38,11 @@ void MainMenu::resetAll()
 
 void MainMenu::update()
 {
+
+
 	if (playbtn.isHovered()) 
 	{
+		playHoverbtn.draw();
 		
 	}
 }

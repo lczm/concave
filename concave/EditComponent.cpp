@@ -188,7 +188,6 @@ void EditComponent::placeItemRoom(Room room, int map[mapWidth][mapHeight])
 
 		//chests
 		map[x1][randY] = 3;
-		map[randX][randY] = 11;
 	}
 }
 

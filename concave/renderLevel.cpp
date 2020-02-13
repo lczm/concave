@@ -34,13 +34,6 @@ void RenderLevel::initialize(Graphics* graphics, Input* input, int type)
 	itemTexture.initialize(graphics, IMAGE_ITEMS_DUNGEON);
 	itemGridMask.initialize(0, 0, 130, 130, 1, 1, 59, 59);
 	itemImage.initialize(&itemTexture, itemGridMask);
-
-
-	//itemssss
-	manyItemsTexture.initialize(graphics, IMAGE_ITEMS_TEST);
-	manyItemsGridMask.initialize(0, 0, 94, 117, 1, 1, 46, 44);
-	manyItemsImage.initialize(&manyItemsTexture, manyItemsGridMask);
-
 }
 
 void RenderLevel::renderMap(int map[mapWidth][mapHeight], int x, int y, SpriteData& sd, int type)
@@ -85,12 +78,6 @@ void RenderLevel::renderMap(int map[mapWidth][mapHeight], int x, int y, SpriteDa
 			break;
 		case 10:
 			tileImage.getSpriteData(sd, CoordI{14,8});
-			break;
-		case 11:
-			manyItemsImage.getSpriteData(sd, CoordI{ 0,0 });
-			break;
-		case 12:
-			manyItemsImage.getSpriteData(sd, CoordI{ 8,0 });
 			break;
 		}
 	}

@@ -51,3 +51,14 @@ void State::updateFrameNo(float frameTime, int index, Players players, RenderInf
     }
 }
 
+bool State::peekChangeState(float frameTime, int index, Players players, RenderInfo* renderInfo, State* newState, PLAYER state)
+{
+    if (renderInfo->frameNo == players.getImageArray()[index]->getEndFrame(renderInfo->state) - 1) {
+        updateFrameNo(frameTime, index, players, renderInfo);
+        players.setState(index, newState);
+        players.updateStateInfo(index, state);
+        return true;
+    }
+    return false;
+}
+

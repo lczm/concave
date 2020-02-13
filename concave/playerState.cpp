@@ -6,10 +6,7 @@ void PlayerAttackState::update(Level* level, int index)
     Input* input = level->input;
     Players& players = level->getPlayers();
     RenderInfo& renderInfo = players.getImageInfoArray()[index];
-    if (renderInfo.frameNo == players.getImageArray()[index]->getEndFrame(renderInfo.state) - 1) {
-        updateFrameNo(frameTime, index, players, &renderInfo);
-        players.setState(index, level->getStates()->at(PLAYER::IDLE));
-        players.updateStateInfo(index, PLAYER::IDLE);
+    if (peekChangeState(frameTime, index, players, &renderInfo, level->getStates()->at(PLAYER::IDLE), PLAYER::IDLE)) {
         return;
     }
     updateFrameNo(frameTime, index, players, &renderInfo);
@@ -22,10 +19,7 @@ void PlayerDieState::update(Level* level, int index)
     Input* input = level->input;
     Players& players = level->getPlayers();
     RenderInfo& renderInfo = players.getImageInfoArray()[index];
-    if (renderInfo.frameNo == players.getImageArray()[index]->getEndFrame(renderInfo.state) - 1) {
-        updateFrameNo(frameTime, index, players, &renderInfo);
-        players.setState(index, level->getStates()->at(PLAYER::IDLE));
-        players.updateStateInfo(index, PLAYER::IDLE);
+    if (peekChangeState(frameTime, index, players, &renderInfo, level->getStates()->at(PLAYER::IDLE), PLAYER::IDLE)) {
         return;
     }
     updateFrameNo(frameTime, index, players, &renderInfo);
@@ -133,10 +127,7 @@ void PlayerGetHitState::update(Level* level, int index)
     Input* input = level->input;
     Players& players = level->getPlayers();
     RenderInfo& renderInfo = players.getImageInfoArray()[index];
-    if (renderInfo.frameNo == players.getImageArray()[index]->getEndFrame(renderInfo.state) - 1) {
-        updateFrameNo(frameTime, index, players, &renderInfo);
-        players.setState(index, level->getStates()->at(PLAYER::IDLE));
-        players.updateStateInfo(index, PLAYER::IDLE);
+    if (peekChangeState(frameTime, index, players, &renderInfo, level->getStates()->at(PLAYER::IDLE), PLAYER::IDLE)) {
         return;
     }
     updateFrameNo(frameTime, index, players, &renderInfo);
@@ -153,6 +144,9 @@ void PlayerFireState::update(Level* level, int index)
         updateFrameNo(frameTime, index, players, &renderInfo);
         players.setState(index, level->getStates()->at(PLAYER::IDLE));
         players.updateStateInfo(index, PLAYER::IDLE);
+        return;
+    }
+    if (peekChangeState(frameTime, index, players, &renderInfo, level->getStates()->at(PLAYER::IDLE), PLAYER::IDLE)) {
         return;
     }
     updateFrameNo(frameTime, index, players, &renderInfo);

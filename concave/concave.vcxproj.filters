@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\PlayerStates">
+      <UniqueIdentifier>{3e80423a-2dfa-445c-ab21-ea6b6cc056f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\PlayerStates">
+      <UniqueIdentifier>{ddcdb3c0-81e0-47ce-a5d7-7d23ef97f7e1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="game.cpp">
@@ -53,6 +59,27 @@
     </ClCompile>
     <ClCompile Include="collisionSystem.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="playerAttackState.cpp">
+      <Filter>Source Files\PlayerStates</Filter>
+    </ClCompile>
+    <ClCompile Include="playerDieState.cpp">
+      <Filter>Source Files\PlayerStates</Filter>
+    </ClCompile>
+    <ClCompile Include="playerIdleState.cpp">
+      <Filter>Source Files\PlayerStates</Filter>
+    </ClCompile>
+    <ClCompile Include="playerWalkState.cpp">
+      <Filter>Source Files\PlayerStates</Filter>
+    </ClCompile>
+    <ClCompile Include="state.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="playerGetHitState.cpp">
+      <Filter>Source Files\PlayerStates</Filter>
+    </ClCompile>
+    <ClCompile Include="playerFireState.cpp">
+      <Filter>Source Files\PlayerStates</Filter>
     </ClCompile>
     <ClCompile Include="projectiles.cpp">
       <Filter>Source Files</Filter>
@@ -103,6 +130,27 @@
     </ClInclude>
     <ClInclude Include="collisionSystem.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="playerAttackState.h">
+      <Filter>Header Files\PlayerStates</Filter>
+    </ClInclude>
+    <ClInclude Include="playerDieState.h">
+      <Filter>Header Files\PlayerStates</Filter>
+    </ClInclude>
+    <ClInclude Include="playerIdleState.h">
+      <Filter>Header Files\PlayerStates</Filter>
+    </ClInclude>
+    <ClInclude Include="playerWalkState.h">
+      <Filter>Header Files\PlayerStates</Filter>
+    </ClInclude>
+    <ClInclude Include="state.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="playerGetHitState.h">
+      <Filter>Header Files\PlayerStates</Filter>
+    </ClInclude>
+    <ClInclude Include="playerFireState.h">
+      <Filter>Header Files\PlayerStates</Filter>
     </ClInclude>
     <ClInclude Include="projectiles.h">
       <Filter>Header Files</Filter>

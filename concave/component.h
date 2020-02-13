@@ -5,6 +5,10 @@
 #include <set>
 using namespace std;
 
+// typedef vector<Line> Collision;
+// typedef Sprite* Render;
+// typedef AnimImage* RenderAnim;
+
 // Lines (Collisions)
 struct Line {
 	float lower, upper, shift;
@@ -26,3 +30,4 @@ typedef vector<LineISetIter> LineISetIters;
 
 // Directions
 enum DIRECTION8 { SOUTH, SOUTH_WEST, WEST, NORTH_WEST, NORTH, NORTH_EAST, EAST, SOUTH_EAST };
+// enum DIRECTION16 { SOUTH, SOUTH_WEST, WEST, NORTH_WEST, NORTH, NORTH_EAST, EAST, SOUTH_EAST };

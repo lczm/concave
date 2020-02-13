@@ -1,4 +1,5 @@
 #include "image.h"
+#include "component.h"
 
 Texture::Texture()
 {}
@@ -119,6 +120,14 @@ SpriteData AnimImage::getSpriteData(int state, int direction, int frameNo)
 	SpriteData spriteData;
 	texture->getSpriteData(spriteData);
 	gridMasks[state].getSpriteData(spriteData, CoordI{ frameNo, direction });
+	return spriteData;
+}
+
+SpriteData AnimImage::getSpriteData(RenderInfo renderInfo)
+{
+	SpriteData spriteData;
+	texture->getSpriteData(spriteData);
+	gridMasks[renderInfo.state].getSpriteData(spriteData, CoordI{ renderInfo.frameNo, renderInfo.direction });
 	return spriteData;
 }
 

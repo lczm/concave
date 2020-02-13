@@ -8,6 +8,12 @@
 #include "collisionSystem.h"
 #include <vector>
 #include <cassert>
+#include "playerAttackState.h"
+#include "playerDieState.h"
+#include "playerIdleState.h"
+#include "playerWalkState.h"
+#include "playerGetHitState.h"
+#include "playerFireState.h"
 using namespace std;
 
 class Level : public Window
@@ -19,16 +25,33 @@ private:
 	Texture tileTexture; GridMask tileGridMask; Image tileImage;
 	Sprite floorSprite, wallSprite;
 	// Player
-	Texture unitTexture; GridMask unitGridMask; Image unitImage;
-	Sprite unitSprite;
-	// Projectiles
+	Texture unitTexture; AnimImage unitImage;
+	GridMask unitAttackGridMask;
+	GridMask unitDieGridMask;
+	GridMask unitIdleGridMask;
+	GridMask unitWalkGridMask;
+	GridMask unitGetHitGridMask;
+
+	Texture unitMageTexture; AnimImage unitMageImage;
+	GridMask unitMageAttackGridMask;
+	GridMask unitMageDieGridMask;
+	GridMask unitMageIdleGridMask;
+	GridMask unitMageWalkGridMask;
+	GridMask unitMageGetHitGridMask;
+	GridMask unitMageFireGridMask;
+
+	// Texture unitTexture; GridMask unitGridMask; Image unitImage;
+	// Sprite unitSprite;
+	// // Projectiles
 	Texture projTexture; GridMask projGridMask; Image projImage;
 	Sprite projSprite;
+
 	// Components
 	Tiles tiles;
 	Players players;
 	Projectiles projectiles;
 	// Systems
+	vector<State*> states;
 
 public:
 	Level();
@@ -43,4 +66,6 @@ public:
 	CoordF screenToGrid(float sx, float sy);
 	CoordF gridToScreen(CoordF gridCoord);
 	CoordF screenToGrid(CoordF screenCoord);
+
+	Players* getPlayers() { return &players; }
 };

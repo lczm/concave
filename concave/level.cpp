@@ -16,10 +16,47 @@ void Level::initialize()
 	tileImage.initialize(&tileTexture, tileGridMask);
 	floorSprite.initialize(&tileImage, CoordI{ 12, 0 });
 	wallSprite.initialize(&tileImage, CoordI{ 6, 0 });
+
+	// Initializing both warrior and mage is temporary
+	// It should be initialized whenever the character picks whichever
+	// they are playing
 	unitTexture.initialize(graphics, IMAGE_UNIT_WARRIOR);
-	unitGridMask.initialize(0, 1046, 96, 94, 0, 1, 43, 81);
-	unitImage.initialize(&unitTexture, unitGridMask);
-	unitSprite.initialize(&unitImage, CoordI{ 0, 0 });
+    unitAttackGridMask.initialize(0, 7, 128, 128, 0, 1, 58, 114);
+	unitDieGridMask.initialize(2049, 7, 128, 95, 0, 1, 59, 71);
+	unitIdleGridMask.initialize(0, 1045, 96, 96, 0, 1, 43, 81);
+	unitWalkGridMask.initialize(2882, 1045, 96, 96, 0, 1, 44, 80);
+	unitGetHitGridMask.initialize(4420, 1045, 96, 96, 0, 1, 44, 80);
+	vector<GridMask> unitGridMasks = {
+        unitAttackGridMask,
+        unitDieGridMask,
+        unitIdleGridMask,
+        unitWalkGridMask,
+		unitGetHitGridMask
+	};
+    vector<int> unitEndFrames = { 16, 21, 10, 8, 6 };
+	unitImage.initialize(&unitTexture, unitGridMasks, unitEndFrames);
+
+	unitMageTexture.initialize(graphics, IMAGE_UNIT_MAGE);
+    unitMageAttackGridMask.initialize(0, 7, 128, 128, 0, 1, 63, 110);
+	unitMageDieGridMask.initialize(2049, 7, 128, 95, 0, 1, 61, 81);
+	unitMageIdleGridMask.initialize(0, 1045, 96, 96, 0, 1, 47, 79);
+	unitMageWalkGridMask.initialize(2690, 1045, 96, 96, 0, 1, 47, 79);
+	unitMageGetHitGridMask.initialize(4228, 1045, 96, 96, 0, 1, 47, 79);
+	unitMageFireGridMask.initialize(0, 1827, 128, 128, 0, 1, 61, 108);
+	vector<GridMask> unitMageGridMasks = {
+        unitMageAttackGridMask,
+        unitMageDieGridMask,
+        unitMageIdleGridMask,
+        unitMageWalkGridMask,
+		unitMageGetHitGridMask,
+		unitMageFireGridMask
+	};
+	vector<int> unitMageEndFrames = { 16, 20, 8, 8, 8, 12 };
+	unitMageImage.initialize(&unitMageTexture, unitMageGridMasks, unitMageEndFrames);
+
+	// unitGridMask.initialize(0, 1046, 96, 94, 0, 1, 43, 81);
+	// unitImage.initialize(&unitTexture, unitGridMask);
+	// unitSprite.initialize(&unitImage, CoordI{ 0, 0 });
 	projTexture.initialize(graphics, IMAGE_PROJECTILE_FIREBALL);
 	projGridMask.initialize(1, 1, 96, 96, 1, 1, 46, 46);
 	projImage.initialize(&projTexture, projGridMask);
@@ -36,20 +73,37 @@ void Level::initialize()
 			tiles.set(y, x, &floorSprite,
 				translateHLines(Lines{}, x, y),
 				translateVLines(Lines{}, x, y));
+
+	// States
+	PlayerAttackState* playerAttackState = new PlayerAttackState();
+	PlayerDieState* playerDieState = new PlayerDieState();
+	PlayerIdleState* playerIdleState = new PlayerIdleState();
+	PlayerWalkState* playerWalkState = new PlayerWalkState();
+	PlayerGetHitState* playerGetHitState = new PlayerGetHitState();
+	PlayerFireState* playerFireState = new PlayerFireState();
+	states.push_back(playerAttackState);
+	states.push_back(playerDieState);
+	states.push_back(playerIdleState);
+	states.push_back(playerWalkState);
+	states.push_back(playerGetHitState);
+	states.push_back(playerFireState);
+
 	// Player
 	players.initialize(1);
-	CoordF pPos = CoordF{ 8, 8 };
+	CoordF pPos = CoordF{ 3, 3 };
 	players.push(
-		pPos, &unitSprite,
-		translateHLines(Lines{ { -0.4, 0.4, -0.4 }, { -0.4, 0.4, 0.4 } }, pPos), 
-		translateVLines(Lines{ { -0.4, 0.4, -0.4 }, { -0.4, 0.4, 0.4 } }, pPos));
+		pPos, &unitMageImage, RenderInfo{ PLAYER_STATE::IDLE, 0, 0, 0, 0.03 },
+		playerIdleState,
+		translateHLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, pPos), 
+		translateVLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, pPos));
+
 	// Projectiles
 	projectiles.initialize(1);
 	CoordF jPos = CoordF{ 5, 5 };
 	projectiles.push(
-		jPos, &unitSprite,
-		translateHLines(Lines{ { -2, 2, -2 }, { -2, 2, 2 } }, jPos),
-		translateVLines(Lines{ { -2, 2, -2 }, { -2, 2, 2 } }, jPos));
+		jPos, &projSprite,
+		translateHLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, jPos),
+		translateVLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, jPos));
 }
 
 void Level::releaseAll()
@@ -66,75 +120,122 @@ void Level::resetAll()
 
 void Level::update()
 {
-	// Move Projectiles
-	CoordF moveDelta{ 0, 0 };
-	if (input->isKeyDown('I')) moveDelta.y = -0.01;
-	if (input->isKeyDown('K')) moveDelta.y = 0.01;
-	if (input->isKeyDown('J')) moveDelta.x = -0.01;
-	if (input->isKeyDown('L')) moveDelta.x = 0.01;
-	projectiles.getPositionArray()[0] += moveDelta;
-	updateHLineISetIters(projectiles.getHLineISet(), projectiles.getHLineISetItersArray()[0], moveDelta);
-	updateVLineISetIters(projectiles.getVLineISet(), projectiles.getVLineISetItersArray()[0], moveDelta);
-	// Projectiles Collision
-	vector<CoordF>& jPositionArray = projectiles.getPositionArray();
-	vector<LineISetIters>& hLineISetItersArray = projectiles.getHLineISetItersArray();
-	vector<LineISetIters>& vLineISetItersArray = projectiles.getVLineISetItersArray();
-	for (int i = 0; i < projectiles.getSize(); i++) {
-		CoordF jPos = jPositionArray[i];
-		CoordF delta{ 0, 0 };
-		LineI hLineI, vLineI;
-		if (checkHLineISetItersToWallCollision(tiles, hLineISetItersArray[i], hLineI, vLineI))
-			delta.x = getDeltaXResponse(hLineI, vLineI, jPos);
-		if (checkVLineISetItersToWallCollision(tiles, vLineISetItersArray[i], vLineI, hLineI))
-			delta.y = getDeltaYResponse(vLineI, hLineI, jPos);
-		jPositionArray[i] += delta;
-		updateHLineISetIters(projectiles.getHLineISet(), hLineISetItersArray[i], delta);
-		updateVLineISetIters(projectiles.getVLineISet(), vLineISetItersArray[i], delta);
-	}
-
 	// Move Player
-	moveDelta.x = 0; moveDelta.y = 0;
-	if (input->isKeyDown('W')) moveDelta.y = -0.01;
-	if (input->isKeyDown('S')) moveDelta.y = 0.01;
-	if (input->isKeyDown('A')) moveDelta.x = -0.01;
-	if (input->isKeyDown('D')) moveDelta.x = 0.01;
-	players.getPositionArray()[0] += moveDelta;
-	// Move Player Lines
-	updateHLines(players.getHLinesArray()[0], moveDelta);
-	updateVLines(players.getVLinesArray()[0], moveDelta);
-	// Lines
-	vector<CoordF>& pPositionArray = players.getPositionArray();
-	vector<Lines>& pHLinesArray = players.getHLinesArray();
-	vector<Lines>& pVLinesArray = players.getVLinesArray();
+	// CoordF moveDelta{ 0, 0 };
+	// if (input->isKeyDown('W')) moveDelta.y = -0.01;
+	// if (input->isKeyDown('S')) moveDelta.y = 0.01;
+	// if (input->isKeyDown('A')) moveDelta.x = -0.01;
+	// if (input->isKeyDown('D')) moveDelta.x = 0.01;
+	// players.getPositions()[0] += moveDelta;
+	// Move Player Collision
+	// updateHCollision(players.getHCollisions()[0], moveDelta);
+	// updateVCollision(players.getVCollisions()[0], moveDelta);
+
+	// Collision
+	// CoordF* pPositions = players.getPositions();
+	// CoordF* pDestPositions = players.getDestPositions();
+	// Collision* pHCollisions = players.getHCollisions();
+	// Collision* pVCollisions = players.getVCollisions();
+
+	vector<State*> pStates = players.getStateArray();
+	vector<RenderInfo>* pRenderInfos = &players.getImageInfoArray();
 	for (int i = 0; i < players.getSize(); i++) {
-		CoordF pPosition = pPositionArray[i];
-		CoordF delta{ 0, 0 };
-		Line hLine, vLine;
-		if (checkHLinesToWallCollision(tiles, pHLinesArray[i], hLine, vLine))
-			delta.x = getDeltaXResponse(hLine, vLine, pPosition);
-		if (checkVLinesToWallCollision(tiles, pVLinesArray[i], vLine, hLine))
-			delta.y = getDeltaYResponse(vLine, hLine, pPosition);
-		pPositionArray[i] += delta;
-		updateHLines(pHLinesArray[i], delta);
-		updateVLines(pVLinesArray[i], delta);
+		PLAYER_STATE state = pStates[i]->update(i, this);
+		switch (state)
+		{
+		case ATTACK:
+			pRenderInfos->at(i).state = PLAYER_STATE::ATTACK;
+			players.setState(i, states[0]);
+			break;
+		case DIE:
+	 		pRenderInfos->at(i).state = PLAYER_STATE::DIE;
+			players.setState(i, states[1]);
+			break;
+		case IDLE:
+	 		pRenderInfos->at(i).state = PLAYER_STATE::IDLE;
+			players.setState(i, states[2]);
+			break;
+		case WALK:
+	 		pRenderInfos->at(i).state = PLAYER_STATE::WALK;
+			players.setState(i, states[3]);
+			break;
+		case GET_HIT:
+	 		pRenderInfos->at(i).state = PLAYER_STATE::GET_HIT;
+			players.setState(i, states[4]);
+			break;
+		case FIRE:
+	 		pRenderInfos->at(i).state = PLAYER_STATE::FIRE;
+			players.setState(i, states[5]);
+			break;
+		default:
+			break;
+		}
 	}
 
-	// Player - Projectiles Collision
-	for (int i = 0; i < players.getSize(); i++) {
-		CoordF pPos = pPositionArray[i];
-		CoordF delta{ 0, 0 };
-		Line hLine, vLine;
-		LineI hLineI, vLineI;
-		if (checkLinesToLineISetCollision(projectiles.getVLineISet(), pHLinesArray[i], hLine, vLineI))
-			delta.x = getDeltaXResponse(hLine, vLineI, pPos);
-		if (checkLinesToLineISetCollision(projectiles.getHLineISet(), pVLinesArray[i], vLine, hLineI))
-			delta.y = getDeltaYResponse(vLine, hLineI, pPos);
-		pPositionArray[i] += delta;
-		updateHLines(pHLinesArray[i], delta);
-		updateVLines(pVLinesArray[i], delta);
-	}
+    // CoordF pPosition = pPositions[i];
+    // CoordF delta{ 0, 0 };
+    // Line hLine, vLine;
+    // if (checkHCollisionToWallCollision(tiles, hLine, vLine, pHCollisions[i]))
+    // 	delta.x = getDeltaXResponse(hLine, vLine, pPosition);
+    // if (checkVCollisionToWallCollision(tiles, vLine, hLine, pVCollisions[i]))
+    // 	delta.y = getDeltaYResponse(vLine, hLine, pPosition);
+    // pPositions[i] += delta;
+    // updateHCollision(pHCollisions[i], delta);
+    // updateVCollision(pVCollisions[i], delta);
 
-	// Move Camera
+	// CoordF moveDelta{ 0, 0 };
+	// if (input->isKeyDown('W')) moveDelta.y = -0.01;
+	// if (input->isKeyDown('S')) moveDelta.y = 0.01;
+	// if (input->isKeyDown('A')) moveDelta.x = -0.01;
+	// if (input->isKeyDown('D')) moveDelta.x = 0.01;
+	// players.getPositionArray()[0] += moveDelta;
+	// // Move Player Lines
+	// updateHLines(players.getHLinesArray()[0], moveDelta);
+	// updateVLines(players.getVLinesArray()[0], moveDelta);
+	// // Lines
+	// vector<CoordF>& pPositionArray = players.getPositionArray();
+	// vector<Lines>& pHLinesArray = players.getHLinesArray();
+	// vector<Lines>& pVLinesArray = players.getVLinesArray();
+	// for (int i = 0; i < players.getSize(); i++) {
+	// 	CoordF pPosition = pPositionArray[i];
+	// 	CoordF delta{ 0, 0 };
+	// 	Line hLine, vLine;
+	// 	if (checkHLinesToWallCollision(tiles, pHLinesArray[i], hLine, vLine))
+	// 		delta.x = getDeltaXResponse(hLine, vLine, pPosition);
+	// 	if (checkVLinesToWallCollision(tiles, pVLinesArray[i], vLine, hLine))
+	// 		delta.y = getDeltaYResponse(vLine, hLine, pPosition);
+	// 	pPositionArray[i] += delta;
+	// 	updateHLines(pHLinesArray[i], delta);
+	// 	updateVLines(pVLinesArray[i], delta);
+	// }
+
+	// // Move Projectiles
+	// moveDelta.x = 0; moveDelta.y = 0;
+	// if (input->isKeyDown('I')) moveDelta.y = -0.01;
+	// if (input->isKeyDown('K')) moveDelta.y = 0.01;
+	// if (input->isKeyDown('J')) moveDelta.x = -0.01;
+	// if (input->isKeyDown('L')) moveDelta.x = 0.01;
+	// projectiles.getPositionArray()[0] += moveDelta;
+	// updateHLineISetIters(projectiles.getHLineISet(), projectiles.getHLineISetItersArray()[0], moveDelta);
+	// updateVLineISetIters(projectiles.getVLineISet(), projectiles.getVLineISetItersArray()[0], moveDelta);
+	// // Projectiles Collision
+	// vector<CoordF>& jPositionArray = projectiles.getPositionArray();
+	// vector<LineISetIters>& hLineISetItersArray = projectiles.getHLineISetItersArray();
+	// vector<LineISetIters>& vLineISetItersArray = projectiles.getVLineISetItersArray();
+	// for (int i = 0; i < players.getSize(); i++) {
+	// 	CoordF jPos = jPositionArray[i];
+	// 	CoordF delta{ 0, 0 };
+	// 	LineI hLineI, vLineI;
+	// 	if (checkHLineISetItersToWallCollision(tiles, hLineISetItersArray[i], hLineI, vLineI))
+	// 		delta.x = getDeltaXResponse(hLineI, vLineI, jPos);
+	// 	if (checkVLineISetItersToWallCollision(tiles, vLineISetItersArray[i], vLineI, hLineI))
+	// 		delta.y = getDeltaYResponse(vLineI, hLineI, jPos);
+	// 	jPositionArray[i] += delta;
+	// 	updateHLineISetIters(projectiles.getHLineISet(), hLineISetItersArray[i], delta);
+	// 	updateVLineISetIters(projectiles.getVLineISet(), vLineISetItersArray[i], delta);
+	// }
+
+	// // Move Camera
 	camCoord = players.getPositionArray()[0];
 	if (input->isKeyDown('O')) camScale *= 1 - 0.01;
 	if (input->isKeyDown('P')) camScale *= 1 + 0.01;
@@ -147,9 +248,22 @@ void Level::render()
 			graphics->drawSprite(
 				tiles.getSprite(y, x)->getSpriteData(),
 				gridToScreen(x, y), camScale);
-	graphics->drawSprite(
-		players.getSpriteArray()[0]->getSpriteData(),
-		gridToScreen(players.getPositionArray()[0]), camScale);
+	for (int i = 0; i < players.getSize(); i++) {
+		// Temporary solution to make it not blurry
+		// CoordF screenCoords = gridToScreen(players.getPosition(i));
+		CoordF screenCoords = gridToScreen(players.getPositionArray()[i]);
+        // graphics->drawSprite(
+        //     players.getRender(i)->getSpriteData(players.getRenderInfo(i)),
+        //     int(screenCoords.x), int(screenCoords.y), camScale);
+		graphics->drawSprite(
+			players.getImageArray()[i]->getSpriteData(players.getImageInfoArray()[i]),
+			int(screenCoords.x), int(screenCoords.y), camScale);
+	}
+
+	// graphics->drawSprite(
+	// 	players.getSpriteArray()[0]->getSpriteData(),
+	// 	gridToScreen(players.getPositionArray()[0]), camScale);
+
 	graphics->drawSprite(
 		projectiles.getSpriteArray()[0]->getSpriteData(),
 		gridToScreen(projectiles.getPositionArray()[0]), camScale);

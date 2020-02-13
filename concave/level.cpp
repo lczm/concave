@@ -134,7 +134,8 @@ void Level::changeLevel()
 	{
 		//woahh
 		//mapNo = 29229;
-		level.initialize();
+		level.readFromFile();
+		//level.initialize();
 	}
 }
 

@@ -99,7 +99,7 @@ void EditComponent::placeRoom(int map[mapWidth][mapHeight])
 }
 
 void EditComponent::placeWall(int map[mapWidth][mapHeight], Room newRoom)
-{	
+{
 	//setting the four corners
 	map[newRoom.getDimensions().x1][newRoom.getDimensions().y1] = ImageType::churchWallConnect;
 	map[newRoom.getDimensions().x2][newRoom.getDimensions().y1] = ImageType::churchWallWest;
@@ -140,21 +140,17 @@ void EditComponent::verticalCorridor(int y1, int y2, int x, int map[mapWidth][ma
 	int maxY = (y1 > y2) ? y1 : y2;
 
 	for (int i = minY; i < maxY + 1; i++)
-	{	
+	{
 		map[x][i] = ImageType::churchWallPath;
 	}
 }
 
-//add code to place items into rooms
-//specify boss/loot rooms maybe NPC rooms
-void EditComponent::placeItemRoom(Room room, int map[mapWidth][mapHeight])
-{
 
-	/* First iteration: place some random chest */
-	/* second iteration specitfy rooms to place specific items */
-	/* 3rd iteration specify what type of objects can spawn where */
+/* First iteration: place some random chest */
+/* second iteration specitfy rooms to place specific items */
+/* 3rd iteration specify what type of objects can spawn where */
 
-	// boundary within the room
+// boundary within the room
 	/* --------------------------> (X)
 	|
 	|	(X1, Y1)			(X2, Y1)
@@ -167,14 +163,17 @@ void EditComponent::placeItemRoom(Room room, int map[mapWidth][mapHeight])
 	|
 	(Y)
 
-	*/
+*/
+void EditComponent::placeItemRoom(Room room, int map[mapWidth][mapHeight])
+{
+	//walls occupy the first and last X values
 	int x1 = room.getDimensions().x1 + 1;
-	int y1 = room.getDimensions().y1 + 1;
 	int x2 = room.getDimensions().x2 - 1;
-	int y2 = room.getDimensions().y2 - 1;
 
 	//walls occupy the first and last Y positions 
-	//walls occupy the first and last X values
+	int y1 = room.getDimensions().y1 + 1;
+	int y2 = room.getDimensions().y2 - 1;
+
 	int areaToPlace = ((room.getRoomWidth() - 2) * (room.getRoomHeight() - 2)) * 0.2;
 
 	//percentage of chests 
@@ -203,7 +202,7 @@ void EditComponent::changeObjects(int initial, int changeTo, int map[mapWidth][m
 	int mapPos = map[PosX][PosY];
 	//door code
 	if (mapPos == initial) { mapPos = changeTo; }
-	else if(mapPos == changeTo) { mapPos = initial; }
+	else if (mapPos == changeTo) { mapPos = initial; }
 
 	//set to intended
 	map[PosX][PosY] = mapPos;

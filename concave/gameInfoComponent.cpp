@@ -94,7 +94,7 @@ void GameInfoComponent::appendRecord(std::string file_name, int col, std::string
 	//duplication happends here
 	vector<std::vector<std::string>> allrecords = filterOutRecord(file_name, search_term);
 
-	std::ofstream ofs("text\\gameInfo.csv");
+	std::ofstream ofs(file_name);
 	ofs.close();
 	for (int i = 0; i < data.size(); i++)
 	{
@@ -137,7 +137,13 @@ vector<std::vector<std::string>> GameInfoComponent::filterOutRecord(std::string 
 	{		
 			
 			getline(file, field_one, ',');
+
+			//I am sorry for uh, these if statements
 			if (field_one == search_term)
+			{
+				skip(file, 1.5, '\n');
+			}
+			if (field_one == "")
 			{
 				skip(file, 1, '\n');
 			}

@@ -225,4 +225,5 @@ void EditComponent::animateObjects()
 {
 	gm.appendRecord("text\\gameInfo.csv",2, "0save.txt", "blah");
 	gm.appendRecord("text\\gameInfo.csv",2, "1save.txt", "blah");
+	gm.appendRecord("text\\gameInfo.csv", 2, "1save.txt", "woot");
 }

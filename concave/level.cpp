@@ -73,10 +73,7 @@ void Level::initialize()
 			tiles.set(y, x, &floorSprite,
 				translateHLines(Lines{}, x, y),
 				translateVLines(Lines{}, x, y));
-			// tiles.set(y, x, 
-			// 	translateHCollision(Collision{}, x, y),
-			// 	translateVCollision(Collision{}, x, y), 
-			// 	&floorSprite);
+
 	// States
 	PlayerAttackState* playerAttackState = new PlayerAttackState();
 	PlayerDieState* playerDieState = new PlayerDieState();
@@ -141,34 +138,34 @@ void Level::update()
 	// Collision* pVCollisions = players.getVCollisions();
 
 	vector<State*> pStates = players.getStateArray();
-	vector<RenderInfo> pRenderInfos = players.getImageInfoArray();
+	vector<RenderInfo>* pRenderInfos = &players.getImageInfoArray();
 	for (int i = 0; i < players.getSize(); i++) {
 		PLAYER_STATE state = pStates[i]->update(i, this);
 		switch (state)
 		{
 		case ATTACK:
-	 		pRenderInfos[i].state = PLAYER_STATE::ATTACK;
-	 		pStates[i] = states[0];
+			pRenderInfos->at(i).state = PLAYER_STATE::ATTACK;
+			players.setState(i, states[0]);
 			break;
 		case DIE:
-	 		pRenderInfos[i].state = PLAYER_STATE::DIE;
-	 		pStates[i] = states[1];
+	 		pRenderInfos->at(i).state = PLAYER_STATE::DIE;
+			players.setState(i, states[1]);
 			break;
 		case IDLE:
-	 		pRenderInfos[i].state = PLAYER_STATE::IDLE;
-	 		pStates[i] = states[2];
+	 		pRenderInfos->at(i).state = PLAYER_STATE::IDLE;
+			players.setState(i, states[2]);
 			break;
 		case WALK:
-	 		pRenderInfos[i].state = PLAYER_STATE::WALK;
-	 		pStates[i] = states[3];
+	 		pRenderInfos->at(i).state = PLAYER_STATE::WALK;
+			players.setState(i, states[3]);
 			break;
 		case GET_HIT:
-	 		pRenderInfos[i].state = PLAYER_STATE::GET_HIT;
-	 		pStates[i] = states[4];
+	 		pRenderInfos->at(i).state = PLAYER_STATE::GET_HIT;
+			players.setState(i, states[4]);
 			break;
 		case FIRE:
-	 		pRenderInfos[i].state = PLAYER_STATE::FIRE;
-	 		pStates[i] = states[5];
+	 		pRenderInfos->at(i).state = PLAYER_STATE::FIRE;
+			players.setState(i, states[5]);
 			break;
 		default:
 			break;
@@ -239,9 +236,9 @@ void Level::update()
 	// }
 
 	// // Move Camera
-	// camCoord = players.getPositionArray()[0];
-	// if (input->isKeyDown('O')) camScale *= 1 - 0.01;
-	// if (input->isKeyDown('P')) camScale *= 1 + 0.01;
+	camCoord = players.getPositionArray()[0];
+	if (input->isKeyDown('O')) camScale *= 1 - 0.01;
+	if (input->isKeyDown('P')) camScale *= 1 + 0.01;
 }
 
 void Level::render()
@@ -266,6 +263,7 @@ void Level::render()
 	// graphics->drawSprite(
 	// 	players.getSpriteArray()[0]->getSpriteData(),
 	// 	gridToScreen(players.getPositionArray()[0]), camScale);
+
 	graphics->drawSprite(
 		projectiles.getSpriteArray()[0]->getSpriteData(),
 		gridToScreen(projectiles.getPositionArray()[0]), camScale);

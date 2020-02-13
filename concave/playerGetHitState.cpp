@@ -1,6 +1,6 @@
 #include "playerGetHitState.h"
 
-PLAYER_STATE PlayerGetHitState::update(int index, Level* level)
+void PlayerGetHitState::update(Level* level, int index)
 {
     float frameTime = level->frameTime;
     Input* input = level->input;
@@ -10,8 +10,10 @@ PLAYER_STATE PlayerGetHitState::update(int index, Level* level)
         updateFrameNo(frameTime, index, players, renderInfo);
         renderInfo->timer = 0;
         renderInfo->frameNo = 0;
-        return PLAYER_STATE::IDLE;
+        players->getStateArray()[index] = level->getStates()->at(PLAYER_STATE::IDLE);
+        players->getImageInfoArray()[index].state = PLAYER_STATE::IDLE;
+        return;
     }
     updateFrameNo(frameTime, index, players, renderInfo);
-    return PLAYER_STATE::GET_HIT;
+    return;
 }

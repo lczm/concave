@@ -4,5 +4,5 @@
 class PlayerDieState : public State
 {
 public:
-    PLAYER_STATE update(int index, Level* level);
+    void update(Level* level, int index);
 };

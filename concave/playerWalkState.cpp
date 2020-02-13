@@ -1,6 +1,6 @@
 #include "playerWalkState.h"
 
-PLAYER_STATE PlayerWalkState::update(int index, Level* level)
+void PlayerWalkState::update(Level* level, int index)
 {
     float frameTime = level->frameTime;
     Input* input = level->input;
@@ -12,7 +12,9 @@ PLAYER_STATE PlayerWalkState::update(int index, Level* level)
     if (input->getMouseLButton()) {
         players->setDestPosition(index, level->screenToGrid(CoordF{float(input->getMouseX()), float(input->getMouseY())}));
         players->setMovement(index, calculateMovement(frameTime, position, destPosition));
-        return PLAYER_STATE::WALK;
+        players->getStateArray()[index] = level->getStates()->at(PLAYER_STATE::WALK);
+        players->getImageInfoArray()[index].state = PLAYER_STATE::WALK;
+        return;
     }
     else if (input->getMouseRButton()) {
         // Change directions based on where mouse is 
@@ -21,7 +23,9 @@ PLAYER_STATE PlayerWalkState::update(int index, Level* level)
         players->setMovement(index, Movement{ 0, 0, rotation });
         renderInfo->timer = 0;
         renderInfo->frameNo = 0;
-        return PLAYER_STATE::FIRE;
+        players->getStateArray()[index] = level->getStates()->at(PLAYER_STATE::FIRE);
+        players->getImageInfoArray()[index].state = PLAYER_STATE::FIRE;
+        return;
     }
     else if (input->getMouseMButton()) {
         // Change directions based on where mouse is 
@@ -30,7 +34,9 @@ PLAYER_STATE PlayerWalkState::update(int index, Level* level)
         players->setMovement(index, Movement{ 0, 0, rotation });
         renderInfo->timer = 0;
         renderInfo->frameNo = 0;
-        return PLAYER_STATE::FIRE;
+        players->getStateArray()[index] = level->getStates()->at(PLAYER_STATE::FIRE);
+        players->getImageInfoArray()[index].state = PLAYER_STATE::FIRE;
+        return;
     }
 
     Movement movement = players->getMovementArray()[index];
@@ -38,19 +44,19 @@ PLAYER_STATE PlayerWalkState::update(int index, Level* level)
         players->setPosition(index, CoordF{ position.x += movement.moveX,
                                             position.y += movement.moveY });
         updateFrameNo(frameTime, index, players, renderInfo);
-        return PLAYER_STATE::WALK;
+        return;
     }
+
     players->setMovement(index, Movement{ 0, 0, movement.rotation });
     renderInfo->timer = 0;
     renderInfo->frameNo = 0;
-    return PLAYER_STATE::IDLE;
+    players->getStateArray()[index] = level->getStates()->at(PLAYER_STATE::IDLE);
+    players->getImageInfoArray()[index].state = PLAYER_STATE::IDLE;
+    return;
 }
 
 bool PlayerWalkState::isAtPosition(CoordF current, CoordF destination)
 {
-    // if ((abs(current->x - destination->x) < 0.1) && (abs(current->y - destination->y))) {
-    //     return true;
-    // }
     if ((abs(current.x - destination.x) < 0.1) && (abs(current.y - destination.y))) {
         return true;
     }

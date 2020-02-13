@@ -6,8 +6,11 @@ class Level;
 class State 
 {
 public:
-    virtual PLAYER_STATE update(int index, Level* level) = 0;
+    virtual void update(Level* level, int index) = 0;
     Movement calculateMovement(float frameTime, CoordF position, CoordF destPosition);
     void updateFrameNo(float frameTime, int index, Players* players, RenderInfo* renderInfo);
 };
+
 #include "level.h"
+
+

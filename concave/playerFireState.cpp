@@ -1,8 +1,7 @@
 #include "playerFireState.h"
 
-PLAYER_STATE PlayerFireState::update(int index, Level* level)
+void PlayerFireState::update(Level* level, int index)
 {
-    cout << "IN FIRE" << endl;
     float frameTime = level->frameTime;
     Input* input = level->input;
     Players* players = level->getPlayers();
@@ -11,9 +10,11 @@ PLAYER_STATE PlayerFireState::update(int index, Level* level)
         updateFrameNo(frameTime, index, players, renderInfo);
         renderInfo->timer = 0;
         renderInfo->frameNo = 0;
-        return PLAYER_STATE::IDLE;
+        players->getStateArray()[index] = level->getStates()->at(PLAYER_STATE::IDLE);
+        players->getImageInfoArray()[index].state = PLAYER_STATE::IDLE;
+        return;
     }
     updateFrameNo(frameTime, index, players, renderInfo);
-    return PLAYER_STATE::FIRE;
+    return;
 }
 

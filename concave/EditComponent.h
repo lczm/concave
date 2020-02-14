@@ -10,6 +10,7 @@ using namespace std;
 
 class EditComponent
 {
+
 private:
 	GameInfoComponent gm;
 

@@ -13,6 +13,16 @@ class Room
 			int y1;
 			int y2;
 	};
+
+	struct RoomItems {
+		int left = 3;
+		int right = 3;
+		int top = 3;
+		int bottom = 3;
+		CoordI center;
+		int flooring = 1;
+	};
+
 private:
 
 	//temporary variables 
@@ -23,6 +33,7 @@ private:
 	//room info
 	RoomType room;
 	RoomDimensions roomDimensions;
+	RoomItems roomItems;
 
 	//width and height of the room
 	int roomWidth;
@@ -69,8 +80,24 @@ public:
 
 	//dimentions of the room
 	RoomDimensions getDimensions() {return roomDimensions;}
-	void setDimensions(RoomDimensions changedDimensions) { roomDimensions = changedDimensions;}
 
+	//set position of room items in a room
+	RoomItems getRoomItems() { return roomItems; }
+
+	//set room items of a room
+	void setRoomItems(int left, int right, int top, int bottom, int flooring) 
+	{
+		RoomItems newRoomItems;
+		newRoomItems.left = left;
+		newRoomItems.right = right;
+		newRoomItems.top = top;
+		newRoomItems.bottom = bottom;
+		newRoomItems.flooring = flooring;
+
+		roomItems = newRoomItems;
+	}
+
+	void setDimensions(RoomDimensions changedDimensions) { roomDimensions = changedDimensions;}
 	//center of room functions
 	CoordI getCenterRoom(){ return roomCenter;}
 	void setCenter(CoordI center){roomCenter = center;}

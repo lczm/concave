@@ -45,13 +45,20 @@ void EditComponent::placeRoom(int map[mapWidth][mapHeight])
 
 	//temp placement
 	int maxRooms = 9;
+	int minRooms = 8;
 	int maxRoomSize = 12;
 	int minRoomSize = 9;
 
-	for (int i = 0; i < maxRooms; i++)
+	int count = 0;
+
+	//for (int i = 0; i < maxRooms; i++)
 	//{
-	//while (rooms.size() < maxRooms)
-	{
+	
+
+	while (rooms.size() < maxRooms)
+	{	
+		//estimate
+		if (count > 100 && (maxRooms > minRooms)) { maxRooms = maxRooms - 1; }
 
 		int w = minRoomSize + rand() % (maxRoomSize - minRoomSize + 1);
 		int h = minRoomSize + rand() % (maxRoomSize - minRoomSize + 1);
@@ -68,6 +75,8 @@ void EditComponent::placeRoom(int map[mapWidth][mapHeight])
 			if (newRoom.intersects(room))
 			{
 				failed = true;
+				//cout << "Fail" << endl;
+				count += 1;
 				break;
 			}
 		}
@@ -81,6 +90,7 @@ void EditComponent::placeRoom(int map[mapWidth][mapHeight])
 			//setting four corners of the room (test)
 			placeWall(map, newRoom);
 
+			/*
 			//building the corridors 
 			CoordI newCenter = newRoom.getCenterRoom();
 			if (rooms.size() != 1)
@@ -88,7 +98,6 @@ void EditComponent::placeRoom(int map[mapWidth][mapHeight])
 				Room prevRoom = rooms[rooms.size() - 2];
 				CoordI prevCenter = prevRoom.getCenterRoom();
 
-				/*
 				int random = rand() % 2;
 
 				if (random == 1)
@@ -101,13 +110,15 @@ void EditComponent::placeRoom(int map[mapWidth][mapHeight])
 					verticalCorridor(prevCenter.y, newCenter.y, newCenter.x, map);
 					horizontalCorridor(prevCenter.x, newCenter.x, prevCenter.y, map);
 				}
-				*/
 			}
+			*/
 
 			//place items into the room
 			placeItemRoom(newRoom, map);
 		}
 	}
+	//cout << "Count:" << count << endl;
+	//cout << "Maxrooms:" << maxRooms << endl;
 }
 
 void EditComponent::placeWall(int map[mapWidth][mapHeight], Room newRoom)
@@ -176,6 +187,8 @@ void EditComponent::verticalCorridor(int y1, int y2, int x, int map[mapWidth][ma
 	(Y)
 
 */
+
+/* next iteration to set random places and to add a door*/
 void EditComponent::placeItemRoom(Room room, int map[mapWidth][mapHeight])
 {
 	//walls occupy the first and last X values
@@ -186,20 +199,36 @@ void EditComponent::placeItemRoom(Room room, int map[mapWidth][mapHeight])
 	int y1 = room.getDimensions().y1 + 1;
 	int y2 = room.getDimensions().y2 - 1;
 
-	int areaToPlace = ((room.getRoomWidth() - 2) * (room.getRoomHeight() - 2)) * 0.2;
+	//items in the room
+	int left = room.getRoomItems().left;
+	int right = room.getRoomItems().right;
+	int top = room.getRoomItems().top;
+	int bottom = room.getRoomItems().bottom;
 
-	//percentage of chests 
-	int noChests = areaToPlace * 0.2;
 
-	for (int i = 0; i < noChests; i++)
+	//setting a floor value
+	for (int x = x1; x < x2; x++)
 	{
-		//Testing code
-		int randX = random(x1, x2);
-		int randY = random(y1, y2);
-
-		//chests
-		map[x1][randY] = 3;
+		for (int y = y1 ; y < y2 ; y++)
+		{
+			map[x][y] = room.getRoomItems().flooring;
+		}
 	}
+
+	//placing items
+	for (int i = x1 ; i < x2 ; i++)
+	{
+		map[i][y1] = top;
+		map[i][y2] = bottom;
+	}
+
+	//placing items
+	for (int i = y1 + 1; i < y2 -1; i++)
+	{
+		map[x1][i] = left;
+		map[x2][i] = right;
+	}
+
 }
 
 //Random number

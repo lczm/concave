@@ -48,9 +48,9 @@ void EditComponent::placeRoom(int map[mapWidth][mapHeight])
 	int maxRoomSize = 12;
 	int minRoomSize = 9;
 
-	//for (int i = 0; i < maxRooms; i++)
+	for (int i = 0; i < maxRooms; i++)
 	//{
-	while (rooms.size() < maxRooms)
+	//while (rooms.size() < maxRooms)
 	{
 
 		int w = minRoomSize + rand() % (maxRoomSize - minRoomSize + 1);
@@ -223,7 +223,10 @@ void EditComponent::changeObjects(int initial, int changeTo, int map[mapWidth][m
 //changes object look
 void EditComponent::animateObjects()
 {
-	gm.appendRecord("text\\gameInfo.csv",2, "0save.txt", "blah");
-	gm.appendRecord("text\\gameInfo.csv",2, "1save.txt", "blah");
-	gm.appendRecord("text\\gameInfo.csv", 2, "1save.txt", "woot");
+	gm.editRecord("text\\gameInfo.csv",2,3, "0save.txt", "blah");
+	gm.editRecord("text\\gameInfo.csv",2,3, "1save.txt", "blah");
+	gm.editRecord("text\\gameInfo.csv", 2,3, "1save.txt", "woot");
+	gm.editRecord("text\\gameInfo.csv", 1, 3, "4save.txt", "woot");
+	gm.searchForRecord("text\\gameInfo.csv", "0save.txt", 3);
+
 }

@@ -123,6 +123,7 @@ void EditComponent::placeRoom(int map[mapWidth][mapHeight])
 			//place items into the room
 			placeItemRoom(newRoom, map);
 		}
+		placeBossRoom(map);
 	}
 	//cout << "Count:" << count << endl;
 	//cout << "Maxrooms:" << maxRooms << endl;
@@ -239,8 +240,14 @@ void EditComponent::placeItemRoom(Room room, int map[mapWidth][mapHeight])
 }
 
 void EditComponent::placeBossRoom(int map[mapWidth][mapHeight])
-{
+{	
+	//hardcoded values
+	int bossPos = int(mapWidth * 0.7);
 
+	int length = (mapWidth-2) - bossPos;
+
+	Room room(bossPos , 1, length, mapHeight-2);
+	placeWall(map, room);
 }
 
 //Random number

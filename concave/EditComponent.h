@@ -20,6 +20,7 @@ public:
 	void placeItemRoom(Room room, int map[mapWidth][mapHeight]);
 	void determineRoomTypes();
 	void placeWall(int map[mapWidth][mapHeight], Room newRoom);
+	void placeBossRoom(int map[mapWidth][mapHeight]);
 
 	//random funcs
 	void changeObjects(int intial, int changeTo, int map[mapWidth][mapHeight], int PosX, int PosY);

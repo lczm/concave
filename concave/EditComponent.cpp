@@ -44,10 +44,17 @@ void EditComponent::placeRoom(int map[mapWidth][mapHeight])
 	vector<Room> rooms;
 
 	//temp placement
-	int maxRooms = 9;
-	int minRooms = 8;
-	int maxRoomSize = 12;
-	int minRoomSize = 9;
+	/*
+		int maxRooms = 9;
+		int minRooms = 8;
+		int maxRoomSize = 12;
+		int minRoomSize = 9;
+	*/
+
+	int maxRooms = 7;
+	int minRooms = 6;
+	int maxRoomSize = 7;
+	int minRoomSize = 6;
 
 	int count = 0;
 
@@ -63,7 +70,7 @@ void EditComponent::placeRoom(int map[mapWidth][mapHeight])
 		int w = minRoomSize + rand() % (maxRoomSize - minRoomSize + 1);
 		int h = minRoomSize + rand() % (maxRoomSize - minRoomSize + 1);
 
-		int x = rand() % (mapWidth - w - 1) + 1;
+		int x = rand() % (mapWidth/2 - w - 1) + 1;
 		int y = rand() % (mapHeight - h - 1) + 1;
 
 		Room newRoom(x, y, w, h);
@@ -228,6 +235,11 @@ void EditComponent::placeItemRoom(Room room, int map[mapWidth][mapHeight])
 		map[x1][i] = left;
 		map[x2][i] = right;
 	}
+
+}
+
+void EditComponent::placeBossRoom(int map[mapWidth][mapHeight])
+{
 
 }
 

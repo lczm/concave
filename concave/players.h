@@ -3,7 +3,7 @@
 #include "component.h"
 using namespace STATE;
 
-class State;
+struct State;
 class Players
 {
 private:
@@ -13,34 +13,39 @@ private:
 	vector<Lines> hLinesArray;
 	vector<Lines> vLinesArray;
 
-	vector<State*> stateArray;
+	vector<State*> fsmArray;
 	vector<AnimImage*> imageArray;
-	vector<RenderInfo> imageInfoArray;
+	vector<int> stateArray;
+	vector<int> frameNoArray;
+	vector<int> directionArray;
+	vector<float> timerArray;
+	vector<float> delayArray;
 
-	vector<Movement> movementArray;
 	vector<int> healthArray;
 	vector<int> manaArray;
 public:
 	Players(); ~Players();
 	void initialize(int capacity);
-	void push(CoordF position, AnimImage* image, RenderInfo imageInfo, 
-		State* state, Lines hLines, Lines vLines);
+	void push(CoordF position, Lines hLines, Lines vLines,
+		State* fsm, AnimImage* image, int state, int health, int mana);
  	void pop(int index);
-public:
-	void setPosition(int index, CoordF position);
-	void setDestPosition(int index, CoordF destPosition);
-	void setMovement(int index, Movement movement);
-	void setState(int index, State* state);
 public:
 	int getSize() { return size; }
  	vector<CoordF>& getPositionArray() { return positionArray; }
 	vector<CoordF>& getDestPositionArray() { return destPositionArray; }
  	vector<Lines>& getHLinesArray() { return hLinesArray; }
  	vector<Lines>& getVLinesArray() { return vLinesArray; }
-	vector<State*>& getStateArray() { return stateArray; }
+
+	vector<State*>& getFsmArray() { return fsmArray; }
  	vector<AnimImage*>& getImageArray() { return imageArray; }
-	vector<RenderInfo>& getImageInfoArray() { return imageInfoArray; }
-	vector<Movement>& getMovementArray() { return movementArray; }
-public:
-	void updateStateInfo(int index, PLAYER state);
+	vector<int>& getStateArray() { return stateArray; }
+	vector<int>& getFrameNoArray() { return frameNoArray; }
+	vector<int>& getDirectionArray() { return directionArray; }
+	vector<float>& getTimerArray() { return timerArray; }
+	vector<float>& getDelayArray() { return delayArray; }
+
+	vector<int>& getHealthArray() { return healthArray; }
+	vector<int>& getManaArray() { return manaArray; }
 };
+
+#include "state.h"

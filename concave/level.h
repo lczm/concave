@@ -2,19 +2,19 @@
 #include "window.h"
 #include "image.h"
 #include "component.h"
-#include "players.h"
 #include "tiles.h"
 #include "projectiles.h"
 #include "collisionSystem.h"
 #include <vector>
 #include <cassert>
+#include "players.h"
 // #include "playerAttackState.h"
 // #include "playerDieState.h"
 // #include "playerIdleState.h"
 // #include "playerWalkState.h"
 // #include "playerGetHitState.h"
 // #include "playerFireState.h"
-#include "playerState.h"
+// #include "playerState.h"
 using namespace std;
 using namespace STATE;
 
@@ -53,7 +53,7 @@ private:
 	Players players;
 	Projectiles projectiles;
 	// Systems
-	vector<State*> states;
+	// vector<State*> states;
 
 public:
 	Level();
@@ -70,5 +70,5 @@ public:
 	CoordF screenToGrid(CoordF screenCoord);
 
 	Players& getPlayers() { return players; }
-	vector<State*>* getStates() { return &states; }
+	// vector<State*>* getStates() { return &states; }
 };

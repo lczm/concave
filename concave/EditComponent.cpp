@@ -223,10 +223,14 @@ void EditComponent::changeObjects(int initial, int changeTo, int map[mapWidth][m
 //changes object look
 void EditComponent::animateObjects()
 {
-	gm.editRecord("text\\gameInfo.csv",2,3, "0save.txt", "blah");
-	gm.editRecord("text\\gameInfo.csv",2,3, "1save.txt", "blah");
-	gm.editRecord("text\\gameInfo.csv", 2,3, "1save.txt", "woot");
-	gm.editRecord("text\\gameInfo.csv", 1, 3, "4save.txt", "woot");
-	gm.searchForRecord("text\\gameInfo.csv", "0save.txt", 3);
+	gm.editRecord("text\\gameInfo.csv",0,2,3, "0save.txt", "blah");
+	gm.editRecord("text\\gameInfo.csv", 0, 2, 3, "1save.txt", "blah");
+	gm.editRecord("text\\gameInfo.csv", 1, 1, 3, "0", "1");
+	gm.editRecord("text\\gameInfo.csv", 2, 2, 3, "No", "1");
+
+	gm.editRecord("text\\gameInfo.csv", 0, 2, 3, "1save.txt", "blah");
+
+
+	gm.searchForRecord("text\\gameInfo.csv", "0", 3, -1);
 
 }

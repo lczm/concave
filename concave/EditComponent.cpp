@@ -227,10 +227,7 @@ void EditComponent::animateObjects()
 	gm.editRecord("text\\gameInfo.csv", 0, 2, 3, "1save.txt", "blah");
 	gm.editRecord("text\\gameInfo.csv", 1, 1, 3, "0", "1");
 	gm.editRecord("text\\gameInfo.csv", 2, 2, 3, "No", "1");
-
-	gm.editRecord("text\\gameInfo.csv", 0, 2, 3, "1save.txt", "blah");
-
-
-	gm.searchForRecord("text\\gameInfo.csv", "0", 3, -1);
+	gm.editRecord("text\\gameInfo.csv", 0, 1, 3, "", "test");
+	gm.editRecord("text\\gameInfo.csv", 0, 2, 3, "", "wo");
 
 }

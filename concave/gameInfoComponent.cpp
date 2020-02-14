@@ -85,8 +85,12 @@ std::vector<std::vector<std::string>> GameInfoComponent::searchMany(std::vector<
 	{
 
 		if (searchCol != -1)
-		{
-			if (records[i][searchCol] == search_term)
+		{	
+			if (search_term == "")
+			{
+				searchedRecords.push_back(records[i]);
+			}
+			else if (records[i][searchCol] == search_term)
 			{
 				searchedRecords.push_back(records[i]);
 			}
@@ -95,7 +99,6 @@ std::vector<std::vector<std::string>> GameInfoComponent::searchMany(std::vector<
 		{
 			for (int j = 0; j < records[i].size(); j++)
 			{
-
 				if (records[i][j] == search_term)
 				{
 					searchedRecords.push_back(records[i]);
@@ -117,7 +120,7 @@ std::vector<std::vector<std::string>> GameInfoComponent::searchMany(std::vector<
 	editedCol = col in the rows that you got from  searchTermCol in which you want to change the value
 	newData =  data u want to put into the edited column
 */
-void GameInfoComponent::editRecord(std::string file_name, int searchTermCol,int editedCol, int numOfCols, std::string search_term, std::string newdata)
+void GameInfoComponent::editRecord(std::string file_name, int searchTermCol, int editedCol, int numOfCols, std::string search_term, std::string newdata)
 {
 	//search for the record
 	vector<std::vector<std::string>>  data = searchForRecord(file_name, search_term, numOfCols, searchTermCol);
@@ -163,8 +166,9 @@ vector<std::vector<std::string>> GameInfoComponent::filterOutRecord(std::string 
 	std::vector<std::vector<std::string>> data = read(file_name, cols);
 
 	for (int i = 0; i < data.size(); i++)
-	{
-		if (data[i][searchTermCol] != search_term)
+	{	
+		//write more elegant code yes
+		if (data[i][searchTermCol] != search_term && search_term != "")
 		{
 			records.push_back(data[i]);
 		}

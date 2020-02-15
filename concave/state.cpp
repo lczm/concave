@@ -62,3 +62,10 @@
 //     return false;
 // }
 
+CoordF State::getMoveAmount(float frameTime, float rotation)
+{
+    return CoordF{
+        float(SPEED * cos(rotation) * frameTime),
+        float(SPEED * sin(rotation) * frameTime)
+    };
+}

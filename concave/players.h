@@ -23,8 +23,7 @@ private:
 	vector<int> healthArray;
 	vector<int> manaArray;
 	vector<float> rotationArray;
-	vector<float> dxArray;
-	vector<float> dyArray;
+	vector<CoordF> dydxArray;
 public:
 	Players(); ~Players();
 	void initialize(int capacity);
@@ -47,6 +46,5 @@ public:
 	vector<int>& getHealthArray() { return healthArray; }
 	vector<int>& getManaArray() { return manaArray; }
 	vector<float>& getRotationArray() { return rotationArray; }
-	vector<float>& getDxArray() { return dxArray; }
-	vector<float>& getDyArray() { return dyArray; }
+	vector<CoordF>& getDyDxArray() { return dydxArray; }
 };

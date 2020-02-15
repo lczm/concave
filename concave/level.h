@@ -70,7 +70,7 @@ public:
 	CoordF screenToGrid(CoordF screenCoord);
 
 	Players& getPlayers() { return players; }
-	vector<State*>* getStates() { return &states; }
+	vector<State*> getStates() { return states; }
     float calculateRotation(CoordF src, CoordF dest);
     int rotationToDirection(float rotation);
 	int modulo(int val, int m);

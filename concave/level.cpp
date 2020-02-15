@@ -85,10 +85,10 @@ void Level::initialize()
 	// Player
 	players.initialize(1);
 	CoordF pPos = CoordF{ 3, 3 };
-    players.push(pPos,
+	players.push(pPos,
 		translateHLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, pPos),
 		translateVLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, pPos),
-		getStates()->at(PLAYER::IDLE),
+		getStates().at(PLAYER::IDLE),
 		&unitMageImage,
 		PLAYER::IDLE,
 		100,
@@ -130,16 +130,15 @@ void Level::update()
 
 	// Collision
 	vector<CoordF>& pPositions = players.getPositionArray();
+	vector<CoordF>& pDydx = players.getDyDxArray();
 	// vector<CoordF> pDestPositions = players.getDestPositionArray();
 	// Collision* pHCollisions = players.getHCollisions();
 	// Collision* pVCollisions = players.getVCollisions();
-	vector<State*> pFsms = players.getFsmArray();
+	vector<State*>& pFsms = players.getFsmArray();
 	// vector<RenderInfo>* pRenderInfos = &players.getImageInfoArray();
 	for (int i = 0; i < players.getSize(); i++) {
-		// pStates[i]->update(this, i);
 		pFsms[i]->update(this, i);
-		pPositions[i].x += players.getDxArray()[i];
-		pPositions[i].y += players.getDyArray()[i];
+		pPositions[i] += pDydx[i];
 	}
 
     // CoordF pPosition = pPositions[i];

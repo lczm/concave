@@ -8,10 +8,7 @@ class State
 {
 public:
     virtual void update(Level* level, int index) = 0;
-    // Movement calculateMovement(float frameTime, CoordF position, CoordF destPosition);
-    // void updateFrameNo(float frameTime, int index, Players players, RenderInfo* renderInfo);
-    // bool peekChangeState(float frameTime, int index, Players players, 
-    //     RenderInfo* renderInfo, State* newState, PLAYER state);
+    CoordF getMoveAmount(float frameTime, float rotation);
 };
 
 #include "level.h"

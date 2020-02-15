@@ -23,8 +23,7 @@ void Players::initialize(int capacity)
 	Players::healthArray.resize(capacity);
 	Players::manaArray.resize(capacity);
 	Players::rotationArray.resize(capacity);
-	Players::dxArray.resize(capacity);
-	Players::dyArray.resize(capacity);
+	Players::dydxArray.resize(capacity);
 }
 
 void Players::push(CoordF position, Lines hLines, Lines vLines,
@@ -44,8 +43,7 @@ void Players::push(CoordF position, Lines hLines, Lines vLines,
 	healthArray[size] = health;
 	manaArray[size] = mana;
 	rotationArray[size] = 0;
-	dxArray[size] = 0;
-	dyArray[size] = 0;
+	dydxArray[size] = CoordF{ 0, 0 };
 	size++;
 }
 
@@ -65,6 +63,5 @@ void Players::pop(int index)
 	healthArray[index] = healthArray[size];
 	manaArray[index] = manaArray[size];
 	rotationArray[index] = rotationArray[size];
-	dxArray[index] = dxArray[size];
-	dyArray[index] = dyArray[size];
+	dydxArray[index] = dydxArray[size];
 }

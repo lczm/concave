@@ -1,5 +1,6 @@
 #pragma once
 #include "state.h"
+#include "iostream"
 
 class PlayerAttackState : public State
 {

@@ -224,14 +224,25 @@ void Level::render()
         // SpriteData sd = players.getAnimImageArray()[i]->getSpriteData(
         //     players.getStateArray()[i], players.getDirectionArray()[i],
         //     players.getFrameNoArray()[i]);
-        SpriteData sd = players.getAnimImageArray()[i]->getSpriteData(
-            players.getStateArray()[i], rotationToDirection(players.getRotationArray()[i]),
-            players.getFrameNoArray()[i]);
-        graphics->drawSprite(
-            sd,
-            gridToScreen(players.getPositionArray()[i]), camScale);
 
+        // SpriteData sd = players.getAnimImageArray()[i]->getSpriteData(
+        //     players.getStateArray()[i], rotationToDirection(players.getRotationArray()[i]),
+        //     players.getFrameNoArray()[i]);
+
+		// SpriteData sd = players.getAnimImageArray()[i]->getSpriteData(
+		// 	players.getStateArray()[i],
+		// 	int(rotationToDirection(players.getRotationArray()[i])),
+		// 	players.getFrameNoArray()[i]);
+		int x = rotationToDirection(players.getRotationArray()[i]);
+		SpriteData sd = players.getAnimImageArray()[i]->getSpriteData(
+			players.getStateArray()[i],
+			rotationToDirection(players.getRotationArray()[i]),
+			players.getFrameNoArray()[i]);
+
+        graphics->drawSprite(sd,
+            gridToScreen(players.getPositionArray()[i]), camScale);
 	}
+
 	graphics->drawSprite(
 		projectiles.getSpriteArray()[0]->getSpriteData(),
 		gridToScreen(projectiles.getPositionArray()[0]), camScale);
@@ -273,16 +284,66 @@ CoordF Level::screenToGrid(CoordF screenCoord)
 
 float Level::calculateRotation(CoordF src, CoordF dest)
 {
-    float dy = dest.y - src.y;
-    float dx = dest.x - src.x;
-    return atan2(dy, dx);
+    // float dy = dest.y - src.y;
+    // float dx = dest.x - src.x;
+    // return atan2(dy, dx);
+	float currentX = src.x;
+	float currentY = src.y;
+
+	float destX = dest.x;
+	float destY = dest.y;
+
+	float radAngle = atan2(abs(currentX - destX), abs(currentY - destY));
+    float degAngle = radAngle * (180 / PI);
+    if (destX > currentX && destY < currentY) {
+    }
+    else if (destX > currentX && destY > currentY) {
+        degAngle = 180 - degAngle;
+    }
+    else if (destX < currentX && destY > currentY) {
+        degAngle = 180 + degAngle;
+    }
+    else if (destX < currentX && destY < currentY) {
+        degAngle = 360 - degAngle;
+    }
+    // Dimetric angle offset
+    degAngle += 25.565;
+	return degAngle;
 }
 
 float Level::rotationToDirection(float rotation)
 {
-    rotation *= -1;
-    rotation -= PI / 4;
-    rotation = fmod(rotation, PI * 2);
-    rotation /= PI / 8;
-    return round(rotation);
+    // rotation *= -1;
+    // rotation -= PI / 4;
+    // rotation = fmod(rotation, PI * 2);
+    // rotation /= PI / 8;
+    // return round(rotation);
+	if (rotation <= 22.5) {
+		return DIRECTION8::NORTH;
+    }
+    else if (rotation <= 67.5) {
+		return DIRECTION8::NORTH_EAST;
+    }
+    else if (rotation <= 112.5) {
+		return DIRECTION8::EAST;
+    }
+    else if (rotation <= 157.5) {
+		return DIRECTION8::SOUTH_EAST;
+    }
+    else if (rotation <= 202.5) {
+		return DIRECTION8::SOUTH;
+    }
+    else if (rotation <= 247.5) {
+		return DIRECTION8::SOUTH_WEST;
+    }
+    else if (rotation <= 292.5) {
+		return DIRECTION8::WEST;
+    }
+    else if (rotation <= 337.5) {
+		return DIRECTION8::NORTH_WEST;
+    }
+    else {
+		return DIRECTION8::NORTH;
+    }
+
 }

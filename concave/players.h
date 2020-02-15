@@ -45,6 +45,4 @@ public:
 	vector<int>& getHealthArray() { return healthArray; }
 	vector<int>& getManaArray() { return manaArray; }
 	vector<float>& getRotationArray() { return rotationArray; }
-// public:
-// 	void updateStateInfo(int index, PLAYER state);
 };

@@ -14,6 +14,7 @@ void PlayerAttackState::update(Level* level, int index)
 
     timer += frameTime;
     if (timer >= delay) {
+        timer -= delay;
         frameNo++;
         if (frameNo >= animImage->getEndFrame(state)) {
             timer = 0;
@@ -38,9 +39,9 @@ void PlayerDieState::update(Level* level, int index)
 
     timer += frameTime;
     if (timer >= delay) {
+        timer -= delay;
         frameNo++;
         if (frameNo >= animImage->getEndFrame(state)) {
-            timer = 0;
             frameNo = 0;
             fsm = level->getStates()->at(PLAYER::IDLE);
         }
@@ -65,10 +66,10 @@ void PlayerIdleState::update(Level* level, int index)
 
     if (input->getMouseLButton()) {
         // players.setMovement(index, calculateMovement(frameTime, position, destPosition));
-
         destPosition = level->screenToGrid(CoordF{ float(input->getMouseX()), float(input->getMouseY()) });
         rotation = level->calculateRotation(position, destPosition);
         fsm = level->getStates()->at(PLAYER::WALK);
+        frameNo = 0;
         state = PLAYER::WALK;
         return;
     }
@@ -77,9 +78,9 @@ void PlayerIdleState::update(Level* level, int index)
         // float rotation = calculateMovement(frameTime, position,
         //     level->screenToGrid(CoordF{ float(input->getMouseX()), float(input->getMouseY()) })).rotation;
         // players.setMovement(index, Movement{ 0, 0, rotation });
-
         rotation = level->calculateRotation(position, CoordF{float(input->getMouseX()), float(input->getMouseY())});
         fsm = level->getStates()->at(PLAYER::FIRE);
+        frameNo = 0;
         state = PLAYER::FIRE;
         return;
     }
@@ -91,15 +92,17 @@ void PlayerIdleState::update(Level* level, int index)
         // players.setMovement(index, Movement{ 0, 0, rotation });
         rotation = level->calculateRotation(position, CoordF{float(input->getMouseX()), float(input->getMouseY())});
         fsm = level->getStates()->at(PLAYER::FIRE);
+        // timer = 0;
+        frameNo = 0;
         state = PLAYER::FIRE;
         return;
     }
     // updateFrameNo(frameTime, index, players, &renderInfo);
     timer += frameTime;
     if (timer >= delay) {
+        timer -= delay;
         frameNo++;
         if (frameNo>= animImage->getEndFrame(state)) {
-            timer = 0;
             frameNo = 0;
         }
     }
@@ -134,6 +137,7 @@ void PlayerWalkState::update(Level* level, int index)
         // players.setMovement(index, Movement{ 0, 0, rotation });
         rotation = level->calculateRotation(position, CoordF{float(input->getMouseX()), float(input->getMouseY())});
         fsm = level->getStates()->at(PLAYER::FIRE);
+        frameNo = 0;
         state = PLAYER::FIRE;
         return;
     }
@@ -144,6 +148,7 @@ void PlayerWalkState::update(Level* level, int index)
         // players.setMovement(index, Movement{ 0, 0, rotation });
         rotation = level->calculateRotation(position, CoordF{float(input->getMouseX()), float(input->getMouseY())});
         fsm = level->getStates()->at(PLAYER::FIRE);
+        frameNo = 0;
         state = PLAYER::FIRE;
         return;
     }
@@ -154,6 +159,7 @@ void PlayerWalkState::update(Level* level, int index)
         // players.updateStateInfo(index, PLAYER::IDLE);
         rotation = level->calculateRotation(position, CoordF{float(input->getMouseX()), float(input->getMouseY())});
         fsm = level->getStates()->at(PLAYER::FIRE);
+        frameNo = 0;
         state = PLAYER::IDLE;
         return;
     }
@@ -164,9 +170,9 @@ void PlayerWalkState::update(Level* level, int index)
     // updateFrameNo(frameTime, index, players, &renderInfo);
     timer += frameTime;
     if (timer >= delay) {
+        timer -= delay;
         frameNo++;
         if (frameNo>= animImage->getEndFrame(state)) {
-            timer = 0;
             frameNo = 0;
         }
     }
@@ -198,7 +204,6 @@ void PlayerGetHitState::update(Level* level, int index)
     if (timer >= delay) {
         frameNo++;
         if (frameNo >= animImage->getEndFrame(state)) {
-            timer = 0;
             frameNo = 0;
             fsm = level->getStates()->at(PLAYER::IDLE);
         }
@@ -220,9 +225,9 @@ void PlayerFireState::update(Level* level, int index)
 
     timer += frameTime;
     if (timer >= delay) {
+        timer -= delay;
         frameNo++;
         if (frameNo >= animImage->getEndFrame(state)) {
-            timer = 0;
             frameNo = 0;
             fsm = level->getStates()->at(PLAYER::IDLE);
         }

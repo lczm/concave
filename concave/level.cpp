@@ -221,8 +221,11 @@ void Level::render()
 	for (int i = 0; i < players.getSize(); i++) {
 		// Temporary solution to make it not blurry
 		// CoordF screenCoords = gridToScreen(players.getPositionArray()[i]);
+        // SpriteData sd = players.getAnimImageArray()[i]->getSpriteData(
+        //     players.getStateArray()[i], players.getDirectionArray()[i],
+        //     players.getFrameNoArray()[i]);
         SpriteData sd = players.getAnimImageArray()[i]->getSpriteData(
-            players.getStateArray()[i], players.getDirectionArray()[i],
+            players.getStateArray()[i], rotationToDirection(players.getRotationArray()[i]),
             players.getFrameNoArray()[i]);
         graphics->drawSprite(
             sd,
@@ -266,4 +269,20 @@ CoordF Level::gridToScreen(CoordF gridCoord)
 CoordF Level::screenToGrid(CoordF screenCoord)
 {
 	return screenToGrid(screenCoord.x, screenCoord.y);
+}
+
+float Level::calculateRotation(CoordF src, CoordF dest)
+{
+    float dy = dest.y - src.y;
+    float dx = dest.x - src.x;
+    return atan2(dy, dx);
+}
+
+float Level::rotationToDirection(float rotation)
+{
+    rotation *= -1;
+    rotation -= PI / 4;
+    rotation = fmod(rotation, PI * 2);
+    rotation /= PI / 8;
+    return round(rotation);
 }

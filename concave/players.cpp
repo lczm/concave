@@ -22,6 +22,7 @@ void Players::initialize(int capacity)
 	Players::delayArray.resize(capacity);
 	Players::healthArray.resize(capacity);
 	Players::manaArray.resize(capacity);
+	Players::rotationArray.resize(capacity);
 }
 
 // void Players::push(CoordF position, AnimImage* image, , 
@@ -37,6 +38,7 @@ void Players::initialize(int capacity)
 // 	// stateArray[size] = state;
 // 	size++;
 // }
+
 void Players::push(CoordF position, Lines hLines, Lines vLines,
 	State* fsm, AnimImage* animImage, int state, int health, int mana)
 {
@@ -53,6 +55,7 @@ void Players::push(CoordF position, Lines hLines, Lines vLines,
 	delayArray[size] = 0;
 	healthArray[size] = health;
 	manaArray[size] = mana;
+	rotationArray[size] = 0;
 	size++;
 }
 
@@ -71,6 +74,7 @@ void Players::pop(int index)
 	delayArray[index] = delayArray[size];
 	healthArray[index] = healthArray[size];
 	manaArray[index] = manaArray[size];
+	rotationArray[index] = rotationArray[size];
 }
 
 // void Players::setPosition(int index, CoordF position)

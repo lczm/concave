@@ -71,4 +71,6 @@ public:
 
 	Players& getPlayers() { return players; }
 	vector<State*>* getStates() { return &states; }
+    float calculateRotation(CoordF src, CoordF dest);
+    float rotationToDirection(float rotation);
 };

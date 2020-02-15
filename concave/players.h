@@ -22,6 +22,7 @@ private:
 	vector<float> delayArray;
 	vector<int> healthArray;
 	vector<int> manaArray;
+	vector<float> rotationArray;
 public:
 	Players(); ~Players();
 	void initialize(int capacity);
@@ -43,6 +44,7 @@ public:
 	vector<float>& getDelayArray() { return delayArray; }
 	vector<int>& getHealthArray() { return healthArray; }
 	vector<int>& getManaArray() { return manaArray; }
+	vector<float>& getRotationArray() { return rotationArray; }
 // public:
 // 	void updateStateInfo(int index, PLAYER state);
 };

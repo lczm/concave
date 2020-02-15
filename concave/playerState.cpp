@@ -12,11 +12,6 @@ void PlayerAttackState::update(Level* level, int index)
     float& timer = players.getTimerArray()[index];
     float& delay = players.getDelayArray()[index];
 
-    // if (peekChangeState(frameTime, index, players, &renderInfo, level->getStates()->at(PLAYER::IDLE), PLAYER::IDLE)) {
-    //     return;
-    // }
-    // updateFrameNo(frameTime, index, players, &renderInfo);
-
     timer += frameTime;
     if (timer >= delay) {
         frameNo++;
@@ -40,11 +35,6 @@ void PlayerDieState::update(Level* level, int index)
     int& frameNo = players.getFrameNoArray()[index];
     float& timer = players.getTimerArray()[index];
     float& delay = players.getDelayArray()[index];
-
-    // if (peekChangeState(frameTime, index, players, &renderInfo, level->getStates()->at(PLAYER::IDLE), PLAYER::IDLE)) {
-    //     return;
-    // }
-    // updateFrameNo(frameTime, index, players, &renderInfo);
 
     timer += frameTime;
     if (timer >= delay) {
@@ -71,15 +61,15 @@ void PlayerIdleState::update(Level* level, int index)
     float& delay = players.getDelayArray()[index];
     CoordF& position = players.getPositionArray()[index];
     CoordF& destPosition = players.getDestPositionArray()[index];
+    float& rotation = players.getRotationArray()[index];
 
     if (input->getMouseLButton()) {
-        destPosition = level->screenToGrid(CoordF{ float(input->getMouseX()), float(input->getMouseY()) });
-        // players.setDestPosition(index, level->screenToGrid(CoordF{float(input->getMouseX()), float(input->getMouseY())}));
         // players.setMovement(index, calculateMovement(frameTime, position, destPosition));
-        // players.setState(index, level->getStates()->at(PLAYER::WALK));
+
+        destPosition = level->screenToGrid(CoordF{ float(input->getMouseX()), float(input->getMouseY()) });
+        rotation = level->calculateRotation(position, destPosition);
         fsm = level->getStates()->at(PLAYER::WALK);
         state = PLAYER::WALK;
-        // players.updateStateInfo(index, PLAYER::WALK);
         return;
     }
     else if (input->getMouseRButton()) {
@@ -87,10 +77,10 @@ void PlayerIdleState::update(Level* level, int index)
         // float rotation = calculateMovement(frameTime, position,
         //     level->screenToGrid(CoordF{ float(input->getMouseX()), float(input->getMouseY()) })).rotation;
         // players.setMovement(index, Movement{ 0, 0, rotation });
-        // players.setState(index, level->getStates()->at(PLAYER::FIRE));
+
+        rotation = level->calculateRotation(position, CoordF{float(input->getMouseX()), float(input->getMouseY())});
         fsm = level->getStates()->at(PLAYER::FIRE);
         state = PLAYER::FIRE;
-        // players.updateStateInfo(index, PLAYER::FIRE);
         return;
     }
     // Temporary, middle click is to change between states
@@ -99,10 +89,9 @@ void PlayerIdleState::update(Level* level, int index)
         // float rotation = calculateMovement(frameTime, position,
         //     level->screenToGrid(CoordF{ float(input->getMouseX()), float(input->getMouseY()) })).rotation;
         // players.setMovement(index, Movement{ 0, 0, rotation });
-        // players.setState(index, level->getStates()->at(PLAYER::FIRE));
+        rotation = level->calculateRotation(position, CoordF{float(input->getMouseX()), float(input->getMouseY())});
         fsm = level->getStates()->at(PLAYER::FIRE);
         state = PLAYER::FIRE;
-        // players.updateStateInfo(index, PLAYER::FIRE);
         return;
     }
     // updateFrameNo(frameTime, index, players, &renderInfo);
@@ -111,7 +100,7 @@ void PlayerIdleState::update(Level* level, int index)
         frameNo++;
         if (frameNo>= animImage->getEndFrame(state)) {
             timer = 0;
-            frameNo= 0;
+            frameNo = 0;
         }
     }
     return;
@@ -130,11 +119,12 @@ void PlayerWalkState::update(Level* level, int index)
     float& delay = players.getDelayArray()[index];
     CoordF& position = players.getPositionArray()[index];
     CoordF& destPosition = players.getDestPositionArray()[index];
+    float& rotation = players.getRotationArray()[index];
 
     if (input->getMouseLButton()) {
-        destPosition = level->screenToGrid(CoordF{ float(input->getMouseX()), float(input->getMouseY()) });
-        // players.setDestPosition(index, level->screenToGrid(CoordF{float(input->getMouseX()), float(input->getMouseY())}));
         // players.setMovement(index, calculateMovement(frameTime, position, destPosition));
+        destPosition = level->screenToGrid(CoordF{ float(input->getMouseX()), float(input->getMouseY()) });
+        rotation = level->calculateRotation(position, destPosition);
         return;
     }
     else if (input->getMouseRButton()) {
@@ -142,9 +132,8 @@ void PlayerWalkState::update(Level* level, int index)
         // float rotation = calculateMovement(frameTime, position,
         //     level->screenToGrid(CoordF{ float(input->getMouseX()), float(input->getMouseY()) })).rotation;
         // players.setMovement(index, Movement{ 0, 0, rotation });
-        // players.setState(index, level->getStates()->at(PLAYER::FIRE));
+        rotation = level->calculateRotation(position, CoordF{float(input->getMouseX()), float(input->getMouseY())});
         fsm = level->getStates()->at(PLAYER::FIRE);
-        // players.updateStateInfo(index, PLAYER::FIRE);
         state = PLAYER::FIRE;
         return;
     }
@@ -153,9 +142,8 @@ void PlayerWalkState::update(Level* level, int index)
         // float rotation = calculateMovement(frameTime, position,
         //     level->screenToGrid(CoordF{ float(input->getMouseX()), float(input->getMouseY()) })).rotation;
         // players.setMovement(index, Movement{ 0, 0, rotation });
-        // players.setState(index, level->getStates()->at(PLAYER::FIRE));
+        rotation = level->calculateRotation(position, CoordF{float(input->getMouseX()), float(input->getMouseY())});
         fsm = level->getStates()->at(PLAYER::FIRE);
-        // players.updateStateInfo(index, PLAYER::FIRE);
         state = PLAYER::FIRE;
         return;
     }
@@ -163,8 +151,9 @@ void PlayerWalkState::update(Level* level, int index)
     if (isAtPosition(position, destPosition)) {
         // players.setMovement(index, Movement{ 0, 0, movement.rotation });
         // players.setState(index, level->getStates()->at(PLAYER::IDLE));
-        fsm = level->getStates()->at(PLAYER::FIRE);
         // players.updateStateInfo(index, PLAYER::IDLE);
+        rotation = level->calculateRotation(position, CoordF{float(input->getMouseX()), float(input->getMouseY())});
+        fsm = level->getStates()->at(PLAYER::FIRE);
         state = PLAYER::IDLE;
         return;
     }
@@ -205,11 +194,6 @@ void PlayerGetHitState::update(Level* level, int index)
     float& timer = players.getTimerArray()[index];
     float& delay = players.getDelayArray()[index];
 
-    // if (peekChangeState(frameTime, index, players, &renderInfo, level->getStates()->at(PLAYER::IDLE), PLAYER::IDLE)) {
-    //     return;
-    // }
-    // updateFrameNo(frameTime, index, players, &renderInfo);
-
     timer += frameTime;
     if (timer >= delay) {
         frameNo++;
@@ -233,11 +217,6 @@ void PlayerFireState::update(Level* level, int index)
     int& frameNo = players.getFrameNoArray()[index];
     float& timer = players.getTimerArray()[index];
     float& delay = players.getDelayArray()[index];
-
-    // if (peekChangeState(frameTime, index, players, &renderInfo, level->getStates()->at(PLAYER::IDLE), PLAYER::IDLE)) {
-    //     return;
-    // }
-    // updateFrameNo(frameTime, index, players, &renderInfo);
 
     timer += frameTime;
     if (timer >= delay) {

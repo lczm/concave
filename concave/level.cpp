@@ -221,20 +221,14 @@ void Level::render()
 	for (int i = 0; i < players.getSize(); i++) {
 		// Temporary solution to make it not blurry
 		// CoordF screenCoords = gridToScreen(players.getPositionArray()[i]);
+        SpriteData sd = players.getAnimImageArray()[i]->getSpriteData(
+            players.getStateArray()[i], players.getDirectionArray()[i],
+            players.getFrameNoArray()[i]);
+        graphics->drawSprite(
+            sd,
+            gridToScreen(players.getPositionArray()[i]), camScale);
 
-        // graphics->drawSprite(
-        //     players.getRender(i)->getSpriteData(players.getRenderInfo(i)),
-        //     int(screenCoords.x), int(screenCoords.y), camScale);
-
-		// graphics->drawSprite(
-		// 	players.getImageArray()[i]->getSpriteData(players.getImageInfoArray()[i]),
-		// 	int(screenCoords.x), int(screenCoords.y), camScale);
 	}
-
-	// graphics->drawSprite(
-	// 	players.getSpriteArray()[0]->getSpriteData(),
-	// 	gridToScreen(players.getPositionArray()[0]), camScale);
-
 	graphics->drawSprite(
 		projectiles.getSpriteArray()[0]->getSpriteData(),
 		gridToScreen(projectiles.getPositionArray()[0]), camScale);

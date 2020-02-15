@@ -58,6 +58,8 @@ const char IMAGE_TILES_CAVE[] = "sprites/tiles_cave_dungeon.png";
 
 //const char IMAGE_ITEMS_DUNGEON[] = "sprites/items.png";
 const char IMAGE_ITEMS_DUNGEON[] = "sprites/items2.png";
+const char IMAGE_BARRELITEMS_DUNGEON[] = "sprites/items.png";
+
 
 //-----------------------------------------------
 //                Image (Units)
@@ -103,9 +105,24 @@ const int itemsToSpawn = 1;
 
 enum RoomType
 {
-	chestRoom,
-	trapRoom,
-	someRoom
+	chest,
+	trap,
+	barrel,
+	armoury
+};
+
+
+enum roomTypesCsv
+{
+	roomtypes = 0,
+	accessible = 1,
+	no = 2,
+	left = 3,
+	right = 4,
+	top = 5,
+	bottom = 6,
+	assign = 7,
+	flooring = 8
 };
 
 enum ImageType {
@@ -156,3 +173,4 @@ const std::map<ImageTypeCave, CoordI> IMAGE_MAP_CAVE
 };
 
 
+const const char ROOM_INFO[] = "text\\roomTypes.csv";

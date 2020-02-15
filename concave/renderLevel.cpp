@@ -34,6 +34,22 @@ void RenderLevel::initialize(Graphics* graphics, Input* input, int type)
 	itemTexture.initialize(graphics, IMAGE_ITEMS_DUNGEON);
 	itemGridMask.initialize(0, 0, 130, 130, 1, 1, 59, 59);
 	itemImage.initialize(&itemTexture, itemGridMask);
+
+
+	//barrel png
+	manyItemsTexture.initialize(graphics, IMAGE_BARRELITEMS_DUNGEON);
+	manyItemsGridMask.initialize(0,0, 94, 119, 1,1, 45, 44);
+	manyItemsImage.initialize(&manyItemsTexture, manyItemsGridMask);
+
+
+	//cabinet
+	cabinetGridMask.initialize(0, 0, 111, 110, 1, 1, 50, 55 );
+	cabinetImage.initialize(&manyItemsTexture, cabinetGridMask);
+
+	//fire
+	flameGridMask.initialize(0, 0, 69, 107, 1, 1, 50, 20);
+	flameImage.initialize(&manyItemsTexture, flameGridMask);
+
 }
 
 void RenderLevel::renderMap(int map[mapWidth][mapHeight], int x, int y, SpriteData& sd, int type)
@@ -74,10 +90,32 @@ void RenderLevel::renderMap(int map[mapWidth][mapHeight], int x, int y, SpriteDa
 			itemImage.getSpriteData(sd, CoordI{0,0});
 			break;
 		case 9:
-			itemImage.getSpriteData(sd, CoordI{ 21,0 });
+			itemImage.getSpriteData(sd, CoordI{21,0});
 			break;
 		case 10:
 			tileImage.getSpriteData(sd, CoordI{14,8});
+			break;
+		case 11:
+			//barrel *add to constants
+			manyItemsImage.getSpriteData(sd, CoordI{ 0,0 });
+			break;
+		case 12:
+			cabinetImage.getSpriteData(sd, CoordI{ 0,6 });
+			break;
+		case 13:
+			flameImage.getSpriteData(sd, CoordI{ 0,3 });
+			break;
+
+		//flooring
+		case 14:
+			//white on top flooring
+			tileImage.getSpriteData(sd, CoordI{ 14,6 });
+			break;
+		case 15:
+			tileImage.getSpriteData(sd, CoordI{ 0,3 });
+			break;
+		case 16:
+			tileImage.getSpriteData(sd, CoordI{ 0,3 });
 			break;
 		}
 	}

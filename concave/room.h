@@ -15,15 +15,16 @@ class Room
 	};
 
 	struct RoomItems {
-		int left = 3;
-		int right = 3;
-		int top = 3;
-		int bottom = 3;
+		int left;
+		int right;
+		int top;
+		int bottom;
 		CoordI center;
-		int flooring = 1;
+		int flooring;
 	};
 
 private:
+
 
 	//temporary variables 
 	int maxRooms= 5;
@@ -87,14 +88,11 @@ public:
 	//set room items of a room
 	void setRoomItems(int left, int right, int top, int bottom, int flooring) 
 	{
-		RoomItems newRoomItems;
-		newRoomItems.left = left;
-		newRoomItems.right = right;
-		newRoomItems.top = top;
-		newRoomItems.bottom = bottom;
-		newRoomItems.flooring = flooring;
-
-		roomItems = newRoomItems;
+		roomItems.left = left;
+		roomItems.right = right;
+		roomItems.top = top;
+		roomItems.bottom = bottom;
+		roomItems.flooring = flooring;
 	}
 
 	void setDimensions(RoomDimensions changedDimensions) { roomDimensions = changedDimensions;}

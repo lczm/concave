@@ -24,6 +24,12 @@ private:
 	GridMask manyItemsGridMask;
 	Image manyItemsImage;
 
+	GridMask cabinetGridMask;
+	Image cabinetImage;
+
+	GridMask flameGridMask;
+	Image flameImage;
+
 public:
 	RenderLevel();
 	~RenderLevel();

@@ -53,8 +53,8 @@ void EditComponent::placeRoom(int map[mapWidth][mapHeight])
 
 	int maxRooms = 7;
 	int minRooms = 6;
-	int maxRoomSize = 7;
-	int minRoomSize = 6;
+	int maxRoomSize = 9;
+	int minRoomSize = 8;
 
 	int count = 0;
 
@@ -70,7 +70,7 @@ void EditComponent::placeRoom(int map[mapWidth][mapHeight])
 		int w = minRoomSize + rand() % (maxRoomSize - minRoomSize + 1);
 		int h = minRoomSize + rand() % (maxRoomSize - minRoomSize + 1);
 
-		int x = rand() % (mapWidth/2 - w - 1) + 1;
+		int x = rand() % (int(mapWidth/1.6) - w - 1) + 1;
 		int y = rand() % (mapHeight - h - 1) + 1;
 
 		Room newRoom(x, y, w, h);
@@ -93,9 +93,10 @@ void EditComponent::placeRoom(int map[mapWidth][mapHeight])
 		{
 			//createRoom to carve the room
 			rooms.emplace_back(newRoom);
-
 			//setting four corners of the room (test)
 			placeWall(map, newRoom);
+
+			determineRoomTypes(newRoom);
 
 			/*
 			//building the corridors 
@@ -243,7 +244,6 @@ void EditComponent::placeBossRoom(int map[mapWidth][mapHeight])
 {	
 	//hardcoded values
 	int bossPos = int(mapWidth * 0.7);
-
 	int length = (mapWidth-2) - bossPos;
 
 	Room room(bossPos , 1, length, mapHeight-2);
@@ -277,5 +277,30 @@ void EditComponent::animateObjects()
 	gm.editRecord("text\\gameInfo.csv", 2, 2, 3, "No", "1");
 	gm.editRecord("text\\gameInfo.csv", 0, 1, 3, "", "test");
 	gm.editRecord("text\\gameInfo.csv", 0, 2, 3, "", "wo");
+}
 
+
+/* next iteration set percentages on the room types*/
+void EditComponent::determineRoomTypes(Room &room)
+{
+	int total = 0;
+	std::vector<std::vector<std::string>> roomTypeRecords = gm.read(ROOM_INFO, 9);
+
+
+	int rangeMin = std::stoi(roomTypeRecords[1][roomTypesCsv::no]);
+	int rangeMax = std::stoi(roomTypeRecords[roomTypeRecords.size()-1][roomTypesCsv::no]);
+
+	int ranRoom = random(rangeMin, rangeMax);
+	std::vector<std::vector<std::string>> records  = gm.searchForRecord(ROOM_INFO, to_string(ranRoom), 9, roomTypesCsv::no);
+
+
+	//only one value will be returned
+	int left = std::stoi(records[0][roomTypesCsv::left]);
+	int right= std::stoi(records[0][roomTypesCsv::right]);
+	int top= std::stoi(records[0][roomTypesCsv::top]);
+	int bottom = std::stoi(records[0][roomTypesCsv::bottom]);
+	int flooring = std::stoi(records[0][roomTypesCsv::flooring]);
+
+	//set the room value
+	room.setRoomItems(left, right, top, bottom, flooring);
 }

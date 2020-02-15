@@ -1,0 +1,5 @@
+roomtypes,accessible,no,left,right,top,bottom,assign,flooring
+armoury,yes,1,3,3,10,3,1,14
+loot ,yes,2,3,3,11,3,1,1
+trap,yes,3,3,3,12,3,2,1
+barrel,yes,4,3,3,13,3,1,1

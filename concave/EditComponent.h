@@ -18,7 +18,7 @@ public:
 	//room code
 	void placeRoom(int map[mapWidth][mapHeight]);
 	void placeItemRoom(Room room, int map[mapWidth][mapHeight]);
-	void determineRoomTypes();
+	void determineRoomTypes(Room &room);
 	void placeWall(int map[mapWidth][mapHeight], Room newRoom);
 	void placeBossRoom(int map[mapWidth][mapHeight]);
 

@@ -13,34 +13,36 @@ private:
 	vector<Lines> hLinesArray;
 	vector<Lines> vLinesArray;
 
-	vector<State*> stateArray;
-	vector<AnimImage*> imageArray;
-	vector<RenderInfo> imageInfoArray;
-
-	vector<Movement> movementArray;
+	vector<State*> fsmArray;
+	vector<AnimImage*> animImageArray;
+    vector<int> stateArray;
+	vector<int> directionArray;
+	vector<int> frameNoArray;
+	vector<float> timerArray;
+	vector<float> delayArray;
 	vector<int> healthArray;
 	vector<int> manaArray;
 public:
 	Players(); ~Players();
 	void initialize(int capacity);
-	void push(CoordF position, AnimImage* image, RenderInfo imageInfo, 
-		State* state, Lines hLines, Lines vLines);
+	void push(CoordF position, Lines hLines, Lines vLines,
+		State* fsm, AnimImage* animImage, int state, int health, int mana);
  	void pop(int index);
-public:
-	void setPosition(int index, CoordF position);
-	void setDestPosition(int index, CoordF destPosition);
-	void setMovement(int index, Movement movement);
-	void setState(int index, State* state);
 public:
 	int getSize() { return size; }
  	vector<CoordF>& getPositionArray() { return positionArray; }
 	vector<CoordF>& getDestPositionArray() { return destPositionArray; }
  	vector<Lines>& getHLinesArray() { return hLinesArray; }
  	vector<Lines>& getVLinesArray() { return vLinesArray; }
-	vector<State*>& getStateArray() { return stateArray; }
- 	vector<AnimImage*>& getImageArray() { return imageArray; }
-	vector<RenderInfo>& getImageInfoArray() { return imageInfoArray; }
-	vector<Movement>& getMovementArray() { return movementArray; }
-public:
-	void updateStateInfo(int index, PLAYER state);
+	vector<State*>& getFsmArray () { return fsmArray; }
+	vector<AnimImage*>& getAnimImageArray() { return animImageArray; }
+	vector<int>& getStateArray() { return stateArray; }
+	vector<int>& getDirectionArray() { return directionArray; }
+	vector<int>& getFrameNoArray() { return frameNoArray; }
+	vector<float>& getTimerArray() { return timerArray; }
+	vector<float>& getDelayArray() { return delayArray; }
+	vector<int>& getHealthArray() { return healthArray; }
+	vector<int>& getManaArray() { return manaArray; }
+// public:
+// 	void updateStateInfo(int index, PLAYER state);
 };

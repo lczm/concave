@@ -85,11 +85,14 @@ void Level::initialize()
 	// Player
 	players.initialize(1);
 	CoordF pPos = CoordF{ 3, 3 };
-	players.push(
-		pPos, &unitMageImage, RenderInfo{ PLAYER::IDLE, 0, 0, 0, 0.03 },
-		states.at(PLAYER::IDLE),
-		translateHLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, pPos), 
-		translateVLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, pPos));
+    players.push(pPos,
+		translateHLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, pPos),
+		translateVLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, pPos),
+		getStates()->at(PLAYER::IDLE),
+		&unitMageImage,
+		PLAYER::IDLE,
+		100,
+		100);
 
 	// Projectiles
 	projectiles.initialize(1);
@@ -131,10 +134,12 @@ void Level::update()
 	// Collision* pHCollisions = players.getHCollisions();
 	// Collision* pVCollisions = players.getVCollisions();
 
-	vector<State*> pStates = players.getStateArray();
-	vector<RenderInfo>* pRenderInfos = &players.getImageInfoArray();
+	// vector<State*> pStates = players.getStateArray();
+	vector<State*> pFsms = players.getFsmArray();
+	// vector<RenderInfo>* pRenderInfos = &players.getImageInfoArray();
 	for (int i = 0; i < players.getSize(); i++) {
-		pStates[i]->update(this, i);
+		// pStates[i]->update(this, i);
+		pFsms[i]->update(this, i);
 	}
 
     // CoordF pPosition = pPositions[i];
@@ -215,14 +220,15 @@ void Level::render()
 				gridToScreen(x, y), camScale);
 	for (int i = 0; i < players.getSize(); i++) {
 		// Temporary solution to make it not blurry
-		// CoordF screenCoords = gridToScreen(players.getPosition(i));
-		CoordF screenCoords = gridToScreen(players.getPositionArray()[i]);
+		// CoordF screenCoords = gridToScreen(players.getPositionArray()[i]);
+
         // graphics->drawSprite(
         //     players.getRender(i)->getSpriteData(players.getRenderInfo(i)),
         //     int(screenCoords.x), int(screenCoords.y), camScale);
-		graphics->drawSprite(
-			players.getImageArray()[i]->getSpriteData(players.getImageInfoArray()[i]),
-			int(screenCoords.x), int(screenCoords.y), camScale);
+
+		// graphics->drawSprite(
+		// 	players.getImageArray()[i]->getSpriteData(players.getImageInfoArray()[i]),
+		// 	int(screenCoords.x), int(screenCoords.y), camScale);
 	}
 
 	// graphics->drawSprite(

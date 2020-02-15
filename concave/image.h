@@ -42,7 +42,8 @@ public:
 	Image();
 	~Image();
 	void initialize(Texture* texture, GridMask gridMask);
-	void getSpriteData(SpriteData& SpriteData, CoordI coord);
+	SpriteData getSpriteData(CoordI coord);
+	//void getSpriteData(SpriteData& SpriteData, CoordI coord);
 };
 
 class AnimImage
@@ -55,7 +56,9 @@ public:
 	AnimImage();
 	~AnimImage();
 	void initialize(Texture* texture, vector<GridMask> gridMask, vector<int> endFrames);
-	void getSpriteData(SpriteData& SpriteData, int state, int direction, int frameNo);
+	SpriteData getSpriteData(int state, int direction, int frameNo);
+	SpriteData getSpriteData(RenderInfo renderInfo);
+	//void getSpriteData(SpriteData& SpriteData, int state, int direction, int frameNo);
 	int getEndFrame(int state);
 };
 
@@ -63,18 +66,22 @@ public:
 // NOTE: These classes shouldn't be used.
 // NOTE: Please tell me if you want to use these classes.
 //-------------------------------------------------------
-//class Sprite
-//{
-//private:
-//	Image* image;
-//	CoordI coord;
-//public:
-//	Sprite();
-//	~Sprite();
-//	void initialize(Image* image, CoordI coord);
-//	SpriteData getSpriteData();
-//};
-//
+class Sprite
+{
+private:
+	Image* image;
+	CoordI coord;
+public:
+	Sprite();
+	~Sprite();
+	void initialize(Image* image, CoordI coord);
+	SpriteData getSpriteData();
+};
+
+//-------------------------------------------------------
+// NOTE: These classes shouldn't be used.
+// NOTE: Please tell me if you want to use these classes.
+//-------------------------------------------------------
 //class AnimSprite
 //{
 //private:

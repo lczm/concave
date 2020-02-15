@@ -5,15 +5,35 @@
 //-----------------------------------------------
 //                   Data
 //-----------------------------------------------
-struct CoordI { int x, y; };
-struct CoordF { float x, y; };
+// Coordinates / Positions
+template<typename T>
+struct Coord
+{
+	T x, y;
+	Coord operator+(const Coord& coord) { return Coord{ x + coord.x, y + coord.y }; }
+	Coord operator-(const Coord& coord) { return Coord{ x - coord.x, y - coord.y }; }
+	Coord& operator+=(const Coord& coord) { x += coord.x; y += coord.y; return *this; }
+	Coord& operator-=(const Coord& coord) { x -= coord.x; y -= coord.y; return *this; }
+};
+typedef Coord<int> CoordI;
+typedef Coord<float> CoordF;
 
-enum DIRECTION8 { SOUTH, SOUTH_WEST, WEST, NORTH_WEST, NORTH, NORTH_EAST, EAST, SOUTH_EAST };
+// struct Line { float lower, upper, shift; };
+// enum DIRECTION8 { SOUTH, SOUTH_WEST, WEST, NORTH_WEST, NORTH, NORTH_EAST, EAST, SOUTH_EAST };
 // enum DIRECTION16 { SOUTH, SOUTH_WEST, WEST, NORTH_WEST, NORTH, NORTH_EAST, EAST, SOUTH_EAST };
 //namespace DIRECTION8 {
 //	const int
 //		SOUTH = 0, SOUTH_WEST = 1, WEST = 2, NORTH_WEST = 3,
 //		NORTH = 4, NORTH_EAST = 5, EAST = 6, SOUTH_EAST = 7;}
+
+struct RenderInfo
+{
+	int state;
+	int direction;
+	int frameNo;
+	float timer = 0;
+	float delay = float(1.00);
+};
 
 //-----------------------------------------------
 //                   Tiles
@@ -29,6 +49,11 @@ const int UNIT_STATE_DIE = 1;
 const int UNIT_STATE_IDLE = 2;
 const int UNIT_STATE_WALK = 3;
 const int UNIT_STATE_GET_HIT = 4;
+
+namespace STATE {
+    enum PLAYER { ATTACK, DIE, IDLE, WALK, GET_HIT, FIRE };
+}
+
 // Players
 const int PLAYER_STATE_MAGIC_FIRE = 5;
 const int PLAYER_STATE_MAGIC_LIGHTNING = 6;
@@ -54,6 +79,12 @@ const char IMAGE_TILES_DUNGEON[] = "sprites/tiles_church_dungeon.png";
 //                Image (Units)
 //-----------------------------------------------
 const char IMAGE_UNIT_WARRIOR[] = "sprites/unit_warrior.png";
+const char IMAGE_UNIT_MAGE[] = "sprites/unit_mage.png";
+
+//-----------------------------------------------
+//              Image (Projectiles)
+//-----------------------------------------------
+const char IMAGE_PROJECTILE_FIREBALL[] = "sprites/projectile_fireball.png";
 
 //-----------------------------------------------
 //					  Other
@@ -84,3 +115,6 @@ const float FRAME_RATE = 200.0f;               // the target frame rate (frames/
 const float MIN_FRAME_RATE = 10.0f;             // the minimum frame rate
 const float MIN_FRAME_TIME = 1.0f / FRAME_RATE;   // minimum desired time for 1 frame
 const float MAX_FRAME_TIME = 1.0f / MIN_FRAME_RATE; // maximum time used in calculations
+
+const double PI = 3.1415926535897;
+const float SPEED = 2.5;

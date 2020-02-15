@@ -1,4 +1,5 @@
 #include "image.h"
+#include "component.h"
 
 Texture::Texture()
 {}
@@ -87,11 +88,19 @@ void Image::initialize(Texture* texture, GridMask gridMask)
 	Image::gridMask = gridMask;
 }
 
-void Image::getSpriteData(SpriteData& spriteData, CoordI coord)
+SpriteData Image::getSpriteData(CoordI coord)
 {
+	SpriteData spriteData;
 	texture->getSpriteData(spriteData);
 	gridMask.getSpriteData(spriteData, coord);
+	return spriteData;
 }
+
+//void Image::getSpriteData(SpriteData& spriteData, CoordI coord)
+//{
+//	texture->getSpriteData(spriteData);
+//	gridMask.getSpriteData(spriteData, coord);
+//}
 
 AnimImage::AnimImage()
 {}
@@ -106,36 +115,50 @@ void AnimImage::initialize(Texture* texture, vector<GridMask> gridMasks, vector<
 	AnimImage::endFrames = endFrames;
 }
 
-void AnimImage::getSpriteData(SpriteData& spriteData, int state, int direction, int frameNo)
+SpriteData AnimImage::getSpriteData(int state, int direction, int frameNo)
 {
+	SpriteData spriteData;
 	texture->getSpriteData(spriteData);
 	gridMasks[state].getSpriteData(spriteData, CoordI{ frameNo, direction });
+	return spriteData;
 }
+
+SpriteData AnimImage::getSpriteData(RenderInfo renderInfo)
+{
+	SpriteData spriteData;
+	texture->getSpriteData(spriteData);
+	gridMasks[renderInfo.state].getSpriteData(spriteData, CoordI{ renderInfo.frameNo, renderInfo.direction });
+	return spriteData;
+}
+
+//void AnimImage::getSpriteData(SpriteData& spriteData, int state, int direction, int frameNo)
+//{
+//	texture->getSpriteData(spriteData);
+//	gridMasks[state].getSpriteData(spriteData, CoordI{ frameNo, direction });
+//}
 
 int AnimImage::getEndFrame(int state)
 {
 	return endFrames[state];
 }
 
-//Sprite::Sprite()
-//{}
-//
-//Sprite::~Sprite()
-//{}
-//
-//void Sprite::initialize(Image* image, CoordI coord)
-//{
-//	Sprite::image = image;
-//	Sprite::coord = coord;
-//}
-//
-//SpriteData Sprite::getSpriteData()
-//{
-//	SpriteData sd;
-//	image->getSpriteData(sd, coord);
-//	return sd;
-//}
-//
+Sprite::Sprite()
+{}
+
+Sprite::~Sprite()
+{}
+
+void Sprite::initialize(Image* image, CoordI coord)
+{
+	Sprite::image = image;
+	Sprite::coord = coord;
+}
+
+SpriteData Sprite::getSpriteData()
+{
+	return image->getSpriteData(coord);
+}
+
 //AnimSprite::AnimSprite()
 //{}
 //

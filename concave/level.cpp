@@ -59,8 +59,12 @@ void Level::initialize()
 	// unitSprite.initialize(&unitImage, CoordI{ 0, 0 });
 	projTexture.initialize(graphics, IMAGE_PROJECTILE_FIREBALL);
 	projGridMask.initialize(1, 1, 96, 96, 1, 1, 46, 46);
-	projImage.initialize(&projTexture, projGridMask);
-	projSprite.initialize(&projImage, CoordI { 0, 0 });
+	vector<GridMask> projGridMasks = {
+		projGridMask
+	};
+	vector<int> projEndFrames = { 15 };
+	projImage.initialize(&projTexture, projGridMasks, projEndFrames);
+
 	// Tiles
 	tiles.initialize(10, 10);
 	for (int y = 0; y < tiles.getRows(); y++)
@@ -98,7 +102,7 @@ void Level::initialize()
 	projectiles.initialize(1);
 	CoordF jPos = CoordF{ 5, 5 };
 	projectiles.push(
-		jPos, &projSprite,
+		jPos, &projImage,
 		translateHLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, jPos),
 		translateVLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, jPos));
 }
@@ -228,10 +232,17 @@ void Level::render()
         graphics->drawSprite(sd,
             gridToScreen(players.getPositionArray()[i]), camScale);
 	}
+	for (int i = 0; i < projectiles.getSize(); i++) {
+		SpriteData sd = projectiles.getAnimImageArray()[i]->getSpriteData(
+			0, projectiles.getRotationArray()[i],
+			projectiles.getFrameNoArray()[i]);
+		graphics->drawSprite(sd,
+			gridToScreen(projectiles.getPositionArray()[i]), camScale);
+	}
 
-	graphics->drawSprite(
-		projectiles.getSpriteArray()[0]->getSpriteData(),
-		gridToScreen(projectiles.getPositionArray()[0]), camScale);
+	// graphics->drawSprite(
+	// 	projectiles.getSpriteArray()[0]->getSpriteData(),
+	// 	gridToScreen(projectiles.getPositionArray()[0]), camScale);
 }
 
 CoordF Level::gridToScreen(float gx, float gy)

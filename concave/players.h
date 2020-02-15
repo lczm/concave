@@ -16,7 +16,6 @@ private:
 	vector<State*> fsmArray;
 	vector<AnimImage*> animImageArray;
     vector<int> stateArray;
-	vector<int> directionArray;
 	vector<int> frameNoArray;
 	vector<float> timerArray;
 	vector<float> delayArray;
@@ -39,7 +38,6 @@ public:
 	vector<State*>& getFsmArray () { return fsmArray; }
 	vector<AnimImage*>& getAnimImageArray() { return animImageArray; }
 	vector<int>& getStateArray() { return stateArray; }
-	vector<int>& getDirectionArray() { return directionArray; }
 	vector<int>& getFrameNoArray() { return frameNoArray; }
 	vector<float>& getTimerArray() { return timerArray; }
 	vector<float>& getDelayArray() { return delayArray; }

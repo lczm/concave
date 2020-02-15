@@ -42,11 +42,9 @@ private:
 	GridMask unitMageGetHitGridMask;
 	GridMask unitMageFireGridMask;
 
-	// Texture unitTexture; GridMask unitGridMask; Image unitImage;
-	// Sprite unitSprite;
 	// // Projectiles
-	Texture projTexture; GridMask projGridMask; Image projImage;
-	Sprite projSprite;
+	Texture projTexture; AnimImage projImage;
+	GridMask projGridMask;
 
 	// Components
 	Tiles tiles;

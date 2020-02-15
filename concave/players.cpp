@@ -16,7 +16,6 @@ void Players::initialize(int capacity)
 	Players::fsmArray.resize(capacity);
 	Players::animImageArray.resize(capacity);
 	Players::stateArray.resize(capacity);
-	Players::directionArray.resize(capacity);
 	Players::frameNoArray.resize(capacity);
 	Players::timerArray.resize(capacity);
 	Players::delayArray.resize(capacity);
@@ -37,7 +36,6 @@ void Players::push(CoordF position, Lines hLines, Lines vLines,
 	animImageArray[size] = animImage;
 	stateArray[size] = state;
 	frameNoArray[size] = 0;
-	directionArray[size] = 0;
 	timerArray[size] = 0;
 	delayArray[size] = float(0.03);
 	healthArray[size] = health;

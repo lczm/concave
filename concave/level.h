@@ -8,12 +8,6 @@
 #include "collisionSystem.h"
 #include <vector>
 #include <cassert>
-// #include "playerAttackState.h"
-// #include "playerDieState.h"
-// #include "playerIdleState.h"
-// #include "playerWalkState.h"
-// #include "playerGetHitState.h"
-// #include "playerFireState.h"
 #include "playerState.h"
 using namespace std;
 using namespace STATE;
@@ -27,20 +21,19 @@ private:
 	Texture tileTexture; GridMask tileGridMask; Image tileImage;
 	Sprite floorSprite, wallSprite;
 	// Player
-	Texture unitTexture; AnimImage unitImage;
-	GridMask unitAttackGridMask;
-	GridMask unitDieGridMask;
-	GridMask unitIdleGridMask;
-	GridMask unitWalkGridMask;
-	GridMask unitGetHitGridMask;
-
-	Texture unitMageTexture; AnimImage unitMageImage;
-	GridMask unitMageAttackGridMask;
-	GridMask unitMageDieGridMask;
-	GridMask unitMageIdleGridMask;
-	GridMask unitMageWalkGridMask;
-	GridMask unitMageGetHitGridMask;
-	GridMask unitMageFireGridMask;
+	Texture warriorTexture; AnimImage warriorAnimImage;
+	GridMask warriorAttackGridMask;
+	GridMask warriorDieGridMask;
+	GridMask warriorIdleGridMask;
+	GridMask warriorWalkGridMask;
+	GridMask warriorGetHitGridMask;
+	Texture mageTexture; AnimImage mageAnimImage;
+	GridMask mageAttackGridMask;
+	GridMask mageDieGridMask;
+	GridMask mageIdleGridMask;
+	GridMask mageWalkGridMask;
+	GridMask mageGetHitGridMask;
+	//GridMask mageFireGridMask;
 
 	// // Projectiles
 	Texture projTexture; AnimImage projImage;

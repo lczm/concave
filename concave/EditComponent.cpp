@@ -15,7 +15,7 @@ void EditComponent::readFromFile(std::string mapString, int map[mapWidth][mapHei
 
 void EditComponent::readFromFile2(std::string mapString, int map[6][6], int level)
 {
-	std::ifstream file("text\\" + std::to_string(level) + mapString);
+	std::ifstream file("text\\rooms\\" + std::to_string(level) + mapString);
 	for (int r = 0; r < mapWidth; r++)
 	{
 		for (int c = 0; c < mapHeight; c++) {
@@ -225,11 +225,13 @@ void EditComponent::placeItemRoom(Room room, int map[mapWidth][mapHeight])
 	int y1 = room.getDimensions().y1 + 1;
 	int y2 = room.getDimensions().y2 - 1;
 
-	//items in the room
-	int left = room.getRoomItems().left;
-	int right = room.getRoomItems().right;
-	int top = room.getRoomItems().top;
-	int bottom = room.getRoomItems().bottom;
+	/*
+		//items in the room
+		int left = room.getRoomItems().left;
+		int right = room.getRoomItems().right;
+		int top = room.getRoomItems().top;
+		int bottom = room.getRoomItems().bottom;
+	*/
 
 
 	//get appropriate x1 and x2 to fit within boundaries for templates
@@ -328,21 +330,18 @@ void EditComponent::determineRoomTypes(Room &room)
 	int ranRoom = random(rangeMin, rangeMax);
 	std::vector<std::vector<std::string>> records  = gm.searchForRecord(ROOM_INFO, to_string(ranRoom), 10, roomTypesCsv::no);
 
-	//only one value will be returned
-	int left = std::stoi(records[0][roomTypesCsv::left]);
-	int right= std::stoi(records[0][roomTypesCsv::right]);
-	int top= std::stoi(records[0][roomTypesCsv::top]);
-	int bottom = std::stoi(records[0][roomTypesCsv::bottom]);
-	int flooring = std::stoi(records[0][roomTypesCsv::flooring]);
-
-
-
+	/*
+		//only one value will be returned
+		int left = std::stoi(records[0][roomTypesCsv::left]);
+		int right= std::stoi(records[0][roomTypesCsv::right]);
+		int top= std::stoi(records[0][roomTypesCsv::top]);
+		int bottom = std::stoi(records[0][roomTypesCsv::bottom]);
+		int flooring = std::stoi(records[0][roomTypesCsv::flooring]);
+	*/
 	string file = records[0][roomTypesCsv::file];
 
-
-
 	//set the room value
-	room.setRoomItems(left, right, top, bottom, flooring);
+	//room.setRoomItems(left, right, top, bottom, flooring);
 	room.setFile(file);
 
 }

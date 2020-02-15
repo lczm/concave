@@ -5,17 +5,35 @@
 class MainMenu : public Window
 {
 private:
+
+	Texture menuBg;
+	Texture itemBg;
+
 	Texture playbtnTexture;
-	Texture playHoverTexture;
 	Texture insbtnTexture;
 	Texture optbtnTexture;
 	Texture crbtnTexture;
+	Texture scrbarTexture;
+	Texture scrollerTexture;
+
+
+	Texture playHoverTexture;
+	Texture insHoverTexture;
+	Texture optHoverTexture;
+	Texture crHoverTexture;
+	Button playHover;
+	Button insHover;
+	Button optHover;
+	Button crHover;
+
+
 	//GridMask playbtnGM;
 	Button playbtn;
-	Button playHoverbtn;
 	Button insbtn;
 	Button optbtn;
 	Button crbtn;
+	Button scrbar;
+	Button scroller;
 
 
 
@@ -28,4 +46,6 @@ public:
 	void resetAll();
 	void update();
 	void render();
+
+	void initBg(Graphics* graphics);
 };

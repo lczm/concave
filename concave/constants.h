@@ -58,11 +58,22 @@ const char IMAGE_UNIT_WARRIOR[] = "sprites/unit_warrior.png";
 //-----------------------------------------------
 //                Texture (Menu)
 //-----------------------------------------------
+const char MENU_BG[] = "sprites/menubg.jpg";
+const char ITEM_BG[] = "sprites/itembg.png";
+
+
 const char PLAY_BTN_TEXTURE[] = "sprites/play.png";
-const char PLAY_HOVER_TEXTURE[] = "sprites/playhover.png";
 const char INS_BTN_TEXTURE[] = "sprites/instruction.png";
 const char OPT_BTN_TEXTURE[] = "sprites/options.png";
 const char CR_BTN_TEXTURE[] = "sprites/credits.png";
+
+const char PLAY_HOVER_TEXTURE[] = "sprites/playhover.png";
+const char INS_HOVER_TEXTURE[] = "sprites/instructionhover.png";
+const char OPT_HOVER_TEXTURE[] = "sprites/optionshover.png";
+const char CR_HOVER_TEXTURE[] = "sprites/creditshover.png";
+
+const char SCROLLBAR[] = "sprites/scrollbar.png";
+const char SCOLLER[] = "sprites/scroller.png";
 
 //-----------------------------------------------
 //					  Other

@@ -14,6 +14,7 @@ void Button::initialize(Graphics* graphics, Input* input, Texture* texture, floa
 	Button::texture = texture;
 	Button::x = x;
 	Button::y = y;
+	active = true;
 
 }
 SpriteData Button::getSpriteData() 
@@ -22,12 +23,17 @@ SpriteData Button::getSpriteData()
     texture->getSpriteData(sd);
 	return sd;
 }
+
+void Button::setActive(bool a)
+{
+	active = a;
+}
+
 void Button::draw()
 {
 
-	
-
-	graphics->drawSprite(getSpriteData(), x, y, 1);
+	if(active)
+		graphics->drawSprite(getSpriteData(), x, y, 1);
 	
 }
 
@@ -47,10 +53,10 @@ bool Button::isHovered()
 	}
 	else
 	{
-		SpriteData sd = getSpriteData();
+		
 
-		int buttonWidth = x + sd.width;
-		int buttonHeight = y + sd.height;
+		int buttonWidth = x + getSpriteData().width;
+		int buttonHeight = y + getSpriteData().height;
 
 
 		return (mouseX > x && mouseX < buttonWidth &&
@@ -86,9 +92,9 @@ bool Button::isClicked()
 
 int Button::getWidth()
 {
-	SpriteData sd = getSpriteData();
-
-	return sd.width;
+	return getSpriteData().width;
 }
+
+
 
 

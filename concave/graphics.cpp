@@ -27,7 +27,6 @@ void Graphics::initialize(HWND hw, int w, int h, bool full)
     width = w;
     height = h;
     fullscreen = full;
-
     //initialize Direct3D
     direct3d = Direct3DCreate9(D3D_SDK_VERSION);
     if (direct3d == NULL)
@@ -216,6 +215,7 @@ HRESULT Graphics::loadTexture(const char* filename, COLOR_ARGB transcolor,
 
 void Graphics::drawSprite(const SpriteData& spriteData, float screenX, float screenY, float scale, COLOR_ARGB color)
 {
+	
 	if (spriteData.texture == NULL) return;
 
 	D3DXVECTOR2 pivot(spriteData.pivotX, spriteData.pivotY);

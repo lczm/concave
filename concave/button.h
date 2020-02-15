@@ -13,13 +13,14 @@ private:
 	//GridMask gridMask;
 	float x;
 	float y;
-
+	bool active;
 
 public:
 	Button();
 	~Button();
 	void initialize(Graphics* graphics, Input* input, Texture* texture, float x, float y);
 	SpriteData getSpriteData();
+	void setActive(bool a);
 	void draw();
 	bool isHovered();
 	bool isClicked();

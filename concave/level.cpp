@@ -118,7 +118,7 @@ void Level::resetAll()
 void Level::update()
 {
 	// Move Player
-	// CoordF moveDelta{ 0, 0 };
+	CoordF moveDelta{ 0, 0 };
 	// if (input->isKeyDown('W')) moveDelta.y = -0.01;
 	// if (input->isKeyDown('S')) moveDelta.y = 0.01;
 	// if (input->isKeyDown('A')) moveDelta.x = -0.01;
@@ -129,17 +129,17 @@ void Level::update()
 	// updateVCollision(players.getVCollisions()[0], moveDelta);
 
 	// Collision
-	// CoordF* pPositions = players.getPositions();
-	// CoordF* pDestPositions = players.getDestPositions();
+	vector<CoordF>& pPositions = players.getPositionArray();
+	// vector<CoordF> pDestPositions = players.getDestPositionArray();
 	// Collision* pHCollisions = players.getHCollisions();
 	// Collision* pVCollisions = players.getVCollisions();
-
-	// vector<State*> pStates = players.getStateArray();
 	vector<State*> pFsms = players.getFsmArray();
 	// vector<RenderInfo>* pRenderInfos = &players.getImageInfoArray();
 	for (int i = 0; i < players.getSize(); i++) {
 		// pStates[i]->update(this, i);
 		pFsms[i]->update(this, i);
+		pPositions[i].x += players.getDxArray()[i];
+		pPositions[i].y += players.getDyArray()[i];
 	}
 
     // CoordF pPosition = pPositions[i];
@@ -221,19 +221,6 @@ void Level::render()
 	for (int i = 0; i < players.getSize(); i++) {
 		// Temporary solution to make it not blurry
 		// CoordF screenCoords = gridToScreen(players.getPositionArray()[i]);
-        // SpriteData sd = players.getAnimImageArray()[i]->getSpriteData(
-        //     players.getStateArray()[i], players.getDirectionArray()[i],
-        //     players.getFrameNoArray()[i]);
-
-        // SpriteData sd = players.getAnimImageArray()[i]->getSpriteData(
-        //     players.getStateArray()[i], rotationToDirection(players.getRotationArray()[i]),
-        //     players.getFrameNoArray()[i]);
-
-		// SpriteData sd = players.getAnimImageArray()[i]->getSpriteData(
-		// 	players.getStateArray()[i],
-		// 	int(rotationToDirection(players.getRotationArray()[i])),
-		// 	players.getFrameNoArray()[i]);
-		int x = rotationToDirection(players.getRotationArray()[i]);
 		SpriteData sd = players.getAnimImageArray()[i]->getSpriteData(
 			players.getStateArray()[i],
 			rotationToDirection(players.getRotationArray()[i]),
@@ -284,66 +271,26 @@ CoordF Level::screenToGrid(CoordF screenCoord)
 
 float Level::calculateRotation(CoordF src, CoordF dest)
 {
-    // float dy = dest.y - src.y;
-    // float dx = dest.x - src.x;
-    // return atan2(dy, dx);
-	float currentX = src.x;
-	float currentY = src.y;
-
-	float destX = dest.x;
-	float destY = dest.y;
-
-	float radAngle = atan2(abs(currentX - destX), abs(currentY - destY));
-    float degAngle = radAngle * (180 / PI);
-    if (destX > currentX && destY < currentY) {
-    }
-    else if (destX > currentX && destY > currentY) {
-        degAngle = 180 - degAngle;
-    }
-    else if (destX < currentX && destY > currentY) {
-        degAngle = 180 + degAngle;
-    }
-    else if (destX < currentX && destY < currentY) {
-        degAngle = 360 - degAngle;
-    }
-    // Dimetric angle offset
-    degAngle += 25.565;
-	return degAngle;
+    float dx = dest.x - src.x;
+    float dy = dest.y - src.y;
+    return atan2(dy, dx);
 }
 
-float Level::rotationToDirection(float rotation)
+int Level::rotationToDirection(float rotation)
 {
-    // rotation *= -1;
-    // rotation -= PI / 4;
-    // rotation = fmod(rotation, PI * 2);
-    // rotation /= PI / 8;
-    // return round(rotation);
-	if (rotation <= 22.5) {
-		return DIRECTION8::NORTH;
-    }
-    else if (rotation <= 67.5) {
-		return DIRECTION8::NORTH_EAST;
-    }
-    else if (rotation <= 112.5) {
-		return DIRECTION8::EAST;
-    }
-    else if (rotation <= 157.5) {
-		return DIRECTION8::SOUTH_EAST;
-    }
-    else if (rotation <= 202.5) {
-		return DIRECTION8::SOUTH;
-    }
-    else if (rotation <= 247.5) {
-		return DIRECTION8::SOUTH_WEST;
-    }
-    else if (rotation <= 292.5) {
-		return DIRECTION8::WEST;
-    }
-    else if (rotation <= 337.5) {
-		return DIRECTION8::NORTH_WEST;
-    }
-    else {
-		return DIRECTION8::NORTH;
-    }
+	int direction;
+	// Offset dimetric angle
+	rotation += 0.4461934;
+    rotation -= PI / 2;
+    rotation /= PI / 4;
+	direction = round(rotation);
+	direction = modulo(direction, 8);
+	return direction;
+}
 
+int Level::modulo(int val, int m)
+{
+	int mod = val % m;
+	if (val < 0) mod += m;
+	return mod;
 }

@@ -23,6 +23,8 @@ void Players::initialize(int capacity)
 	Players::healthArray.resize(capacity);
 	Players::manaArray.resize(capacity);
 	Players::rotationArray.resize(capacity);
+	Players::dxArray.resize(capacity);
+	Players::dyArray.resize(capacity);
 }
 
 void Players::push(CoordF position, Lines hLines, Lines vLines,
@@ -38,10 +40,12 @@ void Players::push(CoordF position, Lines hLines, Lines vLines,
 	frameNoArray[size] = 0;
 	directionArray[size] = 0;
 	timerArray[size] = 0;
-	delayArray[size] = float(0.1);
+	delayArray[size] = float(0.05);
 	healthArray[size] = health;
 	manaArray[size] = mana;
-	rotationArray[size] = 90;
+	rotationArray[size] = 0;
+	dxArray[size] = 0;
+	dyArray[size] = 0;
 	size++;
 }
 
@@ -61,59 +65,6 @@ void Players::pop(int index)
 	healthArray[index] = healthArray[size];
 	manaArray[index] = manaArray[size];
 	rotationArray[index] = rotationArray[size];
+	dxArray[index] = dxArray[size];
+	dyArray[index] = dyArray[size];
 }
-
-// void Players::setPosition(int index, CoordF position)
-// {
-// 	positionArray[index] = position;
-// }
-// 
-// void Players::setDestPosition(int index, CoordF destPosition)
-// {
-// 	destPositionArray[index] = destPosition;
-// }
-// 
-// void Players::setMovement(int index, Movement movement)
-// {
-// 	movementArray[index] = movement;
-//     if (movement.rotation <= 22.5) {
-//         imageInfoArray[index].direction = DIRECTION8::NORTH;
-//     }
-//     else if (movement.rotation <= 67.5) {
-//         imageInfoArray[index].direction = DIRECTION8::NORTH_EAST;
-//     }
-//     else if (movement.rotation <= 112.5) {
-//         imageInfoArray[index].direction = DIRECTION8::EAST;
-//     }
-//     else if (movement.rotation <= 157.5) {
-//         imageInfoArray[index].direction = DIRECTION8::SOUTH_EAST;
-//     }
-//     else if (movement.rotation <= 202.5) {
-//         imageInfoArray[index].direction = DIRECTION8::SOUTH;
-//     }
-//     else if (movement.rotation <= 247.5) {
-//         imageInfoArray[index].direction = DIRECTION8::SOUTH_WEST;
-//     }
-//     else if (movement.rotation <= 292.5) {
-//         imageInfoArray[index].direction = DIRECTION8::WEST;
-//     }
-//     else if (movement.rotation <= 337.5) {
-//         imageInfoArray[index].direction = DIRECTION8::NORTH_WEST;
-//     }
-//     else {
-//         imageInfoArray[index].direction = DIRECTION8::NORTH;
-//     }
-// }
-// 
-// void Players::setState(int index, State* state)
-// {
-// 	stateArray[index] = state;
-// }
-// 
-// void Players::updateStateInfo(int index, PLAYER state)
-// {
-// 	RenderInfo* renderInfo = &imageInfoArray[index];
-// 	renderInfo->timer = 0;
-// 	renderInfo->frameNo = 0;
-// 	renderInfo->state = state;
-// }

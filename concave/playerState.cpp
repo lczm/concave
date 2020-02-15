@@ -63,11 +63,16 @@ void PlayerIdleState::update(Level* level, int index)
     CoordF& position = players.getPositionArray()[index];
     CoordF& destPosition = players.getDestPositionArray()[index];
     float& rotation = players.getRotationArray()[index];
+    float& dx = players.getDxArray()[index];
+    float& dy = players.getDyArray()[index];
 
     if (input->getMouseLButton()) {
         // players.setMovement(index, calculateMovement(frameTime, position, destPosition));
         destPosition = level->screenToGrid(CoordF{ float(input->getMouseX()), float(input->getMouseY()) });
         rotation = level->calculateRotation(position, destPosition);
+        // float radAngle = rotation * PI / 180;
+        dx = float(SPEED * cos(rotation) * frameTime);
+        dy = float(SPEED * sin(rotation) * frameTime);
         fsm = level->getStates()->at(PLAYER::WALK);
         frameNo = 0;
         state = PLAYER::WALK;
@@ -84,7 +89,6 @@ void PlayerIdleState::update(Level* level, int index)
         state = PLAYER::FIRE;
         return;
     }
-    // Temporary, middle click is to change between states
     else if (input->getMouseMButton()) {
         // Change directions based on where mouse is 
         // float rotation = calculateMovement(frameTime, position,

@@ -2,6 +2,7 @@
 #include "constants.h"
 #include <math.h>
 #include <vector>
+#include <string>
 using namespace std;
 
 class Room
@@ -31,6 +32,7 @@ private:
 	int maxRoomSize = 10;
 	int minRoomSize = 8;
 
+	std::string fileLocation;
 	//room info
 	RoomType room;
 	RoomDimensions roomDimensions;
@@ -99,4 +101,11 @@ public:
 	//center of room functions
 	CoordI getCenterRoom(){ return roomCenter;}
 	void setCenter(CoordI center){roomCenter = center;}
+
+	void setFile(std::string fileLoc) { fileLocation = fileLoc; }
+
+	std::string getFile()
+	{ 
+		return fileLocation; 
+	}
 };

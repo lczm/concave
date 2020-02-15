@@ -105,10 +105,10 @@ const int itemsToSpawn = 1;
 
 enum RoomType
 {
-	chest,
-	trap,
-	barrel,
-	armoury
+	loot =2,
+	trap = 3,
+	barrel = 4,
+	armoury = 1
 };
 
 
@@ -122,7 +122,8 @@ enum roomTypesCsv
 	top = 5,
 	bottom = 6,
 	assign = 7,
-	flooring = 8
+	flooring = 8,
+	file = 9
 };
 
 enum ImageType {

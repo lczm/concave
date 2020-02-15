@@ -215,7 +215,7 @@ void EditComponent::placeItemRoom(Room room, int map[mapWidth][mapHeight])
 
 
 	int room1[6][6];
-	readFromFile2("loot.txt", room1, 1);
+	readFromFile2(room.getFile(), room1, 1);
 
 	//walls occupy the first and last X values
 	int x1 = room.getDimensions().x1 + 1;
@@ -326,7 +326,7 @@ void EditComponent::determineRoomTypes(Room &room)
 	int rangeMax = std::stoi(roomTypeRecords[roomTypeRecords.size()-1][roomTypesCsv::no]);
 
 	int ranRoom = random(rangeMin, rangeMax);
-	std::vector<std::vector<std::string>> records  = gm.searchForRecord(ROOM_INFO, to_string(ranRoom), 9, roomTypesCsv::no);
+	std::vector<std::vector<std::string>> records  = gm.searchForRecord(ROOM_INFO, to_string(ranRoom), 10, roomTypesCsv::no);
 
 	//only one value will be returned
 	int left = std::stoi(records[0][roomTypesCsv::left]);
@@ -335,6 +335,14 @@ void EditComponent::determineRoomTypes(Room &room)
 	int bottom = std::stoi(records[0][roomTypesCsv::bottom]);
 	int flooring = std::stoi(records[0][roomTypesCsv::flooring]);
 
+
+
+	string file = records[0][roomTypesCsv::file];
+
+
+
 	//set the room value
 	room.setRoomItems(left, right, top, bottom, flooring);
+	room.setFile(file);
+
 }

@@ -2,7 +2,7 @@
 #include "constants.h"
 #include "image.h"
 
-class Players
+class Enemies
 {
 private:
 	int capacity, size;
@@ -23,15 +23,10 @@ private:
 	// Collision
 	vector<Lines> hLinesArray;
 	vector<Lines> vLinesArray;
-	// Attributes
-	vector<int> healthArray;
-	vector<int> maxHealthArray;
-	vector<int> manaArray;
-	vector<int> maxManaArray;
 public:
-	Players(); ~Players();
+	Enemies(); ~Enemies();
 	void initialize(int capacity);
-	void push(CoordF position, AnimImage* animImage, int state, FSM fsm, float rotation, float velocity, Lines hLines, Lines vLines, int health, int maxHealth, int mana, int maxMana);
+	void push(CoordF position, AnimImage* animImage, int state, FSM fsm, float rotation, float velocity, Lines hLines, Lines vLines);
 	void pop(int index);
 public:
 	int getSize() { return size; }
@@ -52,9 +47,4 @@ public:
 	// Collision
 	vector<Lines>& getHLinesArray() { return hLinesArray; }
 	vector<Lines>& getVLinesArray() { return vLinesArray; }
-	// Attributes
-	vector<int>& getHealthArray() { return healthArray; };
-	vector<int>& getMaxHealthArray() { return maxHealthArray; };
-	vector<int>& getManaArray() { return manaArray; };
-	vector<int>& getMaxManaArray() { return maxManaArray; };
 };

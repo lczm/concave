@@ -1,6 +1,10 @@
 #pragma once
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
+#include <vector>
+#include <set>
+#include <iostream>
+using namespace std;
 
 //-----------------------------------------------
 //                   Data
@@ -14,26 +18,53 @@ struct Coord
 	Coord operator-(const Coord& coord) { return Coord{ x - coord.x, y - coord.y }; }
 	Coord& operator+=(const Coord& coord) { x += coord.x; y += coord.y; return *this; }
 	Coord& operator-=(const Coord& coord) { x -= coord.x; y -= coord.y; return *this; }
+	Coord operator*(T val) { return Coord{ x * val, y * val }; }
 };
 typedef Coord<int> CoordI;
 typedef Coord<float> CoordF;
-
-// struct Line { float lower, upper, shift; };
-// enum DIRECTION8 { SOUTH, SOUTH_WEST, WEST, NORTH_WEST, NORTH, NORTH_EAST, EAST, SOUTH_EAST };
-// enum DIRECTION16 { SOUTH, SOUTH_WEST, WEST, NORTH_WEST, NORTH, NORTH_EAST, EAST, SOUTH_EAST };
-//namespace DIRECTION8 {
-//	const int
-//		SOUTH = 0, SOUTH_WEST = 1, WEST = 2, NORTH_WEST = 3,
-//		NORTH = 4, NORTH_EAST = 5, EAST = 6, SOUTH_EAST = 7;}
-
-struct RenderInfo
-{
-	int state;
-	int direction;
-	int frameNo;
-	float timer = 0;
-	float delay = float(1.00);
+// Line (Collision)
+struct Line {
+	float lower, upper, shift;
+	Line() {}
+	Line(float lower, float upper, float shift) { Line::lower = lower; Line::upper = upper; Line::shift = shift; }
+	bool operator<(const Line& other) const { return shift < other.shift; }
 };
+struct LineI : Line {
+	int id;
+	LineI() {}
+	LineI(Line line, int id) : Line(line) { LineI::id = id; }
+	LineI(float lower, float upper, float shift, int id) : Line(lower, upper, shift) { LineI::id = id; }
+};
+typedef vector<Line> Lines;
+typedef set<LineI> LineISet;
+typedef LineISet::iterator LineISetIter;
+typedef vector<LineISetIter> LineISetIters;
+
+// Direction
+namespace DIRECTION8 {
+	enum DIRECTION8 { SOUTH, SOUTH_WEST, WEST, NORTH_WEST, NORTH, NORTH_EAST, EAST, SOUTH_EAST }; }
+namespace DIRECTION16 {
+	enum DIRECTION16 { SOUTH, SOUTH_SOUTH_WEST, SOUTH_WEST, WEST_SOUTH_WEST, WEST, WEST_NORTH_WEST, NORTH_WEST, NORTH_NORTH_WEST, NORTH, NORTH_NORTH_EAST, NORTH_EAST, EAST_NORTH_EAST, EAST, EASE_SOUTH_EAST, SOUTH_EAST, SOUTH_SOUTH_EAST }; }
+
+// State Function Pointer
+class Level;
+typedef void (*FSM)(Level* level, int index);
+
+//struct RenderInfo
+//{
+//	int state;
+//	int direction;
+//	int frameNo;
+//	float timer = 0;
+//	float delay = float(1.00);
+//};
+
+//struct Movement
+//{
+//	float moveX;
+//	float moveY;
+//	float rotation;
+//};
 
 //-----------------------------------------------
 //                   Tiles
@@ -50,9 +81,9 @@ const int UNIT_STATE_IDLE = 2;
 const int UNIT_STATE_WALK = 3;
 const int UNIT_STATE_GET_HIT = 4;
 
-namespace STATE {
-    enum PLAYER { ATTACK, DIE, IDLE, WALK, GET_HIT, FIRE };
-}
+//namespace STATE {
+//    enum PLAYER { ATTACK, DIE, IDLE, WALK, GET_HIT, FIRE };
+//}
 
 // Players
 const int PLAYER_STATE_MAGIC_FIRE = 5;

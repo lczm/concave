@@ -1,11 +1,6 @@
 #pragma once
 #include "constants.h"
-#include "component.h"
 #include "tiles.h"
-#include "players.h"
-#include <set>
-#include <cassert>
-using namespace std;
 
 Lines translateHLines(Lines lines, CoordF delta);
 Lines translateVLines(Lines lines, CoordF delta);
@@ -37,3 +32,6 @@ bool checkLineISetItersToLineISetCollision(LineISetIters& lineISetIters, LineISe
 
 float getDeltaXResponse(Line rHLine, Line bVLine, CoordF pos);
 float getDeltaYResponse(Line rVLine, Line bHLine, CoordF pos);
+
+void updateLinesArray(int size, vector<Lines>& hLinesArray, vector<Lines>& vLinesArray, vector<CoordF> deltaArray);
+void updateAllWallCollision(Tiles& tiles, int size, vector<Lines>& hLinesArray, vector<Lines>& vLinesArray, vector<CoordF>& positionArray);

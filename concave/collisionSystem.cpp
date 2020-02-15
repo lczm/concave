@@ -236,7 +236,7 @@ bool checkLineISetItersToLineISetCollision(LineISetIters& lineISetIters, LineISe
 
 float getDeltaXResponse(Line rHLine, Line bVLine, CoordF pos)
 {
-	assert(bVLine.shift != pos.x);
+	//assert(bVLine.shift != pos.x);
 	if (bVLine.shift < pos.x)
 		return bVLine.shift - rHLine.lower;
 	else
@@ -245,9 +245,35 @@ float getDeltaXResponse(Line rHLine, Line bVLine, CoordF pos)
 
 float getDeltaYResponse(Line rVLine, Line bHLine, CoordF pos)
 {
-	assert(bHLine.shift != pos.y);
+	//assert(bHLine.shift != pos.y);
 	if (bHLine.shift < pos.y)
 		return bHLine.shift - rVLine.lower;
 	else
 		return bHLine.shift - rVLine.upper;
+}
+
+void updateLinesArray(int size, vector<Lines>& hLinesArray, vector<Lines>& vLinesArray, vector<CoordF> deltaArray)
+{
+	for (int i = 0; i < size; i++) {
+		updateHLines(hLinesArray[i], deltaArray[i]);
+		updateVLines(vLinesArray[i], deltaArray[i]);
+	}
+}
+
+void updateAllWallCollision(Tiles& tiles, int size, vector<Lines>& hLinesArray, vector<Lines>& vLinesArray, vector<CoordF>& positionArray)
+{
+	for (int i = 0; i < size; i++) {
+		CoordF& pos = positionArray[i];
+		Lines& hLines = hLinesArray[i];
+		Lines& vLines = vLinesArray[i];
+		CoordF delta{ 0, 0 };
+		Line hLine, vLine;
+		if (checkHLinesToWallCollision(tiles, hLines, hLine, vLine))
+			delta.x = getDeltaXResponse(hLine, vLine, pos);
+		if (checkVLinesToWallCollision(tiles, vLines, vLine, hLine))
+			delta.y = getDeltaYResponse(vLine, hLine, pos);
+		pos += delta;
+		updateHLines(hLines, delta);
+		updateVLines(vLines, delta);
+	}
 }

@@ -1,5 +1,6 @@
 #pragma once
-#include "component.h"
+#include "constants.h"
+#include "image.h"
 
 class Tiles
 {

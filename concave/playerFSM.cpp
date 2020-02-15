@@ -1,12 +1,12 @@
-#include "playerState.h"
+#include "playerFSM.h"
 
-void PlayerAttackState::update(Level* level, int index)
+void playerAttackState(Level* level, int index)
 {
     float frameTime = level->frameTime;
     Input* input = level->input;
     Players& players = level->getPlayers();
     AnimImage*& animImage = players.getAnimImageArray()[index];
-    State* fsm = players.getFsmArray()[index];
+    FSM& fsm = players.getFSMArray()[index];
     int& state = players.getStateArray()[index];
     int& frameNo = players.getFrameNoArray()[index];
     float& timer = players.getTimerArray()[index];
@@ -17,22 +17,20 @@ void PlayerAttackState::update(Level* level, int index)
         timer -= delay;
         frameNo++;
         if (frameNo >= animImage->getEndFrame(state)) {
-            timer = 0;
-            frameNo = 0;
-            fsm = level->getStates().at(PLAYER::IDLE);
-            state = PLAYER::IDLE;
+            timer = 0; frameNo = 0;
+            fsm = playerIdleState;
+            state = UNIT_STATE_IDLE;
         }
     }
-    return;
 }
 
-void PlayerDieState::update(Level* level, int index)
+void playerDieState(Level* level, int index)
 {
     float frameTime = level->frameTime;
     Input* input = level->input;
     Players& players = level->getPlayers();
     AnimImage*& animImage = players.getAnimImageArray()[index];
-    State* fsm = players.getFsmArray()[index];
+    FSM& fsm = players.getFSMArray()[index];
     int& state = players.getStateArray()[index];
     int& frameNo = players.getFrameNoArray()[index];
     float& timer = players.getTimerArray()[index];
@@ -44,55 +42,52 @@ void PlayerDieState::update(Level* level, int index)
         frameNo++;
         if (frameNo >= animImage->getEndFrame(state)) {
             frameNo = 0;
-            fsm = level->getStates().at(PLAYER::IDLE);
-            state = PLAYER::IDLE;
+            fsm = playerIdleState;
+            state = UNIT_STATE_IDLE;
         }
     }
-    return;
 }
 
-void PlayerIdleState::update(Level* level, int index)
+void playerIdleState(Level* level, int index)
 {
     float frameTime = level->frameTime;
     Input* input = level->input;
     Players& players = level->getPlayers();
     AnimImage*& animImage = players.getAnimImageArray()[index];
-    State*& fsm = players.getFsmArray()[index];
+    FSM& fsm = players.getFSMArray()[index];
     CoordF& position = players.getPositionArray()[index];
     CoordF& destPosition = players.getDestPositionArray()[index];
-    CoordF& dydx = players.getDyDxArray()[index];
     int& state = players.getStateArray()[index];
     int& frameNo = players.getFrameNoArray()[index];
     float& timer = players.getTimerArray()[index];
     float& delay = players.getDelayArray()[index];
     float& rotation = players.getRotationArray()[index];
+    float& velocity = players.getVelocityArray()[index];
 
     if (input->getMouseLButton()) {
         input->setMouseLButton(false);
         destPosition = level->screenToGrid(CoordF{ float(input->getMouseX()), float(input->getMouseY()) });
-        rotation = level->calculateRotation(position, destPosition);
-        dydx = getMoveAmount(frameTime, rotation);
+        rotation = calculateRotation(position, destPosition);
+        velocity = 1;
         frameNo = 0;
-        fsm = level->getStates().at(PLAYER::WALK);
-        state = PLAYER::WALK;
+        fsm = playerWalkState;
+        state = UNIT_STATE_WALK;
         return;
     }
     else if (input->getMouseRButton()) {
         input->setMouseRButton(false);
-        rotation = level->calculateRotation(position, 
-            level->screenToGrid(CoordF{float(input->getMouseX()), float(input->getMouseY())}));
+        rotation = calculateRotation(position, level->screenToGrid(input->getMouseX(), input->getMouseY()));
         frameNo = 0;
-        fsm = level->getStates().at(PLAYER::FIRE);
-        state = PLAYER::FIRE;
+        fsm = playerMagicFireState;
+        state = PLAYER_STATE_MAGIC_FIRE;
         return;
     }
     else if (input->getMouseMButton()) {
         input->setMouseMButton(false);
-        rotation = level->calculateRotation(position, 
-            level->screenToGrid(CoordF{float(input->getMouseX()), float(input->getMouseY())}));
+        rotation = calculateRotation(position, level->screenToGrid(input->getMouseX(), input->getMouseY()));
         frameNo = 0;
-        fsm = level->getStates().at(PLAYER::FIRE);
-        state = PLAYER::FIRE;
+        fsm = playerGetHitState;
+        state = UNIT_STATE_ATTACK;
         return;
     }
 
@@ -100,66 +95,62 @@ void PlayerIdleState::update(Level* level, int index)
     if (timer >= delay) {
         timer -= delay;
         frameNo++;
-        if (frameNo>= animImage->getEndFrame(state)) {
+        if (frameNo >= animImage->getEndFrame(state)) {
             frameNo = 0;
         }
     }
-    return;
 }
 
-void PlayerWalkState::update(Level* level, int index)
+void playerWalkState(Level* level, int index)
 {
     float frameTime = level->frameTime;
     Input* input = level->input;
     Players& players = level->getPlayers();
     AnimImage*& animImage = players.getAnimImageArray()[index];
-    State*& fsm = players.getFsmArray()[index];
+    FSM& fsm = players.getFSMArray()[index];
     CoordF& position = players.getPositionArray()[index];
     CoordF& destPosition = players.getDestPositionArray()[index];
-    CoordF& dydx = players.getDyDxArray()[index];
     int& state = players.getStateArray()[index];
     int& frameNo = players.getFrameNoArray()[index];
     float& timer = players.getTimerArray()[index];
     float& delay = players.getDelayArray()[index];
     float& rotation = players.getRotationArray()[index];
+    float& velocity = players.getVelocityArray()[index];
 
     if (input->getMouseLButton()) {
         input->setMouseLButton(false);
         destPosition = level->screenToGrid(CoordF{ float(input->getMouseX()), float(input->getMouseY()) });
-        rotation = level->calculateRotation(position, destPosition);
-        dydx = getMoveAmount(frameTime, rotation);
+        rotation = calculateRotation(position, destPosition);
         return;
     }
     else if (input->getMouseRButton()) {
         input->setMouseRButton(false);
         destPosition = position;
-        dydx = CoordF{ 0, 0 };
-        rotation = level->calculateRotation(position, 
-            level->screenToGrid(CoordF{float(input->getMouseX()), float(input->getMouseY())}));
+        velocity = 0;
+        rotation = calculateRotation(position, level->screenToGrid(input->getMouseX(), input->getMouseY()));
         frameNo = 0;
-        fsm = level->getStates().at(PLAYER::FIRE);
-        state = PLAYER::FIRE;
+        fsm = playerMagicFireState;
+        state = PLAYER_STATE_MAGIC_FIRE;
         return;
     }
     else if (input->getMouseMButton()) {
         input->setMouseMButton(false);
         destPosition = position;
-        dydx = CoordF{ 0, 0 };
-        rotation = level->calculateRotation(position, 
-            level->screenToGrid(CoordF{float(input->getMouseX()), float(input->getMouseY())}));
+        velocity = 0;
+        rotation = calculateRotation(position, level->screenToGrid(input->getMouseX(), input->getMouseY()));
         frameNo = 0;
-        fsm = level->getStates().at(PLAYER::FIRE);
-        state = PLAYER::FIRE;
+        fsm = playerAttackState;
+        state = UNIT_STATE_ATTACK;
         return;
     }
 
-    if (isAtPosition(position, destPosition)) {
+    if (fastSquareProximityCheck(position, destPosition, 0.01)) {
         // In case of any inaccuracies
         destPosition = position;
-        dydx = CoordF{ 0, 0 };
+        velocity = 0;
         frameNo = 0;
-        fsm = level->getStates().at(PLAYER::IDLE);
-        state = PLAYER::IDLE;
+        fsm = playerIdleState;
+        state = UNIT_STATE_IDLE;
         return;
     }
 
@@ -167,28 +158,19 @@ void PlayerWalkState::update(Level* level, int index)
     if (timer >= delay) {
         timer -= delay;
         frameNo++;
-        if (frameNo>= animImage->getEndFrame(state)) {
+        if (frameNo >= animImage->getEndFrame(state)) {
             frameNo = 0;
         }
     }
-    return;
 }
 
-bool PlayerWalkState::isAtPosition(CoordF current, CoordF destination)
-{
-    if ((abs(current.x - destination.x) < 0.01) && (abs(current.y - destination.y) < 0.01)) {
-        return true;
-    }
-    return false;
-}
-
-void PlayerGetHitState::update(Level* level, int index)
+void playerGetHitState(Level* level, int index)
 {
     float frameTime = level->frameTime;
     Input* input = level->input;
     Players& players = level->getPlayers();
     AnimImage*& animImage = players.getAnimImageArray()[index];
-    State*& fsm = players.getFsmArray()[index];
+    FSM& fsm = players.getFSMArray()[index];
     int& state = players.getStateArray()[index];
     int& frameNo = players.getFrameNoArray()[index];
     float& timer = players.getTimerArray()[index];
@@ -199,20 +181,20 @@ void PlayerGetHitState::update(Level* level, int index)
         frameNo++;
         if (frameNo >= animImage->getEndFrame(state)) {
             frameNo = 0;
-            fsm = level->getStates().at(PLAYER::IDLE);
-            state = PLAYER::IDLE;
+            fsm = playerIdleState;
+            state = UNIT_STATE_IDLE;
         }
     }
     return;
 }
 
-void PlayerFireState::update(Level* level, int index)
+void playerMagicFireState(Level* level, int index)
 {
     float frameTime = level->frameTime;
     Input* input = level->input;
     Players& players = level->getPlayers();
     AnimImage*& animImage = players.getAnimImageArray()[index];
-    State*& fsm = players.getFsmArray()[index];
+    FSM& fsm = players.getFSMArray()[index];
     int& state = players.getStateArray()[index];
     int& frameNo = players.getFrameNoArray()[index];
     float& timer = players.getTimerArray()[index];
@@ -224,8 +206,8 @@ void PlayerFireState::update(Level* level, int index)
         frameNo++;
         if (frameNo >= animImage->getEndFrame(state)) {
             frameNo = 0;
-            fsm = level->getStates().at(PLAYER::IDLE);
-            state = PLAYER::IDLE;
+            fsm = playerIdleState;
+            state = UNIT_STATE_IDLE;
         }
     }
     return;

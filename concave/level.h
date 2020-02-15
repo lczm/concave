@@ -1,16 +1,18 @@
 #pragma once
 #include "window.h"
 #include "image.h"
-#include "component.h"
-#include "players.h"
 #include "tiles.h"
+#include "players.h"
+#include "enemies.h"
 #include "projectiles.h"
+#include "playerFSM.h"
+#include "enemyFSM.h"
 #include "collisionSystem.h"
+#include "movementSystem.h"
+#include "fsmSystem.h"
 #include <vector>
 #include <cassert>
-#include "playerState.h"
 using namespace std;
-using namespace STATE;
 
 class Level : public Window
 {
@@ -33,18 +35,16 @@ private:
 	GridMask mageIdleGridMask;
 	GridMask mageWalkGridMask;
 	GridMask mageGetHitGridMask;
-	//GridMask mageFireGridMask;
+	GridMask mageMagicFireGridMask;
 
-	// // Projectiles
+	// Projectiles
 	Texture projTexture; AnimImage projImage;
 	GridMask projGridMask;
-
 	// Components
 	Tiles tiles;
 	Players players;
 	Projectiles projectiles;
-	// Systems
-	vector<State*> states;
+	Enemies enemies;
 
 public:
 	Level();
@@ -61,8 +61,5 @@ public:
 	CoordF screenToGrid(CoordF screenCoord);
 
 	Players& getPlayers() { return players; }
-	vector<State*> getStates() { return states; }
-    float calculateRotation(CoordF src, CoordF dest);
-    int rotationToDirection(float rotation);
-	int modulo(int val, int m);
+	Enemies& getEnemies() { return enemies; }
 };

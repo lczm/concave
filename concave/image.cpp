@@ -1,5 +1,4 @@
 #include "image.h"
-#include "component.h"
 
 Texture::Texture()
 {}

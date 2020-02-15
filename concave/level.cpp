@@ -26,7 +26,8 @@ void Level::initialize()
 	warriorGetHitGridMask.initialize(4420, 1045, 96, 96, 0, 1, 44, 80);
 	warriorAnimImage.initialize(&warriorTexture, {
 		warriorAttackGridMask, warriorDieGridMask, warriorIdleGridMask,
-		warriorWalkGridMask, warriorGetHitGridMask }, { 16, 21, 10, 8, 6 });
+		warriorWalkGridMask, warriorGetHitGridMask, warriorAttackGridMask }, 
+		{ 16, 21, 10, 8, 6, 20 });
 	// Mage
 	mageTexture.initialize(graphics, IMAGE_UNIT_MAGE);
 	mageAttackGridMask.initialize(0, 7, 128, 128, 0, 1, 63, 110);
@@ -34,11 +35,12 @@ void Level::initialize()
 	mageIdleGridMask.initialize(0, 1045, 96, 96, 0, 1, 47, 79);
 	mageWalkGridMask.initialize(2690, 1045, 96, 96, 0, 1, 47, 79);
 	mageGetHitGridMask.initialize(4228, 1045, 96, 96, 0, 1, 47, 79);
-	//mageFireGridMask.initialize(0, 1827, 128, 128, 0, 1, 61, 108);
+	mageMagicFireGridMask.initialize(0, 1827, 128, 128, 0, 1, 61, 108);
 	mageAnimImage.initialize(&mageTexture, {
 		mageAttackGridMask, mageDieGridMask,
 		mageIdleGridMask, mageWalkGridMask,
-		mageGetHitGridMask }, { 16, 20, 8, 8, 8, 12 });
+		mageGetHitGridMask, mageMagicFireGridMask}, 
+		{ 16, 20, 8, 8, 8, 12 });
 	// Fireball
 	projTexture.initialize(graphics, IMAGE_PROJECTILE_FIREBALL);
 	projGridMask.initialize(1, 1, 96, 96, 1, 1, 46, 46);
@@ -63,33 +65,31 @@ void Level::initialize()
 				translateHLines(Lines{ { 0, 1, 0 } }, x, y),
 				translateVLines(Lines{}, x, y));
 
-	// States
-	states.push_back(new PlayerAttackState());
-	states.push_back(new PlayerDieState());
-	states.push_back(new PlayerIdleState());
-	states.push_back(new PlayerWalkState());
-	states.push_back(new PlayerGetHitState());
-	states.push_back(new PlayerFireState());
-
 	// Player
 	players.initialize(1);
 	CoordF pPos = CoordF{ 3, 3 };
-	players.push(pPos,
+	players.push(
+		pPos, &mageAnimImage, UNIT_STATE_IDLE, 
+		playerIdleState, 0, 0, 
 		translateHLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, pPos),
 		translateVLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, pPos),
-		getStates().at(PLAYER::IDLE),
-		&mageAnimImage,
-		PLAYER::IDLE,
-		100,
-		100);
+		0, 0, 0, 0);
 
+	// Enemy
+	enemies.initialize(1);
+	CoordF ePos = CoordF{ 5, 5 };
+	enemies.push(
+		ePos, &warriorAnimImage, UNIT_STATE_WALK,
+		enemyWalkState, 0, 0.5,
+		translateHLines(Lines{ { -0.4, 0.4, -0.4 }, { -0.4, 0.4, 0.4 } }, ePos),
+		translateVLines(Lines{ { -0.4, 0.4, -0.4 }, { -0.4, 0.4, 0.4 } }, ePos));
 	// Projectiles
-	projectiles.initialize(1);
+	/*projectiles.initialize(1);
 	CoordF jPos = CoordF{ 5, 5 };
 	projectiles.push(
 		jPos, &projImage,
 		translateHLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, jPos),
-		translateVLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, jPos));
+		translateVLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, jPos));*/
 }
 
 void Level::releaseAll()
@@ -100,21 +100,23 @@ void Level::resetAll()
 
 void Level::update()
 {
-	// Move Player
-	CoordF moveDelta{ 0, 0 };
+	// Player
+	updateFSMArray(this, players.getSize(), players.getFSMArray());
+	vector<CoordF> pDeltaArray(players.getSize());
+	calculateDeltaArray(players.getSize(), pDeltaArray, players.getRotationArray(), players.getVelocityArray(), frameTime);
+	updatePositionArray(players.getSize(), players.getPositionArray(), pDeltaArray);
+	updateLinesArray(players.getSize(), players.getHLinesArray(), players.getVLinesArray(), pDeltaArray);
 
-	// Collision
-	vector<CoordF>& pPositions = players.getPositionArray();
-	vector<CoordF>& pDydx = players.getDyDxArray();
-	// vector<CoordF> pDestPositions = players.getDestPositionArray();
-	// Collision* pHCollisions = players.getHCollisions();
-	// Collision* pVCollisions = players.getVCollisions();
-	vector<State*>& pFsms = players.getFsmArray();
-	// vector<RenderInfo>* pRenderInfos = &players.getImageInfoArray();
-	for (int i = 0; i < players.getSize(); i++) {
-		pFsms[i]->update(this, i);
-		pPositions[i] += pDydx[i];
-	}
+	// Enemy
+	updateFSMArray(this, enemies.getSize(), enemies.getFSMArray());
+	vector<CoordF> eDeltaArray(enemies.getSize());
+	calculateDeltaArray(enemies.getSize(), eDeltaArray, enemies.getRotationArray(), enemies.getVelocityArray(), frameTime);
+	updatePositionArray(enemies.getSize(), enemies.getPositionArray(), eDeltaArray);
+	updateLinesArray(enemies.getSize(), enemies.getHLinesArray(), enemies.getVLinesArray(), eDeltaArray);
+
+	// Wall Collision (Temporary!) (Callback not yet implemented!)
+	updateAllWallCollision(tiles, players.getSize(), players.getHLinesArray(), players.getVLinesArray(), players.getPositionArray());
+	updateAllWallCollision(tiles, enemies.getSize(), enemies.getHLinesArray(), enemies.getVLinesArray(), enemies.getPositionArray());
 
 	// Move Camera
 	camCoord = players.getPositionArray()[0];
@@ -129,24 +131,43 @@ void Level::render()
 			graphics->drawSprite(
 				tiles.getSprite(y, x)->getSpriteData(),
 				gridToScreen(x, y), camScale);
-	for (int i = 0; i < players.getSize(); i++) {
-		// Temporary solution to make it not blurry
-		// CoordF screenCoords = gridToScreen(players.getPositionArray()[i]);
-		SpriteData sd = players.getAnimImageArray()[i]->getSpriteData(
-			players.getStateArray()[i],
-			rotationToDirection(players.getRotationArray()[i]),
-			players.getFrameNoArray()[i]);
 
-        graphics->drawSprite(sd,
-            gridToScreen(players.getPositionArray()[i]), camScale);
-	}
-	for (int i = 0; i < projectiles.getSize(); i++) {
-		SpriteData sd = projectiles.getAnimImageArray()[i]->getSpriteData(
-			0, projectiles.getRotationArray()[i],
-			projectiles.getFrameNoArray()[i]);
-		graphics->drawSprite(sd,
-			gridToScreen(projectiles.getPositionArray()[i]), camScale);
-	}
+	// Player (Temporary)
+	int playerState = players.getStateArray()[0];
+	int playerDirection = players.getDirectionArray()[0];
+	int playerFrameNo = players.getFrameNoArray()[0];
+	CoordF playerPos = players.getPositionArray()[0];
+	SpriteData playerSD = players.getAnimImageArray()[0]->getSpriteData(playerState, playerDirection, playerFrameNo);
+	graphics->drawSprite(
+		playerSD, gridToScreen(playerPos), camScale);
+
+	// Enemies (Temporary)
+	int enemyState = enemies.getStateArray()[0];
+	int enemyDirection = enemies.getDirectionArray()[0];
+	int enemyFrameNo = enemies.getFrameNoArray()[0];
+	CoordF enemyPos = enemies.getPositionArray()[0];
+	SpriteData enemySD = enemies.getAnimImageArray()[0]->getSpriteData(enemyState, enemyDirection, enemyFrameNo);
+	graphics->drawSprite(
+		enemySD, gridToScreen(enemyPos), camScale);
+
+	//for (int i = 0; i < players.getSize(); i++) {
+	//	// Temporary solution to make it not blurry
+	//	// CoordF screenCoords = gridToScreen(players.getPositionArray()[i]);
+	//	SpriteData sd = players.getAnimImageArray()[i]->getSpriteData(
+	//		players.getStateArray()[i],
+	//		rotationToDirection(players.getRotationArray()[i]),
+	//		players.getFrameNoArray()[i]);
+
+ //       graphics->drawSprite(sd,
+ //           gridToScreen(players.getPositionArray()[i]), camScale);
+	//}
+	//for (int i = 0; i < projectiles.getSize(); i++) {
+	//	SpriteData sd = projectiles.getAnimImageArray()[i]->getSpriteData(
+	//		0, projectiles.getRotationArray()[i],
+	//		projectiles.getFrameNoArray()[i]);
+	//	graphics->drawSprite(sd,
+	//		gridToScreen(projectiles.getPositionArray()[i]), camScale);
+	//}
 }
 
 CoordF Level::gridToScreen(float gx, float gy)
@@ -181,30 +202,4 @@ CoordF Level::gridToScreen(CoordF gridCoord)
 CoordF Level::screenToGrid(CoordF screenCoord)
 {
 	return screenToGrid(screenCoord.x, screenCoord.y);
-}
-
-float Level::calculateRotation(CoordF src, CoordF dest)
-{
-    float dx = dest.x - src.x;
-    float dy = dest.y - src.y;
-    return atan2(dy, dx);
-}
-
-int Level::rotationToDirection(float rotation)
-{
-	int direction;
-	// Offset dimetric angle
-	rotation += 0.4461934;
-    rotation -= PI / 2;
-    rotation /= PI / 4;
-	direction = round(rotation);
-	direction = modulo(direction, 8);
-	return direction;
-}
-
-int Level::modulo(int val, int m)
-{
-	int mod = val % m;
-	if (val < 0) mod += m;
-	return mod;
 }

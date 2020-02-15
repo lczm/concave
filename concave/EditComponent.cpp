@@ -12,6 +12,18 @@ void EditComponent::readFromFile(std::string mapString, int map[mapWidth][mapHei
 	}
 }
 
+
+void EditComponent::readFromFile2(std::string mapString, int map[6][6], int level)
+{
+	std::ifstream file("text\\" + std::to_string(level) + mapString);
+	for (int r = 0; r < mapWidth; r++)
+	{
+		for (int c = 0; c < mapHeight; c++) {
+			file >> map[r][c];
+		}
+	}
+}
+
 void EditComponent::writeToFile(int map[mapWidth][mapHeight], int i)
 {
 	int random = rand();
@@ -199,7 +211,12 @@ void EditComponent::verticalCorridor(int y1, int y2, int x, int map[mapWidth][ma
 
 /* next iteration to set random places and to add a door*/
 void EditComponent::placeItemRoom(Room room, int map[mapWidth][mapHeight])
-{
+{	
+
+
+	int room1[6][6];
+	readFromFile2("loot.txt", room1, 1);
+
 	//walls occupy the first and last X values
 	int x1 = room.getDimensions().x1 + 1;
 	int x2 = room.getDimensions().x2 - 1;
@@ -215,14 +232,31 @@ void EditComponent::placeItemRoom(Room room, int map[mapWidth][mapHeight])
 	int bottom = room.getRoomItems().bottom;
 
 
-	//setting a floor value
-	for (int x = x1; x < x2; x++)
+	//get appropriate x1 and x2 to fit within boundaries for templates
+	while ((x2 - x1) != 6 && (x2-x1) > 6)
 	{
-		for (int y = y1 ; y < y2 ; y++)
-		{
-			map[x][y] = room.getRoomItems().flooring;
+		x1 = x1 + 1;
+		x2 = x2 - 1;
+
+	}
+
+	while ((y2 - y1) != 6 && (y2 - y1) > 6)
+	{
+		y1 += 1;
+		y2 -= 1;
+	}
+
+	//filling it up with the template
+	for (int i = x1; i < x2; i++)
+	{	
+		for (int j = y1 ; j < y2; j++)
+		{	
+			map[i][j] = room1[(x2-1)-i][(y2-1)-j];
 		}
 	}
+
+
+	/*
 
 	//placing items
 	for (int i = x1 ; i < x2 ; i++)
@@ -237,6 +271,7 @@ void EditComponent::placeItemRoom(Room room, int map[mapWidth][mapHeight])
 		map[x1][i] = left;
 		map[x2][i] = right;
 	}
+	*/
 
 }
 
@@ -271,28 +306,27 @@ void EditComponent::changeObjects(int initial, int changeTo, int map[mapWidth][m
 //changes object look
 void EditComponent::animateObjects()
 {
-	gm.editRecord("text\\gameInfo.csv",0,2,3, "0save.txt", "blah");
-	gm.editRecord("text\\gameInfo.csv", 0, 2, 3, "1save.txt", "blah");
-	gm.editRecord("text\\gameInfo.csv", 1, 1, 3, "0", "1");
-	gm.editRecord("text\\gameInfo.csv", 2, 2, 3, "No", "1");
-	gm.editRecord("text\\gameInfo.csv", 0, 1, 3, "", "test");
-	gm.editRecord("text\\gameInfo.csv", 0, 2, 3, "", "wo");
+	/*
+		gm.editRecord("text\\gameInfo.csv",0,2,3, "0save.txt", "blah");
+		gm.editRecord("text\\gameInfo.csv", 0, 2, 3, "1save.txt", "blah");
+		gm.editRecord("text\\gameInfo.csv", 1, 1, 3, "0", "1");
+		gm.editRecord("text\\gameInfo.csv", 2, 2, 3, "No", "1");
+		gm.editRecord("text\\gameInfo.csv", 0, 1, 3, "", "test");
+		gm.editRecord("text\\gameInfo.csv", 0, 2, 3, "", "wo");
+	*/
 }
 
 
 /* next iteration set percentages on the room types*/
 void EditComponent::determineRoomTypes(Room &room)
 {
-	int total = 0;
 	std::vector<std::vector<std::string>> roomTypeRecords = gm.read(ROOM_INFO, 9);
-
 
 	int rangeMin = std::stoi(roomTypeRecords[1][roomTypesCsv::no]);
 	int rangeMax = std::stoi(roomTypeRecords[roomTypeRecords.size()-1][roomTypesCsv::no]);
 
 	int ranRoom = random(rangeMin, rangeMax);
 	std::vector<std::vector<std::string>> records  = gm.searchForRecord(ROOM_INFO, to_string(ranRoom), 9, roomTypesCsv::no);
-
 
 	//only one value will be returned
 	int left = std::stoi(records[0][roomTypesCsv::left]);

@@ -30,6 +30,9 @@ private:
 	GridMask flameGridMask;
 	Image flameImage;
 
+	GridMask deadPeopleGridMask;
+	Image deadPeopleImage;
+
 public:
 	RenderLevel();
 	~RenderLevel();

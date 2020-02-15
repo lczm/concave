@@ -47,8 +47,12 @@ void RenderLevel::initialize(Graphics* graphics, Input* input, int type)
 	cabinetImage.initialize(&manyItemsTexture, cabinetGridMask);
 
 	//fire
-	flameGridMask.initialize(0, 0, 69, 107, 1, 1, 50, 20);
+	flameGridMask.initialize(0, 0, 69, 107, 1, 1, -40, 20);
 	flameImage.initialize(&manyItemsTexture, flameGridMask);
+
+	//dead man
+	deadPeopleGridMask.initialize(0, 0, 113, 131, 1, 1, 40, 20);
+	deadPeopleImage.initialize(&manyItemsTexture, flameGridMask);
 
 }
 
@@ -105,17 +109,8 @@ void RenderLevel::renderMap(int map[mapWidth][mapHeight], int x, int y, SpriteDa
 		case 13:
 			flameImage.getSpriteData(sd, CoordI{ 0,3 });
 			break;
-
-		//flooring
-		case 14:
-			//white on top flooring
-			tileImage.getSpriteData(sd, CoordI{ 14,6 });
-			break;
-		case 15:
-			tileImage.getSpriteData(sd, CoordI{ 0,3 });
-			break;
-		case 16:
-			tileImage.getSpriteData(sd, CoordI{ 0,3 });
+		case 14: 
+			deadPeopleImage.getSpriteData(sd, CoordI{ 16,17 });
 			break;
 		}
 	}

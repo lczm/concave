@@ -99,7 +99,7 @@ void Level::levelEdit()
 		CoordF mouse = { input->getMouseX(), input->getMouseY() };
 		CoordF gridPos1 = screenToGrid(mouse.x, mouse.y);
 		CoordI gridPos = { gridPos1.x, gridPos1.y };
-		++map[gridPos.x][gridPos.y] %= 14;
+		++map[gridPos.x][gridPos.y] %= 15;
 		input->clearCharIn();
 	}
 

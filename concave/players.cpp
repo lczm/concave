@@ -40,7 +40,7 @@ void Players::push(CoordF position, Lines hLines, Lines vLines,
 	frameNoArray[size] = 0;
 	directionArray[size] = 0;
 	timerArray[size] = 0;
-	delayArray[size] = float(0.05);
+	delayArray[size] = float(0.03);
 	healthArray[size] = health;
 	manaArray[size] = mana;
 	rotationArray[size] = 0;

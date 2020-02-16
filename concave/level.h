@@ -37,8 +37,9 @@ private:
 		wallSprite, blood, door, chest,
 		wallEast, wallWest, WallConnect,
 		wallPath, barrel, fireItem, torch,
-		book, dead, armour, witch, banner,
-		cabinet, bloodPool, store, cow;
+		book, dead, dead2, dead3, dead4, dead5,
+		armour, witch, banner, cabinet, 
+		bloodPool, store, cow;
 
 	/* Tile texture, masks and images*/
 	Texture itemTexture;	  GridMask itemGridMask;      Image itemImage;

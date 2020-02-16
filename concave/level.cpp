@@ -355,7 +355,6 @@ void Level::render()
         CoordF enemyPos = enemies.getPositionArray()[i];
 		CoordF coords = gridToScreen(enemyPos);
         SpriteData enemySD = enemies.getAnimImageArray()[i]->getSpriteData(enemyState, enemyDirection, enemyFrameNo);
-		std::cout << coords.x << "|" << coords.y << std::endl;
         graphics->drawSprite(
             enemySD, int(coords.x), int(coords.y), camScale);
 	}

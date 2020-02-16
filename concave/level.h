@@ -81,6 +81,7 @@ private:
 	GridMask mageWalkGridMask;
 	GridMask mageGetHitGridMask;
 	GridMask mageMagicFireGridMask;
+	GridMask mageMagicSmokeGridMask;
 
 	// Projectiles
 	Texture projTexture; AnimImage projImage;

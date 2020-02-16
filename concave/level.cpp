@@ -125,11 +125,13 @@ void Level::initialize()
 	mageWalkGridMask.initialize(2690, 1045, 96, 96, 0, 1, 47, 79);
 	mageGetHitGridMask.initialize(4228, 1045, 96, 96, 0, 1, 47, 79);
 	mageMagicFireGridMask.initialize(0, 1827, 128, 128, 0, 1, 61, 108);
+	mageMagicSmokeGridMask.initialize(3074, 1827, 128, 128, 0, 1, 60, 108);
 	mageAnimImage.initialize(&mageTexture, {
 		mageAttackGridMask, mageDieGridMask,
 		mageIdleGridMask, mageWalkGridMask,
-		mageGetHitGridMask, mageMagicFireGridMask}, 
-		{ 16, 20, 8, 8, 8, 12 });
+		mageGetHitGridMask, mageMagicFireGridMask, 
+		mageMagicSmokeGridMask}, 
+		{ 16, 20, 8, 8, 8, 12, 12 });
 	// Fireball
 	projTexture.initialize(graphics, IMAGE_PROJECTILE_FIREBALL);
 	projGridMask.initialize(1, 1, 96, 96, 1, 1, 46, 46);

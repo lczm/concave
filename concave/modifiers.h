@@ -1,5 +1,6 @@
 #pragma once
 #include "players.h"
+#include "projectiles.h"
 
 // Increase max health by %% amount
 void increaseMaxHealth(int index, Players& players, float amount);
@@ -16,5 +17,9 @@ void increaseMovementSpeed(int index, Players& players, float amount);
 // Increase maximum projectiles
 void increaseProjectilesAmount(int index, Players& players, int amount);
 
+// Increase projectile size
+void increaseProjectileSize(int index, Projectiles& projectiles, int amount);
+
 // Increase damage
 void increaseDamage(int index, Players& players, float amount);
+

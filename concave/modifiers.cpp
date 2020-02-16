@@ -30,6 +30,12 @@ void increaseProjectilesAmount(int index, Players& players, int amount) {
     currentAmount = amount;
 }
 
+void increaseProjectileSize(int index, Projectiles& projectiles, int amount)
+{
+    float& size = projectiles.getSizeArray()[index];
+    size *= amount;
+}
+
 // Increase damage
 void increaseDamage(int index, Players& players, float amount) {
     float& damage = players.getDamageArray()[index];

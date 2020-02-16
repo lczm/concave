@@ -198,18 +198,18 @@ void Level::initialize()
 	tiles.initialize(mapWidth, mapHeight);
 	underTiles.initialize(mapWidth, mapHeight);
 	tilesInitialize();
-	// tiles.initialize(20, 20);
-	/*for (int y = 0; y < tiles.getRows(); y++)
+	/* tiles.initialize(20, 20);
+	for (int y = 0; y < tiles.getRows(); y++)
 		for (int x = 0; x < tiles.getCols(); x++)
 			tiles.set(y, x, &wallSprite,
 				translateHLines(Lines{ { 0, 1, 0 } }, x, y),
-				translateVLines(Lines{}, x, y));*/
-	/*for (int y = 1; y < tiles.getRows() - 1; y++)
+				translateVLines(Lines{}, x, y));
+	for (int y = 1; y < tiles.getRows() - 1; y++)
 		for (int x = 1; x < tiles.getCols() - 1; x++)
 			tiles.set(y, x, &floorSprite,
 				translateHLines(Lines{}, x, y),
-				translateVLines(Lines{}, x, y));*/
-	/*for (int y = 7; y < tiles.getRows() - 7; y++)
+				translateVLines(Lines{}, x, y));
+	for (int y = 7; y < tiles.getRows() - 7; y++)
 		for (int x = 7; x < tiles.getCols() - 7; x++)
 			tiles.set(y, x, &wallSprite,
 				translateHLines(Lines{ { 0, 1, 0 } }, x, y),
@@ -232,14 +232,14 @@ void Level::initialize()
 
 	// Enemy
 	enemies.initialize(2);
-	CoordF ePos = CoordF{ 0, 0 };
+	CoordF ePos = CoordF{ 2, 2 };
 	enemies.push(
 		ePos, &balrogAnimImage, UNIT_STATE_WALK,
 		enemyWalkState, 0, 0.5,
 		translateHLines(Lines{ { -0.4, 0.4, -0.4 }, { -0.4, 0.4, 0.4 } }, ePos),
 		translateVLines(Lines{ { -0.4, 0.4, -0.4 }, { -0.4, 0.4, 0.4 } }, ePos));
 
-	CoordF ePos2 = CoordF{ 0, 1 };
+	CoordF ePos2 = CoordF{ 1, 1 };
 	enemies.push(
 		ePos2, &balrogAnimImage, UNIT_STATE_WALK,
 		enemyWalkState, 0, 0.5,
@@ -285,9 +285,9 @@ void Level::update()
 	updateDirectionArray(enemies.getSize(), enemies.getRotationArray(), enemies.getDirectionArray());
 
 	// Update Collision
-	// updateLineISetItersArray(players.getHLineISet(), players.getVLineISet(), players.getSize(), players.getHLineISetItersArray(), players.getVLineISetItersArray(), pDeltaArray);
-	// updateLineISetItersArray(enemies.getHLineISet(), enemies.getVLineISet(), enemies.getSize(), enemies.getHLineISetItersArray(), enemies.getVLineISetItersArray(), eDeltaArray);
-	// updateLinesArray(projectiles.getSize(), projectiles.getHLinesArray(), projectiles.getVLinesArray(), jDeltaArray);
+	updateLineISetItersArray(players.getHLineISet(), players.getVLineISet(), players.getSize(), players.getHLineISetItersArray(), players.getVLineISetItersArray(), pDeltaArray);
+	updateLineISetItersArray(enemies.getHLineISet(), enemies.getVLineISet(), enemies.getSize(), enemies.getHLineISetItersArray(), enemies.getVLineISetItersArray(), eDeltaArray);
+	updateLinesArray(projectiles.getSize(), projectiles.getHLinesArray(), projectiles.getVLinesArray(), jDeltaArray);
 
 	// Get Collision (Wall) (Horizontal)
 	/*vector<LineI> pRLineIArray; vector<Line> pBLineArray;
@@ -361,22 +361,40 @@ void Level::update()
 	getVLineIArrayOfWallCollision(jVLineIArray, jHLineArray, tiles, projectiles.getSize(), projectiles.getVLinesArray());
 
 	// Projectiles To Wall Collision Response
-	for (int i = 0; i < jHLineIArray.size(); i++) {
+	for (int i = jHLineIArray.size() - 1; i >= 0; i--) {
 		LineI lineI = jHLineIArray[i]; Line line = jVLineArray[i];
-		CoordF& pos = projectiles.getPositionArray()[lineI.id];
-		CoordF delta{ getDeltaXResponse(lineI, line, pos), 0 };
-		pos += delta;
-		updateHLines(projectiles.getHLinesArray()[i], delta);
-		updateVLines(projectiles.getVLinesArray()[i], delta);
+		projectiles.pop(lineI.id);
+		//CoordF& pos = projectiles.getPositionArray()[lineI.id];
+		//CoordF delta{ getDeltaXResponse(lineI, line, pos), 0 };
+		//pos += delta;
+		//updateHLines(projectiles.getHLinesArray()[i], delta);
+		//updateVLines(projectiles.getVLinesArray()[i], delta);
 	}
-	for (int i = 0; i < jVLineIArray.size(); i++) {
+	for (int i = jVLineIArray.size() - 1; i >= 0 ; i--) {
 		LineI lineI = jVLineIArray[i]; Line line = jHLineArray[i];
-		CoordF& pos = projectiles.getPositionArray()[lineI.id];
-		CoordF delta{ 0, getDeltaYResponse(lineI, line, pos) };
-		pos += delta;
-		updateHLines(projectiles.getHLinesArray()[i], delta);
-		updateVLines(projectiles.getVLinesArray()[i], delta);
+		projectiles.pop(lineI.id);
+		//CoordF& pos = projectiles.getPositionArray()[lineI.id];
+		//CoordF delta{ 0, getDeltaYResponse(lineI, line, pos) };
+		//pos += delta;
+		//updateHLines(projectiles.getHLinesArray()[i], delta);
+		//updateVLines(projectiles.getVLinesArray()[i], delta);
 	}
+	//for (int i = 0; i < jHLineIArray.size(); i++) {
+	//	LineI lineI = jHLineIArray[i]; Line line = jVLineArray[i];
+	//	CoordF& pos = projectiles.getPositionArray()[lineI.id];
+	//	CoordF delta{ getDeltaXResponse(lineI, line, pos), 0 };
+	//	pos += delta;
+	//	updateHLines(projectiles.getHLinesArray()[i], delta);
+	//	updateVLines(projectiles.getVLinesArray()[i], delta);
+	//}
+	//for (int i = 0; i < jVLineIArray.size(); i++) {
+	//	LineI lineI = jVLineIArray[i]; Line line = jHLineArray[i];
+	//	CoordF& pos = projectiles.getPositionArray()[lineI.id];
+	//	CoordF delta{ 0, getDeltaYResponse(lineI, line, pos) };
+	//	pos += delta;
+	//	updateHLines(projectiles.getHLinesArray()[i], delta);
+	//	updateVLines(projectiles.getVLinesArray()[i], delta);
+	//}
 
 	// AnimObjects (Temp)
 	for (int i = 0; i < animObjects.getSize(); i++) {
@@ -394,17 +412,11 @@ void Level::update()
 			}
 		}
 	}
-
+	
 	// Move Camera
 	camCoord = players.getPositionArray()[0];
 	if (input->isKeyDown('O')) camScale *= 1 - 0.01;
 	if (input->isKeyDown('P')) camScale *= 1 + 0.01;
-
-	// Use this for audio
-	// audioEngine->play("splat 2");
-	if (input->wasKeyPressed('0x39')) {
-		audioEngine->play("splat 2");
-    }
 	levelEdit();
 	changeLevel();
 }
@@ -496,6 +508,9 @@ void Level::render()
 		graphics->drawSprite(sd,
 			int(coords.x), int(coords.y), camScale);
 	}
+
+	// Use this for audio
+    // audioEngine->play("splat 2");
 }
 
 CoordF Level::gridToScreen(float gx, float gy)

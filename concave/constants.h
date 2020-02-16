@@ -138,6 +138,31 @@ const char IMAGE_UNIT_MAGE[] = "sprites/unit_mage.png";
 const char IMAGE_PROJECTILE_FIREBALL[] = "sprites/projectile_fireball.png";
 
 //-----------------------------------------------
+//                Texture (Menu)
+//-----------------------------------------------
+const char MENU_BG[] = "sprites/menubg.jpg";
+const char OPTIONS_BG[] = "sprites/optionsbg.png";
+const char INS_BG[] = "sprites/insbg.png";
+const char CR_BG[] = "sprites/crbg.png";
+
+const char BACK_BTN_TEXTURE[] = "sprites/back.png";
+const char BACK_HOVER_TEXTURE[] = "sprites/backhover.png";
+
+
+const char PLAY_BTN_TEXTURE[] = "sprites/play.png";
+const char INS_BTN_TEXTURE[] = "sprites/instruction.png";
+const char OPT_BTN_TEXTURE[] = "sprites/options.png";
+const char CR_BTN_TEXTURE[] = "sprites/credits.png";
+
+const char PLAY_HOVER_TEXTURE[] = "sprites/playhover.png";
+const char INS_HOVER_TEXTURE[] = "sprites/instructionhover.png";
+const char OPT_HOVER_TEXTURE[] = "sprites/optionshover.png";
+const char CR_HOVER_TEXTURE[] = "sprites/creditshover.png";
+
+const char SCROLLBAR[] = "sprites/scrollbar.png";
+const char SCOLLER[] = "sprites/scroller.png";
+
+//-----------------------------------------------
 //					  Other
 //-----------------------------------------------
 // Safely delete pointer referenced item

@@ -1,191 +1,73 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
+    <ClCompile Include="animObjects.cpp" />
+    <ClCompile Include="cellular.cpp" />
+    <ClCompile Include="concave.cpp" />
+    <ClCompile Include="EditComponent.cpp" />
+    <ClCompile Include="enemies.cpp" />
+    <ClCompile Include="enemyFSM.cpp" />
+    <ClCompile Include="fsmSystem.cpp" />
+    <ClCompile Include="modifiers.cpp" />
+    <ClCompile Include="movementSystem.cpp" />
+    <ClCompile Include="objects.cpp" />
+    <ClCompile Include="players.cpp" />
+    <ClCompile Include="game.cpp" />
+    <ClCompile Include="gameInfoComponent.cpp" />
+    <ClCompile Include="graphics.cpp" />
+    <ClCompile Include="hud.cpp" />
+    <ClCompile Include="image.cpp" />
+    <ClCompile Include="input.cpp" />
+    <ClCompile Include="level.cpp" />
+    <ClCompile Include="mainMenu.cpp" />
+    <ClCompile Include="playerFSM.cpp" />
+    <ClCompile Include="projectiles.cpp" />
+    <ClCompile Include="collisionSystem.cpp" />
+    <ClCompile Include="renderLevel.cpp" />
+    <ClCompile Include="shopNpc.cpp" />
+    <ClCompile Include="tiles.cpp" />
+    <ClCompile Include="room.cpp" />
+    <ClCompile Include="window.cpp" />
+    <ClCompile Include="winmain.cpp" />
+    <ClCompile Include="instructions.cpp" />
+    <ClCompile Include="credits.cpp" />
+    <ClCompile Include="options.cpp" />
+    <ClCompile Include="button.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="input.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="winmain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="concave.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="window.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="mainMenu.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="hud.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="level.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="image.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="cellular.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="room.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="gameInfoComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="players.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="tiles.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="projectiles.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="playerFSM.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="collisionSystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="movementSystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="fsmSystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="enemyFSM.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="enemies.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="shopNpc.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="EditComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="modifiers.cpp">
-    <ClCompile Include="objects.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="renderLevel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="animObjects.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="constants.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="gameError.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="input.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="concave.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="window.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="mainMenu.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="hud.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="level.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="image.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="players.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="tiles.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="projectiles.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="playerFSM.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="collisionSystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="movementSystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="fsmSystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="enemyFSM.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="enemies.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="cellular.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="EditComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="room.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="gameInfoComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="component.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="shopNpc.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="modifiers.h">
-    <ClInclude Include="objects.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="renderLevel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="animObjects.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <ClInclude Include="animObjects.h" />
+    <ClInclude Include="cellular.h" />
+    <ClInclude Include="component.h" />
+    <ClInclude Include="concave.h" />
+    <ClInclude Include="constants.h" />
+    <ClInclude Include="EditComponent.h" />
+    <ClInclude Include="enemies.h" />
+    <ClInclude Include="enemyFSM.h" />
+    <ClInclude Include="fsmSystem.h" />
+    <ClInclude Include="modifiers.h" />
+    <ClInclude Include="movementSystem.h" />
+    <ClInclude Include="objects.h" />
+    <ClInclude Include="players.h" />
+    <ClInclude Include="game.h" />
+    <ClInclude Include="gameError.h" />
+    <ClInclude Include="gameInfoComponent.h" />
+    <ClInclude Include="graphics.h" />
+    <ClInclude Include="hud.h" />
+    <ClInclude Include="image.h" />
+    <ClInclude Include="input.h" />
+    <ClInclude Include="level.h" />
+    <ClInclude Include="mainMenu.h" />
+    <ClInclude Include="renderLevel.h" />
+    <ClInclude Include="room.h" />
+    <ClInclude Include="playerFSM.h" />
+    <ClInclude Include="projectiles.h" />
+    <ClInclude Include="collisionSystem.h" />
+    <ClInclude Include="shopNpc.h" />
+    <ClInclude Include="tiles.h" />
+    <ClInclude Include="window.h" />
+    <ClInclude Include="instructions.h" />
+    <ClInclude Include="credits.h" />
+    <ClInclude Include="options.h" />
+    <ClInclude Include="button.h" />
   </ItemGroup>
 </Project>

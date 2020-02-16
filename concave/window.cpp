@@ -9,6 +9,9 @@ vector<Window*> Window::windows;
 MainMenu Window::mainMenu;
 Level Window::level;
 HUD Window::hud;
+Instructions Window::instructions;
+Options Window::options;
+Credits Window::credits;
 
 Window::Window()
 {}

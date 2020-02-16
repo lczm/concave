@@ -27,7 +27,6 @@ void Graphics::initialize(HWND hw, int w, int h, bool full)
     width = w;
     height = h;
     fullscreen = full;
-
     //initialize Direct3D
     direct3d = Direct3DCreate9(D3D_SDK_VERSION);
     if (direct3d == NULL)

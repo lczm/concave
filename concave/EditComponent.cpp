@@ -160,7 +160,7 @@ void EditComponent::placeWall(int map[mapWidth][mapHeight], Room newRoom)
 	}
 
 	//random place to put a door
-	int rand = random(1, newRoom.getRoomHeight());
+	int rand = random(1, newRoom.getRoomHeight()-1);
 
 	for (int j = 1; j < (newRoom.getRoomHeight()); j++)
 	{

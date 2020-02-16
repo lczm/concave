@@ -62,6 +62,7 @@ const char MENU_BG[] = "sprites/menubg.jpg";
 const char OPTIONS_BG[] = "sprites/optionsbg.png";
 const char INS_BG[] = "sprites/insbg.png";
 const char CR_BG[] = "sprites/crbg.png";
+const char LOGO[] = "sprites/logo.png";
 
 const char BACK_BTN_TEXTURE[] = "sprites/back.png";
 const char BACK_HOVER_TEXTURE[] = "sprites/backhover.png";

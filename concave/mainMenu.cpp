@@ -18,6 +18,9 @@ void MainMenu::initialize()
 	menuBgTexture.initialize(Window::graphics, MENU_BG);
 	menuBgTexture.getSpriteData(menuBg);
 
+	logoTexture.initialize(Window::graphics, LOGO);
+	logoTexture.getSpriteData(logo);
+
 
 }
 
@@ -59,17 +62,17 @@ void MainMenu::initButtons()
 
 	
 
-	playbtn.setPos(GAME_WIDTH / 2 - playbtn.getWidth() / 2, 225);
-	playHover.setPos(GAME_WIDTH / 2 - playbtn.getWidth() / 2, 225);
+	playbtn.setPos(GAME_WIDTH / 2 - playbtn.getWidth() / 2, 375);
+	playHover.setPos(GAME_WIDTH / 2 - playbtn.getWidth() / 2, 375);
 
-	insbtn.setPos(GAME_WIDTH / 2 - playbtn.getWidth() / 2, 300);
-	insHover.setPos(GAME_WIDTH / 2 - playbtn.getWidth() / 2, 300);
+	insbtn.setPos(GAME_WIDTH / 2 - playbtn.getWidth() / 2, 450);
+	insHover.setPos(GAME_WIDTH / 2 - playbtn.getWidth() / 2, 450);
 
-	optbtn.setPos(GAME_WIDTH / 2 - playbtn.getWidth() / 2, 375);
-	optHover.setPos(GAME_WIDTH / 2 - playbtn.getWidth() / 2, 375);
+	optbtn.setPos(GAME_WIDTH / 2 - playbtn.getWidth() / 2, 525);
+	optHover.setPos(GAME_WIDTH / 2 - playbtn.getWidth() / 2, 525);
 
-	crbtn.setPos(GAME_WIDTH / 2 - playbtn.getWidth() / 2, 450);
-	crHover.setPos(GAME_WIDTH / 2 - playbtn.getWidth() / 2, 450);
+	crbtn.setPos(GAME_WIDTH / 2 - playbtn.getWidth() / 2, 600);
+	crHover.setPos(GAME_WIDTH / 2 - playbtn.getWidth() / 2, 600);
 
 
 }
@@ -170,6 +173,10 @@ void MainMenu::update()
 void MainMenu::render()
 {
 	graphics->drawSprite(menuBg, 0, 0, 1);
+
+	graphics->drawSprite(logo, 400, 50, 0.5);
+
+
 	
 
 	playbtn.draw();

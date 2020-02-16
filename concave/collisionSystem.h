@@ -2,11 +2,13 @@
 #include "constants.h"
 #include "tiles.h"
 
+// Copy Transform (Compile-Time Use Only)
 Lines translateHLines(Lines lines, CoordF delta);
 Lines translateVLines(Lines lines, CoordF delta);
 Lines translateHLines(Lines lines, float x, float y);
 Lines translateVLines(Lines lines, float x, float y);
 
+// Inplace Transform
 void updateHLines(Lines& lines, CoordF delta);
 void updateVLines(Lines& lines, CoordF delta);
 void updateLines(Lines& lines, float deltaA, float deltaB);
@@ -14,6 +16,7 @@ void updateHLineISetIters(LineISet& lineISet, LineISetIters& lineISetIters, Coor
 void updateVLineISetIters(LineISet& lineISet, LineISetIters& lineISetIters, CoordF delta);
 void updateLineISetIters(LineISet& lineISet, LineISetIters& lineISetIters, float deltaA, float deltaB);
 
+// Wall Collision (Tiles) -> (Lines, LineISetIter)
 bool checkLineToLineCollision(Line hLine, Line vLine);
 bool checkHLineToWallCollision(Tiles& tiles, Line hLine, Line& vLine);
 bool checkVLineToWallCollision(Tiles& tiles, Line vLine, Line& hLine);
@@ -22,6 +25,7 @@ bool checkVLinesToWallCollision(Tiles& tiles, Lines& vLines, Line& vLine, Line& 
 bool checkHLineISetItersToWallCollision(Tiles& tiles, LineISetIters& hLineISetIters, LineI& hLineI, Line& vLine);
 bool checkVLineISetItersToWallCollision(Tiles& tiles, LineISetIters& vLineISetIters, LineI& vLineI, Line& hLine);
 
+// Dynamic Collision (LineISet) -> (Lines, LineISetIter)
 //bool checkHLineToVLineISetCollision(LineISet& vLineISet, Line hLine, LineI& vLineI);
 //bool checkVLineToHLineISetCollision(LineISet& hLineISet, Line vLine, LineI& hLineI);
 //bool checkHLinesToVLineISetCollision(LineISet& vLineISet, Lines& hLines, Line& hLine, LineI& vLineI);
@@ -30,11 +34,14 @@ bool checkLineToLineISetCollision(LineISet& lineISet, Line line, LineI& lineI);
 bool checkLinesToLineISetCollision(LineISet& lineISet, Lines& lines, Line& line, LineI& lineI);
 bool checkLineISetItersToLineISetCollision(LineISet& lineISet, LineISetIters& lineISetIters, LineI& rLineI, LineI& bLineI);
 
+// Collision Response
 float getDeltaXResponse(Line rHLine, Line bVLine, CoordF pos);
 float getDeltaYResponse(Line rVLine, Line bHLine, CoordF pos);
 
-void updateLinesArray(int size, vector<Lines>& hLinesArray, vector<Lines>& vLinesArray, vector<CoordF> deltaArray);
-//void updateAllWallCollision(Tiles& tiles, int size, vector<Lines>& hLinesArray, vector<Lines>& vLinesArray, vector<CoordF>& positionArray);
+
+
+void updateLinesArray(int size, vector<Lines>& hLinesArray, vector<Lines>& vLinesArray, vector<CoordF>& deltaArray);
+void updateLineISetItersArray(LineISet& hLineISet, LineISet& vLineISet, int size, vector<LineISetIters>& hLineISetItersArray, vector<LineISetIters>& vLineISetItersArray, vector<CoordF>& deltaArray);
 
 void getHLineIArrayOfWallCollision(vector<LineI>& hLineIArray, vector<Line>& vLineArray, Tiles& tiles, int size, vector<Lines>& hLinesArray);
 void getVLineIArrayOfWallCollision(vector<LineI>& vLineIArray, vector<Line>& hLineArray, Tiles& tiles, int size, vector<Lines>& vLinesArray);

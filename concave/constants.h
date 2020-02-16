@@ -132,6 +132,10 @@ const char IMAGE_ARMOURITEMS_DUNGEON[] = "sprites/armour.png";
 const char IMAGE_WITCHITEMS_DUNGEON[] = "sprites/witchStuff.png";
 const char IMAGE_BANNERITEMS_DUNGEON[] = "sprites/banner.png";
 const char IMAGE_CABINETITEMS_DUNGEON[] = "sprites/cabinet.png";
+const char IMAGE_BLOODPOND_DUNGEON[] = "sprites/bloodPond.png";
+const char IMAGE_FIRE_DUNGEON[] = "sprites/fireHole.png";
+const char IMAGE_TORCH_DUNGEON[] = "sprites/torches.png";
+const char IMAGE_SHELVES_DUNGEON[] = "sprites/store.png";
 
 //-----------------------------------------------
 //                Image (Units)

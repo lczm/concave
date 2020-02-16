@@ -59,10 +59,7 @@ void Level::initialize()
 	cabinetGridMask.initialize(0, 0, 111, 110, 1, 1, 20, 80);
 	cabinetImage.initialize(&cabinetTexture, cabinetGridMask);
 
-	//fire
-	flameGridMask.initialize(0, 0, 88, 118, 1, 1, 40, 10);
-	flameImage.initialize(&manyItemsTexture, flameGridMask);
-
+	
 	//bookstand
 	bookGridMask.initialize(0, 0, 76, 80, 1, 1, 45, 44);
 	bookImage.initialize(&manyItemsTexture, bookGridMask);
@@ -87,6 +84,22 @@ void Level::initialize()
 	bannerGridMask.initialize(0, 0, 65, 74, 1, 1, 15, 60);
 	bannerImage.initialize(&bannerTexture, bannerGridMask);
 
+	//bloodPool
+	bloodPoolTexture.initialize(graphics, IMAGE_BLOODPOND_DUNGEON);
+	bloodPoolGridMask.initialize(4, 3, 105, 89, 1, 1,58, 60);
+	bloodPoolImage.initialize(&bloodPoolTexture, bloodPoolGridMask);
+
+	//torch
+	torchTexture.initialize(graphics, IMAGE_TORCH_DUNGEON);
+	torchGridMask.initialize(384, 580, 96, 0, 0, 0, 48, 52);
+	torchImage.initialize(&torchTexture, torchGridMask);
+
+	//shelf
+	storeTexture.initialize(graphics, IMAGE_SHELVES_DUNGEON);
+	storeGridMask.initialize(0, 0, 78, 84, 1, 1, 59, 59);
+	storeImage.initialize(&storeTexture, storeGridMask);
+
+
 
 	//church sprites
 	floorSprite.initialize(&tileImage, IMAGE_MAP.at(ImageType::churchFloor));
@@ -106,11 +119,16 @@ void Level::initialize()
 	witch.initialize(&witchImage, CoordI{ 0,0 });
 	banner.initialize(&bannerImage, CoordI{ 0,0 });
 	cabinet.initialize(&cabinetImage, CoordI{ 0,0 });
+	bloodPool.initialize(&bloodPoolImage, CoordI{ 0,0 });
+	torch.initialize(&torchImage, CoordI{ 2,4 });
+	store.initialize(&storeImage, CoordI{ 0,0 });
 
 	//Animation
 	doorAnim.initialize(&tileTexture, { tileGridMask }, {});
 	chestAnim.initialize(&tileTexture, { tileGridMask }, {});
-	barrelAnim.initialize(&manyItemsTexture, { manyItemsGridMask }, {});
+	barrelAnim.initialize(&manyItemsTexture, { manyItemsGridMask }, {5});
+	bloodPoolAnim.initialize(&bloodPoolTexture, { bloodPoolGridMask }, {4});
+	torchAnim.initialize(&torchTexture, {torchGridMask}, { 11 });
 
 	// Warrior
 	warriorTexture.initialize(graphics, IMAGE_UNIT_WARRIOR);
@@ -151,24 +169,6 @@ void Level::initialize()
 	tiles.initialize(mapWidth, mapHeight);
 	underTiles.initialize(mapWidth, mapHeight);
 	tilesInitialize();
-	
-	/*
-	for (int y = 0; y < tiles.getRows(); y++)
-		for (int x = 0; x < tiles.getCols(); x++)
-			tiles.set(y, x, &wallSprite,
-				translateHLines(Lines{ { 0, 1, 0 } }, x, y),
-				translateVLines(Lines{}, x, y));
-	for (int y = 1; y < tiles.getRows() - 1; y++)
-		for (int x = 1; x < tiles.getCols() - 1; x++)
-			tiles.set(y, x, &floorSprite,
-				translateHLines(Lines{}, x, y),
-				translateVLines(Lines{}, x, y));
-	for (int y = 7; y < tiles.getRows() - 7; y++)
-		for (int x = 7; x < tiles.getCols() - 7; x++)
-			tiles.set(y, x, &wallSprite,
-				translateHLines(Lines{ { 0, 1, 0 } }, x, y),
-				translateVLines(Lines{}, x, y));
-	*/
 
 	// Player
 	players.initialize(1);
@@ -206,30 +206,49 @@ void Level::resetAll()
 
 void Level::update()
 {
-	// Player
+	// Update FSM
 	updateFSMArray(this, players.getSize(), players.getFSMArray());
-	vector<CoordF> pDeltaArray(players.getSize());
-	calculateDeltaArray(players.getSize(), pDeltaArray, players.getRotationArray(), players.getVelocityArray(), frameTime);
-	updatePositionArray(players.getSize(), players.getPositionArray(), pDeltaArray);
-	//updateLinesArray(players.getSize(), players.getHLinesArray(), players.getVLinesArray(), pDeltaArray);
-	updateDirectionArray(players.getSize(), players.getRotationArray(), players.getDirectionArray());
-
-	// Enemy
 	updateFSMArray(this, enemies.getSize(), enemies.getFSMArray());
+
+	// Calculate Delta
+	vector<CoordF> pDeltaArray(players.getSize());
 	vector<CoordF> eDeltaArray(enemies.getSize());
+	vector<CoordF> jDeltaArray(projectiles.getSize());
+	calculateDeltaArray(players.getSize(), pDeltaArray, players.getRotationArray(), players.getVelocityArray(), frameTime);
 	calculateDeltaArray(enemies.getSize(), eDeltaArray, enemies.getRotationArray(), enemies.getVelocityArray(), frameTime);
+	calculateDeltaArray(projectiles.getSize(), jDeltaArray, projectiles.getRotationArray(), projectiles.getVelocityArray(), frameTime);
+
+	// Update Position
+	updatePositionArray(players.getSize(), players.getPositionArray(), pDeltaArray);
 	updatePositionArray(enemies.getSize(), enemies.getPositionArray(), eDeltaArray);
-	//updateLinesArray(enemies.getSize(), enemies.getHLinesArray(), enemies.getVLinesArray(), eDeltaArray);
+	updatePositionArray(projectiles.getSize(), projectiles.getPositionArray(), jDeltaArray);
 
-	// Wall Collision (Temporary!) (Callback not yet implemented!)
-	//updateAllWallCollision(tiles, players.getSize(), players.getHLinesArray(), players.getVLinesArray(), players.getPositionArray());
-	//updateAllWallCollision(tiles, enemies.getSize(), enemies.getHLinesArray(), enemies.getVLinesArray(), enemies.getPositionArray());
+	// Update Collision
+	updateLineISetItersArray(players.getHLineISet(), players.getVLineISet(), players.getSize(), players.getHLineISetItersArray(), players.getVLineISetItersArray(), pDeltaArray);
+	updateLineISetItersArray(enemies.getHLineISet(), enemies.getVLineISet(), enemies.getSize(), enemies.getHLineISetItersArray(), enemies.getVLineISetItersArray(), pDeltaArray);
+	updateLinesArray(projectiles.getSize(), projectiles.getHLinesArray(), projectiles.getVLinesArray(), jDeltaArray);
 
-	// Projectiles
-	vector<CoordF> projDeltaArray(projectiles.getSize());
-	calculateDeltaArray(projectiles.getSize(), projDeltaArray, projectiles.getRotationArray(), projectiles.getVelocityArray(), frameTime);
-	updatePositionArray(projectiles.getSize(), projectiles.getPositionArray(), projDeltaArray);
-	// Update collision etc
+	// Get Collision (Wall)
+
+	//// Player
+	//updateFSMArray(this, players.getSize(), players.getFSMArray());
+	//vector<CoordF> pDeltaArray(players.getSize());
+	//calculateDeltaArray(players.getSize(), pDeltaArray, players.getRotationArray(), players.getVelocityArray(), frameTime);
+	//updatePositionArray(players.getSize(), players.getPositionArray(), pDeltaArray);
+	////updateLinesArray(players.getSize(), players.getHLinesArray(), players.getVLinesArray(), pDeltaArray);
+	//updateDirectionArray(players.getSize(), players.getRotationArray(), players.getDirectionArray());
+
+	//// Enemy
+	//updateFSMArray(this, enemies.getSize(), enemies.getFSMArray());
+	//vector<CoordF> eDeltaArray(enemies.getSize());
+	//calculateDeltaArray(enemies.getSize(), eDeltaArray, enemies.getRotationArray(), enemies.getVelocityArray(), frameTime);
+	//updatePositionArray(enemies.getSize(), enemies.getPositionArray(), eDeltaArray);
+	////updateLinesArray(enemies.getSize(), enemies.getHLinesArray(), enemies.getVLinesArray(), eDeltaArray);
+
+	//// Projectiles
+	//vector<CoordF> projDeltaArray(projectiles.getSize());
+	//calculateDeltaArray(projectiles.getSize(), projDeltaArray, projectiles.getRotationArray(), projectiles.getVelocityArray(), frameTime);
+	//updatePositionArray(projectiles.getSize(), projectiles.getPositionArray(), projDeltaArray);
 
 	// AnimObjects (Temp)
 	for (int i = 0; i < animObjects.getSize(); i++) {
@@ -267,7 +286,7 @@ void Level::render()
 			graphics->drawSprite(
 				underTiles.getSprite(x, y)->getSpriteData(),
 				gridToScreen(x, y), camScale);
-
+			
 			graphics->drawSprite(
 				tiles.getSprite(x, y)->getSpriteData(),
 				gridToScreen(x, y), camScale);
@@ -464,6 +483,9 @@ void Level::tilesInitialize()
 				tiles.set(x, y, &blood, translateHLines(Lines{ {} }, x, y),
 					translateVLines(Lines{}, x, y));
 				break;
+
+
+
 			case ImageType::churchFloor:
 				tiles.set(x, y, &floorSprite, translateHLines(Lines{ {} }, x, y),
 					translateVLines(Lines{}, x, y));
@@ -475,8 +497,7 @@ void Level::tilesInitialize()
 				tiles.set(x, y, &door, translateHLines(Lines{ {} }, x, y),
 					translateVLines(Lines{}, x, y));
 				CoordF pos = CoordF{ float(x), float(y) };
-				objects.push(pos, &door, translateHLines(Lines{ {} }, x, y),
-					translateVLines(Lines{}, x, y));
+				
 				//animObjects.push(pos, &doorAnim, 0, 0, 0, translateHLines(Lines{ {} }, x, y),
 					//translateVLines(Lines{}, x, y));
 				break;
@@ -484,9 +505,9 @@ void Level::tilesInitialize()
 
 
 			case ImageType::churchChest:
-				tiles.set(x, y, &chest, translateHLines(Lines{ {} }, x, y),
-					translateVLines(Lines{}, x, y));
 				pos = CoordF{ float(x), float(y) };
+				tiles.set(x, y, &floorSprite, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
 				objects.push(pos, &chest, translateHLines(Lines{ {} }, x, y),
 					translateVLines(Lines{}, x, y));
 				//animObjects.push(pos, &chestAnim, 0, 0, 0.1, translateHLines(Lines{ {} }, x, y),
@@ -499,60 +520,104 @@ void Level::tilesInitialize()
 				tiles.set(x, y, &wallEast, translateHLines(Lines{ {} }, x, y),
 					translateVLines(Lines{}, x, y));
 				break;
+
+
+
 			case ImageType::churchWallWest:
 				tiles.set(x, y, &wallWest, translateHLines(Lines{ {} }, x, y),
 					translateVLines(Lines{}, x, y));
 				break;
+
+
+
 			case ImageType::churchWallConnect:
 				tiles.set(x, y, &WallConnect, translateHLines(Lines{ {} }, x, y),
 					translateVLines(Lines{}, x, y));
 				break;
+
+
+
 			case ImageType::churchWallPath:
 				tiles.set(x, y, &wallPath, translateHLines(Lines{ {} }, x, y),
 					translateVLines(Lines{}, x, y));
 				break;
+
+
+
 				//test object
 			//add no to constants ltr
 			case 11:
-				tiles.set(x, y, &barrel, translateHLines(Lines{ {} }, x, y),
+				tiles.set(x, y, &floorSprite, translateHLines(Lines{ {} }, x, y),
 					translateVLines(Lines{}, x, y));
 				pos = CoordF{float(x), float(y)};
 				//objects.push(pos, &barrel, translateHLines(Lines{ {} }, x, y),
 					//translateVLines(Lines{}, x, y));
-
-				//animObjects.push(pos, &barrelAnim, 0, 0, 0, translateHLines(Lines{ {} }, x, y),
+				animObjects.push(pos, &barrelAnim, 0, 0, 1, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				break;
+				/* fire animation*/
+			case 12:
+				//tiles.set(x, y, &fireItem, translateHLines(Lines{ {} }, x, y),
+					//translateVLines(Lines{}, x, y));
+				tiles.set(x, y, &floorSprite, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				//objects.push(pos, &fireItem, translateHLines(Lines{ {} }, x, y),
+					//translateVLines(Lines{}, x, y));
+				//pos = CoordF{ float(x), float(y) };
+				//animObjects.push(pos, &fireItemAnim, 0, 0, 1, translateHLines(Lines{ {} }, x, y),
 					//translateVLines(Lines{}, x, y));
 				break;
 
-
-
-			case 12:
-				tiles.set(x, y, &fireItem, translateHLines(Lines{ {} }, x, y),
-					translateVLines(Lines{}, x, y));
-				break;
 			case 13:
 				tiles.set(x, y, &book, translateHLines(Lines{ {} }, x, y),
 					translateVLines(Lines{}, x, y));
 				break;
+
 			case 14:
 				tiles.set(x, y, &dead, translateHLines(Lines{ {} }, x, y),
 					translateVLines(Lines{}, x, y));
 				break;
+
 			case 15:
 				tiles.set(x, y, &armour, translateHLines(Lines{ {} }, x, y),
 					translateVLines(Lines{}, x, y));
 				break;
+
 			case 16:
 				tiles.set(x, y, &witch, translateHLines(Lines{ {} }, x, y),
 					translateVLines(Lines{}, x, y));
 				break;
+
 			case 17:
 				tiles.set(x, y, &banner, translateHLines(Lines{ {} }, x, y),
 					translateVLines(Lines{}, x, y));
 				break;
+
 			case 18:
 				tiles.set(x, y, &cabinet, translateHLines(Lines{ {} }, x, y),
 					translateVLines(Lines{}, x, y));
+				break;
+
+			case 19:
+				tiles.set(x, y, &floorSprite, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				pos = CoordF{ float(x), float(y) };
+				animObjects.push(pos, &
+					bloodPoolAnim, 0, 0, 1, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				break;
+			case 20:
+				tiles.set(x, y, &floorSprite, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				pos = CoordF{ float(x), float(y) };
+				animObjects.push(pos, & 
+					torchAnim, 0, 0, 1, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				break;
+			case 21:
+				tiles.set(x, y, &store, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				
 				break;
 			}
 		}

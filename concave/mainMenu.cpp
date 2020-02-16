@@ -142,6 +142,7 @@ void MainMenu::update()
 
 	if (playbtn.isClicked())
 	{
+		input->setMouseLButton(false);
 		windows.pop_back();
 		windows.push_back(&level);
         windows.push_back(&hud);

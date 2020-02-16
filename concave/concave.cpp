@@ -25,7 +25,7 @@ void Concave::initialize(HWND hwnd)
 	Window::credits.initialize();
 	Window::hud.initialize();
 	Window::inventory.initialize();
-	Window::windows.push_back(&Window::level);
+	Window::windows.push_back(&Window::mainMenu);
 }
 
 void Concave::releaseAll()

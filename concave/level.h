@@ -45,6 +45,7 @@ private:
 	// Projectiles
 	Texture projTexture; AnimImage projImage;
 	GridMask projGridMask;
+
 	// Components
 	Tiles underTiles;
 	Tiles tiles;
@@ -57,7 +58,8 @@ private:
 	Sprite floorSprite,
 		wallSprite, blood, door, chest,
 		wallEast, wallWest, WallConnect,
-		wallPath, barrel, fireItem, torch, book, dead, armour, witch;
+		wallPath, barrel, fireItem, torch, 
+		book, dead, armour, witch, banner;
 
 	Texture itemTexture;
 	GridMask itemGridMask;
@@ -90,6 +92,10 @@ private:
 	Texture witchTexture;
 	GridMask witchGridMask;
 	Image witchImage;
+
+	Texture bannerTexture;
+	GridMask bannerGridMask;
+	Image bannerImage;
 
 	int map[mapWidth][mapHeight];
 	int mapNo = 0;

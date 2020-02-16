@@ -33,6 +33,6 @@ public:
 
 	//file functions
 	void readFromFile(std::string mapString, int map[mapWidth][mapHeight], int level);
-	void readFromFile2(std::string mapString, int map[6][6], int level);
+	void readFromFile2(std::string mapString, int map[roomTemplateWidth][roomTemplateHeight], int level);
 	void writeToFile(int map[mapWidth][mapHeight], int i);
 };

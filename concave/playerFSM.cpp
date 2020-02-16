@@ -66,7 +66,6 @@ void playerIdleState(Level* level, int index)
     Projectiles& projectiles = level->getProjectiles();
 
     if (input->getMouseLButton()) {
-        input->setMouseLButton(false);
         destPosition = level->screenToGrid(CoordF{ float(input->getMouseX()), float(input->getMouseY()) });
         rotation = calculateRotation(position, destPosition);
         velocity = 5;
@@ -76,7 +75,6 @@ void playerIdleState(Level* level, int index)
         return;
     }
     else if (input->getMouseRButton()) {
-        input->setMouseRButton(false);
         rotation = calculateRotation(position, level->screenToGrid(input->getMouseX(), input->getMouseY()));
         frameNo = 0;
         fsm = playerMagicFireState;
@@ -104,16 +102,7 @@ void playerIdleState(Level* level, int index)
         }
 
     }
-    // else if (input->getMouseMButton()) {
-    //     input->setMouseMButton(false);
-    //     rotation = calculateRotation(position, level->screenToGrid(input->getMouseX(), input->getMouseY()));
-    //     frameNo = 0;
-    //     fsm = playerGetHitState;
-    //     state = UNIT_STATE_ATTACK;
-    //     return;
-    // }
-    // else if (input->isKeyDown('Q')) {
-    else if (input->getMouseMButton()) {
+    else if (input->getMouseMButton() || input->isKeyDown('Q')) {
         destPosition = level->screenToGrid(CoordF{ float(input->getMouseX()), float(input->getMouseY()) });
         rotation = calculateRotation(position, destPosition);
         position = destPosition;
@@ -152,13 +141,11 @@ void playerWalkState(Level* level, int index)
     Projectiles& projectiles = level->getProjectiles();
 
     if (input->getMouseLButton()) {
-        input->setMouseLButton(false);
         destPosition = level->screenToGrid(CoordF{ float(input->getMouseX()), float(input->getMouseY()) });
         rotation = calculateRotation(position, destPosition);
         return;
     }
     else if (input->getMouseRButton()) {
-        input->setMouseRButton(false);
         destPosition = position;
         velocity = 0;
         rotation = calculateRotation(position, level->screenToGrid(input->getMouseX(), input->getMouseY()));
@@ -173,18 +160,7 @@ void playerWalkState(Level* level, int index)
         rotation);
         return;
     }
-    // else if (input->getMouseMButton()) {
-    //     input->setMouseMButton(false);
-    //     destPosition = position;
-    //     velocity = 0;
-    //     rotation = calculateRotation(position, level->screenToGrid(input->getMouseX(), input->getMouseY()));
-    //     frameNo = 0;
-    //     fsm = playerAttackState;
-    //     state = UNIT_STATE_ATTACK;
-    //     return;
-    // }
-    // else if (input->isKeyDown('Q')) {
-    else if (input->getMouseMButton()) {
+    else if (input->getMouseMButton() || input->isKeyDown('Q')) {
         destPosition = level->screenToGrid(CoordF{ float(input->getMouseX()), float(input->getMouseY()) });
         rotation = calculateRotation(position, destPosition);
         position = destPosition;

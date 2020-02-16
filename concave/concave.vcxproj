@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="animObjects.cpp" />
     <ClCompile Include="cellular.cpp" />
     <ClCompile Include="concave.cpp" />
     <ClCompile Include="EditComponent.cpp" />
@@ -159,6 +160,7 @@
     <ClCompile Include="fsmSystem.cpp" />
     <ClCompile Include="modifiers.cpp" />
     <ClCompile Include="movementSystem.cpp" />
+    <ClCompile Include="objects.cpp" />
     <ClCompile Include="players.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="gameInfoComponent.cpp" />
@@ -171,14 +173,15 @@
     <ClCompile Include="playerFSM.cpp" />
     <ClCompile Include="projectiles.cpp" />
     <ClCompile Include="collisionSystem.cpp" />
+    <ClCompile Include="renderLevel.cpp" />
     <ClCompile Include="shopNpc.cpp" />
     <ClCompile Include="tiles.cpp" />
-    <ClCompile Include="renderLevel.cpp" />
     <ClCompile Include="room.cpp" />
     <ClCompile Include="window.cpp" />
     <ClCompile Include="winmain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="animObjects.h" />
     <ClInclude Include="cellular.h" />
     <ClInclude Include="component.h" />
     <ClInclude Include="concave.h" />
@@ -189,6 +192,7 @@
     <ClInclude Include="fsmSystem.h" />
     <ClInclude Include="modifiers.h" />
     <ClInclude Include="movementSystem.h" />
+    <ClInclude Include="objects.h" />
     <ClInclude Include="players.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="gameError.h" />

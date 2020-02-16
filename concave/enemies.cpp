@@ -24,8 +24,8 @@ void Enemies::initialize(int capacity)
 	Enemies::rotationArray.resize(capacity);
 	Enemies::velocityArray.resize(capacity);
 	// Collision
-	Enemies::hLinesArray.resize(capacity);
-	Enemies::vLinesArray.resize(capacity);
+	Enemies::hLineISetItersArray.resize(capacity);
+	Enemies::vLineISetItersArray.resize(capacity);
 }
 
 void Enemies::push(CoordF position, AnimImage* animImage, int state, FSM fsm, float rotation, float velocity, Lines hLines, Lines vLines)
@@ -45,8 +45,11 @@ void Enemies::push(CoordF position, AnimImage* animImage, int state, FSM fsm, fl
 	rotationArray[size] = rotation;
 	velocityArray[size] = velocity;
 	// Collision
-	hLinesArray[size] = hLines;
-	vLinesArray[size] = vLines;
+	LineISetIters hLineIters, vLineIters;
+	for (Line line : hLines) hLineIters.push_back(hLineISet.insert(LineI{ line, size }).first);
+	for (Line line : vLines) vLineIters.push_back(vLineISet.insert(LineI{ line, size }).first);
+	hLineISetItersArray[size] = hLineIters;
+	vLineISetItersArray[size] = vLineIters;
 	size++;
 }
 
@@ -68,6 +71,8 @@ void Enemies::pop(int index)
 	rotationArray[index] = rotationArray[size];
 	velocityArray[index] = velocityArray[size];
 	// Collision
-	hLinesArray[index] = hLinesArray[size];
-	vLinesArray[index] = vLinesArray[size];
+	for (LineISetIter lineIter : hLineISetItersArray[index]) hLineISet.erase(lineIter);
+	for (LineISetIter lineIter : vLineISetItersArray[index]) vLineISet.erase(lineIter);
+	hLineISetItersArray[index] = hLineISetItersArray[size];
+	vLineISetItersArray[index] = vLineISetItersArray[size];
 }

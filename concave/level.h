@@ -5,6 +5,8 @@
 #include "players.h"
 #include "enemies.h"
 #include "projectiles.h"
+#include "objects.h"
+#include "animObjects.h"
 #include "playerFSM.h"
 #include "enemyFSM.h"
 #include "collisionSystem.h"
@@ -15,7 +17,6 @@
 #include "cellular.h"
 #include "EditComponent.h"
 #include "renderLevel.h"
-
 #include <vector>
 #include <fstream>
 #include <string>
@@ -27,6 +28,26 @@ class Level : public Window
 private:
 	// Camera
 	CoordF camCoord; float camScale;
+	// Tiles
+	Texture tileTexture; GridMask tileGridMask; Image tileImage;
+	Sprite floorSprite,
+		wallSprite, blood, door, chest,
+		wallEast, wallWest, WallConnect,
+		wallPath, barrel, fireItem, torch,
+		book, dead, armour, witch, banner,
+		cabinet;
+
+	/* Tile texture, masks and images*/
+	Texture itemTexture;	  GridMask itemGridMask;      Image itemImage;
+	Texture manyItemsTexture; GridMask manyItemsGridMask; Image manyItemsImage;
+	Texture cabinetTexture;   GridMask cabinetGridMask;   Image cabinetImage;
+	Texture deadTexture;      GridMask deadPeopleGridMask;Image deadPeopleImage;
+	Texture bannerTexture;    GridMask bannerGridMask;    Image bannerImage;
+	Texture armourTexture;    GridMask armourGridMask;	  Image armourImage;
+	Texture witchTexture;     GridMask witchGridMask;     Image witchImage;
+	GridMask flameGridMask;   Image flameImage;
+	GridMask fireGridMask;    Image fireImage;
+	GridMask bookGridMask;    Image bookImage;
 	
 	// Player
 	Texture warriorTexture; AnimImage warriorAnimImage;
@@ -47,64 +68,27 @@ private:
 	// Projectiles
 	Texture projTexture; AnimImage projImage;
 	GridMask projGridMask;
-
 	// Components
 	Tiles underTiles;
 	Tiles tiles;
 	Players players;
 	Projectiles projectiles;
 	Enemies enemies;
+	Objects objects;
+	AnimObjects animObjects;
 
-	// Map Generation things
-	Texture tileTexture; GridMask tileGridMask; Image tileImage;
-	Sprite floorSprite,
-		wallSprite, blood, door, chest,
-		wallEast, wallWest, WallConnect,
-		wallPath, barrel, fireItem, torch, 
-		book, dead, armour, witch, banner;
-
-	Texture itemTexture;
-	GridMask itemGridMask;
-	Image itemImage;
-
-	Texture manyItemsTexture;
-	GridMask manyItemsGridMask;
-	Image manyItemsImage;
-
-	GridMask cabinetGridMask;
-	Image cabinetImage;
-
-	GridMask flameGridMask;
-	Image flameImage;
-
-	Texture deadTexture;
-	GridMask deadPeopleGridMask;
-	Image deadPeopleImage;
-
-	GridMask fireGridMask;
-	Image fireImage;
-
-	GridMask bookGridMask;
-	Image bookImage;
-
-	Texture armourTexture;
-	GridMask armourGridMask;
-	Image armourImage;
-
-	Texture witchTexture;
-	GridMask witchGridMask;
-	Image witchImage;
-
-	Texture bannerTexture;
-	GridMask bannerGridMask;
-	Image bannerImage;
-
+	// Camera
 	int map[mapWidth][mapHeight];
+
 	int mapNo = 0;
+
 	//shld prob change this to another variable
 	//int type = 0;
 	//prob need to change it to read component
 	EditComponent* editComponent;
+
+
+	//RenderLevel renderLevel;
 public:
 	Level();
 	~Level();

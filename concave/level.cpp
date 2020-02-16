@@ -39,33 +39,43 @@ void Level::initialize()
 	tileGridMask.initialize(0, 0, 128, 192, 1, 1, 64, 127);
 	tileImage.initialize(&tileTexture, tileGridMask);
 
+
 	//reference to yh code
 	//void initialize(int originX, int originY, int perWidth, int perHeight, int gapWidth, int gapHeight, int pivotX, int pivotY);
 	//In game items
 	itemTexture.initialize(graphics, IMAGE_ITEMS_DUNGEON);
 	itemGridMask.initialize(0, 0, 130, 130, 1, 1, 59, 59);
 	itemImage.initialize(&itemTexture, itemGridMask);
+
 	//barrel png
 	manyItemsTexture.initialize(graphics, IMAGE_BARRELITEMS_DUNGEON);
 	manyItemsGridMask.initialize(0, 0, 94, 119, 1, 1, 45, 44);
 	manyItemsImage.initialize(&manyItemsTexture, manyItemsGridMask);
+
+
 	//cabinet
-	cabinetGridMask.initialize(0, 0, 111, 110, 1, 1, 50, 55);
-	cabinetImage.initialize(&manyItemsTexture, cabinetGridMask);
+	cabinetTexture.initialize(graphics, IMAGE_CABINETITEMS_DUNGEON);
+	cabinetGridMask.initialize(0, 0, 111, 110, 1, 1, 20, 80);
+	cabinetImage.initialize(&cabinetTexture, cabinetGridMask);
+
 	//fire
 	flameGridMask.initialize(0, 0, 88, 118, 1, 1, 40, 10);
 	flameImage.initialize(&manyItemsTexture, flameGridMask);
+
 	//bookstand
 	bookGridMask.initialize(0, 0, 76, 80, 1, 1, 45, 44);
 	bookImage.initialize(&manyItemsTexture, bookGridMask);
+
 	//dead
 	deadTexture.initialize(graphics, IMAGE_DEADITEMS_DUNGEON);
 	deadPeopleGridMask.initialize(0, 0, 100, 122,1, 1, 19, 25);
 	deadPeopleImage.initialize(&deadTexture, deadPeopleGridMask);
+
 	//armour
 	armourTexture.initialize(graphics, IMAGE_ARMOURITEMS_DUNGEON);
 	armourGridMask.initialize(0, 0, 95, 95, 1, 1, 64, 64);
 	armourImage.initialize(&armourTexture, armourGridMask);
+
 	//witch
 	witchTexture.initialize(graphics, IMAGE_WITCHITEMS_DUNGEON);
 	witchGridMask.initialize(0, 0, 150, 141, 1, 1, 74, 90);
@@ -75,6 +85,7 @@ void Level::initialize()
 	bannerTexture.initialize(graphics, IMAGE_BANNERITEMS_DUNGEON);
 	bannerGridMask.initialize(0, 0, 65, 74, 1, 1, 15, 60);
 	bannerImage.initialize(&bannerTexture, bannerGridMask);
+
 
 	//church sprites
 	floorSprite.initialize(&tileImage, IMAGE_MAP.at(ImageType::churchFloor));
@@ -86,19 +97,14 @@ void Level::initialize()
 	WallConnect.initialize(&tileImage, IMAGE_MAP.at(ImageType::churchWallConnect));
 	wallPath.initialize(&tileImage, IMAGE_MAP.at(ImageType::churchWallPath));
 	chest.initialize(&tileImage, IMAGE_MAP.at(ImageType::churchChest));
-	//barrel
 	barrel.initialize(&manyItemsImage, CoordI{ 0,0 });
-	//fireplace
 	fireItem.initialize(&flameImage, CoordI{ 4,5 });
-	//book
 	book.initialize(&manyItemsImage, CoordI{ 0,1 });
-	//dead man
 	dead.initialize(&deadPeopleImage, CoordI{3,0});
 	armour.initialize(&armourImage, CoordI{ 0,0 });
-	//witch
 	witch.initialize(&witchImage, CoordI{ 0,0 });
-	//banner
 	banner.initialize(&bannerImage, CoordI{ 0,0 });
+	cabinet.initialize(&cabinetImage, CoordI{ 0,0 });
 
 	// Warrior
 	warriorTexture.initialize(graphics, IMAGE_UNIT_WARRIOR);
@@ -130,12 +136,33 @@ void Level::initialize()
 	projTexture.initialize(graphics, IMAGE_PROJECTILE_FIREBALL);
 	projGridMask.initialize(1, 1, 96, 96, 1, 1, 46, 46);
 	projImage.initialize(&projTexture, { projGridMask }, { 15 });
+	//initialize the values
+	//renderLevel.initialize(graphics, input, type);
+
 
 	////  Entities Initialisation  ////
 	// Tiles
 	tiles.initialize(mapWidth, mapHeight);
 	underTiles.initialize(mapWidth, mapHeight);
 	tilesInitialize();
+	
+	/*
+	for (int y = 0; y < tiles.getRows(); y++)
+		for (int x = 0; x < tiles.getCols(); x++)
+			tiles.set(y, x, &wallSprite,
+				translateHLines(Lines{ { 0, 1, 0 } }, x, y),
+				translateVLines(Lines{}, x, y));
+	for (int y = 1; y < tiles.getRows() - 1; y++)
+		for (int x = 1; x < tiles.getCols() - 1; x++)
+			tiles.set(y, x, &floorSprite,
+				translateHLines(Lines{}, x, y),
+				translateVLines(Lines{}, x, y));
+	for (int y = 7; y < tiles.getRows() - 7; y++)
+		for (int x = 7; x < tiles.getCols() - 7; x++)
+			tiles.set(y, x, &wallSprite,
+				translateHLines(Lines{ { 0, 1, 0 } }, x, y),
+				translateVLines(Lines{}, x, y));
+	*/
 
 	// Player
 	players.initialize(1);
@@ -157,9 +184,9 @@ void Level::initialize()
 		translateVLines(Lines{ { -0.4, 0.4, -0.4 }, { -0.4, 0.4, 0.4 } }, ePos));
 
 	// Projectiles
-	projectiles.initialize(1000000);
-	increaseProjectilesAmount(0, players, 10);
-	increaseSpeed(0, players, 0.001);
+	projectiles.initialize(100000);
+	increaseProjectilesAmount(0, players, 100);
+	increaseSpeed(0, players, 0.01);
 }
 
 void Level::releaseAll()
@@ -175,7 +202,7 @@ void Level::update()
 	vector<CoordF> pDeltaArray(players.getSize());
 	calculateDeltaArray(players.getSize(), pDeltaArray, players.getRotationArray(), players.getVelocityArray(), frameTime);
 	updatePositionArray(players.getSize(), players.getPositionArray(), pDeltaArray);
-	updateLinesArray(players.getSize(), players.getHLinesArray(), players.getVLinesArray(), pDeltaArray);
+	//updateLinesArray(players.getSize(), players.getHLinesArray(), players.getVLinesArray(), pDeltaArray);
 	updateDirectionArray(players.getSize(), players.getRotationArray(), players.getDirectionArray());
 
 	// Enemy
@@ -183,11 +210,11 @@ void Level::update()
 	vector<CoordF> eDeltaArray(enemies.getSize());
 	calculateDeltaArray(enemies.getSize(), eDeltaArray, enemies.getRotationArray(), enemies.getVelocityArray(), frameTime);
 	updatePositionArray(enemies.getSize(), enemies.getPositionArray(), eDeltaArray);
-	updateLinesArray(enemies.getSize(), enemies.getHLinesArray(), enemies.getVLinesArray(), eDeltaArray);
+	//updateLinesArray(enemies.getSize(), enemies.getHLinesArray(), enemies.getVLinesArray(), eDeltaArray);
 
 	// Wall Collision (Temporary!) (Callback not yet implemented!)
-	updateAllWallCollision(tiles, players.getSize(), players.getHLinesArray(), players.getVLinesArray(), players.getPositionArray());
-	updateAllWallCollision(tiles, enemies.getSize(), enemies.getHLinesArray(), enemies.getVLinesArray(), enemies.getPositionArray());
+	//updateAllWallCollision(tiles, players.getSize(), players.getHLinesArray(), players.getVLinesArray(), players.getPositionArray());
+	//updateAllWallCollision(tiles, enemies.getSize(), enemies.getHLinesArray(), enemies.getVLinesArray(), enemies.getPositionArray());
 
 	// Projectiles
 	vector<CoordF> projDeltaArray(projectiles.getSize());
@@ -195,6 +222,23 @@ void Level::update()
 	updatePositionArray(projectiles.getSize(), projectiles.getPositionArray(), projDeltaArray);
 	// Update collision etc
 
+	// AnimObjects (Temp)
+	for (int i = 0; i < animObjects.getSize(); i++) {
+		int& state = animObjects.getStateArray()[i];
+		int& frameNo = animObjects.getFrameNoArray()[i];
+		float& timer = animObjects.getTimerArray()[i];
+		float& delay = animObjects.getDelayArray()[i];
+		AnimImage*& animImage = animObjects.getAnimImageArray()[i];
+		timer += frameTime;
+		if (timer > delay) {
+			timer -= delay;
+			frameNo += 1;
+			if (frameNo > animImage->getEndFrame(state)) {
+				frameNo = 0;
+			}
+		}
+	}
+	
 	// Move Camera
 	camCoord = players.getPositionArray()[0];
 	if (input->isKeyDown('O')) camScale *= 1 - 0.01;
@@ -219,6 +263,22 @@ void Level::render()
 				gridToScreen(x, y), camScale);
 		}
 	}
+	// Objects
+	for (int i = 0; i < objects.getSize(); i++) {
+		SpriteData objectSD = objects.getSpriteArray()[i]->getSpriteData();
+		CoordF objectPos = objects.getPositionArray()[i];
+		graphics->drawSprite(objectSD, gridToScreen(objectPos), camScale);
+	}
+
+	// AnimObjects
+	for (int i = 0; i < animObjects.getSize(); i++) {
+		int animObjectState = animObjects.getStateArray()[i];
+		int animObjectDirection = animObjects.getDirectionArray()[i];
+		int animObjectFrameNo = animObjects.getFrameNoArray()[i];
+		CoordF animObjectPos = animObjects.getPositionArray()[i];
+		SpriteData animObjectSD = animObjects.getAnimImageArray()[i]->getSpriteData(animObjectState, animObjectDirection, animObjectFrameNo);
+		graphics->drawSprite(animObjectSD, gridToScreen(animObjectPos), camScale);
+	}
 
 	// Player (Temporary)
 	int playerState = players.getStateArray()[0];
@@ -240,7 +300,18 @@ void Level::render()
 	graphics->drawSprite(
 		enemySD, gridToScreen(enemyPos), camScale);
 
-	// Projectiles
+	//for (int i = 0; i < players.getSize(); i++) {
+	//	// Temporary solution to make it not blurry
+	//	// CoordF screenCoords = gridToScreen(players.getPositionArray()[i]);
+	//	SpriteData sd = players.getAnimImageArray()[i]->getSpriteData(
+	//		players.getStateArray()[i],
+	//		rotationToDirection(players.getRotationArray()[i]),
+	//		players.getFrameNoArray()[i]);
+
+ //       graphics->drawSprite(sd,
+ //           gridToScreen(players.getPositionArray()[i]), camScale);
+	//}
+
 	for (int i = 0; i < projectiles.getSize(); i++) {
 		float rotation = projectiles.getRotationArray()[i];
 		float direction = rotationToDirection16(rotation);
@@ -250,6 +321,16 @@ void Level::render()
 		graphics->drawSprite(sd,
 			gridToScreen(projectiles.getPositionArray()[i]), camScale);
 	}
+
+	//for (int i = 0; i < projectiles.getSize(); i++) {
+	//	SpriteData sd = projectiles.getAnimImageArray()[i]->getSpriteData(
+	//		0, projectiles.getRotationArray()[i],
+	//		projectiles.getFrameNoArray()[i]);
+	//	graphics->drawSprite(sd,
+	//		gridToScreen(projectiles.getPositionArray()[i]), camScale);
+	//}
+	//will be moved to another file I hope
+	//renderSprites();
 }
 
 CoordF Level::gridToScreen(float gx, float gy)
@@ -420,6 +501,10 @@ void Level::tilesInitialize()
 				break;
 			case 17:
 				tiles.set(x, y, &banner, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				break;
+			case 18:
+				tiles.set(x, y, &cabinet, translateHLines(Lines{ {} }, x, y),
 					translateVLines(Lines{}, x, y));
 				break;
 			}

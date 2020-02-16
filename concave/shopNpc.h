@@ -10,6 +10,6 @@ private:
 public:
 	void ShopMenu();
 	void buyItem(Players player);
-	int calculate(std::vector<std::vector<std::string>> selected;);
+	int calculate(std::vector<std::vector<std::string>> selected);
 
 };

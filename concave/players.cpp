@@ -34,6 +34,7 @@ void Players::initialize(int capacity)
 	Players::maxManaArray.resize(capacity);
 	Players::noProjArray.resize(capacity);
 	Players::damageArray.resize(capacity);
+	Players::potionArray.resize(capacity);
 }
 
 void Players::push(CoordF position, AnimImage* animImage, int state, FSM fsm, float rotation, float staticVelocity, Lines hLines, Lines vLines, int health, int maxHealth, int mana, int maxMana)
@@ -66,6 +67,13 @@ void Players::push(CoordF position, AnimImage* animImage, int state, FSM fsm, fl
 	maxManaArray[size] = maxMana;
 	noProjArray[size] = 1;
 	damageArray[size] = 10;
+	potionArray[size] =
+		vector<Potion>{
+		Potion{PotionType::Health, 1},
+		Potion{PotionType::Health, 1},
+		Potion{PotionType::Mana, 1},
+		Potion{PotionType::Mana, 1},
+	};
 	size++;
 }
 
@@ -99,4 +107,5 @@ void Players::pop(int index)
 	maxManaArray[index] = maxManaArray[size];
 	noProjArray[index] = noProjArray[size];
 	damageArray[index] = damageArray[size];
+	potionArray[index] = potionArray[size];
 }

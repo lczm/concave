@@ -137,7 +137,11 @@ void MainMenu::update()
 
 	}
 
-
+	if (playbtn.isClicked())
+	{
+		windows.pop_back();
+		windows.push_back(&level);
+	}
 	
 	if (optbtn.isClicked())
 	{

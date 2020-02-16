@@ -355,7 +355,6 @@ void Level::render()
         CoordF enemyPos = enemies.getPositionArray()[i];
 		CoordF coords = gridToScreen(enemyPos);
         SpriteData enemySD = enemies.getAnimImageArray()[i]->getSpriteData(enemyState, enemyDirection, enemyFrameNo);
-		std::cout << coords.x << "|" << coords.y << std::endl;
         graphics->drawSprite(
             enemySD, int(coords.x), int(coords.y), camScale);
 	}
@@ -368,8 +367,9 @@ void Level::render()
 			rotationToDirection16(projectiles.getRotationArray()[i]),
 			projectiles.getFrameNoArray()[i]);
 		sd.scale = projectiles.getSizeArray()[i];
+		CoordF coords = gridToScreen(projectiles.getPositionArray()[i]);
 		graphics->drawSprite(sd,
-			gridToScreen(projectiles.getPositionArray()[i]), camScale);
+			int(coords.x), int(coords.y), camScale);
 	}
 
 	// Use this for audio

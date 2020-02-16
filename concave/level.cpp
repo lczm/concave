@@ -38,6 +38,34 @@ void Level::initialize()
 	tileImage.initialize(&tileTexture, tileGridMask);
 
 
+	//reference to yh code
+	//void initialize(int originX, int originY, int perWidth, int perHeight, int gapWidth, int gapHeight, int pivotX, int pivotY);
+	//In game items
+	itemTexture.initialize(graphics, IMAGE_ITEMS_DUNGEON);
+	itemGridMask.initialize(0, 0, 130, 130, 1, 1, 59, 59);
+	itemImage.initialize(&itemTexture, itemGridMask);
+
+
+	//barrel png
+	manyItemsTexture.initialize(graphics, IMAGE_BARRELITEMS_DUNGEON);
+	manyItemsGridMask.initialize(0, 0, 94, 119, 1, 1, 45, 44);
+	manyItemsImage.initialize(&manyItemsTexture, manyItemsGridMask);
+
+
+	//cabinet
+	cabinetGridMask.initialize(0, 0, 111, 110, 1, 1, 50, 55);
+	cabinetImage.initialize(&manyItemsTexture, cabinetGridMask);
+
+	//fire
+	flameGridMask.initialize(0, 0, 69, 107, 1, 1, -40, 20);
+	flameImage.initialize(&manyItemsTexture, flameGridMask);
+
+
+
+
+
+
+
 	//church sprites
 	floorSprite.initialize(&tileImage, IMAGE_MAP.at(ImageType::churchFloor));
 	wallSprite.initialize(&tileImage, CoordI{ 6,0 });
@@ -49,6 +77,8 @@ void Level::initialize()
 	wallPath.initialize(&tileImage, IMAGE_MAP.at(ImageType::churchWallPath));
 	chest.initialize(&tileImage, IMAGE_MAP.at(ImageType::churchChest));
 
+	//barrel
+	barrel.initialize(&manyItemsImage, CoordI{ 0,0 });
 
 
 
@@ -89,6 +119,7 @@ void Level::initialize()
 	////  Entities Initialisation  ////
 	// Tiles
 	tiles.initialize(mapWidth, mapHeight);
+	underTiles.initialize(mapWidth, mapHeight);
 	tilesInitialize();
 	
 	/*
@@ -175,10 +206,18 @@ void Level::update()
 void Level::render()
 {
 	for (int x = 0; x < tiles.getRows(); x++)
+	{
 		for (int y = 0; y < tiles.getCols(); y++)
+		{
+
+			graphics->drawSprite(
+				underTiles.getSprite(x, y)->getSpriteData(),
+				gridToScreen(x, y), camScale);
 			graphics->drawSprite(
 				tiles.getSprite(x, y)->getSpriteData(),
 				gridToScreen(x, y), camScale);
+		}
+	}
 
 	// Player (Temporary)
 	int playerState = players.getStateArray()[0];
@@ -314,40 +353,6 @@ void Level::changeLevel()
 		//level.initialize();
 	}
 }
-/*
-void Level::renderSprites()
-{	
-	//Must be a more elegant way to write this
-	for (int x = 0; x < mapWidth; x++) {
-		for (int y = 0; y < mapHeight; y++) {
-			CoordF screenPos = gridToScreen(x, y);
-			SpriteData sd;
-
-			//pass to renderLevel class
-			renderLevel.getTileImage().getSpriteData(IMAGE_MAP.at(ImageType::churchFloor));
-			graphics->drawSprite(
-				sd,
-				screenPos.x, screenPos.y, camScale);
-		}
-	}
-
-
-	for (int x = 0; x < mapWidth; x++) {
-		for (int y = 0; y < mapHeight; y++) {
-			CoordF screenPos = gridToScreen(x, y);
-			SpriteData sd;
-
-			//pass to renderLevel class
-			renderLevel.renderMap(map, x, y, sd, type);
-			graphics->drawSprite(
-				sd,
-				screenPos.x, screenPos.y, camScale);
-		}
-	}
-
-	
-}
-*/
 
 void Level::placeRoom()
 {
@@ -357,6 +362,10 @@ void Level::tilesInitialize()
 {
 	for (int x = 0; x < mapWidth; x++) {
 		for (int y = 0; y < mapHeight; y++) {
+
+			underTiles.set(x, y, &floorSprite, translateHLines(Lines{ {} }, x, y),
+				translateVLines(Lines{}, x, y));
+
 			switch (map[x][y])
 			{
 				//changing between textures
@@ -393,6 +402,11 @@ void Level::tilesInitialize()
 					translateVLines(Lines{}, x, y));
 				break;
 				//test object
+			//add no to constants ltr
+			case 11:
+				tiles.set(x, y, &barrel, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				break;
 			}
 		}
 	}

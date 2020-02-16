@@ -280,7 +280,7 @@ void handlePotionInput(Input* input, Players& players, int index)
     int& mana = players.getManaArray()[index];
     int& maxMana = players.getMaxManaArray()[index];
     // Number 1 - Health
-    if (input->isKeyDown(0x31)) {
+    if (input->wasKeyPressed(0x31)) {
         potions[0].charge = 0;
         health += 40;
         if (health > maxHealth) {
@@ -288,7 +288,7 @@ void handlePotionInput(Input* input, Players& players, int index)
         }
     }
     // Number 2 - Health
-    if (input->isKeyDown(0x32)) {
+    if (input->wasKeyPressed(0x32)) {
         potions[1].charge = 0;
         health += 40;
         if (health > maxHealth) {
@@ -296,7 +296,7 @@ void handlePotionInput(Input* input, Players& players, int index)
         }
     }
     // Number 3 - Mana
-    if (input->isKeyDown(0x33)) {
+    if (input->wasKeyPressed(0x33)) {
         potions[2].charge = 0;
         mana += 40;
         if (mana > maxMana) {
@@ -304,7 +304,7 @@ void handlePotionInput(Input* input, Players& players, int index)
         }
     }
     // Number 4 - Mana
-    if (input->isKeyDown(0x34)) {
+    if (input->wasKeyPressed(0x34)) {
         potions[3].charge = 0;
         mana += 40;
         if (mana > maxMana) {

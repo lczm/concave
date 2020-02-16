@@ -1,34 +1,3 @@
-// #pragma once
-// #include "image.h"
-// #include <vector>
-// #include <set>
-// using namespace std;
-// 
-// class Projectiles
-// {
-// private:
-// 	int capacity, size;
-// 	vector<CoordF> positionArray;
-// 	vector<Sprite*> spriteArray;
-// 	LineISet hLineISet;
-// 	LineISet vLineISet;
-// 	vector<LineISetIters> hLineISetItersArray;
-// 	vector<LineISetIters> vLineISetItersArray;
-// public:
-// 	Projectiles(); ~Projectiles();
-// 	void initialize(int capacity);
-// 	void push(CoordF position, Sprite* sprite, Lines hLines, Lines vLines);
-// 	void pop(int index);
-// public:
-// 	int getSize() { return size; }
-// 	vector<CoordF>& getPositionArray() { return positionArray; }
-// 	vector<Sprite*>& getSpriteArray() { return spriteArray; }
-// 	LineISet& getHLineISet() { return hLineISet; }
-// 	LineISet& getVLineISet() { return vLineISet; }
-// 	vector<LineISetIters>& getHLineISetItersArray() { return hLineISetItersArray; }
-// 	vector<LineISetIters>& getVLineISetItersArray() { return vLineISetItersArray; }
-// };
-
 #pragma once
 #include "constants.h"
 #include "image.h"
@@ -40,20 +9,21 @@ class Projectiles
 {
 private:
 	int capacity, size;
+	// Position
 	vector<CoordF> positionArray;
-	LineISet hLineISet;
-	LineISet vLineISet;
-	vector<LineISetIters> hLineISetItersArray;
-	vector<LineISetIters> vLineISetItersArray;
-
+	// Animation
 	vector<AnimImage*> animImageArray;
 	vector<int> frameNoArray;
 	vector<float> timerArray;
 	vector<float> delayArray;
+	// Movement
 	vector<float> rotationArray;
 	vector<float> velocityArray;
-	vector<CoordF> dydxArray;
-
+	// Collision
+	LineISet hLineISet;
+	LineISet vLineISet;
+	vector<LineISetIters> hLineISetItersArray;
+	vector<LineISetIters> vLineISetItersArray;
 public:
 	Projectiles(); ~Projectiles();
 	void initialize(int capacity);
@@ -61,16 +31,19 @@ public:
 	void pop(int index);
 public:
 	int getSize() { return size; }
+	// Postition
 	vector<CoordF>& getPositionArray() { return positionArray; }
+	// Animation
 	vector<AnimImage*>& getAnimImageArray() { return animImageArray; }
+	vector<int>& getFrameNoArray() { return frameNoArray; }
+	vector<float>& getTimerArray() { return timerArray; }
+	vector<float>& getDelayArray() { return delayArray; }
+	// Movement
+	vector<float>& getRotationArray() { return rotationArray; }
+	vector<float>& getVelocityArray() { return velocityArray; }
+	// Collision
 	LineISet& getHLineISet() { return hLineISet; }
 	LineISet& getVLineISet() { return vLineISet; }
 	vector<LineISetIters>& getHLineISetItersArray() { return hLineISetItersArray; }
 	vector<LineISetIters>& getVLineISetItersArray() { return vLineISetItersArray; }
-	vector<int>& getFrameNoArray() { return frameNoArray; }
-	vector<float>& getTimerArray() { return timerArray; }
-	vector<float>& getDelayArray() { return delayArray; }
-	vector<float>& getRotationArray() { return rotationArray; }
-	vector<float>& getVelocityArray() { return velocityArray; }
-	vector<CoordF>& getDydxArray() { return dydxArray; }
 };

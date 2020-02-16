@@ -114,10 +114,16 @@ const char IMAGE_TILES_CAVE[] = "sprites/tiles_cave_dungeon.png";
 
 //const char IMAGE_ITEMS_DUNGEON[] = "sprites/items.png";
 const char IMAGE_ITEMS_DUNGEON[] = "sprites/items2.png";
-const char IMAGE_BARRELITEMS_DUNGEON[] = "sprites/items.png";
+//const char IMAGE_BARRELITEMS_DUNGEON[] = "sprites/items.png";
+
+const char IMAGE_BARRELITEMS_DUNGEON[] = "sprites/itemEDIT.png";
+
+
+
 const char IMAGE_DEADITEMS_DUNGEON[] = "sprites/deadMan.png";
 const char IMAGE_ARMOURITEMS_DUNGEON[] = "sprites/armour.png";
 const char IMAGE_WITCHITEMS_DUNGEON[] = "sprites/witchStuff.png";
+const char IMAGE_BANNERITEMS_DUNGEON[] = "sprites/banner.png";
 
 //-----------------------------------------------
 //                Image (Units)
@@ -170,6 +176,8 @@ const int noSpritesChruch = 11;
 const int noSpritesCave = 2;
 const int itemsToSpawn = 1;
 
+const int roomTemplateWidth = 6;
+const int roomTemplateHeight = 6;
 
 enum RoomType
 {

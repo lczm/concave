@@ -26,12 +26,41 @@ class Level : public Window
 private:
 	// Camera
 	CoordF camCoord; float camScale;
-	// Tiles
+	
+	// Player
+	Texture warriorTexture; AnimImage warriorAnimImage;
+	GridMask warriorAttackGridMask;
+	GridMask warriorDieGridMask;
+	GridMask warriorIdleGridMask;
+	GridMask warriorWalkGridMask;
+	GridMask warriorGetHitGridMask;
+	Texture mageTexture; AnimImage mageAnimImage;
+	GridMask mageAttackGridMask;
+	GridMask mageDieGridMask;
+	GridMask mageIdleGridMask;
+	GridMask mageWalkGridMask;
+	GridMask mageGetHitGridMask;
+	GridMask mageMagicFireGridMask;
+	GridMask mageMagicSmokeGridMask;
+
+	// Projectiles
+	Texture projTexture; AnimImage projImage;
+	GridMask projGridMask;
+
+	// Components
+	Tiles underTiles;
+	Tiles tiles;
+	Players players;
+	Projectiles projectiles;
+	Enemies enemies;
+
+	// Map Generation things
 	Texture tileTexture; GridMask tileGridMask; Image tileImage;
 	Sprite floorSprite,
 		wallSprite, blood, door, chest,
 		wallEast, wallWest, WallConnect,
-		wallPath, barrel, fireItem, torch, book, dead, armour, witch;
+		wallPath, barrel, fireItem, torch, 
+		book, dead, armour, witch, banner;
 
 	Texture itemTexture;
 	GridMask itemGridMask;
@@ -54,10 +83,8 @@ private:
 	GridMask fireGridMask;
 	Image fireImage;
 
-
 	GridMask bookGridMask;
 	Image bookImage;
-
 
 	Texture armourTexture;
 	GridMask armourGridMask;
@@ -67,44 +94,16 @@ private:
 	GridMask witchGridMask;
 	Image witchImage;
 
-	// Player
-	Texture warriorTexture; AnimImage warriorAnimImage;
-	GridMask warriorAttackGridMask;
-	GridMask warriorDieGridMask;
-	GridMask warriorIdleGridMask;
-	GridMask warriorWalkGridMask;
-	GridMask warriorGetHitGridMask;
-	Texture mageTexture; AnimImage mageAnimImage;
-	GridMask mageAttackGridMask;
-	GridMask mageDieGridMask;
-	GridMask mageIdleGridMask;
-	GridMask mageWalkGridMask;
-	GridMask mageGetHitGridMask;
-	GridMask mageMagicFireGridMask;
-	GridMask mageMagicSmokeGridMask;
+	Texture bannerTexture;
+	GridMask bannerGridMask;
+	Image bannerImage;
 
-	// Projectiles
-	Texture projTexture; AnimImage projImage;
-	GridMask projGridMask;
-	// Components
-	Tiles underTiles;
-	Tiles tiles;
-	Players players;
-	Projectiles projectiles;
-	Enemies enemies;
-
-	// Camera
 	int map[mapWidth][mapHeight];
-
 	int mapNo = 0;
-
 	//shld prob change this to another variable
 	//int type = 0;
 	//prob need to change it to read component
-	EditComponent * editComponent;
-
-
-	//RenderLevel renderLevel;
+	EditComponent* editComponent;
 public:
 	Level();
 	~Level();

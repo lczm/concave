@@ -31,6 +31,8 @@ void Players::initialize(int capacity)
 	Players::maxHealthArray.resize(capacity);
 	Players::manaArray.resize(capacity);
 	Players::maxManaArray.resize(capacity);
+	Players::damageArray.resize(capacity);
+	Players::noProjArray.resize(capacity);
 }
 
 void Players::push(CoordF position, AnimImage* animImage, int state, FSM fsm, float rotation, float velocity, Lines hLines, Lines vLines, int health, int maxHealth, int mana, int maxMana)
@@ -44,7 +46,7 @@ void Players::push(CoordF position, AnimImage* animImage, int state, FSM fsm, fl
 	directionArray[size] = 0;
 	frameNoArray[size] = 0;
 	timerArray[size] = 0;
-	delayArray[size] = 0.03;
+	delayArray[size] = 0.01;
 	fsmArray[size] = fsm;
 	// Movement
 	rotationArray[size] = rotation;
@@ -57,28 +59,10 @@ void Players::push(CoordF position, AnimImage* animImage, int state, FSM fsm, fl
 	maxHealthArray[size] = maxHealth;
 	manaArray[size] = mana;
 	maxManaArray[size] = maxMana;
+	damageArray[size] = 10;
+	noProjArray[size] = 10;
 	size++;
 }
-
-//void Players::push(CoordF position, Lines hLines, Lines vLines,
-//	State* fsm, AnimImage* animImage, int state, int health, int mana)
-//{
-//	positionArray[size] = position;
-//	destPositionArray[size] = position;
-//	hLinesArray[size] = hLines;
-//	vLinesArray[size] = vLines;
-//	fsmArray[size] = fsm;
-//	animImageArray[size] = animImage;
-//	stateArray[size] = state;
-//	frameNoArray[size] = 0;
-//	timerArray[size] = 0;
-//	delayArray[size] = float(0.03);
-//	healthArray[size] = health;
-//	manaArray[size] = mana;
-//	rotationArray[size] = 0;
-//	dydxArray[size] = CoordF{ 0, 0 };
-//	size++;
-//}
 
 void Players::pop(int index)
 {
@@ -101,8 +85,10 @@ void Players::pop(int index)
 	hLinesArray[index] = hLinesArray[size];
 	vLinesArray[index] = vLinesArray[size];
 	// Attributes
-	healthArray[size] = healthArray[index];
-	maxHealthArray[size] = maxHealthArray[index];
-	manaArray[size] = manaArray[index];
-	maxManaArray[size] = maxManaArray[index];
+	healthArray[index] = healthArray[size];
+	maxHealthArray[index] = maxHealthArray[size];
+	manaArray[index] = manaArray[size];
+	maxManaArray[index] = maxManaArray[size];
+	damageArray[index] = damageArray[size];
+	noProjArray[index] = noProjArray[size];
 }

@@ -82,15 +82,27 @@ void playerIdleState(Level* level, int index)
         fsm = playerMagicFireState;
         state = PLAYER_STATE_MAGIC_FIRE;
 
-        vector<float> temp = { float(rotation - PI/8), rotation, float(rotation + PI/8) };
-        for (int i = 0; i < 3; i++) {
+        if (players.getNoProjArray()[index] == 1) {
             projectiles.push(
                 position, &level->getProjImage(),
                 translateHLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, position),
                 translateVLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, position),
-            temp[i]);
+            rotation);
         }
-        return;
+        else {
+            float range = PI / 4; // 90 degrees
+            float left = rotation - (range / 2); // get the most left edge
+            float increment = range / players.getNoProjArray()[index]; 
+            for (int i = 0; i < players.getNoProjArray()[index]; i++) {
+                projectiles.push(
+                    position, &level->getProjImage(),
+                    translateHLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, position),
+                    translateVLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, position),
+                left + ( i * increment));
+            }
+            return;
+        }
+
     }
     else if (input->getMouseMButton()) {
         input->setMouseMButton(false);
@@ -104,6 +116,7 @@ void playerIdleState(Level* level, int index)
         destPosition = level->screenToGrid(CoordF{ float(input->getMouseX()), float(input->getMouseY()) });
         rotation = calculateRotation(position, destPosition);
         position = destPosition;
+        velocity = 0;
         frameNo = 0;
         fsm = playerMagicSmokeState;
         state = PLAYER_STATE_MAGIC_LIGHTNING;
@@ -167,6 +180,16 @@ void playerWalkState(Level* level, int index)
         frameNo = 0;
         fsm = playerAttackState;
         state = UNIT_STATE_ATTACK;
+        return;
+    }
+    else if (input->isKeyDown('Q')) {
+        destPosition = level->screenToGrid(CoordF{ float(input->getMouseX()), float(input->getMouseY()) });
+        rotation = calculateRotation(position, destPosition);
+        position = destPosition;
+        velocity = 0;
+        frameNo = 0;
+        fsm = playerMagicSmokeState;
+        state = PLAYER_STATE_MAGIC_LIGHTNING;
         return;
     }
 

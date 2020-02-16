@@ -226,7 +226,38 @@ void Level::update()
 	updateLineISetItersArray(enemies.getHLineISet(), enemies.getVLineISet(), enemies.getSize(), enemies.getHLineISetItersArray(), enemies.getVLineISetItersArray(), pDeltaArray);
 	updateLinesArray(projectiles.getSize(), projectiles.getHLinesArray(), projectiles.getVLinesArray(), jDeltaArray);
 
-	// Get Collision (Wall)
+	// Get Collision (Wall) (Horizontal)
+	/*vector<LineI> pRLineIArray; vector<Line> pBLineArray;
+	vector<LineI> eRLineIArray; vector<Line> eBLineArray;
+	vector<LineI> jRLineIArray; vector<Line> jBLineArray;
+	pRLineIArray.reserve(players.getSize()); pBLineArray.reserve(players.getSize());
+	eRLineIArray.reserve(enemies.getSize()); eBLineArray.reserve(enemies.getSize());
+	jRLineIArray.reserve(projectiles.getSize()); jBLineArray.reserve(projectiles.getSize());
+	getHLineIArrayOfWallCollision(pRLineIArray, pBLineArray, tiles, players.getSize(), players.getHLineISetItersArray());
+	getHLineIArrayOfWallCollision(eRLineIArray, eBLineArray, tiles, enemies.getSize(), enemies.getHLineISetItersArray());
+	getHLineIArrayOfWallCollision(jRLineIArray, jBLineArray, tiles, projectiles.getSize(), projectiles.getHLinesArray());*/
+
+	// Player To Wall Collision
+	vector<LineI> pHLineIArray, pVLineIArray;
+	vector<Line> pHLineArray, pVLineArray;
+	pHLineIArray.reserve(players.getSize()); pVLineIArray.reserve(players.getSize());
+	pHLineArray.reserve(players.getSize()); pVLineArray.reserve(players.getSize());
+	getHLineIArrayOfWallCollision(pHLineIArray, pVLineArray, tiles, players.getSize(), players.getHLineISetItersArray());
+	getVLineIArrayOfWallCollision(pVLineIArray, pHLineArray, tiles, players.getSize(), players.getVLineISetItersArray());
+
+	// Player To Wall Collision Response
+	for (int i = 0; i < pHLineIArray.size(); i++) {
+		LineI lineI = pHLineIArray[i]; Line line = pVLineArray[i];
+		CoordF& pos = players.getPositionArray()[lineI.id];
+		CoordF delta{ getDeltaXResponse(lineI, line, pos), 0 };
+		updateHLineISetIters(players.getHLineISet(), players.getHLineISetItersArray()[i], delta);
+	}
+	for (int i = 0; i < pVLineIArray.size(); i++) {
+		LineI lineI = pVLineIArray[i]; Line line = pHLineArray[i];
+		CoordF& pos = players.getPositionArray()[lineI.id];
+		CoordF delta{ getDeltaXResponse(lineI, line, pos), 0 };
+		updateVLineISetIters(players.getVLineISet(), players.getVLineISetItersArray()[i], delta);
+	}
 
 	//// Player
 	//updateFSMArray(this, players.getSize(), players.getFSMArray());

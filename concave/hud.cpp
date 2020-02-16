@@ -93,6 +93,7 @@ void HUD::drawHUD()
 	graphics->drawSprite(healthPotSpriteData, 469, GAME_HEIGHT - 62, 1.9);
 	graphics->drawSprite(healthPotSpriteData, 412, GAME_HEIGHT - 62, 1.9);
 	graphics->drawSprite(manaPotSpriteData, 355, GAME_HEIGHT - 62, 1.9);
+	graphics->drawSprite(manaPotSpriteData, 298, GAME_HEIGHT - 62, 1.9);
 	spriteText.print("HP: " + to_string(currentHealth) + "/" + to_string(maxHealth), 20, GAME_HEIGHT - 280);
 	spriteText.print("MP: " + to_string(currentMana) + "/" + to_string(maxMana), GAME_WIDTH - 220, GAME_HEIGHT - 280);
 }

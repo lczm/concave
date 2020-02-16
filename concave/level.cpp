@@ -119,7 +119,13 @@ void Level::initialize()
 	barrel.initialize(&manyItemsImage, CoordI{ 0,0 });
 	fireItem.initialize(&flameImage, CoordI{ 4,5 });
 	book.initialize(&manyItemsImage, CoordI{ 0,1 });
+
 	dead.initialize(&deadPeopleImage, CoordI{3,0});
+	dead2.initialize(&deadPeopleImage, CoordI{ 0,0 });
+	dead3.initialize(&deadPeopleImage, CoordI{ 1,0 });
+	dead4.initialize(&deadPeopleImage, CoordI{ 2,0 });
+	dead5.initialize(&deadPeopleImage, CoordI{ 4,0 });
+
 	armour.initialize(&armourImage, CoordI{ 0,0 });
 	witch.initialize(&witchImage, CoordI{ 0,0 });
 	banner.initialize(&bannerImage, CoordI{ 0,0 });
@@ -610,9 +616,22 @@ void Level::tilesInitialize()
 					translateVLines(Lines{}, x, y));
 				break;
 			case 22:
-				tiles.set(x, y, &cow, translateHLines(Lines{ {} }, x, y),
+				tiles.set(x, y, &dead4, translateHLines(Lines{ {} }, x, y),
 					translateVLines(Lines{}, x, y));
 				break;
+			case 23:
+				tiles.set(x, y, &dead5, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				break;
+			case 24:
+				tiles.set(x, y, &dead2, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				break;
+			case 25:
+				tiles.set(x, y, &dead3, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				break;
+			
 			}
 		}
 	}

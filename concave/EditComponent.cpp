@@ -33,8 +33,8 @@ void EditComponent::writeToFile(int map[mapWidth][mapHeight], int i)
 	std::vector<std::string> record;
 
 	record.push_back(to_string(i) + "save.txt");
-	record.push_back("0");
-	record.push_back("No");
+	record.push_back("1");
+	record.push_back("Not defeated");
 
 	gm.writeRecord("text\\gameInfo.csv", record);
 	

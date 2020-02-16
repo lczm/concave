@@ -257,26 +257,6 @@ void Level::update()
 
 	// Get Collision (Wall)
 
-	//// Player
-	//updateFSMArray(this, players.getSize(), players.getFSMArray());
-	//vector<CoordF> pDeltaArray(players.getSize());
-	//calculateDeltaArray(players.getSize(), pDeltaArray, players.getRotationArray(), players.getVelocityArray(), frameTime);
-	//updatePositionArray(players.getSize(), players.getPositionArray(), pDeltaArray);
-	////updateLinesArray(players.getSize(), players.getHLinesArray(), players.getVLinesArray(), pDeltaArray);
-	//updateDirectionArray(players.getSize(), players.getRotationArray(), players.getDirectionArray());
-
-	//// Enemy
-	//updateFSMArray(this, enemies.getSize(), enemies.getFSMArray());
-	//vector<CoordF> eDeltaArray(enemies.getSize());
-	//calculateDeltaArray(enemies.getSize(), eDeltaArray, enemies.getRotationArray(), enemies.getVelocityArray(), frameTime);
-	//updatePositionArray(enemies.getSize(), enemies.getPositionArray(), eDeltaArray);
-	////updateLinesArray(enemies.getSize(), enemies.getHLinesArray(), enemies.getVLinesArray(), eDeltaArray);
-
-	//// Projectiles
-	//vector<CoordF> projDeltaArray(projectiles.getSize());
-	//calculateDeltaArray(projectiles.getSize(), projDeltaArray, projectiles.getRotationArray(), projectiles.getVelocityArray(), frameTime);
-	//updatePositionArray(projectiles.getSize(), projectiles.getPositionArray(), projDeltaArray);
-
 	// AnimObjects (Temp)
 	for (int i = 0; i < animObjects.getSize(); i++) {
 		int& state = animObjects.getStateArray()[i];

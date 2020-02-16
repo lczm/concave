@@ -39,50 +39,37 @@ void Level::initialize()
 	tileGridMask.initialize(0, 0, 128, 192, 1, 1, 64, 127);
 	tileImage.initialize(&tileTexture, tileGridMask);
 
-
 	//reference to yh code
 	//void initialize(int originX, int originY, int perWidth, int perHeight, int gapWidth, int gapHeight, int pivotX, int pivotY);
 	//In game items
 	itemTexture.initialize(graphics, IMAGE_ITEMS_DUNGEON);
 	itemGridMask.initialize(0, 0, 130, 130, 1, 1, 59, 59);
 	itemImage.initialize(&itemTexture, itemGridMask);
-
-
 	//barrel png
 	manyItemsTexture.initialize(graphics, IMAGE_BARRELITEMS_DUNGEON);
 	manyItemsGridMask.initialize(0, 0, 94, 119, 1, 1, 45, 44);
 	manyItemsImage.initialize(&manyItemsTexture, manyItemsGridMask);
-
-
 	//cabinet
 	cabinetGridMask.initialize(0, 0, 111, 110, 1, 1, 50, 55);
 	cabinetImage.initialize(&manyItemsTexture, cabinetGridMask);
-
 	//fire
 	flameGridMask.initialize(0, 0, 88, 118, 1, 1, 40, 10);
 	flameImage.initialize(&manyItemsTexture, flameGridMask);
-
-
 	//bookstand
 	bookGridMask.initialize(0, 0, 76, 80, 1, 1, 45, 44);
 	bookImage.initialize(&manyItemsTexture, bookGridMask);
-
 	//dead
 	deadTexture.initialize(graphics, IMAGE_DEADITEMS_DUNGEON);
 	deadPeopleGridMask.initialize(0, 0, 108, 109,1, 1, 75, 90);
 	deadPeopleImage.initialize(&deadTexture, deadPeopleGridMask);
-
 	//armour
 	armourTexture.initialize(graphics, IMAGE_ARMOURITEMS_DUNGEON);
 	armourGridMask.initialize(0, 0, 38, 44, 1, 1, 19, 14);
 	armourImage.initialize(&armourTexture, armourGridMask);
-
 	//witch
 	witchTexture.initialize(graphics, IMAGE_WITCHITEMS_DUNGEON);
 	witchGridMask.initialize(0, 0, 150, 141, 1, 1, 74, 90);
 	witchImage.initialize(&witchTexture, witchGridMask);
-
-
 	//church sprites
 	floorSprite.initialize(&tileImage, IMAGE_MAP.at(ImageType::churchFloor));
 	wallSprite.initialize(&tileImage, CoordI{ 6,0 });
@@ -102,10 +89,8 @@ void Level::initialize()
 	//dead man
 	dead.initialize(&deadPeopleImage, CoordI{3,0});
 	armour.initialize(&armourImage, CoordI{ 0,0 });
-
 	//witch
 	witch.initialize(&witchImage, CoordI{ 0,0 });
-
 	// Warrior
 	warriorTexture.initialize(graphics, IMAGE_UNIT_WARRIOR);
 	warriorAttackGridMask.initialize(0, 7, 128, 128, 0, 1, 58, 114);
@@ -134,33 +119,12 @@ void Level::initialize()
 	projTexture.initialize(graphics, IMAGE_PROJECTILE_FIREBALL);
 	projGridMask.initialize(1, 1, 96, 96, 1, 1, 46, 46);
 	projImage.initialize(&projTexture, { projGridMask }, { 15 });
-	//initialize the values
-	//renderLevel.initialize(graphics, input, type);
-
 
 	////  Entities Initialisation  ////
 	// Tiles
 	tiles.initialize(mapWidth, mapHeight);
 	underTiles.initialize(mapWidth, mapHeight);
 	tilesInitialize();
-	
-	/*
-	for (int y = 0; y < tiles.getRows(); y++)
-		for (int x = 0; x < tiles.getCols(); x++)
-			tiles.set(y, x, &wallSprite,
-				translateHLines(Lines{ { 0, 1, 0 } }, x, y),
-				translateVLines(Lines{}, x, y));
-	for (int y = 1; y < tiles.getRows() - 1; y++)
-		for (int x = 1; x < tiles.getCols() - 1; x++)
-			tiles.set(y, x, &floorSprite,
-				translateHLines(Lines{}, x, y),
-				translateVLines(Lines{}, x, y));
-	for (int y = 7; y < tiles.getRows() - 7; y++)
-		for (int x = 7; x < tiles.getCols() - 7; x++)
-			tiles.set(y, x, &wallSprite,
-				translateHLines(Lines{ { 0, 1, 0 } }, x, y),
-				translateVLines(Lines{}, x, y));
-	*/
 
 	// Player
 	players.initialize(1);
@@ -183,12 +147,6 @@ void Level::initialize()
 
 	// Projectiles
 	projectiles.initialize(100);
-	// CoordF jPos = CoordF{ 5, 5 };
-	// projectiles.push(
-	// 	jPos, &projImage,
-	// 	translateHLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, jPos),
-	// 	translateVLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, jPos),
-	// 	1);
 }
 
 void Level::releaseAll()
@@ -235,6 +193,7 @@ void Level::update()
 	
 void Level::render()
 {
+	// Tiles
 	for (int x = 0; x < tiles.getRows(); x++)
 	{
 		for (int y = 0; y < tiles.getCols(); y++)
@@ -268,18 +227,7 @@ void Level::render()
 	graphics->drawSprite(
 		enemySD, gridToScreen(enemyPos), camScale);
 
-	//for (int i = 0; i < players.getSize(); i++) {
-	//	// Temporary solution to make it not blurry
-	//	// CoordF screenCoords = gridToScreen(players.getPositionArray()[i]);
-	//	SpriteData sd = players.getAnimImageArray()[i]->getSpriteData(
-	//		players.getStateArray()[i],
-	//		rotationToDirection(players.getRotationArray()[i]),
-	//		players.getFrameNoArray()[i]);
-
- //       graphics->drawSprite(sd,
- //           gridToScreen(players.getPositionArray()[i]), camScale);
-	//}
-
+	// Projectiles
 	for (int i = 0; i < projectiles.getSize(); i++) {
 		float rotation = projectiles.getRotationArray()[i];
 		float direction = rotationToDirection16(rotation);
@@ -289,16 +237,6 @@ void Level::render()
 		graphics->drawSprite(sd,
 			gridToScreen(projectiles.getPositionArray()[i]), camScale);
 	}
-
-	//for (int i = 0; i < projectiles.getSize(); i++) {
-	//	SpriteData sd = projectiles.getAnimImageArray()[i]->getSpriteData(
-	//		0, projectiles.getRotationArray()[i],
-	//		projectiles.getFrameNoArray()[i]);
-	//	graphics->drawSprite(sd,
-	//		gridToScreen(projectiles.getPositionArray()[i]), camScale);
-	//}
-	//will be moved to another file I hope
-	//renderSprites();
 }
 
 CoordF Level::gridToScreen(float gx, float gy)

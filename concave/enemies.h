@@ -1,6 +1,8 @@
 #pragma once
 #include "constants.h"
 #include "image.h"
+#include <vector>
+using namespace std;
 
 class Enemies
 {

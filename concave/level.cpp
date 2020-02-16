@@ -179,7 +179,7 @@ void Level::initialize()
 	CoordF pPos = CoordF{ 3, 3 };
 	players.push(
 		pPos, &mageAnimImage, UNIT_STATE_IDLE, 
-		playerIdleState, 0, 0, 
+		playerIdleState, 0, 5, 
 		translateHLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, pPos),
 		translateVLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, pPos),
 		0, 0, 0, 0);
@@ -196,7 +196,8 @@ void Level::initialize()
 	// Projectiles
 	projectiles.initialize(10000);
 	increaseProjectilesAmount(0, players, 100);
-	increaseSpeed(0, players, 0.01);
+	increaseAttackSpeed(0, players, 0.01);
+	increaseMovementSpeed(0, players, 2);
 }
 
 void Level::releaseAll()

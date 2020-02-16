@@ -63,12 +63,13 @@ void playerIdleState(Level* level, int index)
     float& delay = players.getDelayArray()[index];
     float& rotation = players.getRotationArray()[index];
     float& velocity = players.getVelocityArray()[index];
+    float& staticVelocity = players.getStaticVelocityArray()[index];
     Projectiles& projectiles = level->getProjectiles();
 
     if (input->getMouseLButton()) {
         destPosition = level->screenToGrid(CoordF{ float(input->getMouseX()), float(input->getMouseY()) });
         rotation = calculateRotation(position, destPosition);
-        velocity = 5;
+        velocity = staticVelocity;
         frameNo = 0;
         fsm = playerWalkState;
         state = UNIT_STATE_WALK;
@@ -171,7 +172,7 @@ void playerWalkState(Level* level, int index)
         return;
     }
 
-    if (fastSquareProximityCheck(position, destPosition, 0.01)) {
+    if (fastSquareProximityCheck(position, destPosition, 0.1)) {
         destPosition = position;
         velocity = 0;
         frameNo = 0;

@@ -13,9 +13,15 @@ void increaseMaxMana(int index, Players& players, float amount) {
 }
 
 // Increase speed of everything by %% amount
-void increaseSpeed(int index, Players& players, float amount) {
+void increaseAttackSpeed(int index, Players& players, float amount) {
     float& delay = players.getDelayArray()[index];
     delay *= amount;
+}
+
+// Increase movement speed
+void increaseMovementSpeed(int index, Players& players, float amount) {
+    float& velocity = players.getStaticVelocityArray()[index];
+    velocity *= amount;
 }
 
 // Increase maximum projectiles

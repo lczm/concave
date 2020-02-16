@@ -23,6 +23,7 @@ void Players::initialize(int capacity)
 	// Movement
 	Players::rotationArray.resize(capacity);
 	Players::velocityArray.resize(capacity);
+	Players::staticVelocityArray.resize(capacity);
 	// Collision
 	Players::hLineISetItersArray.resize(capacity);
 	Players::vLineISetItersArray.resize(capacity);
@@ -35,7 +36,7 @@ void Players::initialize(int capacity)
 	Players::damageArray.resize(capacity);
 }
 
-void Players::push(CoordF position, AnimImage* animImage, int state, FSM fsm, float rotation, float velocity, Lines hLines, Lines vLines, int health, int maxHealth, int mana, int maxMana)
+void Players::push(CoordF position, AnimImage* animImage, int state, FSM fsm, float rotation, float staticVelocity, Lines hLines, Lines vLines, int health, int maxHealth, int mana, int maxMana)
 {
 	// Position
 	positionArray[size] = position;
@@ -50,7 +51,8 @@ void Players::push(CoordF position, AnimImage* animImage, int state, FSM fsm, fl
 	fsmArray[size] = fsm;
 	// Movement
 	rotationArray[size] = rotation;
-	velocityArray[size] = velocity;
+	velocityArray[size] = 0;
+	staticVelocityArray[size] = staticVelocity;
 	// Collision
 	LineISetIters hLineIters, vLineIters;
 	for (Line line : hLines) hLineIters.push_back(hLineISet.insert(LineI{ line, size }).first);
@@ -84,6 +86,7 @@ void Players::pop(int index)
 	// Movement
 	rotationArray[index] = rotationArray[size];
 	velocityArray[index] = velocityArray[size];
+	staticVelocityArray[index] = staticVelocityArray[size];
 	// Collision
 	for (LineISetIter lineIter : hLineISetItersArray[index]) hLineISet.erase(lineIter);
 	for (LineISetIter lineIter : vLineISetItersArray[index]) vLineISet.erase(lineIter);

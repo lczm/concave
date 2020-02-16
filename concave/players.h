@@ -22,6 +22,7 @@ private:
 	// Movement
 	vector<float> rotationArray;
 	vector<float> velocityArray;
+	vector<float> staticVelocityArray;
 	// Collision
 	LineISet hLineISet;
 	LineISet vLineISet;
@@ -37,7 +38,7 @@ private:
 public:
 	Players(); ~Players();
 	void initialize(int capacity);
-	void push(CoordF position, AnimImage* animImage, int state, FSM fsm, float rotation, float velocity, Lines hLines, Lines vLines, int health, int maxHealth, int mana, int maxMana);
+	void push(CoordF position, AnimImage* animImage, int state, FSM fsm, float rotation, float staticVelocity, Lines hLines, Lines vLines, int health, int maxHealth, int mana, int maxMana);
 	void pop(int index);
 public:
 	int getSize() { return size; }
@@ -55,6 +56,7 @@ public:
 	// Movement
 	vector<float>& getRotationArray() { return rotationArray; }
 	vector<float>& getVelocityArray() { return velocityArray; }
+	vector<float>& getStaticVelocityArray() { return staticVelocityArray; }
 	// Collision
 	LineISet& getHLineISet() { return hLineISet; }
 	LineISet& getVLineISet() { return vLineISet; }

@@ -8,7 +8,10 @@ void increaseMaxHealth(int index, Players& players, float amount);
 void increaseMaxMana(int index, Players& players, float amount);
 
 // Increase speed of everything by %% amount
-void increaseSpeed(int index, Players& players, float amount);
+void increaseAttackSpeed(int index, Players& players, float amount);
+
+// Increase movement speed
+void increaseMovementSpeed(int index, Players& players, float amount);
 
 // Increase maximum projectiles
 void increaseProjectilesAmount(int index, Players& players, int amount);

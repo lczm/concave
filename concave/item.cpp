@@ -3,7 +3,7 @@
 Item::Item()
 {}
 
-Item::Item(Graphics* graphics, UINT id, ItemType itemtype, vector<int> posInInven)
+Item::Item(Graphics* graphics, UINT id, ItemType itemtype, CoordI posInInven = {})
 {
 	CoordI itemSpriteMapCoord = { id, 0 };
 	COLOR_ARGB customTranscolor = D3DCOLOR_ARGB(255, 73, 101, 101);

@@ -57,9 +57,18 @@ void Level::initialize()
 	cabinetImage.initialize(&manyItemsTexture, cabinetGridMask);
 
 	//fire
-	flameGridMask.initialize(0, 0, 69, 107, 1, 1, -40, 20);
+	flameGridMask.initialize(0, 0, 88, 118, 1, 1, 40, 10);
 	flameImage.initialize(&manyItemsTexture, flameGridMask);
 
+
+	//bookstand
+	bookGridMask.initialize(0, 0, 76, 80, 1, 1, 45, 44);
+	bookImage.initialize(&manyItemsTexture, bookGridMask);
+
+	//dead
+	deadTexture.initialize(graphics, IMAGE_DEADITEMS_DUNGEON);
+	deadPeopleGridMask.initialize(0, 0, 108, 109,1, 1, 75, 90);
+	deadPeopleImage.initialize(&deadTexture, deadPeopleGridMask);
 
 
 
@@ -80,7 +89,14 @@ void Level::initialize()
 	//barrel
 	barrel.initialize(&manyItemsImage, CoordI{ 0,0 });
 
+	//fireplace
+	fireItem.initialize(&flameImage, CoordI{ 4,5 });
 
+	//armour
+	book.initialize(&manyItemsImage, CoordI{ 0,1 });
+
+	//dead man
+	dead.initialize(&deadPeopleImage, CoordI{3,0});
 
 
 	// Warrior
@@ -209,7 +225,6 @@ void Level::render()
 	{
 		for (int y = 0; y < tiles.getCols(); y++)
 		{
-
 			graphics->drawSprite(
 				underTiles.getSprite(x, y)->getSpriteData(),
 				gridToScreen(x, y), camScale);
@@ -405,6 +420,18 @@ void Level::tilesInitialize()
 			//add no to constants ltr
 			case 11:
 				tiles.set(x, y, &barrel, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				break;
+			case 12:
+				tiles.set(x, y, &fireItem, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				break;
+			case 13:
+				tiles.set(x, y, &book, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				break;
+			case 14:
+				tiles.set(x, y, &dead, translateHLines(Lines{ {} }, x, y),
 					translateVLines(Lines{}, x, y));
 				break;
 			}

@@ -28,8 +28,10 @@ private:
 	CoordF camCoord; float camScale;
 	// Tiles
 	Texture tileTexture; GridMask tileGridMask; Image tileImage;
-	Sprite floorSprite, wallSprite, blood, door, chest, 
-	wallEast, wallWest, WallConnect, wallPath, barrel, fireItem, torch;
+	Sprite floorSprite,
+		wallSprite, blood, door, chest,
+		wallEast, wallWest, WallConnect,
+		wallPath, barrel, fireItem, torch, book, dead;
 
 	Texture itemTexture;
 	GridMask itemGridMask;
@@ -45,9 +47,16 @@ private:
 	GridMask flameGridMask;
 	Image flameImage;
 
+	Texture deadTexture;
 	GridMask deadPeopleGridMask;
 	Image deadPeopleImage;
 
+	GridMask fireGridMask;
+	Image fireImage;
+
+
+	GridMask bookGridMask;
+	Image bookImage;
 
 	// Player
 	Texture warriorTexture; AnimImage warriorAnimImage;

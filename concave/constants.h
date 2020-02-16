@@ -115,6 +115,7 @@ const char IMAGE_TILES_CAVE[] = "sprites/tiles_cave_dungeon.png";
 //const char IMAGE_ITEMS_DUNGEON[] = "sprites/items.png";
 const char IMAGE_ITEMS_DUNGEON[] = "sprites/items2.png";
 const char IMAGE_BARRELITEMS_DUNGEON[] = "sprites/items.png";
+const char IMAGE_DEADITEMS_DUNGEON[] = "sprites/deadMan.png";
 
 
 //-----------------------------------------------

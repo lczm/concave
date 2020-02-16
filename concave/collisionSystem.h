@@ -35,3 +35,8 @@ float getDeltaYResponse(Line rVLine, Line bHLine, CoordF pos);
 
 void updateLinesArray(int size, vector<Lines>& hLinesArray, vector<Lines>& vLinesArray, vector<CoordF> deltaArray);
 void updateAllWallCollision(Tiles& tiles, int size, vector<Lines>& hLinesArray, vector<Lines>& vLinesArray, vector<CoordF>& positionArray);
+
+void getHLineIArrayOfWallCollision(vector<LineI>& hLineIArray, vector<Line>& vLineArray, Tiles& tiles, int size, vector<Lines>& hLinesArray);
+void getVLineIArrayOfWallCollision(vector<LineI>& vLineIArray, vector<Line>& hLineArray, Tiles& tiles, int size, vector<Lines>& vLinesArray);
+//void getHLineIArrayOfWallCollision(vector<LineI>& hLineIArray, vector<Line>& vLineArray, Tiles& tiles, int size, vector<LineISetIters>& hLineISetItersArray);
+//void getVLineIArrayOfWallCollision(vector<LineI>& vLineIArray, vector<Line>& hLineArray, Tiles& tiles, int size, vector<LineISetIters>& vLineISetItersArray);

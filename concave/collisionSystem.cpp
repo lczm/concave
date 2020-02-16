@@ -277,3 +277,34 @@ void updateAllWallCollision(Tiles& tiles, int size, vector<Lines>& hLinesArray, 
 		updateVLines(vLines, delta);
 	}
 }
+
+void getHLineIArrayOfWallCollision(vector<LineI>& hLineIArray, vector<Line>& vLineArray, Tiles& tiles, int size, vector<Lines>& hLinesArray)
+{
+	for (int i = 0; i < size; i++) {
+		Line hLine, vLine;
+		if (checkHLinesToWallCollision(tiles, hLinesArray[i], hLine, vLine)) {
+			hLineIArray.push_back(LineI{ hLine, i });
+			vLineArray.push_back(vLine);
+		}
+	}
+}
+
+void getVLineIArrayOfWallCollision(vector<LineI>& vLineIArray, vector<Line>& hLineArray, Tiles& tiles, int size, vector<Lines>& vLinesArray)
+{
+	for (int i = 0; i < size; i++) {
+		Line vLine, hLine;
+		if (checkVLinesToWallCollision(tiles, vLinesArray[i], vLine, hLine)) {
+			vLineIArray.push_back(LineI{ vLine, i });
+			hLineArray.push_back(hLine);
+		}
+	}
+}
+
+//void getHLineIArrayOfWallCollision(vector<LineI>& hLineIArray, vector<Line>& vLineArray, Tiles& tiles, int size, vector<LineISetIters>& hLineISetItersArray)
+//{
+//	for (int i = 0; i < size; i++) {
+//		LineI hLine; Line vLine;
+//		//if (checkHLinesToWallCollision(tiles, ))
+//	}
+//}
+//void getVLineIArrayOfWallCollision(vector<LineI>& vLineIArray, vector<Line>& hLineArray, Tiles& tiles, int size, vector<LineISetIters>& vLineISetItersArray);

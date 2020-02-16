@@ -285,9 +285,9 @@ void Level::update()
 	updateDirectionArray(enemies.getSize(), enemies.getRotationArray(), enemies.getDirectionArray());
 
 	// Update Collision
-	updateLineISetItersArray(players.getHLineISet(), players.getVLineISet(), players.getSize(), players.getHLineISetItersArray(), players.getVLineISetItersArray(), pDeltaArray);
-	updateLineISetItersArray(enemies.getHLineISet(), enemies.getVLineISet(), enemies.getSize(), enemies.getHLineISetItersArray(), enemies.getVLineISetItersArray(), eDeltaArray);
-	updateLinesArray(projectiles.getSize(), projectiles.getHLinesArray(), projectiles.getVLinesArray(), jDeltaArray);
+	// updateLineISetItersArray(players.getHLineISet(), players.getVLineISet(), players.getSize(), players.getHLineISetItersArray(), players.getVLineISetItersArray(), pDeltaArray);
+	// updateLineISetItersArray(enemies.getHLineISet(), enemies.getVLineISet(), enemies.getSize(), enemies.getHLineISetItersArray(), enemies.getVLineISetItersArray(), eDeltaArray);
+	// updateLinesArray(projectiles.getSize(), projectiles.getHLinesArray(), projectiles.getVLinesArray(), jDeltaArray);
 
 	// Get Collision (Wall) (Horizontal)
 	/*vector<LineI> pRLineIArray; vector<Line> pBLineArray;
@@ -394,11 +394,17 @@ void Level::update()
 			}
 		}
 	}
-	
+
 	// Move Camera
 	camCoord = players.getPositionArray()[0];
 	if (input->isKeyDown('O')) camScale *= 1 - 0.01;
 	if (input->isKeyDown('P')) camScale *= 1 + 0.01;
+
+	// Use this for audio
+	// audioEngine->play("splat 2");
+	if (input->wasKeyPressed('0x39')) {
+		audioEngine->play("splat 2");
+    }
 	levelEdit();
 	changeLevel();
 }
@@ -490,9 +496,6 @@ void Level::render()
 		graphics->drawSprite(sd,
 			int(coords.x), int(coords.y), camScale);
 	}
-
-	// Use this for audio
-    // audioEngine->play("splat 2");
 }
 
 CoordF Level::gridToScreen(float gx, float gy)

@@ -1,43 +1,3 @@
-// #include "projectiles.h"
-// 
-// Projectiles::Projectiles()
-// {}
-// 
-// Projectiles::~Projectiles()
-// {}
-// 
-// void Projectiles::initialize(int capacity)
-// {
-// 	Projectiles::capacity = capacity;
-// 	Projectiles::positionArray.resize(capacity);
-// 	Projectiles::spriteArray.resize(capacity);
-// 	Projectiles::hLineISetItersArray.resize(capacity);
-// 	Projectiles::vLineISetItersArray.resize(capacity);
-// }
-// 
-// void Projectiles::push(CoordF position, Sprite* sprite, Lines hLines, Lines vLines)
-// {
-// 	LineISetIters hLineIters, vLineIters;
-// 	for (Line line : hLines) hLineIters.push_back(hLineISet.insert(LineI{ line, size }).first);
-// 	for (Line line : vLines) vLineIters.push_back(vLineISet.insert(LineI{ line, size }).first);
-// 	positionArray[size] = position;
-// 	spriteArray[size] = sprite;
-// 	hLineISetItersArray[size] = hLineIters;
-// 	vLineISetItersArray[size] = vLineIters;
-// 	size++;
-// }
-// 
-// void Projectiles::pop(int index)
-// {
-// 	for (LineISetIter lineIter : hLineISetItersArray[index]) hLineISet.erase(lineIter);
-// 	for (LineISetIter lineIter : vLineISetItersArray[index]) vLineISet.erase(lineIter);
-// 	size--;
-// 	positionArray[index] = positionArray[size];
-// 	spriteArray[index] = spriteArray[size];
-// 	hLineISetItersArray[index] = hLineISetItersArray[size];
-// 	vLineISetItersArray[index] = vLineISetItersArray[size];
-// }
-
 #include "projectiles.h"
 
 Projectiles::Projectiles()
@@ -49,49 +9,58 @@ Projectiles::~Projectiles()
 void Projectiles::initialize(int capacity)
 {
 	Projectiles::capacity = capacity;
+	// Position
 	Projectiles::positionArray.resize(capacity);
-	Projectiles::hLineISetItersArray.resize(capacity);
-	Projectiles::vLineISetItersArray.resize(capacity);
+	// Animation
 	Projectiles::animImageArray.resize(capacity);
 	Projectiles::frameNoArray.resize(capacity);
 	Projectiles::timerArray.resize(capacity);
 	Projectiles::delayArray.resize(capacity);
+	// Movement
 	Projectiles::rotationArray.resize(capacity);
 	Projectiles::velocityArray.resize(capacity);
-	Projectiles::dydxArray.resize(capacity);
+	// Collision
+	Projectiles::hLineISetItersArray.resize(capacity);
+	Projectiles::vLineISetItersArray.resize(capacity);
 }
 
 void Projectiles::push(CoordF position, AnimImage* animImage, Lines hLines, Lines vLines, float rotation)
 {
-	LineISetIters hLineIters, vLineIters;
-	for (Line line : hLines) hLineIters.push_back(hLineISet.insert(LineI{ line, size }).first);
-	for (Line line : vLines) vLineIters.push_back(vLineISet.insert(LineI{ line, size }).first);
+	// Position
 	positionArray[size] = position;
-	hLineISetItersArray[size] = hLineIters;
-	vLineISetItersArray[size] = vLineIters;
+	// Animation
 	animImageArray[size] = animImage;
 	frameNoArray[size] = 0;
 	timerArray[size] = 0;
 	delayArray[size] = float(0.03);
+	// Movement
 	rotationArray[size] = rotation;
 	velocityArray[size] = 3;
-	dydxArray[size] = CoordF{ 0, 0 };
+	// Collision
+	LineISetIters hLineIters, vLineIters;
+	for (Line line : hLines) hLineIters.push_back(hLineISet.insert(LineI{ line, size }).first);
+	for (Line line : vLines) vLineIters.push_back(vLineISet.insert(LineI{ line, size }).first);
+	hLineISetItersArray[size] = hLineIters;
+	vLineISetItersArray[size] = vLineIters;
 	size++;
 }
 
 void Projectiles::pop(int index)
 {
-	for (LineISetIter lineIter : hLineISetItersArray[index]) hLineISet.erase(lineIter);
-	for (LineISetIter lineIter : vLineISetItersArray[index]) vLineISet.erase(lineIter);
 	size--;
+	// Position
 	positionArray[index] = positionArray[size];
-	hLineISetItersArray[index] = hLineISetItersArray[size];
-	vLineISetItersArray[index] = vLineISetItersArray[size];
+	// Animation
 	animImageArray[index] = animImageArray[size];
 	frameNoArray[index] = frameNoArray[size];
 	timerArray[index] = timerArray[size];
 	delayArray[index] = delayArray[size];
+	// Movement
 	rotationArray[index] = rotationArray[size];
 	velocityArray[index] = velocityArray[size];
-	dydxArray[index] = dydxArray[size];
+	// Collision
+	for (LineISetIter lineIter : hLineISetItersArray[index]) hLineISet.erase(lineIter);
+	for (LineISetIter lineIter : vLineISetItersArray[index]) vLineISet.erase(lineIter);
+	hLineISetItersArray[index] = hLineISetItersArray[size];
+	vLineISetItersArray[index] = vLineISetItersArray[size];
 }

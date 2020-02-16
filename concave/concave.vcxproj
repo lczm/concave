@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="animObjects.cpp" />
+    <ClCompile Include="audioEngine.cpp" />
     <ClCompile Include="button.cpp" />
     <ClCompile Include="cellular.cpp" />
     <ClCompile Include="concave.cpp" />
@@ -189,6 +190,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="animObjects.h" />
+    <ClInclude Include="audioEngine.h" />
     <ClInclude Include="button.h" />
     <ClInclude Include="cellular.h" />
     <ClInclude Include="component.h" />

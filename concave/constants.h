@@ -142,6 +142,7 @@ const char IMAGE_SHELVES_DUNGEON[] = "sprites/store.png";
 //-----------------------------------------------
 const char IMAGE_UNIT_WARRIOR[] = "sprites/unit_warrior.png";
 const char IMAGE_UNIT_MAGE[] = "sprites/unit_mage.png";
+const char IMAGE_ENEMY_BALROG[] = "sprites/unit_enemy_balrog.png";
 
 //-----------------------------------------------
 //              Image (Projectiles)
@@ -188,6 +189,14 @@ const char IMAGE_HUD_MANAORBREGEN[] = "sprites/hud_manaorb_regen.png";
 const char IMAGE_HUD_HEALTH[] = "sprites/hud_health.png";
 const char IMAGE_HUD_HEALTHORB[] = "sprites/hud_healthorb.png";
 const char IMAGE_HUD_HEALTHORBREGEN[] = "sprites/hud_healthorb_regen.png";
+
+//-----------------------------------------------
+//                    Audio
+//-----------------------------------------------
+// Wave_Bank
+const char WAVE_BANK[] = "audio\\Win\\Wave_Bank.xwb";
+// Sound_Bank
+const char SOUND_BANK[] = "audio\\Win\\Sound_Bank.xsb";
 
 //-----------------------------------------------
 //					  Other

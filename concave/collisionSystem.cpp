@@ -305,7 +305,7 @@ void getVLineIArrayOfWallCollision(vector<LineI>& vLineIArray, vector<Line>& hLi
 {
 	for (int i = 0; i < size; i++) {
 		LineI vLineI; Line hLine;
-		if (checkHLineISetItersToWallCollision(tiles, vLineISetItersArray[i], vLineI, hLine)) {
+		if (checkVLineISetItersToWallCollision(tiles, vLineISetItersArray[i], vLineI, hLine)) {
 			vLineIArray.push_back(vLineI);
 			hLineArray.push_back(hLine);
 		}

@@ -67,6 +67,7 @@ typedef void (*FSM)(Level* level, int index);
 //};
 
 enum class ItemType { Elixr, Sword, Shield, Armor };
+enum class PotionType { Health, Mana };
 // enum DIRECTION16 { SOUTH, SOUTH_WEST, WEST, NORTH_WEST, NORTH, NORTH_EAST, EAST, SOUTH_EAST };
 //namespace DIRECTION8 {
 //	const int
@@ -315,3 +316,11 @@ const std::map<ImageTypeCave, CoordI> IMAGE_MAP_CAVE
 
 
 const const char ROOM_INFO[] = "text\\roomTypes.csv";
+
+
+// Potions
+struct Potion
+{
+	PotionType type;
+	int charge; // 0 is no charge, 1 is charged
+};

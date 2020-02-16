@@ -35,6 +35,7 @@ private:
 	vector<int> maxManaArray;
 	vector<int> noProjArray;
 	vector<float> damageArray;
+	vector<vector<Potion>> potionArray;
 public:
 	Players(); ~Players();
 	void initialize(int capacity);
@@ -69,4 +70,5 @@ public:
 	vector<int>& getMaxManaArray() { return maxManaArray; };
 	vector<int>& getNoProjArray() { return noProjArray; }
 	vector<float>& getDamageArray() { return damageArray; }
+	vector<vector<Potion>>& getPotionArray() { return potionArray; }
 };

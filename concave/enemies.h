@@ -27,6 +27,8 @@ private:
 	LineISet vLineISet;
 	vector<LineISetIters> hLineISetItersArray;
 	vector<LineISetIters> vLineISetItersArray;
+	// Attributes
+	vector<int> rangeArray;
 public:
 	Enemies(); ~Enemies();
 	void initialize(int capacity);
@@ -53,4 +55,6 @@ public:
 	LineISet& getVLineISet() { return vLineISet; }
 	vector<LineISetIters>& getHLineISetItersArray() { return hLineISetItersArray; }
 	vector<LineISetIters>& getVLineISetItersArray() { return vLineISetItersArray; }
+	// Attributes
+	vector<int>& getRangeArray() { return rangeArray; }
 };

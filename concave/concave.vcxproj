@@ -163,6 +163,7 @@
     <ClCompile Include="fsmSystem.cpp" />
     <ClCompile Include="instructions.cpp" />
     <ClCompile Include="modifiers.cpp" />
+    <ClCompile Include="modifierSelect.cpp" />
     <ClCompile Include="movementSystem.cpp" />
     <ClCompile Include="objects.cpp" />
     <ClCompile Include="options.cpp" />
@@ -203,6 +204,7 @@
     <ClInclude Include="fsmSystem.h" />
     <ClInclude Include="instructions.h" />
     <ClInclude Include="modifiers.h" />
+    <ClInclude Include="modifierSelect.h" />
     <ClInclude Include="movementSystem.h" />
     <ClInclude Include="objects.h" />
     <ClInclude Include="options.h" />

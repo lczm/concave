@@ -78,12 +78,14 @@ void HUD::drawHUD()
 	int& currentMana = level.getPlayers().getManaArray()[0];
 	int& maxMana = level.getPlayers().getMaxManaArray()[0];
 
-	int hpHeight = healthOrbSpriteData.height * maxHealth - currentHealth / 100;
-	int mpHeight = manaOrbSpriteData.height * maxMana - currentMana / 100;
-	healthOrbSpriteData.rect.top = hpHeight;
-	manaOrbSpriteData.rect.top = mpHeight;
-	graphics->drawSprite(manaOrbSpriteData, GAME_WIDTH - 230, GAME_HEIGHT - 230 + mpHeight, 1);
-	graphics->drawSprite(healthOrbSpriteData, 0, GAME_HEIGHT - 230 + hpHeight, 1);
+	float hpFraction = (float)currentHealth / (float)maxHealth;
+	float mpFraction = (float)currentMana / (float)maxMana;
+	float hpHeight = healthOrbSpriteData.height * hpFraction;
+	float mpHeight = manaOrbSpriteData.height * mpFraction;
+	healthOrbSpriteData.rect.top = 230 - hpHeight;
+	manaOrbSpriteData.rect.top = 230 - mpHeight;
+	graphics->drawSprite(manaOrbSpriteData, GAME_WIDTH - 230, GAME_HEIGHT - 230 + (230 - mpHeight), 1);
+	graphics->drawSprite(healthOrbSpriteData, 0, GAME_HEIGHT - 230 + (230 - hpHeight), 1);
 	graphics->drawSprite(manaSpriteData, GAME_WIDTH - 530, GAME_HEIGHT - 230, 1);
 	graphics->drawSprite(healthSpriteData, 0, GAME_HEIGHT - 230, 1);
 	graphics->drawSprite(fireballSpriteData, GAME_WIDTH - 520, GAME_HEIGHT - 62, 1);

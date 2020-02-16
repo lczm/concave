@@ -11,3 +11,5 @@ void playerWalkState(Level* level, int index);
 void playerGetHitState(Level* level, int index);
 void playerMagicFireState(Level* level, int index);
 void playerMagicSmokeState(Level* level, int index);
+
+void handlePotionInput(int index, Input* input, Players& players);

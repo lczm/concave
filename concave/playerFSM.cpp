@@ -264,3 +264,44 @@ void playerMagicSmokeState(Level* level, int index)
     }
     return;
 }
+
+void handlePotionInput(int index, Input* input, Players& players)
+{
+    vector<Potion>& potions = players.getPotionArray()[index];
+    int& health = players.getHealthArray()[index];
+    int& maxHealth = players.getMaxHealthArray()[index];
+    int& mana = players.getManaArray()[index];
+    int& maxMana = players.getMaxManaArray()[index];
+    // Number 1 - Health
+    if (input->isKeyDown(0x31)) {
+        potions[0].charge = 0;
+        health += 40;
+        if (health > maxHealth) {
+            health = maxHealth;
+        }
+    }
+    // Number 2 - Health
+    if (input->isKeyDown(0x32)) {
+        potions[1].charge = 0;
+        health += 40;
+        if (health > maxHealth) {
+            health = maxHealth;
+        }
+    }
+    // Number 3 - Mana
+    if (input->isKeyDown(0x33)) {
+        potions[2].charge = 0;
+        mana += 40;
+        if (mana > maxMana) {
+            mana = maxMana;
+        }
+    }
+    // Number 4 - Mana
+    if (input->isKeyDown(0x34)) {
+        potions[3].charge = 0;
+        mana += 40;
+        if (mana > maxMana) {
+            mana = maxMana;
+        }
+    }
+}

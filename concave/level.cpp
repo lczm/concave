@@ -149,24 +149,6 @@ void Level::initialize()
 	tiles.initialize(mapWidth, mapHeight);
 	underTiles.initialize(mapWidth, mapHeight);
 	tilesInitialize();
-	
-	/*
-	for (int y = 0; y < tiles.getRows(); y++)
-		for (int x = 0; x < tiles.getCols(); x++)
-			tiles.set(y, x, &wallSprite,
-				translateHLines(Lines{ { 0, 1, 0 } }, x, y),
-				translateVLines(Lines{}, x, y));
-	for (int y = 1; y < tiles.getRows() - 1; y++)
-		for (int x = 1; x < tiles.getCols() - 1; x++)
-			tiles.set(y, x, &floorSprite,
-				translateHLines(Lines{}, x, y),
-				translateVLines(Lines{}, x, y));
-	for (int y = 7; y < tiles.getRows() - 7; y++)
-		for (int x = 7; x < tiles.getCols() - 7; x++)
-			tiles.set(y, x, &wallSprite,
-				translateHLines(Lines{ { 0, 1, 0 } }, x, y),
-				translateVLines(Lines{}, x, y));
-	*/
 
 	// Player
 	players.initialize(1);
@@ -204,30 +186,49 @@ void Level::resetAll()
 
 void Level::update()
 {
-	// Player
+	// Update FSM
 	updateFSMArray(this, players.getSize(), players.getFSMArray());
-	vector<CoordF> pDeltaArray(players.getSize());
-	calculateDeltaArray(players.getSize(), pDeltaArray, players.getRotationArray(), players.getVelocityArray(), frameTime);
-	updatePositionArray(players.getSize(), players.getPositionArray(), pDeltaArray);
-	//updateLinesArray(players.getSize(), players.getHLinesArray(), players.getVLinesArray(), pDeltaArray);
-	updateDirectionArray(players.getSize(), players.getRotationArray(), players.getDirectionArray());
-
-	// Enemy
 	updateFSMArray(this, enemies.getSize(), enemies.getFSMArray());
+
+	// Calculate Delta
+	vector<CoordF> pDeltaArray(players.getSize());
 	vector<CoordF> eDeltaArray(enemies.getSize());
+	vector<CoordF> jDeltaArray(projectiles.getSize());
+	calculateDeltaArray(players.getSize(), pDeltaArray, players.getRotationArray(), players.getVelocityArray(), frameTime);
 	calculateDeltaArray(enemies.getSize(), eDeltaArray, enemies.getRotationArray(), enemies.getVelocityArray(), frameTime);
+	calculateDeltaArray(projectiles.getSize(), jDeltaArray, projectiles.getRotationArray(), projectiles.getVelocityArray(), frameTime);
+
+	// Update Position
+	updatePositionArray(players.getSize(), players.getPositionArray(), pDeltaArray);
 	updatePositionArray(enemies.getSize(), enemies.getPositionArray(), eDeltaArray);
-	//updateLinesArray(enemies.getSize(), enemies.getHLinesArray(), enemies.getVLinesArray(), eDeltaArray);
+	updatePositionArray(projectiles.getSize(), projectiles.getPositionArray(), jDeltaArray);
 
-	// Wall Collision (Temporary!) (Callback not yet implemented!)
-	//updateAllWallCollision(tiles, players.getSize(), players.getHLinesArray(), players.getVLinesArray(), players.getPositionArray());
-	//updateAllWallCollision(tiles, enemies.getSize(), enemies.getHLinesArray(), enemies.getVLinesArray(), enemies.getPositionArray());
+	// Update Collision
+	updateLineISetItersArray(players.getHLineISet(), players.getVLineISet(), players.getSize(), players.getHLineISetItersArray(), players.getVLineISetItersArray(), pDeltaArray);
+	updateLineISetItersArray(enemies.getHLineISet(), enemies.getVLineISet(), enemies.getSize(), enemies.getHLineISetItersArray(), enemies.getVLineISetItersArray(), pDeltaArray);
+	updateLinesArray(projectiles.getSize(), projectiles.getHLinesArray(), projectiles.getVLinesArray(), jDeltaArray);
 
-	// Projectiles
-	vector<CoordF> projDeltaArray(projectiles.getSize());
-	calculateDeltaArray(projectiles.getSize(), projDeltaArray, projectiles.getRotationArray(), projectiles.getVelocityArray(), frameTime);
-	updatePositionArray(projectiles.getSize(), projectiles.getPositionArray(), projDeltaArray);
-	// Update collision etc
+	// Get Collision (Wall)
+
+	//// Player
+	//updateFSMArray(this, players.getSize(), players.getFSMArray());
+	//vector<CoordF> pDeltaArray(players.getSize());
+	//calculateDeltaArray(players.getSize(), pDeltaArray, players.getRotationArray(), players.getVelocityArray(), frameTime);
+	//updatePositionArray(players.getSize(), players.getPositionArray(), pDeltaArray);
+	////updateLinesArray(players.getSize(), players.getHLinesArray(), players.getVLinesArray(), pDeltaArray);
+	//updateDirectionArray(players.getSize(), players.getRotationArray(), players.getDirectionArray());
+
+	//// Enemy
+	//updateFSMArray(this, enemies.getSize(), enemies.getFSMArray());
+	//vector<CoordF> eDeltaArray(enemies.getSize());
+	//calculateDeltaArray(enemies.getSize(), eDeltaArray, enemies.getRotationArray(), enemies.getVelocityArray(), frameTime);
+	//updatePositionArray(enemies.getSize(), enemies.getPositionArray(), eDeltaArray);
+	////updateLinesArray(enemies.getSize(), enemies.getHLinesArray(), enemies.getVLinesArray(), eDeltaArray);
+
+	//// Projectiles
+	//vector<CoordF> projDeltaArray(projectiles.getSize());
+	//calculateDeltaArray(projectiles.getSize(), projDeltaArray, projectiles.getRotationArray(), projectiles.getVelocityArray(), frameTime);
+	//updatePositionArray(projectiles.getSize(), projectiles.getPositionArray(), projDeltaArray);
 
 	// AnimObjects (Temp)
 	for (int i = 0; i < animObjects.getSize(); i++) {

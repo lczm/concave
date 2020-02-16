@@ -28,6 +28,7 @@ void RenderLevel::initialize(Graphics* graphics, Input* input, int type)
 	tileGridMask.initialize(0, 0, 128, 192, 1, 1, 128 / 2, 192 - TILE_HEIGHT - 1);
 	tileImage.initialize(&tileTexture, tileGridMask);
 
+
 	//reference to yh code
 	//void initialize(int originX, int originY, int perWidth, int perHeight, int gapWidth, int gapHeight, int pivotX, int pivotY);
 	//In game items
@@ -66,51 +67,51 @@ void RenderLevel::renderMap(int map[mapWidth][mapHeight], int x, int y, SpriteDa
 		{
 			//changing between textures
 		case ImageType::churchBlood:
-			tileImage.getSpriteData(sd, IMAGE_MAP.at(ImageType::churchBlood));
+			tileImage.getSpriteData(IMAGE_MAP.at(ImageType::churchBlood));
 			break;
 		case ImageType::churchFloor:
-			tileImage.getSpriteData(sd, IMAGE_MAP.at(ImageType::churchFloor));
+			tileImage.getSpriteData(IMAGE_MAP.at(ImageType::churchFloor));
 			break;
 		case ImageType::churchDoor:
-			tileImage.getSpriteData(sd, IMAGE_MAP.at(ImageType::churchDoor));
+			tileImage.getSpriteData(IMAGE_MAP.at(ImageType::churchDoor));
 			break;
 		case ImageType::churchChest:
-			tileImage.getSpriteData(sd, IMAGE_MAP.at(ImageType::churchChest));
+			tileImage.getSpriteData(IMAGE_MAP.at(ImageType::churchChest));
 			break;
 		case ImageType::churchWallEast:
-			tileImage.getSpriteData(sd, IMAGE_MAP.at(ImageType::churchWallEast));
+			tileImage.getSpriteData(IMAGE_MAP.at(ImageType::churchWallEast));
 			break;
 		case ImageType::churchWallWest:
-			tileImage.getSpriteData(sd, IMAGE_MAP.at(ImageType::churchWallWest));
+			tileImage.getSpriteData(IMAGE_MAP.at(ImageType::churchWallWest));
 			break;
 		case ImageType::churchWallConnect:
-			tileImage.getSpriteData(sd, IMAGE_MAP.at(ImageType::churchWallConnect));
+			tileImage.getSpriteData(IMAGE_MAP.at(ImageType::churchWallConnect));
 			break;
 		case ImageType::churchWallPath:
-			tileImage.getSpriteData(sd, IMAGE_MAP.at(ImageType::churchWallPath));
+			tileImage.getSpriteData(IMAGE_MAP.at(ImageType::churchWallPath));
 			break;
 		//test objects
 		case 8:
-			itemImage.getSpriteData(sd, CoordI{0,0});
+			itemImage.getSpriteData( CoordI{0,0});
 			break;
 		case 9:
-			itemImage.getSpriteData(sd, CoordI{21,0});
+			itemImage.getSpriteData( CoordI{21,0});
 			break;
 		case 10:
-			tileImage.getSpriteData(sd, CoordI{14,8});
+			tileImage.getSpriteData( CoordI{14,8});
 			break;
 		case 11:
 			//barrel *add to constants
-			manyItemsImage.getSpriteData(sd, CoordI{ 0,0 });
+			manyItemsImage.getSpriteData(CoordI{ 0,0 });
 			break;
 		case 12:
-			cabinetImage.getSpriteData(sd, CoordI{ 0,6 });
+			cabinetImage.getSpriteData(CoordI{ 0,6 });
 			break;
 		case 13:
-			flameImage.getSpriteData(sd, CoordI{ 0,3 });
+			flameImage.getSpriteData(CoordI{ 0,3 });
 			break;
 		case 14: 
-			deadPeopleImage.getSpriteData(sd, CoordI{ 16,17 });
+			deadPeopleImage.getSpriteData(CoordI{ 16,17 });
 			break;
 		}
 	}
@@ -120,10 +121,10 @@ void RenderLevel::renderMap(int map[mapWidth][mapHeight], int x, int y, SpriteDa
 		{
 			//changing between textures
 		case ImageTypeCave::caveLava:
-			tileImage.getSpriteData(sd, IMAGE_MAP_CAVE.at(ImageTypeCave::caveLava));
+			tileImage.getSpriteData(IMAGE_MAP_CAVE.at(ImageTypeCave::caveLava));
 			break;
 		case ImageTypeCave::caveFloor:
-			tileImage.getSpriteData(sd, IMAGE_MAP_CAVE.at(ImageTypeCave::caveFloor));
+			tileImage.getSpriteData(IMAGE_MAP_CAVE.at(ImageTypeCave::caveFloor));
 			break;
 		}
 	}

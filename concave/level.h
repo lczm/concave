@@ -12,9 +12,7 @@
 #include "fsmSystem.h"
 
 #include "cellular.h"
-#include "room.h"
 #include "EditComponent.h"
-#include "gameInfoComponent.h"
 #include "renderLevel.h"
 
 #include <vector>
@@ -30,7 +28,7 @@ private:
 	CoordF camCoord; float camScale;
 	// Tiles
 	Texture tileTexture; GridMask tileGridMask; Image tileImage;
-	Sprite floorSprite, wallSprite;
+	Sprite floorSprite, wallSprite, blood, door, chest, wallEast, wallWest, WallConnect, wallPath;
 	// Player
 	Texture warriorTexture; AnimImage warriorAnimImage;
 	GridMask warriorAttackGridMask;
@@ -56,14 +54,14 @@ private:
 	Enemies enemies;
 
 	// Camera
-	//int map[mapWidth][mapHeight];
+	int map[mapWidth][mapHeight];
 
-	//int mapNo = 0;
+	int mapNo = 0;
 
 	//shld prob change this to another variable
 	//int type = 0;
 	//prob need to change it to read component
-	//EditComponent * editComponent;
+	EditComponent * editComponent;
 
 
 	//RenderLevel renderLevel;
@@ -87,7 +85,7 @@ public:
 	void levelEdit();
 	void changeLevel();
 	void readFromFile();
-	void renderSprites();
+	//void renderSprites();
 	void writeToFile(int map[mapWidth][mapHeight]);
 	void placeRoom();
 };

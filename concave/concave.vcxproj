@@ -153,6 +153,7 @@
   <ItemGroup>
     <ClCompile Include="cellular.cpp" />
     <ClCompile Include="concave.cpp" />
+    <ClCompile Include="EditComponent.cpp" />
     <ClCompile Include="enemies.cpp" />
     <ClCompile Include="enemyFSM.cpp" />
     <ClCompile Include="fsmSystem.cpp" />

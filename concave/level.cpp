@@ -9,14 +9,50 @@ Level::~Level()
 {}
 
 void Level::initialize()
-{
+{	
+	for (int i = 0; i < 5; i++)
+	{
+		for (int x = 0; x < mapWidth; x++)
+		{
+			for (int y = 0; y < mapHeight; y++)
+			{
+				map[x][y] = 0;
+			}
+		}
+
+		/* No delete this code*/
+		Cellular cellgenerate;
+		cellgenerate.generateMap(map);
+		//readFromFile();
+
+		/* No delete this code*/
+		placeRoom();
+		editComponent->writeToFile(map, i);
+	}
+	editComponent->readFromFile("save.txt", map, 0);
+
 	////  Sprite Initialisation  ////
 	// Tiles
 	tileTexture.initialize(graphics, IMAGE_TILES_DUNGEON);
 	tileGridMask.initialize(0, 0, 128, 192, 1, 1, 64, 127);
 	tileImage.initialize(&tileTexture, tileGridMask);
-	floorSprite.initialize(&tileImage, CoordI{ 12, 0 });
-	wallSprite.initialize(&tileImage, CoordI{ 6, 0 });
+
+
+	//church sprites
+	floorSprite.initialize(&tileImage, IMAGE_MAP.at(ImageType::churchFloor));
+	wallSprite.initialize(&tileImage, CoordI{ 6,0 });
+	wallEast.initialize(&tileImage, IMAGE_MAP.at(ImageType::churchWallEast));
+	wallWest.initialize(&tileImage, IMAGE_MAP.at(ImageType::churchWallWest));
+	blood.initialize(&tileImage, IMAGE_MAP.at(ImageType::churchBlood));
+	door.initialize(&tileImage, IMAGE_MAP.at(ImageType::churchDoor));
+	WallConnect.initialize(&tileImage, IMAGE_MAP.at(ImageType::churchWallConnect));
+	wallPath.initialize(&tileImage, IMAGE_MAP.at(ImageType::churchWallPath));
+	chest.initialize(&tileImage, IMAGE_MAP.at(ImageType::churchChest));
+
+
+
+
+
 	// Warrior
 	warriorTexture.initialize(graphics, IMAGE_UNIT_WARRIOR);
 	warriorAttackGridMask.initialize(0, 7, 128, 128, 0, 1, 58, 114);
@@ -45,15 +81,58 @@ void Level::initialize()
 	projTexture.initialize(graphics, IMAGE_PROJECTILE_FIREBALL);
 	projGridMask.initialize(1, 1, 96, 96, 1, 1, 46, 46);
 	projImage.initialize(&projTexture, { projGridMask }, { 15 });
-{	
 	//initialize the values
-	renderLevel.initialize(graphics, input, type);
+	//renderLevel.initialize(graphics, input, type);
 	ifstream fout("text\\gameInfo.csv", std::ofstream::out | std::ofstream::trunc);
 	fout.close();
 
 	////  Entities Initialisation  ////
 	// Tiles
-	tiles.initialize(20, 20);
+	tiles.initialize(mapWidth, mapHeight);
+
+	for (int x = 0; x < mapWidth; x++) {
+		for (int y = 0; y < mapHeight; y++) {
+			switch (map[x][y])
+			{
+				//changing between textures
+			case ImageType::churchBlood:
+				tiles.set(x,y, &blood, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				break;
+			case ImageType::churchFloor:
+				tiles.set(x, y, &floorSprite, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				break;
+			case ImageType::churchDoor:
+				tiles.set(x, y, &door, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				break;
+			case ImageType::churchChest:
+				tiles.set(x, y, &chest, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				break;
+			case ImageType::churchWallEast:
+				tiles.set(x, y, &wallEast, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				break;
+			case ImageType::churchWallWest:
+				tiles.set(x, y, &wallWest, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				break;
+			case ImageType::churchWallConnect:
+				tiles.set(x, y, &WallConnect, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				break;
+			case ImageType::churchWallPath:
+				tiles.set(x, y, &wallPath, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				break;
+				//test object
+			}
+		}
+	}
+
+	/*
 	for (int y = 0; y < tiles.getRows(); y++)
 		for (int x = 0; x < tiles.getCols(); x++)
 			tiles.set(y, x, &wallSprite,
@@ -69,6 +148,7 @@ void Level::initialize()
 			tiles.set(y, x, &wallSprite,
 				translateHLines(Lines{ { 0, 1, 0 } }, x, y),
 				translateVLines(Lines{}, x, y));
+	*/
 
 	// Player
 	players.initialize(1);
@@ -95,29 +175,6 @@ void Level::initialize()
 		jPos, &projImage,
 		translateHLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, jPos),
 		translateVLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, jPos));*/
-}
-
-
-	for (int i = 0; i < 5; i++)
-	{
-		for (int x = 0; x < mapWidth; x++)
-		{
-			for (int y = 0; y < mapHeight; y++)
-			{
-				map[x][y] = 0;
-			}
-		}
-
-		/* No delete this code*/
-		Cellular cellgenerate;
-		cellgenerate.generateMap(map);
-		//readFromFile();
-
-		/* No delete this code*/
-		placeRoom();
-		editComponent->writeToFile(map, i);
-	}
-	editComponent->readFromFile("save.txt", map, 0);
 }
 
 void Level::releaseAll()
@@ -150,19 +207,18 @@ void Level::update()
 	camCoord = players.getPositionArray()[0];
 	if (input->isKeyDown('O')) camScale *= 1 - 0.01;
 	if (input->isKeyDown('P')) camScale *= 1 + 0.01;
+	levelEdit();
+	changeLevel();
+
 }
 
 	
-	levelEdit();
-	changeLevel();
-}
-
 void Level::render()
 {
-	for (int y = 0; y < tiles.getRows(); y++)
-		for (int x = 0; x < tiles.getCols(); x++)
+	for (int x = 0; x < tiles.getRows(); x++)
+		for (int y = 0; y < tiles.getCols(); y++)
 			graphics->drawSprite(
-				tiles.getSprite(y, x)->getSpriteData(),
+				tiles.getSprite(x, y)->getSpriteData(),
 				gridToScreen(x, y), camScale);
 
 	// Player (Temporary)
@@ -201,10 +257,8 @@ void Level::render()
 	//	graphics->drawSprite(sd,
 	//		gridToScreen(projectiles.getPositionArray()[i]), camScale);
 	//}
-}
-{
 	//will be moved to another file I hope
-	renderSprites();
+	//renderSprites();
 }
 
 CoordF Level::gridToScreen(float gx, float gy)
@@ -239,7 +293,6 @@ CoordF Level::gridToScreen(CoordF gridCoord)
 CoordF Level::screenToGrid(CoordF screenCoord)
 {
 	return screenToGrid(screenCoord.x, screenCoord.y);
-}
 }
 
 
@@ -301,7 +354,7 @@ void Level::changeLevel()
 		//level.initialize();
 	}
 }
-
+/*
 void Level::renderSprites()
 {	
 	//Must be a more elegant way to write this
@@ -311,7 +364,7 @@ void Level::renderSprites()
 			SpriteData sd;
 
 			//pass to renderLevel class
-			renderLevel.getTileImage().getSpriteData(sd, IMAGE_MAP.at(ImageType::churchFloor));
+			renderLevel.getTileImage().getSpriteData(IMAGE_MAP.at(ImageType::churchFloor));
 			graphics->drawSprite(
 				sd,
 				screenPos.x, screenPos.y, camScale);
@@ -334,6 +387,7 @@ void Level::renderSprites()
 
 	
 }
+*/
 
 void Level::placeRoom()
 {

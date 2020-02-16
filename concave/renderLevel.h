@@ -1,7 +1,6 @@
 #pragma once
 #include "image.h"
 #include "input.h"
-#include "component.h"
 #include <iostream>
 #include <vector>
 using namespace std;
@@ -15,6 +14,7 @@ private:
 	Texture tileTexture;
 	GridMask tileGridMask;
 	Image tileImage;
+
 
 	Texture itemTexture;
 	GridMask itemGridMask;

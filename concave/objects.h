@@ -22,6 +22,7 @@ public:
 	void initialize(int capacity);
 	void push(CoordF position, Sprite* sprite, Lines hLines, Lines vLines);
 	void pop(int index);
+	void clear() { size = 0; }
 public:
 	int getSize() { return size; }
 	// Position

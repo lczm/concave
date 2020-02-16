@@ -31,7 +31,8 @@ private:
 	Sprite floorSprite,
 		wallSprite, blood, door, chest,
 		wallEast, wallWest, WallConnect,
-		wallPath, barrel, fireItem, torch, book, dead, armour, witch;
+		wallPath, barrel, fireItem, torch, 
+		book, dead, armour, witch, banner;
 
 	Texture itemTexture;
 	GridMask itemGridMask;
@@ -66,6 +67,10 @@ private:
 	Texture witchTexture;
 	GridMask witchGridMask;
 	Image witchImage;
+
+	Texture bannerTexture;
+	GridMask bannerGridMask;
+	Image bannerImage;
 
 	// Player
 	Texture warriorTexture; AnimImage warriorAnimImage;

@@ -69,18 +69,24 @@ void Level::initialize()
 
 	//dead
 	deadTexture.initialize(graphics, IMAGE_DEADITEMS_DUNGEON);
-	deadPeopleGridMask.initialize(0, 0, 108, 109,1, 1, 75, 90);
+	deadPeopleGridMask.initialize(0, 0, 100, 122,1, 1, 19, 25);
 	deadPeopleImage.initialize(&deadTexture, deadPeopleGridMask);
 
 	//armour
 	armourTexture.initialize(graphics, IMAGE_ARMOURITEMS_DUNGEON);
-	armourGridMask.initialize(0, 0, 38, 44, 1, 1, 19, 14);
+	armourGridMask.initialize(0, 0, 95, 95, 1, 1, 64, 64);
 	armourImage.initialize(&armourTexture, armourGridMask);
 
 	//witch
 	witchTexture.initialize(graphics, IMAGE_WITCHITEMS_DUNGEON);
 	witchGridMask.initialize(0, 0, 150, 141, 1, 1, 74, 90);
 	witchImage.initialize(&witchTexture, witchGridMask);
+
+
+	//witch
+	bannerTexture.initialize(graphics, IMAGE_BANNERITEMS_DUNGEON);
+	bannerGridMask.initialize(0, 0, 65, 74, 1, 1, 15, 60);
+	bannerImage.initialize(&bannerTexture, bannerGridMask);
 
 
 	//church sprites
@@ -105,6 +111,9 @@ void Level::initialize()
 
 	//witch
 	witch.initialize(&witchImage, CoordI{ 0,0 });
+
+	//banner
+	banner.initialize(&bannerImage, CoordI{ 0,0 });
 
 	// Warrior
 	warriorTexture.initialize(graphics, IMAGE_UNIT_WARRIOR);
@@ -465,6 +474,10 @@ void Level::tilesInitialize()
 				break;
 			case 16:
 				tiles.set(x, y, &witch, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				break;
+			case 17:
+				tiles.set(x, y, &banner, translateHLines(Lines{ {} }, x, y),
 					translateVLines(Lines{}, x, y));
 				break;
 			}

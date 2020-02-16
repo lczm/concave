@@ -13,12 +13,12 @@ void EditComponent::readFromFile(std::string mapString, int map[mapWidth][mapHei
 }
 
 
-void EditComponent::readFromFile2(std::string mapString, int map[6][6], int level)
+void EditComponent::readFromFile2(std::string mapString, int map[roomTemplateWidth][roomTemplateHeight], int level)
 {
 	std::ifstream file("text\\rooms\\" + std::to_string(level) + mapString);
-	for (int r = 0; r < mapWidth; r++)
+	for (int r = 0; r < roomTemplateWidth; r++)
 	{
-		for (int c = 0; c < mapHeight; c++) {
+		for (int c = 0; c < roomTemplateHeight; c++) {
 			file >> map[r][c];
 		}
 	}
@@ -226,7 +226,7 @@ void EditComponent::placeItemRoom(Room room, int map[mapWidth][mapHeight])
 {	
 
 
-	int room1[6][6];
+	int room1[roomTemplateWidth][roomTemplateHeight];
 	readFromFile2(room.getFile(), room1, 1);
 
 	//walls occupy the first and last X values
@@ -247,14 +247,14 @@ void EditComponent::placeItemRoom(Room room, int map[mapWidth][mapHeight])
 
 
 	//get appropriate x1 and x2 to fit within boundaries for templates
-	while ((x2 - x1) != 6 && (x2-x1) > 6)
+	while ((x2 - x1) != roomTemplateWidth && (x2-x1) > roomTemplateWidth)
 	{
 		x1 = x1 + 1;
 		x2 = x2 - 1;
 
 	}
 
-	while ((y2 - y1) != 6 && (y2 - y1) > 6)
+	while ((y2 - y1) != roomTemplateHeight && (y2 - y1) > roomTemplateHeight)
 	{
 		y1 += 1;
 		y2 -= 1;

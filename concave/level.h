@@ -10,7 +10,16 @@
 #include "collisionSystem.h"
 #include "movementSystem.h"
 #include "fsmSystem.h"
+
+#include "cellular.h"
+#include "room.h"
+#include "EditComponent.h"
+#include "gameInfoComponent.h"
+#include "renderLevel.h"
+
 #include <vector>
+#include <fstream>
+#include <string>
 #include <cassert>
 using namespace std;
 
@@ -46,6 +55,18 @@ private:
 	Projectiles projectiles;
 	Enemies enemies;
 
+	// Camera
+	//int map[mapWidth][mapHeight];
+
+	//int mapNo = 0;
+
+	//shld prob change this to another variable
+	//int type = 0;
+	//prob need to change it to read component
+	//EditComponent * editComponent;
+
+
+	//RenderLevel renderLevel;
 public:
 	Level();
 	~Level();
@@ -62,4 +83,11 @@ public:
 
 	Players& getPlayers() { return players; }
 	Enemies& getEnemies() { return enemies; }
+
+	void levelEdit();
+	void changeLevel();
+	void readFromFile();
+	void renderSprites();
+	void writeToFile(int map[mapWidth][mapHeight]);
+	void placeRoom();
 };

@@ -45,6 +45,11 @@ void Level::initialize()
 	projTexture.initialize(graphics, IMAGE_PROJECTILE_FIREBALL);
 	projGridMask.initialize(1, 1, 96, 96, 1, 1, 46, 46);
 	projImage.initialize(&projTexture, { projGridMask }, { 15 });
+{	
+	//initialize the values
+	renderLevel.initialize(graphics, input, type);
+	ifstream fout("text\\gameInfo.csv", std::ofstream::out | std::ofstream::trunc);
+	fout.close();
 
 	////  Entities Initialisation  ////
 	// Tiles
@@ -92,6 +97,29 @@ void Level::initialize()
 		translateVLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, jPos));*/
 }
 
+
+	for (int i = 0; i < 5; i++)
+	{
+		for (int x = 0; x < mapWidth; x++)
+		{
+			for (int y = 0; y < mapHeight; y++)
+			{
+				map[x][y] = 0;
+			}
+		}
+
+		/* No delete this code*/
+		Cellular cellgenerate;
+		cellgenerate.generateMap(map);
+		//readFromFile();
+
+		/* No delete this code*/
+		placeRoom();
+		editComponent->writeToFile(map, i);
+	}
+	editComponent->readFromFile("save.txt", map, 0);
+}
+
 void Level::releaseAll()
 {}
 
@@ -122,6 +150,11 @@ void Level::update()
 	camCoord = players.getPositionArray()[0];
 	if (input->isKeyDown('O')) camScale *= 1 - 0.01;
 	if (input->isKeyDown('P')) camScale *= 1 + 0.01;
+}
+
+	
+	levelEdit();
+	changeLevel();
 }
 
 void Level::render()
@@ -169,6 +202,10 @@ void Level::render()
 	//		gridToScreen(projectiles.getPositionArray()[i]), camScale);
 	//}
 }
+{
+	//will be moved to another file I hope
+	renderSprites();
+}
 
 CoordF Level::gridToScreen(float gx, float gy)
 {
@@ -202,4 +239,103 @@ CoordF Level::gridToScreen(CoordF gridCoord)
 CoordF Level::screenToGrid(CoordF screenCoord)
 {
 	return screenToGrid(screenCoord.x, screenCoord.y);
+}
+}
+
+
+void Level::levelEdit()
+{
+	if (input->getMouseLButton() && input->isKeyDown(0x51))
+	{
+		input->setMouseLButton(false);
+		CoordF mouse = { input->getMouseX(), input->getMouseY() };
+		CoordF gridPos1 = screenToGrid(mouse.x, mouse.y);
+		CoordI gridPos = { gridPos1.x, gridPos1.y };
+		++map[gridPos.x][gridPos.y] %= 15;
+		input->clearCharIn();
+	}
+
+	if (input->wasKeyPressed(0x52))
+	{
+		writeToFile(map);
+	}
+
+
+	if (input->getMouseLButton())
+	{
+		input->setMouseLButton(false);
+		CoordF mouse = { input->getMouseX(), input->getMouseY() };
+		CoordF gridPos1 = screenToGrid(mouse.x, mouse.y);
+		CoordI gridPos = { gridPos1.x, gridPos1.y };
+
+		//door
+		// 10 is open door (add to constants)
+		editComponent->changeObjects(ImageType::churchDoor, 10, map, gridPos.x, gridPos.y);
+
+		input->clearCharIn();
+	}
+
+}
+
+void Level::readFromFile()
+{	
+	++mapNo %= 4;
+	editComponent->readFromFile("save.txt", map, mapNo);
+}
+
+void Level::writeToFile(int map[mapWidth][mapHeight])
+{	
+	int random = rand() % 1000;
+	editComponent->writeToFile(map, random);
+}
+
+void Level::changeLevel()
+{
+	if (input->wasKeyPressed(0x45))
+	{
+		//woahh
+		//mapNo = 29229;
+		input->clearKeyPress(0x45);
+		editComponent->animateObjects();
+		level.readFromFile();
+		//level.initialize();
+	}
+}
+
+void Level::renderSprites()
+{	
+	//Must be a more elegant way to write this
+	for (int x = 0; x < mapWidth; x++) {
+		for (int y = 0; y < mapHeight; y++) {
+			CoordF screenPos = gridToScreen(x, y);
+			SpriteData sd;
+
+			//pass to renderLevel class
+			renderLevel.getTileImage().getSpriteData(sd, IMAGE_MAP.at(ImageType::churchFloor));
+			graphics->drawSprite(
+				sd,
+				screenPos.x, screenPos.y, camScale);
+		}
+	}
+
+
+	for (int x = 0; x < mapWidth; x++) {
+		for (int y = 0; y < mapHeight; y++) {
+			CoordF screenPos = gridToScreen(x, y);
+			SpriteData sd;
+
+			//pass to renderLevel class
+			renderLevel.renderMap(map, x, y, sd, type);
+			graphics->drawSprite(
+				sd,
+				screenPos.x, screenPos.y, camScale);
+		}
+	}
+
+	
+}
+
+void Level::placeRoom()
+{
+	editComponent->placeRoom(map);
 }

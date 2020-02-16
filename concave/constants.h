@@ -72,6 +72,10 @@ typedef void (*FSM)(Level* level, int index);
 const int TILE_WIDTH = 128;
 const int TILE_HEIGHT = 64;
 
+const int mapWidth = 48;
+const int mapHeight = 48;
+
+
 //-----------------------------------------------
 //                   Units
 //-----------------------------------------------
@@ -106,6 +110,13 @@ const int IMAGE_TILES_GAP_WIDTH = 1;
 const int IMAGE_TILES_GAP_HEIGHT = 1;
 
 const char IMAGE_TILES_DUNGEON[] = "sprites/tiles_church_dungeon.png";
+const char IMAGE_TILES_CAVE[] = "sprites/tiles_cave_dungeon.png";
+
+//const char IMAGE_ITEMS_DUNGEON[] = "sprites/items.png";
+const char IMAGE_ITEMS_DUNGEON[] = "sprites/items2.png";
+const char IMAGE_BARRELITEMS_DUNGEON[] = "sprites/items.png";
+
+
 //-----------------------------------------------
 //                Image (Units)
 //-----------------------------------------------
@@ -148,4 +159,85 @@ const float MIN_FRAME_TIME = 1.0f / FRAME_RATE;   // minimum desired time for 1 
 const float MAX_FRAME_TIME = 1.0f / MIN_FRAME_RATE; // maximum time used in calculations
 
 const double PI = 3.1415926535897;
-const float SPEED = 2.5;
+
+
+//-----------------------------------------------
+//               Room Generation
+//-----------------------------------------------
+const int noSpritesChruch = 11;
+const int noSpritesCave = 2;
+const int itemsToSpawn = 1;
+
+
+enum RoomType
+{
+	loot =2,
+	trap = 3,
+	barrel = 4,
+	armoury = 1
+};
+
+
+enum roomTypesCsv
+{
+	roomtypes = 0,
+	accessible = 1,
+	no = 2,
+	left = 3,
+	right = 4,
+	top = 5,
+	bottom = 6,
+	assign = 7,
+	flooring = 8,
+	file = 9
+};
+
+enum ImageType {
+	//church
+	churchBlood = 0,
+	churchFloor = 1,
+	churchDoor = 2,
+	churchChest = 3,
+	churchWallEast = 4,
+	churchWallWest = 5,
+	churchWallConnect = 6,
+	churchWallPath = 7
+	//add church door open here
+};
+
+enum ImageTypeCave
+{
+	//cave
+	caveLava = 0,
+	caveFloor = 1
+};
+
+//enum
+#include <map>
+const std::map<ImageType, CoordI> IMAGE_MAP
+{
+	//name - coordinates
+
+	//church tiles
+	{ImageType::churchWallEast,  CoordI{ 19,3 }},
+	{ImageType::churchWallWest, CoordI{ 18,3 }},
+	{ImageType::churchBlood, CoordI{ 10, 8 }},
+	{ImageType::churchDoor, CoordI{ 4,1 }},
+	{ImageType::churchFloor,  CoordI{ 12,0 }},
+	{ImageType::churchChest, CoordI{ 10, 6 }},
+	{ImageType::churchWallConnect, CoordI{ 3, 0 }},
+	{ImageType::churchWallPath, CoordI{ 14, 6 }},
+
+};
+
+const std::map<ImageTypeCave, CoordI> IMAGE_MAP_CAVE
+{
+	//name - coordinates
+
+	//cave tiles
+	{ImageTypeCave::caveLava,  CoordI{ 12,1 }},
+	{ImageTypeCave::caveFloor, CoordI{6,0}},
+};
+
+
+const const char ROOM_INFO[] = "text\\roomTypes.csv";

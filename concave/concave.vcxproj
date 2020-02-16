@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="cellular.cpp" />
     <ClCompile Include="concave.cpp" />
     <ClCompile Include="enemies.cpp" />
     <ClCompile Include="enemyFSM.cpp" />
@@ -158,6 +159,7 @@
     <ClCompile Include="movementSystem.cpp" />
     <ClCompile Include="players.cpp" />
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="gameInfoComponent.cpp" />
     <ClCompile Include="graphics.cpp" />
     <ClCompile Include="hud.cpp" />
     <ClCompile Include="image.cpp" />
@@ -167,13 +169,19 @@
     <ClCompile Include="playerFSM.cpp" />
     <ClCompile Include="projectiles.cpp" />
     <ClCompile Include="collisionSystem.cpp" />
+    <ClCompile Include="shopNpc.cpp" />
     <ClCompile Include="tiles.cpp" />
+    <ClCompile Include="renderLevel.cpp" />
+    <ClCompile Include="room.cpp" />
     <ClCompile Include="window.cpp" />
     <ClCompile Include="winmain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="cellular.h" />
+    <ClInclude Include="component.h" />
     <ClInclude Include="concave.h" />
     <ClInclude Include="constants.h" />
+    <ClInclude Include="EditComponent.h" />
     <ClInclude Include="enemies.h" />
     <ClInclude Include="enemyFSM.h" />
     <ClInclude Include="fsmSystem.h" />
@@ -181,15 +189,19 @@
     <ClInclude Include="players.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="gameError.h" />
+    <ClInclude Include="gameInfoComponent.h" />
     <ClInclude Include="graphics.h" />
     <ClInclude Include="hud.h" />
     <ClInclude Include="image.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="level.h" />
     <ClInclude Include="mainMenu.h" />
+    <ClInclude Include="renderLevel.h" />
+    <ClInclude Include="room.h" />
     <ClInclude Include="playerFSM.h" />
     <ClInclude Include="projectiles.h" />
     <ClInclude Include="collisionSystem.h" />
+    <ClInclude Include="shopNpc.h" />
     <ClInclude Include="tiles.h" />
     <ClInclude Include="window.h" />
   </ItemGroup>

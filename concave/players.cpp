@@ -60,26 +60,6 @@ void Players::push(CoordF position, AnimImage* animImage, int state, FSM fsm, fl
 	size++;
 }
 
-//void Players::push(CoordF position, Lines hLines, Lines vLines,
-//	State* fsm, AnimImage* animImage, int state, int health, int mana)
-//{
-//	positionArray[size] = position;
-//	destPositionArray[size] = position;
-//	hLinesArray[size] = hLines;
-//	vLinesArray[size] = vLines;
-//	fsmArray[size] = fsm;
-//	animImageArray[size] = animImage;
-//	stateArray[size] = state;
-//	frameNoArray[size] = 0;
-//	timerArray[size] = 0;
-//	delayArray[size] = float(0.03);
-//	healthArray[size] = health;
-//	manaArray[size] = mana;
-//	rotationArray[size] = 0;
-//	dydxArray[size] = CoordF{ 0, 0 };
-//	size++;
-//}
-
 void Players::pop(int index)
 {
 	size--;

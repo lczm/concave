@@ -191,7 +191,7 @@ void Level::initialize()
 		playerIdleState, 0, 5, 
 		translateHLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, pPos),
 		translateVLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, pPos),
-		0, 0, 0, 0);
+		100, 100, 100, 100);
 
 	// Enemy
 	enemies.initialize(1);

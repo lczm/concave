@@ -222,7 +222,7 @@ bool checkLinesToLineISetCollision(LineISet& lineISet, Lines& lines, Line& line,
 	return false;
 }
 
-bool checkLineISetItersToLineISetCollision(LineISetIters& lineISetIters, LineISet& lineISet, LineI& rLineI, LineI& bLineI)
+bool checkLineISetItersToLineISetCollision(LineISet& lineISet, LineISetIters& lineISetIters, LineI& rLineI, LineI& bLineI)
 {
 	for (LineISetIter lineISetIter : lineISetIters) {
 		LineI lineI = *lineISetIter;
@@ -260,23 +260,23 @@ void updateLinesArray(int size, vector<Lines>& hLinesArray, vector<Lines>& vLine
 	}
 }
 
-void updateAllWallCollision(Tiles& tiles, int size, vector<Lines>& hLinesArray, vector<Lines>& vLinesArray, vector<CoordF>& positionArray)
-{
-	for (int i = 0; i < size; i++) {
-		CoordF& pos = positionArray[i];
-		Lines& hLines = hLinesArray[i];
-		Lines& vLines = vLinesArray[i];
-		CoordF delta{ 0, 0 };
-		Line hLine, vLine;
-		if (checkHLinesToWallCollision(tiles, hLines, hLine, vLine))
-			delta.x = getDeltaXResponse(hLine, vLine, pos);
-		if (checkVLinesToWallCollision(tiles, vLines, vLine, hLine))
-			delta.y = getDeltaYResponse(vLine, hLine, pos);
-		pos += delta;
-		updateHLines(hLines, delta);
-		updateVLines(vLines, delta);
-	}
-}
+//void updateAllWallCollision(Tiles& tiles, int size, vector<Lines>& hLinesArray, vector<Lines>& vLinesArray, vector<CoordF>& positionArray)
+//{
+//	for (int i = 0; i < size; i++) {
+//		CoordF& pos = positionArray[i];
+//		Lines& hLines = hLinesArray[i];
+//		Lines& vLines = vLinesArray[i];
+//		CoordF delta{ 0, 0 };
+//		Line hLine, vLine;
+//		if (checkHLinesToWallCollision(tiles, hLines, hLine, vLine))
+//			delta.x = getDeltaXResponse(hLine, vLine, pos);
+//		if (checkVLinesToWallCollision(tiles, vLines, vLine, hLine))
+//			delta.y = getDeltaYResponse(vLine, hLine, pos);
+//		pos += delta;
+//		updateHLines(hLines, delta);
+//		updateVLines(vLines, delta);
+//	}
+//}
 
 void getHLineIArrayOfWallCollision(vector<LineI>& hLineIArray, vector<Line>& vLineArray, Tiles& tiles, int size, vector<Lines>& hLinesArray)
 {
@@ -300,11 +300,46 @@ void getVLineIArrayOfWallCollision(vector<LineI>& vLineIArray, vector<Line>& hLi
 	}
 }
 
-//void getHLineIArrayOfWallCollision(vector<LineI>& hLineIArray, vector<Line>& vLineArray, Tiles& tiles, int size, vector<LineISetIters>& hLineISetItersArray)
-//{
-//	for (int i = 0; i < size; i++) {
-//		LineI hLine; Line vLine;
-//		//if (checkHLinesToWallCollision(tiles, ))
-//	}
-//}
-//void getVLineIArrayOfWallCollision(vector<LineI>& vLineIArray, vector<Line>& hLineArray, Tiles& tiles, int size, vector<LineISetIters>& vLineISetItersArray);
+void getHLineIArrayOfWallCollision(vector<LineI>& hLineIArray, vector<Line>& vLineArray, Tiles& tiles, int size, vector<LineISetIters>& hLineISetItersArray)
+{
+	for (int i = 0; i < size; i++) {
+		LineI hLineI; Line vLine;
+		if (checkHLineISetItersToWallCollision(tiles, hLineISetItersArray[i], hLineI, vLine)) {
+			hLineIArray.push_back(hLineI);
+			vLineArray.push_back(vLine);
+		}
+	}
+}
+
+void getVLineIArrayOfWallCollision(vector<LineI>& vLineIArray, vector<Line>& hLineArray, Tiles& tiles, int size, vector<LineISetIters>& vLineISetItersArray)
+{
+	for (int i = 0; i < size; i++) {
+		LineI vLineI; Line hLine;
+		if (checkHLineISetItersToWallCollision(tiles, vLineISetItersArray[i], vLineI, hLine)) {
+			vLineIArray.push_back(vLineI);
+			hLineArray.push_back(hLine);
+		}
+	}
+}
+
+void getLineIArrayOfLineISetCollision(vector<LineI>& rLineIArray, vector<LineI>& bLineIArray, LineISet& bLineISet, int size, vector<Lines>& rLinesArray)
+{
+	for (int i = 0; i < size; i++) {
+		Line rLine; LineI bLineI;
+		if (checkLinesToLineISetCollision(bLineISet, rLinesArray[i], rLine, bLineI)) {
+			rLineIArray.push_back(LineI{ rLine, i });
+			bLineIArray.push_back(bLineI);
+		}
+	}
+}
+
+void getLineIArrayOfLineISetCollision(vector<LineI>& rLineIArray, vector<LineI>& bLineIArray, LineISet& bLineISet, int size, vector<LineISetIters>& rLineISetItersArray)
+{
+	for (int i = 0; i < size; i++) {
+		LineI rLineI, bLineI;
+		if (checkLineISetItersToLineISetCollision(bLineISet, rLineISetItersArray[i], rLineI, bLineI)) {
+			rLineIArray.push_back(rLineI);
+			bLineIArray.push_back(bLineI);
+		}
+	}
+}

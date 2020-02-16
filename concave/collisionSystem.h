@@ -28,15 +28,18 @@ bool checkVLineISetItersToWallCollision(Tiles& tiles, LineISetIters& vLineISetIt
 //bool checkVLinesToHLineISetCollision(LineISet& hLineISet, Lines& vLines, Line& vLine, LineI& hLineI);
 bool checkLineToLineISetCollision(LineISet& lineISet, Line line, LineI& lineI);
 bool checkLinesToLineISetCollision(LineISet& lineISet, Lines& lines, Line& line, LineI& lineI);
-bool checkLineISetItersToLineISetCollision(LineISetIters& lineISetIters, LineISet& lineISet, LineI& rLineI, LineI& bLineI);
+bool checkLineISetItersToLineISetCollision(LineISet& lineISet, LineISetIters& lineISetIters, LineI& rLineI, LineI& bLineI);
 
 float getDeltaXResponse(Line rHLine, Line bVLine, CoordF pos);
 float getDeltaYResponse(Line rVLine, Line bHLine, CoordF pos);
 
 void updateLinesArray(int size, vector<Lines>& hLinesArray, vector<Lines>& vLinesArray, vector<CoordF> deltaArray);
-void updateAllWallCollision(Tiles& tiles, int size, vector<Lines>& hLinesArray, vector<Lines>& vLinesArray, vector<CoordF>& positionArray);
+//void updateAllWallCollision(Tiles& tiles, int size, vector<Lines>& hLinesArray, vector<Lines>& vLinesArray, vector<CoordF>& positionArray);
 
 void getHLineIArrayOfWallCollision(vector<LineI>& hLineIArray, vector<Line>& vLineArray, Tiles& tiles, int size, vector<Lines>& hLinesArray);
 void getVLineIArrayOfWallCollision(vector<LineI>& vLineIArray, vector<Line>& hLineArray, Tiles& tiles, int size, vector<Lines>& vLinesArray);
-//void getHLineIArrayOfWallCollision(vector<LineI>& hLineIArray, vector<Line>& vLineArray, Tiles& tiles, int size, vector<LineISetIters>& hLineISetItersArray);
-//void getVLineIArrayOfWallCollision(vector<LineI>& vLineIArray, vector<Line>& hLineArray, Tiles& tiles, int size, vector<LineISetIters>& vLineISetItersArray);
+void getHLineIArrayOfWallCollision(vector<LineI>& hLineIArray, vector<Line>& vLineArray, Tiles& tiles, int size, vector<LineISetIters>& hLineISetItersArray);
+void getVLineIArrayOfWallCollision(vector<LineI>& vLineIArray, vector<Line>& hLineArray, Tiles& tiles, int size, vector<LineISetIters>& vLineISetItersArray);
+
+void getLineIArrayOfLineISetCollision(vector<LineI>& rLineIArray, vector<LineI>& bLineIArray, LineISet& bLineISet, int size, vector<Lines>& rLinesArray);
+void getLineIArrayOfLineISetCollision(vector<LineI>& rLineIArray, vector<LineI>& bLineIArray, LineISet& bLineISet, int size, vector<LineISetIters>& rLineISetItersArray);

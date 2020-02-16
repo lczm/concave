@@ -33,6 +33,11 @@ void Level::initialize()
 	}
 	editComponent->readFromFile("save.txt", map, 0);
 
+
+
+
+	
+
 	////  Sprite Initialisation  ////
 	// Tiles
 	tileTexture.initialize(graphics, IMAGE_TILES_DUNGEON);
@@ -105,6 +110,11 @@ void Level::initialize()
 	witch.initialize(&witchImage, CoordI{ 0,0 });
 	banner.initialize(&bannerImage, CoordI{ 0,0 });
 	cabinet.initialize(&cabinetImage, CoordI{ 0,0 });
+
+	//Animation
+	doorAnim.initialize(&tileTexture, { tileGridMask }, {});
+	chestAnim.initialize(&tileTexture, { tileGridMask }, {});
+	barrelAnim.initialize(&manyItemsTexture, { manyItemsGridMask }, {});
 
 	// Warrior
 	warriorTexture.initialize(graphics, IMAGE_UNIT_WARRIOR);
@@ -416,7 +426,7 @@ void Level::writeToFile(int map[mapWidth][mapHeight])
 void Level::changeLevel()
 {
 	if (input->wasKeyPressed(0x45))
-	{
+	{	
 		//woahh
 		//mapNo = 29229;
 		input->clearKeyPress(0x45);
@@ -431,7 +441,12 @@ void Level::placeRoom()
 	editComponent->placeRoom(map);
 }
 void Level::tilesInitialize()
-{
+{	
+	objects.clear();
+	animObjects.clear();
+	objects.initialize(500);
+	animObjects.initialize(500);
+
 	for (int x = 0; x < mapWidth; x++) {
 		for (int y = 0; y < mapHeight; y++) {
 
@@ -449,14 +464,36 @@ void Level::tilesInitialize()
 				tiles.set(x, y, &floorSprite, translateHLines(Lines{ {} }, x, y),
 					translateVLines(Lines{}, x, y));
 				break;
+
+
+
 			case ImageType::churchDoor:
 				tiles.set(x, y, &door, translateHLines(Lines{ {} }, x, y),
 					translateVLines(Lines{}, x, y));
+
+				CoordF pos = CoordF{ float(x), float(y) };
+
+				objects.push(pos, &door, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+
+				//animObjects.push(pos, &doorAnim, 0, 0, 0, translateHLines(Lines{ {} }, x, y),
+					//translateVLines(Lines{}, x, y));
 				break;
+
+
+
 			case ImageType::churchChest:
 				tiles.set(x, y, &chest, translateHLines(Lines{ {} }, x, y),
 					translateVLines(Lines{}, x, y));
+				pos = CoordF{ float(x), float(y) };
+				objects.push(pos, &chest, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				//animObjects.push(pos, &chestAnim, 0, 0, 0.1, translateHLines(Lines{ {} }, x, y),
+					//translateVLines(Lines{}, x, y));
 				break;
+
+
+
 			case ImageType::churchWallEast:
 				tiles.set(x, y, &wallEast, translateHLines(Lines{ {} }, x, y),
 					translateVLines(Lines{}, x, y));
@@ -475,10 +512,21 @@ void Level::tilesInitialize()
 				break;
 				//test object
 			//add no to constants ltr
+
+
 			case 11:
 				tiles.set(x, y, &barrel, translateHLines(Lines{ {} }, x, y),
 					translateVLines(Lines{}, x, y));
+				pos = CoordF{float(x), float(y)};
+				//objects.push(pos, &barrel, translateHLines(Lines{ {} }, x, y),
+					//translateVLines(Lines{}, x, y));
+
+				//animObjects.push(pos, &barrelAnim, 0, 0, 0, translateHLines(Lines{ {} }, x, y),
+					//translateVLines(Lines{}, x, y));
 				break;
+
+
+
 			case 12:
 				tiles.set(x, y, &fireItem, translateHLines(Lines{ {} }, x, y),
 					translateVLines(Lines{}, x, y));

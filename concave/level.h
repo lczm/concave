@@ -77,6 +77,10 @@ private:
 	Objects objects;
 	AnimObjects animObjects;
 
+
+	AnimImage doorAnim;
+	AnimImage chestAnim;
+	AnimImage barrelAnim;
 	// Camera
 	int map[mapWidth][mapHeight];
 

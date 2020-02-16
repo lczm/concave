@@ -76,8 +76,8 @@ void Enemies::pop(int index)
 	rotationArray[index] = rotationArray[size];
 	velocityArray[index] = velocityArray[size];
 	// Collision
-	for (LineISetIter lineIter : hLineISetItersArray[index]) hLineISet.erase(lineIter);
-	for (LineISetIter lineIter : vLineISetItersArray[index]) vLineISet.erase(lineIter);
+	// for (LineISetIter lineIter : hLineISetItersArray[index]) hLineISet.erase(lineIter);
+	// for (LineISetIter lineIter : vLineISetItersArray[index]) vLineISet.erase(lineIter);
 	hLineISetItersArray[index] = hLineISetItersArray[size];
 	vLineISetItersArray[index] = vLineISetItersArray[size];
 	rangeArray[index] = rangeArray[size];

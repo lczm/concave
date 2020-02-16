@@ -92,7 +92,4 @@ void ModifierSelect::render()
 	graphics->drawSprite(swordSpriteData, GAME_WIDTH / 4, GAME_HEIGHT / 3, 5);
 	graphics->drawSprite(shieldSpriteData, GAME_WIDTH / 2, GAME_HEIGHT / 3, 5);
 	graphics->drawSprite(wandSpriteData, GAME_WIDTH / 3 + GAME_WIDTH /3, GAME_HEIGHT / 3, 5);
-	spriteText.print("Click to increase Attack Speed", GAME_WIDTH / 4 - 100, GAME_HEIGHT / 3 - 200);
-	spriteText.print("Click to increase Health", GAME_WIDTH / 2 - 100, GAME_HEIGHT / 3 - 200);
-	spriteText.print("Click to increase Projectile Amount", GAME_WIDTH / 3 - 100, GAME_HEIGHT / 2 - 200);
 }

@@ -62,4 +62,7 @@ public:
 
 	Players& getPlayers() { return players; }
 	Enemies& getEnemies() { return enemies; }
+	Projectiles& getProjectiles() { return projectiles; }
+
+	AnimImage& getProjImage() { return projImage; }
 };

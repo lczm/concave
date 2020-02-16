@@ -68,7 +68,7 @@ void playerIdleState(Level* level, int index)
         input->setMouseLButton(false);
         destPosition = level->screenToGrid(CoordF{ float(input->getMouseX()), float(input->getMouseY()) });
         rotation = calculateRotation(position, destPosition);
-        velocity = 1;
+        velocity = 5;
         frameNo = 0;
         fsm = playerWalkState;
         state = UNIT_STATE_WALK;
@@ -80,6 +80,14 @@ void playerIdleState(Level* level, int index)
         frameNo = 0;
         fsm = playerMagicFireState;
         state = PLAYER_STATE_MAGIC_FIRE;
+
+        Projectiles& projectiles = level->getProjectiles();
+        CoordF jPos = CoordF{ 5, 5 };
+        projectiles.push(
+            jPos, &level->getProjImage(),
+            translateHLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, jPos),
+            translateVLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, jPos),
+        0);
         return;
     }
     else if (input->getMouseMButton()) {

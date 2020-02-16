@@ -44,7 +44,7 @@ void Players::push(CoordF position, AnimImage* animImage, int state, FSM fsm, fl
 	directionArray[size] = 0;
 	frameNoArray[size] = 0;
 	timerArray[size] = 0;
-	delayArray[size] = 0.1;
+	delayArray[size] = 0.03;
 	fsmArray[size] = fsm;
 	// Movement
 	rotationArray[size] = rotation;

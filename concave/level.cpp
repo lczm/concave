@@ -83,13 +83,15 @@ void Level::initialize()
 		enemyWalkState, 0, 0.5,
 		translateHLines(Lines{ { -0.4, 0.4, -0.4 }, { -0.4, 0.4, 0.4 } }, ePos),
 		translateVLines(Lines{ { -0.4, 0.4, -0.4 }, { -0.4, 0.4, 0.4 } }, ePos));
+
 	// Projectiles
-	/*projectiles.initialize(1);
-	CoordF jPos = CoordF{ 5, 5 };
-	projectiles.push(
-		jPos, &projImage,
-		translateHLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, jPos),
-		translateVLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, jPos));*/
+	projectiles.initialize(100);
+	// CoordF jPos = CoordF{ 5, 5 };
+	// projectiles.push(
+	// 	jPos, &projImage,
+	// 	translateHLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, jPos),
+	// 	translateVLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, jPos),
+	// 	1);
 }
 
 void Level::releaseAll()
@@ -161,13 +163,14 @@ void Level::render()
  //       graphics->drawSprite(sd,
  //           gridToScreen(players.getPositionArray()[i]), camScale);
 	//}
-	//for (int i = 0; i < projectiles.getSize(); i++) {
-	//	SpriteData sd = projectiles.getAnimImageArray()[i]->getSpriteData(
-	//		0, projectiles.getRotationArray()[i],
-	//		projectiles.getFrameNoArray()[i]);
-	//	graphics->drawSprite(sd,
-	//		gridToScreen(projectiles.getPositionArray()[i]), camScale);
-	//}
+
+	for (int i = 0; i < projectiles.getSize(); i++) {
+		SpriteData sd = projectiles.getAnimImageArray()[i]->getSpriteData(0, 
+			11,
+			projectiles.getFrameNoArray()[i]);
+		graphics->drawSprite(sd,
+			gridToScreen(projectiles.getPositionArray()[i]), camScale);
+	}
 }
 
 CoordF Level::gridToScreen(float gx, float gy)

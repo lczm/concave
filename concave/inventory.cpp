@@ -59,17 +59,12 @@ void Inventory::update()
 			vector<vector<int>> overlapCoords;
 			if (clickInInven(mouseX, mouseY))
 			{
+				vector<int> itemSize = heldItem.back()->getItemSize();
 				CoordI invenPos = screenToGrid(mouseX, mouseY);
 				CoordI placedCoords = { invenPos.x, invenPos.y };
-				if (!inventoryGrid[invenPos.y][invenPos.x] == NULL)
+				if ((placedCoords.x + itemSize.at(1) < 11) && (placedCoords.y + itemSize.at(0) < 5))
 				{
-					Item* item = inventoryGrid[invenPos.y][invenPos.x];
-					overlapCoords = checkItemCount(invenPos, heldItem.at(0)->getItemSize());
-					placeItem(heldItem.at(0), overlapCoords, placedCoords);
-				}
-				else
-				{
-					overlapCoords = checkItemCount(invenPos, heldItem.at(0)->getItemSize());
+					overlapCoords = checkItemCount(invenPos, heldItem.back()->getItemSize());
 					placeItem(heldItem.at(0), overlapCoords, placedCoords);
 				}
 			}
@@ -219,6 +214,7 @@ vector<vector<int>> Inventory::checkItemCount(CoordI invenPos, vector<int> itemS
 	vector<Item*> overlappingItems;
 	vector<vector<int>> itemCoords;
 	int count = 0;
+
 	for (int i = 0; i < itemSize[1]; i++)
 	{
 		for (int j = 0; j < itemSize[0]; j++)

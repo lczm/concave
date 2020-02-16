@@ -121,11 +121,6 @@ SpriteData Image::getSpriteData(CoordI coord)
 	return spriteData;
 }
 
-//void Image::getSpriteData(SpriteData& spriteData, CoordI coord)
-//{
-//	texture->getSpriteData(spriteData);
-//	gridMask.getSpriteData(spriteData, coord);
-//}
 
 AnimImage::AnimImage()
 {}

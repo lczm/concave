@@ -145,7 +145,6 @@ void MainMenu::update()
 		windows.pop_back();
 		windows.push_back(&level);
         windows.push_back(&hud);
-        windows.push_back(&inventory);
 	}
 	
 	if (optbtn.isClicked())

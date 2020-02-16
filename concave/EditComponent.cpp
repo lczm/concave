@@ -152,6 +152,7 @@ void EditComponent::placeWall(int map[mapWidth][mapHeight], Room newRoom)
 	map[newRoom.getDimensions().x2][newRoom.getDimensions().y2] = ImageType::churchFloor;
 
 
+
 	//set the door 
 	for (int i = 1; i < (newRoom.getRoomWidth()); i++)
 	{
@@ -160,20 +161,22 @@ void EditComponent::placeWall(int map[mapWidth][mapHeight], Room newRoom)
 	}
 
 	//random place to put a door
-	int rand = random(1, newRoom.getRoomHeight()-1);
+	int rand = random(2, newRoom.getRoomHeight()-1);
 
 	for (int j = 1; j < (newRoom.getRoomHeight()); j++)
 	{
 		//to be explained
-		map[newRoom.getDimensions().x1][newRoom.getDimensions().y2 - j] = ImageType::churchWallWest;
+		//map[newRoom.getDimensions().x1][newRoom.getDimensions().y2 - j] = ImageType::churchWallWest;
 		//map[newRoom.getDimensions().x1][newRoom.getDimensions().y2 - j] = ImageType::churchDoor;
 		if (j == rand)
 		{
 			map[newRoom.getDimensions().x2][newRoom.getDimensions().y1 + j] = ImageType::churchDoor;
+			map[newRoom.getDimensions().x1][newRoom.getDimensions().y2 - j] = ImageType::churchDoor;
 		}
 		else
 		{
 			map[newRoom.getDimensions().x2][newRoom.getDimensions().y1 + j] = ImageType::churchWallWest;
+			map[newRoom.getDimensions().x1][newRoom.getDimensions().y2 - j] = ImageType::churchWallWest;
 		}
 	}
 

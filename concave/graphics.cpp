@@ -305,7 +305,7 @@ void Graphics::drawSprite(const SpriteData& spriteData, float screenX, float scr
 	if (spriteData.texture == NULL) return;
 
 	D3DXVECTOR2 pivot(spriteData.pivotX, spriteData.pivotY);
-	D3DXVECTOR2 scale2(scale, scale);
+    D3DXVECTOR2 scale2(scale * spriteData.scale, scale * spriteData.scale);
 	D3DXVECTOR2 screenPos(
 		screenX - spriteData.pivotX,
 		screenY - spriteData.pivotY);
@@ -329,7 +329,7 @@ void Graphics::drawSprite(const SpriteData& spriteData, CoordF screenCoord, floa
 	if (spriteData.texture == NULL) return;
 
 	D3DXVECTOR2 pivot(spriteData.pivotX, spriteData.pivotY);
-	D3DXVECTOR2 scale2(scale, scale);
+	D3DXVECTOR2 scale2(scale * spriteData.scale, scale * spriteData.scale);
 	D3DXVECTOR2 screenPos(
 		screenCoord.x - spriteData.pivotX,
 		screenCoord.y - spriteData.pivotY);

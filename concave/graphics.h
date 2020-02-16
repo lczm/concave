@@ -71,6 +71,7 @@ struct SpriteData
 	int width, height;
 	RECT rect;
 	float pivotX, pivotY;
+    float scale = 1;
 };
 
 struct VertexC              // Vertex with Color

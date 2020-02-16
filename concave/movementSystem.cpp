@@ -42,11 +42,13 @@ int rotationToDirection(float rotation, int n)
 
 int rotationToDirection8(float rotation)
 {
+	rotation += 25.565;
 	return rotationToDirection(rotation, 8);
 }
 
 int rotationToDirection16(float rotation)
 {
+	rotation += 51.13;
 	return rotationToDirection(rotation, 16);
 }
 

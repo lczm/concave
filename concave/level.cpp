@@ -246,6 +246,10 @@ void Level::update()
 	updatePositionArray(enemies.getSize(), enemies.getPositionArray(), eDeltaArray);
 	updatePositionArray(projectiles.getSize(), projectiles.getPositionArray(), jDeltaArray);
 
+	// Update direction
+	updateDirectionArray(players.getSize(), players.getRotationArray(), players.getDirectionArray());
+	updateDirectionArray(enemies.getSize(), enemies.getRotationArray(), enemies.getDirectionArray());
+
 	// Update Collision
 	updateLineISetItersArray(players.getHLineISet(), players.getVLineISet(), players.getSize(), players.getHLineISetItersArray(), players.getVLineISetItersArray(), pDeltaArray);
 	updateLineISetItersArray(enemies.getHLineISet(), enemies.getVLineISet(), enemies.getSize(), enemies.getHLineISetItersArray(), enemies.getVLineISetItersArray(), pDeltaArray);

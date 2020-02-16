@@ -35,7 +35,7 @@ private:
 		wallEast, wallWest, WallConnect,
 		wallPath, barrel, fireItem, torch,
 		book, dead, armour, witch, banner,
-		cabinet;
+		cabinet, bloodPool, store;
 
 	/* Tile texture, masks and images*/
 	Texture itemTexture;	  GridMask itemGridMask;      Image itemImage;
@@ -45,10 +45,14 @@ private:
 	Texture bannerTexture;    GridMask bannerGridMask;    Image bannerImage;
 	Texture armourTexture;    GridMask armourGridMask;	  Image armourImage;
 	Texture witchTexture;     GridMask witchGridMask;     Image witchImage;
-	GridMask flameGridMask;   Image flameImage;
+	Texture flameTexture;  GridMask flameGridMask;   Image flameImage;
 	GridMask fireGridMask;    Image fireImage;
 	GridMask bookGridMask;    Image bookImage;
-	
+	Texture bloodPoolTexture;GridMask  bloodPoolGridMask; Image bloodPoolImage;
+
+	Texture torchTexture;  GridMask torchGridMask;   Image torchImage;
+	Texture storeTexture;	  GridMask storeGridMask;      Image storeImage;
+
 	// Player
 	Texture warriorTexture; AnimImage warriorAnimImage;
 	GridMask warriorAttackGridMask;
@@ -78,8 +82,12 @@ private:
 	AnimObjects animObjects;
 
 	AnimImage doorAnim;
+	AnimImage fireBurning;
 	AnimImage chestAnim;
 	AnimImage barrelAnim;
+	AnimImage bloodPoolAnim;
+	AnimImage fireItemAnim;
+	AnimImage torchAnim;
 	// Camera
 	int map[mapWidth][mapHeight];
 

@@ -25,6 +25,25 @@ bool Texture::initialize(Graphics* graphics, const char* file)
 	return true;
 }
 
+bool Texture::initialize(Graphics* graphics, const char* file, COLOR_ARGB transColor)
+{
+	Texture::file = file;
+	try {
+		HRESULT hr;
+		UINT width, height;
+		LP_TEXTURE texture;
+		hr = graphics->loadTexture(file, transColor, width, height, texture);
+		if (FAILED(hr)) { SAFE_RELEASE(texture); return false; }
+		Texture::texture = texture;
+		Texture::width = width;
+		Texture::height = height;
+	}
+	catch (...) {
+		return false;
+	}
+	return true;
+}
+
 void Texture::onLostDevice()
 {
 	SAFE_RELEASE(Texture::texture);

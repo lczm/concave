@@ -172,6 +172,8 @@
     <ClCompile Include="hud.cpp" />
     <ClCompile Include="image.cpp" />
     <ClCompile Include="input.cpp" />
+    <ClCompile Include="inventory.cpp" />
+    <ClCompile Include="item.cpp" />
     <ClCompile Include="level.cpp" />
     <ClCompile Include="mainMenu.cpp" />
     <ClCompile Include="playerFSM.cpp" />
@@ -181,6 +183,7 @@
     <ClCompile Include="shopNpc.cpp" />
     <ClCompile Include="tiles.cpp" />
     <ClCompile Include="room.cpp" />
+    <ClCompile Include="spriteText.cpp" />
     <ClCompile Include="window.cpp" />
     <ClCompile Include="winmain.cpp" />
   </ItemGroup>
@@ -209,6 +212,9 @@
     <ClInclude Include="hud.h" />
     <ClInclude Include="image.h" />
     <ClInclude Include="input.h" />
+    <ClInclude Include="inventory.h" />
+    <ClInclude Include="inventoryCell.h" />
+    <ClInclude Include="item.h" />
     <ClInclude Include="level.h" />
     <ClInclude Include="mainMenu.h" />
     <ClInclude Include="renderLevel.h" />
@@ -218,6 +224,7 @@
     <ClInclude Include="collisionSystem.h" />
     <ClInclude Include="shopNpc.h" />
     <ClInclude Include="tiles.h" />
+    <ClInclude Include="spriteText.h" />
     <ClInclude Include="window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

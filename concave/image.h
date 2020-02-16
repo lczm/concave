@@ -14,6 +14,7 @@ public:
 	Texture();
 	~Texture();
 	bool initialize(Graphics* graphics, const char* file);
+	bool initialize(Graphics* graphics, const char* file, COLOR_ARGB transcolor);
 	void onLostDevice();
 	void onResetDevice(Graphics* graphics);
 	void getSpriteData(SpriteData& SpriteData);

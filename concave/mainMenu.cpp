@@ -146,6 +146,10 @@ void MainMenu::update()
 	
 	if (optbtn.isClicked())
 	{
+		/*Sample Switching Window Code*/
+		windows.pop_back();
+		windows.push_back(&options);
+
 		scroller.setActive(true);
 		scrbar.setActive(true);
 

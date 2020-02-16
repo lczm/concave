@@ -17,7 +17,20 @@ void HUD::initialize()
 	healthSpriteData = imageToSpriteData(IMAGE_HUD_HEALTH);
 	healthOrbSpriteData = imageToSpriteData(IMAGE_HUD_HEALTHORB);
 	healthOrbRegenSpriteData = imageToSpriteData(IMAGE_HUD_HEALTHORBREGEN);
-	inventorySpriteData = getInventorySpriteData();
+	itemGridMask.initialize(5, 348, 28, 28, 1, 0, 0, 0);
+	skillsGridMask.initialize(0, 0, 56, 56, 1, 1, 0, 0);
+	fireballCoord = { 0,0 };
+	teleportCoord = { 1,2 };
+	emptyHealthPotCoord = { 0, 0 };
+	healthPotCoord = { 1, 0 };
+	emptyManaPotCoord = { 2, 0 };
+	manaPotCoord = { 3, 0 };
+	fireballSpriteData = imageToSpriteData(IMAGE_HUD_SKILLS, skillsGridMask, fireballCoord);
+	teleportSpriteData = imageToSpriteData(IMAGE_HUD_SKILLS, skillsGridMask, teleportCoord);
+	healthPotSpriteData = imageToSpriteData(IMAGE_HUD_ITEMS, itemTranscolor, itemGridMask, healthPotCoord);
+	manaPotSpriteData = imageToSpriteData(IMAGE_HUD_ITEMS, itemTranscolor, itemGridMask, manaPotCoord);
+	emptyHealthPotSpriteData = imageToSpriteData(IMAGE_HUD_ITEMS, itemTranscolor, itemGridMask, emptyHealthPotCoord);
+	emptyManaPotSpriteData = imageToSpriteData(IMAGE_HUD_ITEMS, itemTranscolor, itemGridMask, emptyManaPotCoord);
 	inventoryDisplayed = false;
 }
 
@@ -32,8 +45,7 @@ SpriteData HUD::imageToSpriteData(const char* file)
 	return imageSpriteData;
 }
 
-SpriteData HUD::imageToSpriteData(const char* file, UINT imageWidth, UINT imageHeight, 
-								  GridMask imageGridMask, CoordI imageCoord)
+SpriteData HUD::imageToSpriteData(const char* file, GridMask imageGridMask, CoordI imageCoord)
 {
 	Texture imageTexture;
 	Image image;
@@ -46,17 +58,18 @@ SpriteData HUD::imageToSpriteData(const char* file, UINT imageWidth, UINT imageH
 	return imageSpriteData;
 }
 
-
-SpriteData HUD::getInventorySpriteData()
+SpriteData HUD::imageToSpriteData(const char* file, COLOR_ARGB color, GridMask imageGridMask, CoordI imageCoord)
 {
-	GridMask imageGridMask;
-	CoordI imageCoord = { 0, 0 };
-	imageGridMask.initialize(0, 0, 320, 352, 1, 1, 0, 0);
-	inventorySpriteData = imageToSpriteData(IMAGE_HUD_INVENTORY, 320, 352, imageGridMask, imageCoord);
+	Texture imageTexture;
+	Image image;
+	SpriteData imageSpriteData;
 
-	return inventorySpriteData;
+	imageTexture.initialize(Window::graphics, file, color);
+	image.initialize(&imageTexture, imageGridMask);
+	imageSpriteData = image.getSpriteData(imageCoord);
+
+	return imageSpriteData;
 }
-
 
 void HUD::drawHUD()
 {
@@ -73,6 +86,11 @@ void HUD::drawHUD()
 	graphics->drawSprite(healthOrbSpriteData, 0, GAME_HEIGHT - 230 + hpHeight, 1);
 	graphics->drawSprite(manaSpriteData, GAME_WIDTH - 530, GAME_HEIGHT - 230, 1);
 	graphics->drawSprite(healthSpriteData, 0, GAME_HEIGHT - 230, 1);
+	graphics->drawSprite(fireballSpriteData, GAME_WIDTH - 520, GAME_HEIGHT - 62, 1);
+	graphics->drawSprite(teleportSpriteData, GAME_WIDTH - 463, GAME_HEIGHT - 62, 1);
+	graphics->drawSprite(healthPotSpriteData, 469, GAME_HEIGHT - 62, 1.9);
+	graphics->drawSprite(healthPotSpriteData, 412, GAME_HEIGHT - 62, 1.9);
+	graphics->drawSprite(manaPotSpriteData, 355, GAME_HEIGHT - 62, 1.9);
 	spriteText.print("HP: " + to_string(currentHealth) + "/" + to_string(maxHealth), 20, GAME_HEIGHT - 280);
 	spriteText.print("MP: " + to_string(currentMana) + "/" + to_string(maxMana), GAME_WIDTH - 220, GAME_HEIGHT - 280);
 }

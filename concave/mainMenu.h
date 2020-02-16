@@ -8,14 +8,13 @@ private:
 
 	Texture menuBgTexture;
 	SpriteData menuBg;
-	Button itemBg;
+
 
 	Texture playbtnTexture;
 	Texture insbtnTexture;
 	Texture optbtnTexture;
 	Texture crbtnTexture;
-	Texture scrbarTexture;
-	Texture scrollerTexture;
+	
 
 
 	Texture playHoverTexture;
@@ -33,8 +32,7 @@ private:
 	Button insbtn;
 	Button optbtn;
 	Button crbtn;
-	Button scrbar;
-	Button scroller;
+	
 
 
 

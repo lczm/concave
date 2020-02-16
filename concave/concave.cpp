@@ -19,6 +19,9 @@ void Concave::initialize(HWND hwnd)
 	Window::input = input;
 	Window::mainMenu.initialize();
 	Window::level.initialize();
+	Window::options.initialize();
+	Window::instructions.initialize();
+	Window::credits.initialize();
 	Window::windows.push_back(&Window::mainMenu);
 }
 

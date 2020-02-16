@@ -44,8 +44,7 @@ void MainMenu::initButtons()
 	crHoverTexture.initialize(Window::graphics, CR_HOVER_TEXTURE);
 
 
-	scrbarTexture.initialize(Window::graphics, SCROLLBAR);
-	scrollerTexture.initialize(Window::graphics, SCOLLER);
+	
 
 
 	playbtn.initialize(Window::graphics, Window::input, &playbtnTexture);
@@ -58,8 +57,7 @@ void MainMenu::initButtons()
 	optHover.initialize(Window::graphics, Window::input, &optHoverTexture);
 	crHover.initialize(Window::graphics, Window::input, &crHoverTexture);
 
-	scrbar.initialize(Window::graphics, Window::input, &scrbarTexture);
-	scroller.initialize(Window::graphics, Window::input, &scrollerTexture);
+	
 
 	playbtn.setPos(GAME_WIDTH / 2 - playbtn.getWidth() / 2, 225);
 	playHover.setPos(GAME_WIDTH / 2 - playbtn.getWidth() / 2, 225);
@@ -73,8 +71,7 @@ void MainMenu::initButtons()
 	crbtn.setPos(GAME_WIDTH / 2 - playbtn.getWidth() / 2, 450);
 	crHover.setPos(GAME_WIDTH / 2 - playbtn.getWidth() / 2, 450);
 
-	scrbar.setPos(0, GAME_HEIGHT / 2);
-	scroller.setPos(0, GAME_HEIGHT / 2);
+
 }
 
 
@@ -131,9 +128,7 @@ void MainMenu::update()
 		insHover.setActive(false);
 		optHover.setActive(false);
 		crHover.setActive(false);
-		scrbar.setActive(false);
-		scroller.setActive(false);
-
+		
 
 		playbtn.setActive(true);
 		insbtn.setActive(true);
@@ -146,20 +141,26 @@ void MainMenu::update()
 	
 	if (optbtn.isClicked())
 	{
-		/*Sample Switching Window Code*/
+
 		windows.pop_back();
 		windows.push_back(&options);
 
-		scroller.setActive(true);
-		scrbar.setActive(true);
+	}
 
-		int mouseX = input->getMouseX();
+	if (insbtn.isClicked())
+	{
 
-		if (scrbar.isClicked())
-		{
-			scroller.setPos(mouseX, GAME_HEIGHT / 2);
+		windows.pop_back();
+		windows.push_back(&instructions);
 
-		}
+	}
+
+	if (crbtn.isClicked())
+	{
+
+		windows.pop_back();
+		windows.push_back(&credits);
+
 	}
 
 	
@@ -169,7 +170,7 @@ void MainMenu::update()
 void MainMenu::render()
 {
 	graphics->drawSprite(menuBg, 0, 0, 1);
-	//graphics->drawSprite(itemBg, GAME_WIDTH/2 - itemBg.width/2, GAME_HEIGHT/2 - itemBg.height/2, 1);
+	
 
 	playbtn.draw();
 	insbtn.draw();
@@ -179,6 +180,5 @@ void MainMenu::render()
 	insHover.draw();
 	optHover.draw();
 	crHover.draw();
-	scrbar.draw();
-	scroller.draw();
+	
 }

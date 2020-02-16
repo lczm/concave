@@ -59,7 +59,12 @@ const char IMAGE_UNIT_WARRIOR[] = "sprites/unit_warrior.png";
 //                Texture (Menu)
 //-----------------------------------------------
 const char MENU_BG[] = "sprites/menubg.jpg";
-const char ITEM_BG[] = "sprites/itembg.png";
+const char OPTIONS_BG[] = "sprites/optionsbg.png";
+const char INS_BG[] = "sprites/insbg.png";
+const char CR_BG[] = "sprites/crbg.png";
+
+const char BACK_BTN_TEXTURE[] = "sprites/back.png";
+const char BACK_HOVER_TEXTURE[] = "sprites/backhover.png";
 
 
 const char PLAY_BTN_TEXTURE[] = "sprites/play.png";

@@ -3,6 +3,19 @@
 
 class Credits : public Window
 {
+private:
+	Texture menuBgTexture;
+	SpriteData menuBg;
+
+	Texture crBgTexture;
+	SpriteData crBg;
+
+	Texture backBtnTexture;
+	Texture backHoverTexture;
+	Button back;
+	Button backHover;
+
+
 public:
 	Credits();
 	~Credits();

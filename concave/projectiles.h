@@ -20,10 +20,8 @@ private:
 	vector<float> rotationArray;
 	vector<float> velocityArray;
 	// Collision
-	LineISet hLineISet;
-	LineISet vLineISet;
-	vector<LineISetIters> hLineISetItersArray;
-	vector<LineISetIters> vLineISetItersArray;
+	vector<Lines> hLinesArray;
+	vector<Lines> vLinesArray;
 public:
 	Projectiles(); ~Projectiles();
 	void initialize(int capacity);
@@ -42,8 +40,6 @@ public:
 	vector<float>& getRotationArray() { return rotationArray; }
 	vector<float>& getVelocityArray() { return velocityArray; }
 	// Collision
-	LineISet& getHLineISet() { return hLineISet; }
-	LineISet& getVLineISet() { return vLineISet; }
-	vector<LineISetIters>& getHLineISetItersArray() { return hLineISetItersArray; }
-	vector<LineISetIters>& getVLineISetItersArray() { return vLineISetItersArray; }
+	vector<Lines>& getHLinesArray() { return hLinesArray; }
+	vector<Lines>& getVLinesArray() { return vLinesArray; }
 };

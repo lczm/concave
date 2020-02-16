@@ -21,8 +21,10 @@ private:
 	vector<float> rotationArray;
 	vector<float> velocityArray;
 	// Collision
-	vector<Lines> hLinesArray;
-	vector<Lines> vLinesArray;
+	LineISet hLineISet;
+	LineISet vLineISet;
+	vector<LineISetIters> hLineISetItersArray;
+	vector<LineISetIters> vLineISetItersArray;
 	// Attributes
 	vector<int> healthArray;
 	vector<int> maxHealthArray;
@@ -50,8 +52,10 @@ public:
 	vector<float>& getRotationArray() { return rotationArray; }
 	vector<float>& getVelocityArray() { return velocityArray; }
 	// Collision
-	vector<Lines>& getHLinesArray() { return hLinesArray; }
-	vector<Lines>& getVLinesArray() { return vLinesArray; }
+	LineISet& getHLineISet() { return hLineISet; }
+	LineISet& getVLineISet() { return vLineISet; }
+	vector<LineISetIters>& getHLineISetItersArray() { return hLineISetItersArray; }
+	vector<LineISetIters>& getVLineISetItersArray() { return vLineISetItersArray; }
 	// Attributes
 	vector<int>& getHealthArray() { return healthArray; };
 	vector<int>& getMaxHealthArray() { return maxHealthArray; };

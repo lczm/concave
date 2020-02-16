@@ -24,8 +24,8 @@ void Players::initialize(int capacity)
 	Players::rotationArray.resize(capacity);
 	Players::velocityArray.resize(capacity);
 	// Collision
-	Players::hLinesArray.resize(capacity);
-	Players::vLinesArray.resize(capacity);
+	Players::hLineISetItersArray.resize(capacity);
+	Players::vLineISetItersArray.resize(capacity);
 	// Attributes
 	Players::healthArray.resize(capacity);
 	Players::maxHealthArray.resize(capacity);
@@ -50,8 +50,11 @@ void Players::push(CoordF position, AnimImage* animImage, int state, FSM fsm, fl
 	rotationArray[size] = rotation;
 	velocityArray[size] = velocity;
 	// Collision
-	hLinesArray[size] = hLines;
-	vLinesArray[size] = vLines;
+	LineISetIters hLineIters, vLineIters;
+	for (Line line : hLines) hLineIters.push_back(hLineISet.insert(LineI{ line, size }).first);
+	for (Line line : vLines) vLineIters.push_back(vLineISet.insert(LineI{ line, size }).first);
+	hLineISetItersArray[size] = hLineIters;
+	vLineISetItersArray[size] = vLineIters;
 	// Attributes
 	healthArray[size] = health;
 	maxHealthArray[size] = maxHealth;
@@ -78,8 +81,10 @@ void Players::pop(int index)
 	rotationArray[index] = rotationArray[size];
 	velocityArray[index] = velocityArray[size];
 	// Collision
-	hLinesArray[index] = hLinesArray[size];
-	vLinesArray[index] = vLinesArray[size];
+	for (LineISetIter lineIter : hLineISetItersArray[index]) hLineISet.erase(lineIter);
+	for (LineISetIter lineIter : vLineISetItersArray[index]) vLineISet.erase(lineIter);
+	hLineISetItersArray[index] = hLineISetItersArray[size];
+	vLineISetItersArray[index] = vLineISetItersArray[size];
 	// Attributes
 	healthArray[size] = healthArray[index];
 	maxHealthArray[size] = maxHealthArray[index];

@@ -9,14 +9,101 @@ Level::~Level()
 {}
 
 void Level::initialize()
-{
+{	
+	for (int i = 0; i < 5; i++)
+	{
+		for (int x = 0; x < mapWidth; x++)
+		{
+			for (int y = 0; y < mapHeight; y++)
+			{
+				map[x][y] = 0;
+			}
+		}
+
+		/* No delete this code*/
+		Cellular cellgenerate;
+		cellgenerate.generateMap(map);
+		//readFromFile();
+
+		/* No delete this code*/
+		placeRoom();
+		editComponent->writeToFile(map, i);
+	}
+	editComponent->readFromFile("save.txt", map, 0);
+
 	////  Sprite Initialisation  ////
 	// Tiles
 	tileTexture.initialize(graphics, IMAGE_TILES_DUNGEON);
 	tileGridMask.initialize(0, 0, 128, 192, 1, 1, 64, 127);
 	tileImage.initialize(&tileTexture, tileGridMask);
-	floorSprite.initialize(&tileImage, CoordI{ 12, 0 });
-	wallSprite.initialize(&tileImage, CoordI{ 6, 0 });
+
+
+	//reference to yh code
+	//void initialize(int originX, int originY, int perWidth, int perHeight, int gapWidth, int gapHeight, int pivotX, int pivotY);
+	//In game items
+	itemTexture.initialize(graphics, IMAGE_ITEMS_DUNGEON);
+	itemGridMask.initialize(0, 0, 130, 130, 1, 1, 59, 59);
+	itemImage.initialize(&itemTexture, itemGridMask);
+
+
+	//barrel png
+	manyItemsTexture.initialize(graphics, IMAGE_BARRELITEMS_DUNGEON);
+	manyItemsGridMask.initialize(0, 0, 94, 119, 1, 1, 45, 44);
+	manyItemsImage.initialize(&manyItemsTexture, manyItemsGridMask);
+
+
+	//cabinet
+	cabinetGridMask.initialize(0, 0, 111, 110, 1, 1, 50, 55);
+	cabinetImage.initialize(&manyItemsTexture, cabinetGridMask);
+
+	//fire
+	flameGridMask.initialize(0, 0, 88, 118, 1, 1, 40, 10);
+	flameImage.initialize(&manyItemsTexture, flameGridMask);
+
+
+	//bookstand
+	bookGridMask.initialize(0, 0, 76, 80, 1, 1, 45, 44);
+	bookImage.initialize(&manyItemsTexture, bookGridMask);
+
+	//dead
+	deadTexture.initialize(graphics, IMAGE_DEADITEMS_DUNGEON);
+	deadPeopleGridMask.initialize(0, 0, 108, 109,1, 1, 75, 90);
+	deadPeopleImage.initialize(&deadTexture, deadPeopleGridMask);
+
+	//armour
+	armourTexture.initialize(graphics, IMAGE_ARMOURITEMS_DUNGEON);
+	armourGridMask.initialize(0, 0, 38, 44, 1, 1, 19, 14);
+	armourImage.initialize(&armourTexture, armourGridMask);
+
+	//witch
+	witchTexture.initialize(graphics, IMAGE_WITCHITEMS_DUNGEON);
+	witchGridMask.initialize(0, 0, 150, 141, 1, 1, 74, 90);
+	witchImage.initialize(&witchTexture, witchGridMask);
+
+
+	//church sprites
+	floorSprite.initialize(&tileImage, IMAGE_MAP.at(ImageType::churchFloor));
+	wallSprite.initialize(&tileImage, CoordI{ 6,0 });
+	wallEast.initialize(&tileImage, IMAGE_MAP.at(ImageType::churchWallEast));
+	wallWest.initialize(&tileImage, IMAGE_MAP.at(ImageType::churchWallWest));
+	blood.initialize(&tileImage, IMAGE_MAP.at(ImageType::churchBlood));
+	door.initialize(&tileImage, IMAGE_MAP.at(ImageType::churchDoor));
+	WallConnect.initialize(&tileImage, IMAGE_MAP.at(ImageType::churchWallConnect));
+	wallPath.initialize(&tileImage, IMAGE_MAP.at(ImageType::churchWallPath));
+	chest.initialize(&tileImage, IMAGE_MAP.at(ImageType::churchChest));
+	//barrel
+	barrel.initialize(&manyItemsImage, CoordI{ 0,0 });
+	//fireplace
+	fireItem.initialize(&flameImage, CoordI{ 4,5 });
+	//book
+	book.initialize(&manyItemsImage, CoordI{ 0,1 });
+	//dead man
+	dead.initialize(&deadPeopleImage, CoordI{3,0});
+	armour.initialize(&armourImage, CoordI{ 0,0 });
+
+	//witch
+	witch.initialize(&witchImage, CoordI{ 0,0 });
+
 	// Warrior
 	warriorTexture.initialize(graphics, IMAGE_UNIT_WARRIOR);
 	warriorAttackGridMask.initialize(0, 7, 128, 128, 0, 1, 58, 114);
@@ -45,10 +132,18 @@ void Level::initialize()
 	projTexture.initialize(graphics, IMAGE_PROJECTILE_FIREBALL);
 	projGridMask.initialize(1, 1, 96, 96, 1, 1, 46, 46);
 	projImage.initialize(&projTexture, { projGridMask }, { 15 });
+	//initialize the values
+	//renderLevel.initialize(graphics, input, type);
+	ifstream fout("text\\gameInfo.csv", std::ofstream::out | std::ofstream::trunc);
+	fout.close();
 
 	////  Entities Initialisation  ////
 	// Tiles
-	tiles.initialize(20, 20);
+	tiles.initialize(mapWidth, mapHeight);
+	underTiles.initialize(mapWidth, mapHeight);
+	tilesInitialize();
+	
+	/*
 	for (int y = 0; y < tiles.getRows(); y++)
 		for (int x = 0; x < tiles.getCols(); x++)
 			tiles.set(y, x, &wallSprite,
@@ -64,6 +159,7 @@ void Level::initialize()
 			tiles.set(y, x, &wallSprite,
 				translateHLines(Lines{ { 0, 1, 0 } }, x, y),
 				translateVLines(Lines{}, x, y));
+	*/
 
 	// Player
 	players.initialize(1);
@@ -124,15 +220,26 @@ void Level::update()
 	camCoord = players.getPositionArray()[0];
 	if (input->isKeyDown('O')) camScale *= 1 - 0.01;
 	if (input->isKeyDown('P')) camScale *= 1 + 0.01;
+	levelEdit();
+	changeLevel();
+
 }
 
+	
 void Level::render()
 {
-	for (int y = 0; y < tiles.getRows(); y++)
-		for (int x = 0; x < tiles.getCols(); x++)
+	for (int x = 0; x < tiles.getRows(); x++)
+	{
+		for (int y = 0; y < tiles.getCols(); y++)
+		{
 			graphics->drawSprite(
-				tiles.getSprite(y, x)->getSpriteData(),
+				underTiles.getSprite(x, y)->getSpriteData(),
 				gridToScreen(x, y), camScale);
+			graphics->drawSprite(
+				tiles.getSprite(x, y)->getSpriteData(),
+				gridToScreen(x, y), camScale);
+		}
+	}
 
 	// Player (Temporary)
 	int playerState = players.getStateArray()[0];
@@ -171,6 +278,15 @@ void Level::render()
 		graphics->drawSprite(sd,
 			gridToScreen(projectiles.getPositionArray()[i]), camScale);
 	}
+	//for (int i = 0; i < projectiles.getSize(); i++) {
+	//	SpriteData sd = projectiles.getAnimImageArray()[i]->getSpriteData(
+	//		0, projectiles.getRotationArray()[i],
+	//		projectiles.getFrameNoArray()[i]);
+	//	graphics->drawSprite(sd,
+	//		gridToScreen(projectiles.getPositionArray()[i]), camScale);
+	//}
+	//will be moved to another file I hope
+	//renderSprites();
 }
 
 CoordF Level::gridToScreen(float gx, float gy)
@@ -205,4 +321,143 @@ CoordF Level::gridToScreen(CoordF gridCoord)
 CoordF Level::screenToGrid(CoordF screenCoord)
 {
 	return screenToGrid(screenCoord.x, screenCoord.y);
+}
+
+
+void Level::levelEdit()
+{
+	if (input->getMouseLButton() && input->isKeyDown(0x51))
+	{
+		input->setMouseLButton(false);
+		CoordF mouse = { input->getMouseX(), input->getMouseY() };
+		CoordF gridPos1 = screenToGrid(mouse.x, mouse.y);
+		CoordI gridPos = { gridPos1.x, gridPos1.y };
+		++map[gridPos.x][gridPos.y] %= 15;
+		input->clearCharIn();
+	}
+
+	if (input->wasKeyPressed(0x52))
+	{
+		writeToFile(map);
+	}
+
+
+	if (input->getMouseLButton())
+	{
+		input->setMouseLButton(false);
+		CoordF mouse = { input->getMouseX(), input->getMouseY() };
+		CoordF gridPos1 = screenToGrid(mouse.x, mouse.y);
+		CoordI gridPos = { gridPos1.x, gridPos1.y };
+
+		//door
+		// 10 is open door (add to constants)
+		editComponent->changeObjects(ImageType::churchDoor, 10, map, gridPos.x, gridPos.y);
+
+		input->clearCharIn();
+	}
+
+}
+
+void Level::readFromFile()
+{	
+	++mapNo %= 4;
+	editComponent->readFromFile("save.txt", map, mapNo);
+	tilesInitialize();
+}
+
+void Level::writeToFile(int map[mapWidth][mapHeight])
+{	
+	int random = rand() % 1000;
+	editComponent->writeToFile(map, random);
+}
+
+void Level::changeLevel()
+{
+	if (input->wasKeyPressed(0x45))
+	{
+		//woahh
+		//mapNo = 29229;
+		input->clearKeyPress(0x45);
+		//editComponent->animateObjects();
+		level.readFromFile();
+		//level.initialize();
+	}
+}
+
+void Level::placeRoom()
+{
+	editComponent->placeRoom(map);
+}
+void Level::tilesInitialize()
+{
+	for (int x = 0; x < mapWidth; x++) {
+		for (int y = 0; y < mapHeight; y++) {
+
+			underTiles.set(x, y, &floorSprite, translateHLines(Lines{ {} }, x, y),
+				translateVLines(Lines{}, x, y));
+
+			switch (map[x][y])
+			{
+				//changing between textures
+			case ImageType::churchBlood:
+				tiles.set(x, y, &blood, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				break;
+			case ImageType::churchFloor:
+				tiles.set(x, y, &floorSprite, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				break;
+			case ImageType::churchDoor:
+				tiles.set(x, y, &door, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				break;
+			case ImageType::churchChest:
+				tiles.set(x, y, &chest, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				break;
+			case ImageType::churchWallEast:
+				tiles.set(x, y, &wallEast, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				break;
+			case ImageType::churchWallWest:
+				tiles.set(x, y, &wallWest, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				break;
+			case ImageType::churchWallConnect:
+				tiles.set(x, y, &WallConnect, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				break;
+			case ImageType::churchWallPath:
+				tiles.set(x, y, &wallPath, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				break;
+				//test object
+			//add no to constants ltr
+			case 11:
+				tiles.set(x, y, &barrel, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				break;
+			case 12:
+				tiles.set(x, y, &fireItem, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				break;
+			case 13:
+				tiles.set(x, y, &book, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				break;
+			case 14:
+				tiles.set(x, y, &dead, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				break;
+			case 15:
+				tiles.set(x, y, &armour, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				break;
+			case 16:
+				tiles.set(x, y, &witch, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				break;
+			}
+		}
+	}
 }

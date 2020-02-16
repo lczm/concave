@@ -10,7 +10,14 @@
 #include "collisionSystem.h"
 #include "movementSystem.h"
 #include "fsmSystem.h"
+
+#include "cellular.h"
+#include "EditComponent.h"
+#include "renderLevel.h"
+
 #include <vector>
+#include <fstream>
+#include <string>
 #include <cassert>
 using namespace std;
 
@@ -21,7 +28,45 @@ private:
 	CoordF camCoord; float camScale;
 	// Tiles
 	Texture tileTexture; GridMask tileGridMask; Image tileImage;
-	Sprite floorSprite, wallSprite;
+	Sprite floorSprite,
+		wallSprite, blood, door, chest,
+		wallEast, wallWest, WallConnect,
+		wallPath, barrel, fireItem, torch, book, dead, armour, witch;
+
+	Texture itemTexture;
+	GridMask itemGridMask;
+	Image itemImage;
+
+	Texture manyItemsTexture;
+	GridMask manyItemsGridMask;
+	Image manyItemsImage;
+
+	GridMask cabinetGridMask;
+	Image cabinetImage;
+
+	GridMask flameGridMask;
+	Image flameImage;
+
+	Texture deadTexture;
+	GridMask deadPeopleGridMask;
+	Image deadPeopleImage;
+
+	GridMask fireGridMask;
+	Image fireImage;
+
+
+	GridMask bookGridMask;
+	Image bookImage;
+
+
+	Texture armourTexture;
+	GridMask armourGridMask;
+	Image armourImage;
+
+	Texture witchTexture;
+	GridMask witchGridMask;
+	Image witchImage;
+
 	// Player
 	Texture warriorTexture; AnimImage warriorAnimImage;
 	GridMask warriorAttackGridMask;
@@ -41,11 +86,24 @@ private:
 	Texture projTexture; AnimImage projImage;
 	GridMask projGridMask;
 	// Components
+	Tiles underTiles;
 	Tiles tiles;
 	Players players;
 	Projectiles projectiles;
 	Enemies enemies;
 
+	// Camera
+	int map[mapWidth][mapHeight];
+
+	int mapNo = 0;
+
+	//shld prob change this to another variable
+	//int type = 0;
+	//prob need to change it to read component
+	EditComponent * editComponent;
+
+
+	//RenderLevel renderLevel;
 public:
 	Level();
 	~Level();
@@ -63,6 +121,13 @@ public:
 	Players& getPlayers() { return players; }
 	Enemies& getEnemies() { return enemies; }
 	Projectiles& getProjectiles() { return projectiles; }
-
 	AnimImage& getProjImage() { return projImage; }
+
+	void levelEdit();
+	void changeLevel();
+	void readFromFile();
+	//void renderSprites();
+	void writeToFile(int map[mapWidth][mapHeight]);
+	void placeRoom();
+	void tilesInitialize();
 };

@@ -12,4 +12,4 @@ void playerGetHitState(Level* level, int index);
 void playerMagicFireState(Level* level, int index);
 void playerMagicSmokeState(Level* level, int index);
 
-void handlePotionInput(int index, Input* input, Players& players);
+void handlePotionInput(Input* input, Players& players, int index);

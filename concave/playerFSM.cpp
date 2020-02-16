@@ -12,6 +12,7 @@ void playerAttackState(Level* level, int index)
     float& timer = players.getTimerArray()[index];
     float& delay = players.getDelayArray()[index];
 
+    handlePotionInput(input, players, index);
     timer += frameTime;
     if (timer >= delay) {
         timer -= delay;
@@ -36,6 +37,7 @@ void playerDieState(Level* level, int index)
     float& timer = players.getTimerArray()[index];
     float& delay = players.getDelayArray()[index];
 
+    handlePotionInput(input, players, index);
     timer += frameTime;
     if (timer >= delay) {
         timer -= delay;
@@ -66,6 +68,7 @@ void playerIdleState(Level* level, int index)
     float& staticVelocity = players.getStaticVelocityArray()[index];
     Projectiles& projectiles = level->getProjectiles();
 
+    handlePotionInput(input, players, index);
     if (input->getMouseLButton()) {
         destPosition = level->screenToGrid(CoordF{ float(input->getMouseX()), float(input->getMouseY()) });
         rotation = calculateRotation(position, destPosition);
@@ -141,6 +144,7 @@ void playerWalkState(Level* level, int index)
     float& velocity = players.getVelocityArray()[index];
     Projectiles& projectiles = level->getProjectiles();
 
+    handlePotionInput(input, players, index);
     if (input->getMouseLButton()) {
         destPosition = level->screenToGrid(CoordF{ float(input->getMouseX()), float(input->getMouseY()) });
         rotation = calculateRotation(position, destPosition);
@@ -203,6 +207,7 @@ void playerGetHitState(Level* level, int index)
     float& timer = players.getTimerArray()[index];
     float& delay = players.getDelayArray()[index];
 
+    handlePotionInput(input, players, index);
     timer += frameTime;
     if (timer >= delay) {
         frameNo++;
@@ -227,6 +232,7 @@ void playerMagicFireState(Level* level, int index)
     float& timer = players.getTimerArray()[index];
     float& delay = players.getDelayArray()[index];
 
+    handlePotionInput(input, players, index);
     timer += frameTime;
     if (timer >= delay) {
         timer -= delay;
@@ -252,6 +258,7 @@ void playerMagicSmokeState(Level* level, int index)
     float& timer = players.getTimerArray()[index];
     float& delay = players.getDelayArray()[index];
 
+    handlePotionInput(input, players, index);
     timer += frameTime;
     if (timer >= delay) {
         timer -= delay;
@@ -265,7 +272,7 @@ void playerMagicSmokeState(Level* level, int index)
     return;
 }
 
-void handlePotionInput(int index, Input* input, Players& players)
+void handlePotionInput(Input* input, Players& players, int index)
 {
     vector<Potion>& potions = players.getPotionArray()[index];
     int& health = players.getHealthArray()[index];

@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="animObjects.cpp" />
+    <ClCompile Include="audioEngine.cpp" />
     <ClCompile Include="button.cpp" />
     <ClCompile Include="cellular.cpp" />
     <ClCompile Include="concave.cpp" />
@@ -162,6 +163,7 @@
     <ClCompile Include="fsmSystem.cpp" />
     <ClCompile Include="instructions.cpp" />
     <ClCompile Include="modifiers.cpp" />
+    <ClCompile Include="modifierSelect.cpp" />
     <ClCompile Include="movementSystem.cpp" />
     <ClCompile Include="objects.cpp" />
     <ClCompile Include="options.cpp" />
@@ -189,6 +191,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="animObjects.h" />
+    <ClInclude Include="audioEngine.h" />
     <ClInclude Include="button.h" />
     <ClInclude Include="cellular.h" />
     <ClInclude Include="component.h" />
@@ -201,6 +204,7 @@
     <ClInclude Include="fsmSystem.h" />
     <ClInclude Include="instructions.h" />
     <ClInclude Include="modifiers.h" />
+    <ClInclude Include="modifierSelect.h" />
     <ClInclude Include="movementSystem.h" />
     <ClInclude Include="objects.h" />
     <ClInclude Include="options.h" />

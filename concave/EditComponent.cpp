@@ -33,8 +33,8 @@ void EditComponent::writeToFile(int map[mapWidth][mapHeight], int i)
 	std::vector<std::string> record;
 
 	record.push_back(to_string(i) + "save.txt");
-	record.push_back("0");
-	record.push_back("No");
+	record.push_back("1");
+	record.push_back("Not defeated");
 
 	gm.writeRecord("text\\gameInfo.csv", record);
 	
@@ -240,15 +240,6 @@ void EditComponent::placeItemRoom(Room room, int map[mapWidth][mapHeight])
 	int y1 = room.getDimensions().y1 + 1;
 	int y2 = room.getDimensions().y2 - 1;
 
-	/*
-		//items in the room
-		int left = room.getRoomItems().left;
-		int right = room.getRoomItems().right;
-		int top = room.getRoomItems().top;
-		int bottom = room.getRoomItems().bottom;
-	*/
-
-
 	//get appropriate x1 and x2 to fit within boundaries for templates
 	while ((x2 - x1) != roomTemplateWidth && (x2-x1) > roomTemplateWidth)
 	{
@@ -271,24 +262,6 @@ void EditComponent::placeItemRoom(Room room, int map[mapWidth][mapHeight])
 			map[i][j] = room1[(x2-1)-i][(y2-1)-j];
 		}
 	}
-
-
-	/*
-
-	//placing items
-	for (int i = x1 ; i < x2 ; i++)
-	{
-		map[i][y1] = top;
-		map[i][y2] = bottom;
-	}
-
-	//placing items
-	for (int i = y1 + 1; i < y2 -1; i++)
-	{
-		map[x1][i] = left;
-		map[x2][i] = right;
-	}
-	*/
 
 }
 
@@ -345,18 +318,8 @@ void EditComponent::determineRoomTypes(Room &room)
 	int ranRoom = random(rangeMin, rangeMax);
 	std::vector<std::vector<std::string>> records  = gm.searchForRecord(ROOM_INFO, to_string(ranRoom), 10, roomTypesCsv::no);
 
-	/*
-		//only one value will be returned
-		int left = std::stoi(records[0][roomTypesCsv::left]);
-		int right= std::stoi(records[0][roomTypesCsv::right]);
-		int top= std::stoi(records[0][roomTypesCsv::top]);
-		int bottom = std::stoi(records[0][roomTypesCsv::bottom]);
-		int flooring = std::stoi(records[0][roomTypesCsv::flooring]);
-	*/
 	string file = records[0][roomTypesCsv::file];
-
 	//set the room value
-	//room.setRoomItems(left, right, top, bottom, flooring);
 	room.setFile(file);
 
 }

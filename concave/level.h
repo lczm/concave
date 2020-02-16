@@ -13,6 +13,7 @@
 #include "movementSystem.h"
 #include "fsmSystem.h"
 #include "modifiers.h"
+#include "audioEngine.h"
 
 #include "cellular.h"
 #include "EditComponent.h"
@@ -26,6 +27,8 @@ using namespace std;
 class Level : public Window
 {
 private:
+	// AudioEngine
+	AudioEngine* audioEngine;
 	// Camera
 	CoordF camCoord; float camScale;
 	// Tiles
@@ -34,8 +37,9 @@ private:
 		wallSprite, blood, door, chest,
 		wallEast, wallWest, WallConnect,
 		wallPath, barrel, fireItem, torch,
-		book, dead, armour, witch, banner,
-		cabinet, bloodPool, store;
+		book, dead, dead2, dead3, dead4, dead5,
+		armour, witch, banner, cabinet, 
+		bloodPool, store, cow;
 
 	/* Tile texture, masks and images*/
 	Texture itemTexture;	  GridMask itemGridMask;      Image itemImage;
@@ -52,6 +56,8 @@ private:
 
 	Texture torchTexture;  GridMask torchGridMask;   Image torchImage;
 	Texture storeTexture;	  GridMask storeGridMask;      Image storeImage;
+	Texture cowTexture;  GridMask cowGridMask;   Image cowImage;
+
 
 	// Player
 	Texture warriorTexture; AnimImage warriorAnimImage;
@@ -68,6 +74,14 @@ private:
 	GridMask mageGetHitGridMask;
 	GridMask mageMagicFireGridMask;
 	GridMask mageMagicSmokeGridMask;
+
+	// Enemy
+	Texture balrogTexture; AnimImage balrogAnimImage;
+	GridMask balrogAttackGridMask;
+	GridMask balrogDieGridMask;
+	GridMask balrogIdleGridMask;
+	GridMask balrogWalkGridMask;
+	GridMask balrogGetHitGridMask;
 
 	// Projectiles
 	Texture projTexture; AnimImage projImage;
@@ -88,6 +102,7 @@ private:
 	AnimImage bloodPoolAnim;
 	AnimImage fireItemAnim;
 	AnimImage torchAnim;
+	AnimImage cowAnim;
 	// Camera
 	int map[mapWidth][mapHeight];
 

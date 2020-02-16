@@ -10,6 +10,8 @@ Level::~Level()
 
 void Level::initialize()
 {	
+	audioEngine = new AudioEngine();
+    audioEngine->initialize();
 	ifstream fout("text\\gameInfo.csv", std::ofstream::out | std::ofstream::trunc);
 	fout.close();
 	for (int i = 0; i < 5; i++)
@@ -97,6 +99,11 @@ void Level::initialize()
 	storeGridMask.initialize(0, 0, 78, 84, 1, 1, 59, 59);
 	storeImage.initialize(&storeTexture, storeGridMask);
 
+	//cow
+	cowTexture.initialize(graphics, IMAGE_NPCCOW_DUNGEON);
+	cowGridMask.initialize(0, 0, 109, 88, 1, 1, 9, 89);
+	cowImage.initialize(&cowTexture, cowGridMask);
+
 
 
 	//church sprites
@@ -112,7 +119,13 @@ void Level::initialize()
 	barrel.initialize(&manyItemsImage, CoordI{ 0,0 });
 	fireItem.initialize(&flameImage, CoordI{ 4,5 });
 	book.initialize(&manyItemsImage, CoordI{ 0,1 });
+
 	dead.initialize(&deadPeopleImage, CoordI{3,0});
+	dead2.initialize(&deadPeopleImage, CoordI{ 0,0 });
+	dead3.initialize(&deadPeopleImage, CoordI{ 1,0 });
+	dead4.initialize(&deadPeopleImage, CoordI{ 2,0 });
+	dead5.initialize(&deadPeopleImage, CoordI{ 4,0 });
+
 	armour.initialize(&armourImage, CoordI{ 0,0 });
 	witch.initialize(&witchImage, CoordI{ 0,0 });
 	banner.initialize(&bannerImage, CoordI{ 0,0 });
@@ -120,13 +133,17 @@ void Level::initialize()
 	bloodPool.initialize(&bloodPoolImage, CoordI{ 0,0 });
 	torch.initialize(&torchImage, CoordI{ 2,4 });
 	store.initialize(&storeImage, CoordI{ 0,0 });
+	cow.initialize(&cowImage, CoordI{ 0,0 });
+
+
 
 	//Animation
 	doorAnim.initialize(&tileTexture, { tileGridMask }, {});
 	chestAnim.initialize(&tileTexture, { tileGridMask }, {});
-	barrelAnim.initialize(&manyItemsTexture, { manyItemsGridMask }, {5});
+	barrelAnim.initialize(&manyItemsTexture, { manyItemsGridMask }, {9});
 	bloodPoolAnim.initialize(&bloodPoolTexture, { bloodPoolGridMask }, {4});
 	torchAnim.initialize(&torchTexture, {torchGridMask}, { 11 });
+	cowAnim.initialize(&cowTexture, { cowGridMask }, { 12 });
 
 	// Warrior
 	warriorTexture.initialize(graphics, IMAGE_UNIT_WARRIOR);
@@ -139,6 +156,7 @@ void Level::initialize()
 		warriorAttackGridMask, warriorDieGridMask, warriorIdleGridMask,
 		warriorWalkGridMask, warriorGetHitGridMask, warriorAttackGridMask }, 
 		{ 16, 21, 10, 8, 6, 20 });
+
 	// Mage
 	mageTexture.initialize(graphics, IMAGE_UNIT_MAGE);
 	mageAttackGridMask.initialize(0, 7, 128, 128, 0, 1, 63, 110);
@@ -154,6 +172,7 @@ void Level::initialize()
 		mageGetHitGridMask, mageMagicFireGridMask, 
 		mageMagicSmokeGridMask}, 
 		{ 16, 20, 8, 8, 8, 12, 12 });
+
 	// Fireball
 	projTexture.initialize(graphics, IMAGE_PROJECTILE_FIREBALL);
 	projGridMask.initialize(1, 1, 96, 96, 1, 1, 46, 46);
@@ -161,6 +180,18 @@ void Level::initialize()
 	//initialize the values
 	//renderLevel.initialize(graphics, input, type);
 
+	// Enemies
+	balrogTexture.initialize(graphics, IMAGE_ENEMY_BALROG);
+	balrogAttackGridMask.initialize(0, 7, 160, 160, 0, 1, 79, 149);
+	balrogDieGridMask.initialize(0, 1301, 160, 160, 0, 1, 80, 143);
+	balrogIdleGridMask.initialize(2241, 7, 160, 160, 0, 1, 77, 143);
+	balrogWalkGridMask.initialize(3202, 7, 160, 160, 0, 1, 76, 143);
+	balrogGetHitGridMask.initialize(0, 2595, 160, 160, 0, 1, 80, 140);
+	balrogAnimImage.initialize(&balrogTexture, {
+		balrogAttackGridMask, balrogDieGridMask,
+		balrogIdleGridMask, balrogWalkGridMask,
+		balrogGetHitGridMask },
+		{14, 24, 6, 7, 8});
 
 	////  Entities Initialisation  ////
 	// Tiles
@@ -197,19 +228,26 @@ void Level::initialize()
 		playerIdleState, 0, 5, 
 		translateHLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, pPos),
 		translateVLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, pPos),
-		0, 0, 0, 0);
+		100, 100, 100, 100);
 
 	// Enemy
-	enemies.initialize(1);
-	CoordF ePos = CoordF{ 5, 5 };
+	enemies.initialize(2);
+	CoordF ePos = CoordF{ 0, 0 };
 	enemies.push(
-		ePos, &warriorAnimImage, UNIT_STATE_WALK,
+		ePos, &balrogAnimImage, UNIT_STATE_WALK,
 		enemyWalkState, 0, 0.5,
 		translateHLines(Lines{ { -0.4, 0.4, -0.4 }, { -0.4, 0.4, 0.4 } }, ePos),
 		translateVLines(Lines{ { -0.4, 0.4, -0.4 }, { -0.4, 0.4, 0.4 } }, ePos));
 
+	CoordF ePos2 = CoordF{ 0, 1 };
+	enemies.push(
+		ePos2, &balrogAnimImage, UNIT_STATE_WALK,
+		enemyWalkState, 0, 0.5,
+		translateHLines(Lines{ { -0.4, 0.4, -0.4 }, { -0.4, 0.4, 0.4 } }, ePos2),
+		translateVLines(Lines{ { -0.4, 0.4, -0.4 }, { -0.4, 0.4, 0.4 } }, ePos2));
+
 	// Projectiles
-	projectiles.initialize(10000);
+	projectiles.initialize(5000);
 	increaseProjectilesAmount(0, players, 10);
 	increaseAttackSpeed(0, players, 0.01);
 	increaseMovementSpeed(0, players, 2);
@@ -241,6 +279,10 @@ void Level::update()
 	updatePositionArray(players.getSize(), players.getPositionArray(), pDeltaArray);
 	updatePositionArray(enemies.getSize(), enemies.getPositionArray(), eDeltaArray);
 	updatePositionArray(projectiles.getSize(), projectiles.getPositionArray(), jDeltaArray);
+
+	// Update direction
+	updateDirectionArray(players.getSize(), players.getRotationArray(), players.getDirectionArray());
+	updateDirectionArray(enemies.getSize(), enemies.getRotationArray(), enemies.getDirectionArray());
 
 	// Update Collision
 	updateLineISetItersArray(players.getHLineISet(), players.getVLineISet(), players.getSize(), players.getHLineISetItersArray(), players.getVLineISetItersArray(), pDeltaArray);
@@ -336,26 +378,6 @@ void Level::update()
 		updateVLines(projectiles.getVLinesArray()[i], delta);
 	}
 
-	//// Player
-	//updateFSMArray(this, enemies.getSize(), players.getFSMArray());
-	//vector<CoordF> pDeltaArray(players.getSize());
-	//calculateDeltaArray(players.getSize(), pDeltaArray, players.getRotationArray(), players.getVelocityArray(), frameTime);
-	//updatePositionArray(players.getSize(), players.getPositionArray(), pDeltaArray);
-	////updateLinesArray(players.getSize(), players.getHLinesArray(), players.getVLinesArray(), pDeltaArray);
-	//updateDirectionArray(players.getSize(), players.getRotationArray(), players.getDirectionArray());
-
-	//// Enemy
-	//updateFSMArray(this, enemies.getSize(), enemies.getFSMArray());
-	//vector<CoordF> eDeltaArray(enemies.getSize());
-	//calculateDeltaArray(enemies.getSize(), eDeltaArray, enemies.getRotationArray(), enemies.getVelocityArray(), frameTime);
-	//updatePositionArray(enemies.getSize(), enemies.getPositionArray(), eDeltaArray);
-	////updateLinesArray(enemies.getSize(), enemies.getHLinesArray(), enemies.getVLinesArray(), eDeltaArray);
-
-	//// Projectiles
-	//vector<CoordF> projDeltaArray(projectiles.getSize());
-	//calculateDeltaArray(projectiles.getSize(), projDeltaArray, projectiles.getRotationArray(), projectiles.getVelocityArray(), frameTime);
-	//updatePositionArray(projectiles.getSize(), projectiles.getPositionArray(), projDeltaArray);
-
 	// AnimObjects (Temp)
 	for (int i = 0; i < animObjects.getSize(); i++) {
 		int& state = animObjects.getStateArray()[i];
@@ -389,13 +411,20 @@ void Level::render()
 	{
 		for (int y = 0; y < tiles.getCols(); y++)
 		{
+            CoordF coords  = gridToScreen(x, y);
+			// graphics->drawSprite(
+			// 	underTiles.getSprite(x, y)->getSpriteData(),
+			// 	gridToScreen(x, y), camScale);
 			graphics->drawSprite(
 				underTiles.getSprite(x, y)->getSpriteData(),
-				gridToScreen(x, y), camScale);
+				int(coords.x), int(coords.y), camScale);
 			
+			// graphics->drawSprite(
+			// 	tiles.getSprite(x, y)->getSpriteData(),
+			// 	gridToScreen(x, y), camScale);
 			graphics->drawSprite(
 				tiles.getSprite(x, y)->getSpriteData(),
-				gridToScreen(x, y), camScale);
+				int(coords.x), int(coords.y), camScale);
 		}
 	}
 	//// Tiles
@@ -408,7 +437,9 @@ void Level::render()
 	for (int i = 0; i < objects.getSize(); i++) {
 		SpriteData objectSD = objects.getSpriteArray()[i]->getSpriteData();
 		CoordF objectPos = objects.getPositionArray()[i];
-		graphics->drawSprite(objectSD, gridToScreen(objectPos), camScale);
+		CoordF coords = gridToScreen(objectPos);
+		graphics->drawSprite(objectSD, int(coords.x), int(coords.y), camScale);
+		// graphics->drawSprite(objectSD, gridToScreen(objectPos), camScale);
 	}
 
 	// AnimObjects
@@ -417,42 +448,37 @@ void Level::render()
 		int animObjectDirection = animObjects.getDirectionArray()[i];
 		int animObjectFrameNo = animObjects.getFrameNoArray()[i];
 		CoordF animObjectPos = animObjects.getPositionArray()[i];
+		CoordF coords = gridToScreen(animObjectPos);
 		SpriteData animObjectSD = animObjects.getAnimImageArray()[i]->getSpriteData(animObjectState, animObjectDirection, animObjectFrameNo);
-		graphics->drawSprite(animObjectSD, gridToScreen(animObjectPos), camScale);
+		graphics->drawSprite(animObjectSD, int(coords.x), int(coords.y), camScale);
 	}
 
-	// Player (Temporary)
-	int playerState = players.getStateArray()[0];
-	int playerDirection = players.getDirectionArray()[0];
-	float playerRotation = players.getRotationArray()[0];
-	int playerFrameNo = players.getFrameNoArray()[0];
-	CoordF playerPos = players.getPositionArray()[0];
-	SpriteData playerSD = players.getAnimImageArray()[0]->getSpriteData(playerState, 
-		playerDirection, playerFrameNo);
-	graphics->drawSprite(
-		playerSD, gridToScreen(playerPos), camScale);
+	// Players
+	for (int i = 0; i < players.getSize(); i++) {
+        int playerState = players.getStateArray()[i];
+        int playerDirection = players.getDirectionArray()[i];
+        float playerRotation = players.getRotationArray()[i];
+        int playerFrameNo = players.getFrameNoArray()[i];
+        CoordF playerPos = players.getPositionArray()[i];
+		CoordF coords = gridToScreen(playerPos);
+        SpriteData playerSD = players.getAnimImageArray()[i]->getSpriteData(playerState, 
+            playerDirection, playerFrameNo);
+        graphics->drawSprite(playerSD, int(coords.x), int(coords.y), camScale);
+	}
 
-	// Enemies (Temporary)
-	int enemyState = enemies.getStateArray()[0];
-	int enemyDirection = enemies.getDirectionArray()[0];
-	int enemyFrameNo = enemies.getFrameNoArray()[0];
-	CoordF enemyPos = enemies.getPositionArray()[0];
-	SpriteData enemySD = enemies.getAnimImageArray()[0]->getSpriteData(enemyState, enemyDirection, enemyFrameNo);
-	graphics->drawSprite(
-		enemySD, gridToScreen(enemyPos), camScale);
+	// Enemies
+	for (int i = 0; i < enemies.getSize(); i++) {
+        int enemyState = enemies.getStateArray()[i];
+        int enemyDirection = enemies.getDirectionArray()[i];
+        int enemyFrameNo = enemies.getFrameNoArray()[i];
+        CoordF enemyPos = enemies.getPositionArray()[i];
+		CoordF coords = gridToScreen(enemyPos);
+        SpriteData enemySD = enemies.getAnimImageArray()[i]->getSpriteData(enemyState, enemyDirection, enemyFrameNo);
+        graphics->drawSprite(
+            enemySD, int(coords.x), int(coords.y), camScale);
+	}
 
-	//for (int i = 0; i < players.getSize(); i++) {
-	//	// Temporary solution to make it not blurry
-	//	// CoordF screenCoords = gridToScreen(players.getPositionArray()[i]);
-	//	SpriteData sd = players.getAnimImageArray()[i]->getSpriteData(
-	//		players.getStateArray()[i],
-	//		rotationToDirection(players.getRotationArray()[i]),
-	//		players.getFrameNoArray()[i]);
-
- //       graphics->drawSprite(sd,
- //           gridToScreen(players.getPositionArray()[i]), camScale);
-	//}
-
+	// Projectiles
 	for (int i = 0; i < projectiles.getSize(); i++) {
 		float rotation = projectiles.getRotationArray()[i];
 		float direction = rotationToDirection16(rotation);
@@ -460,19 +486,13 @@ void Level::render()
 			rotationToDirection16(projectiles.getRotationArray()[i]),
 			projectiles.getFrameNoArray()[i]);
 		sd.scale = projectiles.getSizeArray()[i];
+		CoordF coords = gridToScreen(projectiles.getPositionArray()[i]);
 		graphics->drawSprite(sd,
-			gridToScreen(projectiles.getPositionArray()[i]), camScale);
+			int(coords.x), int(coords.y), camScale);
 	}
 
-	//for (int i = 0; i < projectiles.getSize(); i++) {
-	//	SpriteData sd = projectiles.getAnimImageArray()[i]->getSpriteData(
-	//		0, projectiles.getRotationArray()[i],
-	//		projectiles.getFrameNoArray()[i]);
-	//	graphics->drawSprite(sd,
-	//		gridToScreen(projectiles.getPositionArray()[i]), camScale);
-	//}
-	//will be moved to another file I hope
-	//renderSprites();
+	// Use this for audio
+    // audioEngine->play("splat 2");
 }
 
 CoordF Level::gridToScreen(float gx, float gy)
@@ -592,15 +612,10 @@ void Level::tilesInitialize()
 				tiles.set(x, y, &blood, translateHLines(Lines{ {} }, x, y),
 					translateVLines(Lines{}, x, y));
 				break;
-
-
-
 			case ImageType::churchFloor:
 				tiles.set(x, y, &floorSprite, translateHLines(Lines{ {} }, x, y),
 					translateVLines(Lines{}, x, y));
 				break;
-
-
 
 			case ImageType::churchDoor:
 				tiles.set(x, y, &door, translateHLines(Lines{ {} }, x, y),
@@ -611,8 +626,6 @@ void Level::tilesInitialize()
 					//translateVLines(Lines{}, x, y));
 				break;
 
-
-
 			case ImageType::churchChest:
 				pos = CoordF{ float(x), float(y) };
 				tiles.set(x, y, &floorSprite, translateHLines(Lines{ {} }, x, y),
@@ -622,37 +635,25 @@ void Level::tilesInitialize()
 				//animObjects.push(pos, &chestAnim, 0, 0, 0.1, translateHLines(Lines{ {} }, x, y),
 					//translateVLines(Lines{}, x, y));
 				break;
-
-
-
 			case ImageType::churchWallEast:
 				tiles.set(x, y, &wallEast, translateHLines(Lines{ {0, 1, 0} }, x, y),
 					translateVLines(Lines{}, x, y));
 				break;
-
-
 
 			case ImageType::churchWallWest:
 				tiles.set(x, y, &wallWest, translateHLines(Lines{ {0, 1, 0} }, x, y),
 					translateVLines(Lines{}, x, y));
 				break;
 
-
-
 			case ImageType::churchWallConnect:
 				tiles.set(x, y, &WallConnect, translateHLines(Lines{ {} }, x, y),
 					translateVLines(Lines{}, x, y));
 				break;
 
-
-
 			case ImageType::churchWallPath:
 				tiles.set(x, y, &wallPath, translateHLines(Lines{ {} }, x, y),
 					translateVLines(Lines{}, x, y));
 				break;
-
-
-
 				//test object
 			//add no to constants ltr
 			case 11:
@@ -726,8 +727,24 @@ void Level::tilesInitialize()
 			case 21:
 				tiles.set(x, y, &store, translateHLines(Lines{ {} }, x, y),
 					translateVLines(Lines{}, x, y));
-				
 				break;
+			case 22:
+				tiles.set(x, y, &dead4, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				break;
+			case 23:
+				tiles.set(x, y, &dead5, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				break;
+			case 24:
+				tiles.set(x, y, &dead2, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				break;
+			case 25:
+				tiles.set(x, y, &dead3, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				break;
+			
 			}
 		}
 	}

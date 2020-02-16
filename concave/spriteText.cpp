@@ -120,8 +120,7 @@ bool SpriteText::initialize(Graphics* g, const char* file)
 		fontGridMask.initialize(0, 0, 256, 256, 0, 0, 0, 0);
 		fontTexture.initialize(graphics, IMAGE_HUD_FONT);
 		fontImage.initialize(&fontTexture, fontGridMask);
-		// fontImage.getSpriteData(spriteData, test);
-		fontImage.getSpriteData(test);
+		spriteData = fontImage.getSpriteData(test);
 	}
 	catch (...)
 	{

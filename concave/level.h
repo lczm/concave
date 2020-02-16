@@ -72,6 +72,14 @@ private:
 	GridMask mageMagicFireGridMask;
 	GridMask mageMagicSmokeGridMask;
 
+	// Enemy
+	Texture balrogTexture; AnimImage balrogAnimImage;
+	GridMask balrogAttackGridMask;
+	GridMask balrogDieGridMask;
+	GridMask balrogIdleGridMask;
+	GridMask balrogWalkGridMask;
+	GridMask balrogGetHitGridMask;
+
 	// Projectiles
 	Texture projTexture; AnimImage projImage;
 	GridMask projGridMask;

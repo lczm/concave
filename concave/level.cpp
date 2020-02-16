@@ -131,16 +131,17 @@ void Level::initialize()
 	torchAnim.initialize(&torchTexture, {torchGridMask}, { 11 });
 
 	// Warrior
-	warriorTexture.initialize(graphics, IMAGE_UNIT_WARRIOR);
-	warriorAttackGridMask.initialize(0, 7, 128, 128, 0, 1, 58, 114);
-	warriorDieGridMask.initialize(2049, 7, 128, 95, 0, 1, 59, 71);
-	warriorIdleGridMask.initialize(0, 1045, 96, 96, 0, 1, 43, 81);
-	warriorWalkGridMask.initialize(2882, 1045, 96, 96, 0, 1, 44, 80);
-	warriorGetHitGridMask.initialize(4420, 1045, 96, 96, 0, 1, 44, 80);
-	warriorAnimImage.initialize(&warriorTexture, {
-		warriorAttackGridMask, warriorDieGridMask, warriorIdleGridMask,
-		warriorWalkGridMask, warriorGetHitGridMask, warriorAttackGridMask }, 
-		{ 16, 21, 10, 8, 6, 20 });
+	// warriorTexture.initialize(graphics, IMAGE_UNIT_WARRIOR);
+	// warriorAttackGridMask.initialize(0, 7, 128, 128, 0, 1, 58, 114);
+	// warriorDieGridMask.initialize(2049, 7, 128, 95, 0, 1, 59, 71);
+	// warriorIdleGridMask.initialize(0, 1045, 96, 96, 0, 1, 43, 81);
+	// warriorWalkGridMask.initialize(2882, 1045, 96, 96, 0, 1, 44, 80);
+	// warriorGetHitGridMask.initialize(4420, 1045, 96, 96, 0, 1, 44, 80);
+	// warriorAnimImage.initialize(&warriorTexture, {
+	// 	warriorAttackGridMask, warriorDieGridMask, warriorIdleGridMask,
+	// 	warriorWalkGridMask, warriorGetHitGridMask, warriorAttackGridMask }, 
+	// 	{ 16, 21, 10, 8, 6, 20 });
+
 	// Mage
 	mageTexture.initialize(graphics, IMAGE_UNIT_MAGE);
 	mageAttackGridMask.initialize(0, 7, 128, 128, 0, 1, 63, 110);
@@ -163,6 +164,18 @@ void Level::initialize()
 	//initialize the values
 	//renderLevel.initialize(graphics, input, type);
 
+	// Enemies
+	balrogTexture.initialize(graphics, IMAGE_ENEMY_BALROG);
+	balrogAttackGridMask.initialize(0, 7, 160, 160, 0, 1, 79, 149);
+	balrogDieGridMask.initialize(0, 1301, 160, 160, 0, 1, 80, 143);
+	balrogIdleGridMask.initialize(2241, 7, 160, 160, 0, 1, 2318, 143);
+	balrogWalkGridMask.initialize(3202, 7, 160, 160, 0, 1, 3278, 143);
+	balrogGetHitGridMask.initialize(0, 2595, 160, 160, 0, 1, 80, 140);
+	balrogAnimImage.initialize(&balrogTexture, {
+		balrogAttackGridMask, balrogDieGridMask,
+		balrogIdleGridMask, balrogWalkGridMask,
+		balrogGetHitGridMask },
+		{14, 24, 6, 7, 8});
 
 	////  Entities Initialisation  ////
 	// Tiles
@@ -182,9 +195,9 @@ void Level::initialize()
 
 	// Enemy
 	enemies.initialize(1);
-	CoordF ePos = CoordF{ 5, 5 };
+	CoordF ePos = CoordF{ 3, 3 };
 	enemies.push(
-		ePos, &warriorAnimImage, UNIT_STATE_WALK,
+		ePos, &balrogAnimImage, UNIT_STATE_WALK,
 		enemyWalkState, 0, 0.5,
 		translateHLines(Lines{ { -0.4, 0.4, -0.4 }, { -0.4, 0.4, 0.4 } }, ePos),
 		translateVLines(Lines{ { -0.4, 0.4, -0.4 }, { -0.4, 0.4, 0.4 } }, ePos));

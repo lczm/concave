@@ -142,6 +142,7 @@ const char IMAGE_SHELVES_DUNGEON[] = "sprites/store.png";
 //-----------------------------------------------
 const char IMAGE_UNIT_WARRIOR[] = "sprites/unit_warrior.png";
 const char IMAGE_UNIT_MAGE[] = "sprites/unit_mage.png";
+const char IMAGE_ENEMY_BALROG[] = "sprites/unit_enemy_balrog.png";
 
 //-----------------------------------------------
 //              Image (Projectiles)

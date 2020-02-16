@@ -10,6 +10,7 @@ private:
 	Graphics* graphics;
 	Input* input;
 	boolean inventoryDisplayed;
+	boolean modifierSelectDisplayed;
 	GridMask skillsGridMask;
 	GridMask itemGridMask;
 	CoordI fireballCoord;

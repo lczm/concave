@@ -1,5 +1,6 @@
 #pragma once
 #include "window.h"
+#include "spriteText.h"
 
 class ModifierSelect : public Window
 {
@@ -13,6 +14,7 @@ private:
 	SpriteData wandSpriteData;
 	SpriteData shieldSpriteData;
 	SpriteData swordSpriteData;
+	SpriteText spriteText;
 
 public:
 	ModifierSelect();
@@ -23,6 +25,7 @@ public:
 	void resetAll();
 	void update();
 	void render();
+	int checkWhichButton(int mouseX, int mouseY);
 };
 
 

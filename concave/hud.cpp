@@ -32,6 +32,7 @@ void HUD::initialize()
 	emptyHealthPotSpriteData = imageToSpriteData(IMAGE_HUD_ITEMS, itemTranscolor, itemGridMask, emptyHealthPotCoord);
 	emptyManaPotSpriteData = imageToSpriteData(IMAGE_HUD_ITEMS, itemTranscolor, itemGridMask, emptyManaPotCoord);
 	inventoryDisplayed = false;
+	modifierSelectDisplayed = false;
 }
 
 SpriteData HUD::imageToSpriteData(const char* file)
@@ -77,6 +78,7 @@ void HUD::drawHUD()
 	int& maxHealth = level.getPlayers().getMaxHealthArray()[0];
 	int& currentMana = level.getPlayers().getManaArray()[0];
 	int& maxMana = level.getPlayers().getMaxManaArray()[0];
+	vector<Potion>& potions = level.getPlayers().getPotionArray()[0];
 
 	float hpFraction = (float)currentHealth / (float)maxHealth;
 	float mpFraction = (float)currentMana / (float)maxMana;
@@ -90,10 +92,32 @@ void HUD::drawHUD()
 	graphics->drawSprite(healthSpriteData, 0, GAME_HEIGHT - 230, 1);
 	graphics->drawSprite(fireballSpriteData, GAME_WIDTH - 520, GAME_HEIGHT - 62, 1);
 	graphics->drawSprite(teleportSpriteData, GAME_WIDTH - 463, GAME_HEIGHT - 62, 1);
-	graphics->drawSprite(healthPotSpriteData, 469, GAME_HEIGHT - 62, 1.9);
-	graphics->drawSprite(healthPotSpriteData, 412, GAME_HEIGHT - 62, 1.9);
-	graphics->drawSprite(manaPotSpriteData, 355, GAME_HEIGHT - 62, 1.9);
-	graphics->drawSprite(manaPotSpriteData, 298, GAME_HEIGHT - 62, 1.9);
+	for (int i = 0; i < potions.size(); i++)
+	{
+		if (potions.at(i).type == PotionType::Health)
+		{
+			if (potions.at(i).charge == 0)
+			{
+				graphics->drawSprite(emptyHealthPotSpriteData, 469 - (57 * i), GAME_HEIGHT - 62, 1.9);
+			}
+			else
+			{
+				graphics->drawSprite(healthPotSpriteData, 469 - (57 * i), GAME_HEIGHT - 62, 1.9);
+			}
+		}
+		else
+		{
+			if (potions.at(i).charge == 0)
+			{
+				graphics->drawSprite(emptyManaPotSpriteData, 469 - (57 * i), GAME_HEIGHT - 62, 1.9);
+			}
+			else
+			{
+				graphics->drawSprite(manaPotSpriteData, 469 - (57 * i), GAME_HEIGHT - 62, 1.9);
+			}
+		}
+
+	}
 	spriteText.print("HP: " + to_string(currentHealth) + "/" + to_string(maxHealth), 20, GAME_HEIGHT - 280);
 	spriteText.print("MP: " + to_string(currentMana) + "/" + to_string(maxMana), GAME_WIDTH - 220, GAME_HEIGHT - 280);
 }
@@ -106,7 +130,7 @@ void HUD::resetAll()
 
 void HUD::update()
 {
-	if (input->anyKeyPressed() && input->isKeyDown(0x49) )
+	if (input->anyKeyPressed() && input->isKeyDown(0x49) && !modifierSelectDisplayed)
 	{
 		if (!inventoryDisplayed)
 		{
@@ -117,6 +141,19 @@ void HUD::update()
 		{
 			windows.pop_back();
 			inventoryDisplayed = false;
+		}
+	}
+	if (input->anyKeyPressed() && input->isKeyDown(0x4D) && !inventoryDisplayed )
+	{
+		if (!modifierSelectDisplayed)
+		{
+			windows.push_back(&modifierSelect);
+			modifierSelectDisplayed = true;
+		}
+		else
+		{
+			windows.pop_back();
+			modifierSelectDisplayed = false;
 		}
 	}
 	Window::level.update();

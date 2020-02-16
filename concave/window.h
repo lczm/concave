@@ -11,6 +11,7 @@ class Instructions;
 class Options;
 class Credits;
 class Inventory;
+class ModifierSelect;
 
 class Window
 {
@@ -28,6 +29,7 @@ public:
 	static Options options;
 	static Credits credits;
 	static Inventory inventory;
+	static ModifierSelect modifierSelect;
 
 public:
 	Window();
@@ -46,3 +48,4 @@ public:
 #include "options.h"
 #include "credits.h"
 #include "inventory.h"
+#include "modifierSelect.h"

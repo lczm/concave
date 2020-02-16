@@ -198,10 +198,31 @@ void Level::initialize()
 	tiles.initialize(mapWidth, mapHeight);
 	underTiles.initialize(mapWidth, mapHeight);
 	tilesInitialize();
+	// tiles.initialize(20, 20);
+	/*for (int y = 0; y < tiles.getRows(); y++)
+		for (int x = 0; x < tiles.getCols(); x++)
+			tiles.set(y, x, &wallSprite,
+				translateHLines(Lines{ { 0, 1, 0 } }, x, y),
+				translateVLines(Lines{}, x, y));*/
+	/*for (int y = 1; y < tiles.getRows() - 1; y++)
+		for (int x = 1; x < tiles.getCols() - 1; x++)
+			tiles.set(y, x, &floorSprite,
+				translateHLines(Lines{}, x, y),
+				translateVLines(Lines{}, x, y));*/
+	/*for (int y = 7; y < tiles.getRows() - 7; y++)
+		for (int x = 7; x < tiles.getCols() - 7; x++)
+			tiles.set(y, x, &wallSprite,
+				translateHLines(Lines{ { 0, 1, 0 } }, x, y),
+				translateVLines(Lines{}, x, y));*/
+	for (int y = 7; y < 20; y++)
+		for (int x = 7; x < 20; x++)
+			tiles.set(y, x, &wallSprite,
+				translateHLines(Lines{ { 0, 1, 0 } }, x, y),
+				translateVLines(Lines{}, x, y));
 
 	// Player
 	players.initialize(1);
-	CoordF pPos = CoordF{ 3, 3 };
+	CoordF pPos = CoordF{ 1, 1 };
 	players.push(
 		pPos, &mageAnimImage, UNIT_STATE_IDLE, 
 		playerIdleState, 0, 5, 
@@ -264,11 +285,98 @@ void Level::update()
 	updateDirectionArray(enemies.getSize(), enemies.getRotationArray(), enemies.getDirectionArray());
 
 	// Update Collision
-	// updateLineISetItersArray(players.getHLineISet(), players.getVLineISet(), players.getSize(), players.getHLineISetItersArray(), players.getVLineISetItersArray(), pDeltaArray);
-	// updateLineISetItersArray(enemies.getHLineISet(), enemies.getVLineISet(), enemies.getSize(), enemies.getHLineISetItersArray(), enemies.getVLineISetItersArray(), pDeltaArray);
-	// updateLinesArray(projectiles.getSize(), projectiles.getHLinesArray(), projectiles.getVLinesArray(), jDeltaArray);
+	updateLineISetItersArray(players.getHLineISet(), players.getVLineISet(), players.getSize(), players.getHLineISetItersArray(), players.getVLineISetItersArray(), pDeltaArray);
+	updateLineISetItersArray(enemies.getHLineISet(), enemies.getVLineISet(), enemies.getSize(), enemies.getHLineISetItersArray(), enemies.getVLineISetItersArray(), eDeltaArray);
+	updateLinesArray(projectiles.getSize(), projectiles.getHLinesArray(), projectiles.getVLinesArray(), jDeltaArray);
 
-	// Get Collision (Wall)
+	// Get Collision (Wall) (Horizontal)
+	/*vector<LineI> pRLineIArray; vector<Line> pBLineArray;
+	vector<LineI> eRLineIArray; vector<Line> eBLineArray;
+	vector<LineI> jRLineIArray; vector<Line> jBLineArray;
+	pRLineIArray.reserve(players.getSize()); pBLineArray.reserve(players.getSize());
+	eRLineIArray.reserve(enemies.getSize()); eBLineArray.reserve(enemies.getSize());
+	jRLineIArray.reserve(projectiles.getSize()); jBLineArray.reserve(projectiles.getSize());
+	getHLineIArrayOfWallCollision(pRLineIArray, pBLineArray, tiles, players.getSize(), players.getHLineISetItersArray());
+	getHLineIArrayOfWallCollision(eRLineIArray, eBLineArray, tiles, enemies.getSize(), enemies.getHLineISetItersArray());
+	getHLineIArrayOfWallCollision(jRLineIArray, jBLineArray, tiles, projectiles.getSize(), projectiles.getHLinesArray());*/
+
+	// Player To Wall Collision
+	vector<LineI> pHLineIArray, pVLineIArray;
+	vector<Line> pHLineArray, pVLineArray;
+	pHLineIArray.reserve(players.getSize()); pVLineIArray.reserve(players.getSize());
+	pHLineArray.reserve(players.getSize()); pVLineArray.reserve(players.getSize());
+	getHLineIArrayOfWallCollision(pHLineIArray, pVLineArray, tiles, players.getSize(), players.getHLineISetItersArray());
+	getVLineIArrayOfWallCollision(pVLineIArray, pHLineArray, tiles, players.getSize(), players.getVLineISetItersArray());
+
+	// Player To Wall Collision Response
+	for (int i = 0; i < pHLineIArray.size(); i++) {
+		LineI lineI = pHLineIArray[i]; Line line = pVLineArray[i];
+		CoordF& pos = players.getPositionArray()[lineI.id];
+		CoordF delta{ getDeltaXResponse(lineI, line, pos), 0 };
+		pos += delta;
+		updateHLineISetIters(players.getHLineISet(), players.getHLineISetItersArray()[i], delta);
+		updateVLineISetIters(players.getVLineISet(), players.getVLineISetItersArray()[i], delta);
+	}
+	for (int i = 0; i < pVLineIArray.size(); i++) {
+		LineI lineI = pVLineIArray[i]; Line line = pHLineArray[i];
+		CoordF& pos = players.getPositionArray()[lineI.id];
+		CoordF delta{ 0, getDeltaYResponse(lineI, line, pos) };
+		pos += delta;
+		updateHLineISetIters(players.getHLineISet(), players.getHLineISetItersArray()[i], delta);
+		updateVLineISetIters(players.getVLineISet(), players.getVLineISetItersArray()[i], delta);
+	}
+
+	// Enemy to Wall Collision
+	vector<LineI> eHLineIArray, eVLineIArray;
+	vector<Line> eHLineArray, eVLineArray;
+	eHLineIArray.reserve(enemies.getSize()); eVLineIArray.reserve(enemies.getSize());
+	eHLineArray.reserve(enemies.getSize()); eVLineArray.reserve(enemies.getSize());
+	getHLineIArrayOfWallCollision(eHLineIArray, eVLineArray, tiles, enemies.getSize(), enemies.getHLineISetItersArray());
+	getVLineIArrayOfWallCollision(eVLineIArray, eHLineArray, tiles, enemies.getSize(), enemies.getVLineISetItersArray());
+
+	// Enemy To Wall Collision Response
+	for (int i = 0; i < eHLineIArray.size(); i++) {
+		LineI lineI = eHLineIArray[i]; Line line = eVLineArray[i];
+		CoordF& pos = enemies.getPositionArray()[lineI.id];
+		CoordF delta{ getDeltaXResponse(lineI, line, pos), 0 };
+		pos += delta;
+		updateHLineISetIters(enemies.getHLineISet(), enemies.getHLineISetItersArray()[i], delta);
+		updateVLineISetIters(enemies.getVLineISet(), enemies.getVLineISetItersArray()[i], delta);
+	}
+	for (int i = 0; i < eVLineIArray.size(); i++) {
+		LineI lineI = eVLineIArray[i]; Line line = eHLineArray[i];
+		CoordF& pos = enemies.getPositionArray()[lineI.id];
+		CoordF delta{ 0, getDeltaYResponse(lineI, line, pos) };
+		pos += delta;
+		updateHLineISetIters(enemies.getHLineISet(), enemies.getHLineISetItersArray()[i], delta);
+		updateVLineISetIters(enemies.getVLineISet(), enemies.getVLineISetItersArray()[i], delta);
+	}
+
+	// Projectiles To Wall Collision
+	vector<LineI> jHLineIArray, jVLineIArray;
+	vector<Line> jHLineArray, jVLineArray;
+	jHLineIArray.reserve(projectiles.getSize()); jVLineIArray.reserve(projectiles.getSize());
+	jHLineArray.reserve(projectiles.getSize()); jVLineArray.reserve(projectiles.getSize());
+	getHLineIArrayOfWallCollision(jHLineIArray, jVLineArray, tiles, projectiles.getSize(), projectiles.getHLinesArray());
+	getVLineIArrayOfWallCollision(jVLineIArray, jHLineArray, tiles, projectiles.getSize(), projectiles.getVLinesArray());
+
+	// Projectiles To Wall Collision Response
+	for (int i = 0; i < jHLineIArray.size(); i++) {
+		LineI lineI = jHLineIArray[i]; Line line = jVLineArray[i];
+		CoordF& pos = projectiles.getPositionArray()[lineI.id];
+		CoordF delta{ getDeltaXResponse(lineI, line, pos), 0 };
+		pos += delta;
+		updateHLines(projectiles.getHLinesArray()[i], delta);
+		updateVLines(projectiles.getVLinesArray()[i], delta);
+	}
+	for (int i = 0; i < jVLineIArray.size(); i++) {
+		LineI lineI = jVLineIArray[i]; Line line = jHLineArray[i];
+		CoordF& pos = projectiles.getPositionArray()[lineI.id];
+		CoordF delta{ 0, getDeltaYResponse(lineI, line, pos) };
+		pos += delta;
+		updateHLines(projectiles.getHLinesArray()[i], delta);
+		updateVLines(projectiles.getVLinesArray()[i], delta);
+	}
 
 	// AnimObjects (Temp)
 	for (int i = 0; i < animObjects.getSize(); i++) {
@@ -319,7 +427,12 @@ void Level::render()
 				int(coords.x), int(coords.y), camScale);
 		}
 	}
-
+	//// Tiles
+	//for (int y = 0; y < tiles.getRows(); y++)
+	//	for (int x = 0; x < tiles.getCols(); x++)
+	//		graphics->drawSprite(
+	//			tiles.getSprite(y, x)->getSpriteData(),
+	//			gridToScreen(x, y), camScale);
 	// Objects
 	for (int i = 0; i < objects.getSize(); i++) {
 		SpriteData objectSD = objects.getSpriteArray()[i]->getSpriteData();
@@ -523,12 +636,12 @@ void Level::tilesInitialize()
 					//translateVLines(Lines{}, x, y));
 				break;
 			case ImageType::churchWallEast:
-				tiles.set(x, y, &wallEast, translateHLines(Lines{ {} }, x, y),
+				tiles.set(x, y, &wallEast, translateHLines(Lines{ {0, 1, 0} }, x, y),
 					translateVLines(Lines{}, x, y));
 				break;
 
 			case ImageType::churchWallWest:
-				tiles.set(x, y, &wallWest, translateHLines(Lines{ {} }, x, y),
+				tiles.set(x, y, &wallWest, translateHLines(Lines{ {0, 1, 0} }, x, y),
 					translateVLines(Lines{}, x, y));
 				break;
 

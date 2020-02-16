@@ -10,9 +10,19 @@ private:
 	CoordI wandCoord;
 	CoordI shieldCoord;
 	CoordI swordCoord;
+	SpriteData wandSpriteData;
+	SpriteData shieldSpriteData;
+	SpriteData swordSpriteData;
 
 public:
 	ModifierSelect();
+	~ModifierSelect();
+	SpriteData imageToSpriteData(const char* file, GridMask imageGridMask, CoordI imageCoord);
+	void initialize();
+	void releaseAll();
+	void resetAll();
+	void update();
+	void render();
 };
 
 

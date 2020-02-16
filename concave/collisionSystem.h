@@ -38,8 +38,6 @@ bool checkLineISetItersToLineISetCollision(LineISet& lineISet, LineISetIters& li
 float getDeltaXResponse(Line rHLine, Line bVLine, CoordF pos);
 float getDeltaYResponse(Line rVLine, Line bHLine, CoordF pos);
 
-
-
 void updateLinesArray(int size, vector<Lines>& hLinesArray, vector<Lines>& vLinesArray, vector<CoordF>& deltaArray);
 void updateLineISetItersArray(LineISet& hLineISet, LineISet& vLineISet, int size, vector<LineISetIters>& hLineISetItersArray, vector<LineISetIters>& vLineISetItersArray, vector<CoordF>& deltaArray);
 

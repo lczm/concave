@@ -28,7 +28,45 @@ private:
 	CoordF camCoord; float camScale;
 	// Tiles
 	Texture tileTexture; GridMask tileGridMask; Image tileImage;
-	Sprite floorSprite, wallSprite, blood, door, chest, wallEast, wallWest, WallConnect, wallPath;
+	Sprite floorSprite,
+		wallSprite, blood, door, chest,
+		wallEast, wallWest, WallConnect,
+		wallPath, barrel, fireItem, torch, book, dead, armour, witch;
+
+	Texture itemTexture;
+	GridMask itemGridMask;
+	Image itemImage;
+
+	Texture manyItemsTexture;
+	GridMask manyItemsGridMask;
+	Image manyItemsImage;
+
+	GridMask cabinetGridMask;
+	Image cabinetImage;
+
+	GridMask flameGridMask;
+	Image flameImage;
+
+	Texture deadTexture;
+	GridMask deadPeopleGridMask;
+	Image deadPeopleImage;
+
+	GridMask fireGridMask;
+	Image fireImage;
+
+
+	GridMask bookGridMask;
+	Image bookImage;
+
+
+	Texture armourTexture;
+	GridMask armourGridMask;
+	Image armourImage;
+
+	Texture witchTexture;
+	GridMask witchGridMask;
+	Image witchImage;
+
 	// Player
 	Texture warriorTexture; AnimImage warriorAnimImage;
 	GridMask warriorAttackGridMask;
@@ -48,6 +86,7 @@ private:
 	Texture projTexture; AnimImage projImage;
 	GridMask projGridMask;
 	// Components
+	Tiles underTiles;
 	Tiles tiles;
 	Players players;
 	Projectiles projectiles;

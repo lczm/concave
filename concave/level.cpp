@@ -10,6 +10,8 @@ Level::~Level()
 
 void Level::initialize()
 {	
+	ifstream fout("text\\gameInfo.csv", std::ofstream::out | std::ofstream::trunc);
+	fout.close();
 	for (int i = 0; i < 5; i++)
 	{
 		for (int x = 0; x < mapWidth; x++)
@@ -134,8 +136,7 @@ void Level::initialize()
 	projImage.initialize(&projTexture, { projGridMask }, { 15 });
 	//initialize the values
 	//renderLevel.initialize(graphics, input, type);
-	ifstream fout("text\\gameInfo.csv", std::ofstream::out | std::ofstream::trunc);
-	fout.close();
+
 
 	////  Entities Initialisation  ////
 	// Tiles
@@ -342,7 +343,6 @@ void Level::levelEdit()
 		//door
 		// 10 is open door (add to constants)
 		editComponent->changeObjects(ImageType::churchDoor, 10, map, gridPos.x, gridPos.y);
-
 		input->clearCharIn();
 	}
 

@@ -77,7 +77,9 @@ void HUD::resetAll()
 {}
 
 void HUD::update()
-{}
+{
+	Window::level.update();
+}
 
 void HUD::render()
 {

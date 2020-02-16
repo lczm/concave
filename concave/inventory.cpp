@@ -90,6 +90,7 @@ void Inventory::update()
 				}
 			}
 		}
+		input->setMouseLButton(true);
 	}
 	if (input->getMouseRButton())
 	{
@@ -104,6 +105,8 @@ void Inventory::update()
 			}
 		}
 	}
+	Window::hud.update();
+
 }
 
 void Inventory::render()

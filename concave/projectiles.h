@@ -22,6 +22,8 @@ private:
 	// Collision
 	vector<Lines> hLinesArray;
 	vector<Lines> vLinesArray;
+	// Size of sprite
+	vector<float> sizeArray;
 public:
 	Projectiles(); ~Projectiles();
 	void initialize(int capacity);
@@ -42,4 +44,6 @@ public:
 	// Collision
 	vector<Lines>& getHLinesArray() { return hLinesArray; }
 	vector<Lines>& getVLinesArray() { return vLinesArray; }
+	// Sprite data size
+	vector<float>& getSizeArray() { return sizeArray; }
 };

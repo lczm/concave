@@ -22,6 +22,9 @@ void Projectiles::initialize(int capacity)
 	// Collision
 	Projectiles::hLinesArray.resize(capacity);
 	Projectiles::vLinesArray.resize(capacity);
+	// Size of projectiles
+	Projectiles::sizeArray.resize(capacity);
+
 }
 
 void Projectiles::push(CoordF position, AnimImage* animImage, Lines hLines, Lines vLines, float rotation)
@@ -39,6 +42,8 @@ void Projectiles::push(CoordF position, AnimImage* animImage, Lines hLines, Line
 	// Collision
 	hLinesArray[size] = hLines;
 	vLinesArray[size] = vLines;
+	// Size of projectiles
+	sizeArray[size] = 1;
 	size++;
 }
 
@@ -58,4 +63,6 @@ void Projectiles::pop(int index)
 	// Collision
 	hLinesArray[index] = hLinesArray[size];
 	vLinesArray[index] = vLinesArray[size];
+	// Size of projectiles
+	sizeArray[index] = sizeArray[size];
 }

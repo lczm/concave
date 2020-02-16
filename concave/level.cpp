@@ -184,7 +184,7 @@ void Level::initialize()
 		translateVLines(Lines{ { -0.4, 0.4, -0.4 }, { -0.4, 0.4, 0.4 } }, ePos));
 
 	// Projectiles
-	projectiles.initialize(100000);
+	projectiles.initialize(10000);
 	increaseProjectilesAmount(0, players, 100);
 	increaseSpeed(0, players, 0.01);
 }

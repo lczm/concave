@@ -417,6 +417,15 @@ void Level::update()
 	camCoord = players.getPositionArray()[0];
 	if (input->isKeyDown('O')) camScale *= 1 - 0.01;
 	if (input->isKeyDown('P')) camScale *= 1 + 0.01;
+	// Number 8
+	if (input->wasKeyPressed('0x38')) {
+		for (int i = 0; i < enemies.getSize(); i++) {
+			int& health = enemies.getHealthArray()[i];
+			health = 0;
+		}
+	}
+    // Number 9 
+	if (input->wasKeyPressed('0x39')) audioEngine->play("splat 2");
 	levelEdit();
 	changeLevel();
 }

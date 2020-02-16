@@ -57,6 +57,7 @@ void Projectiles::initialize(int capacity)
 	Projectiles::timerArray.resize(capacity);
 	Projectiles::delayArray.resize(capacity);
 	Projectiles::rotationArray.resize(capacity);
+	Projectiles::velocityArray.resize(capacity);
 	Projectiles::dydxArray.resize(capacity);
 }
 
@@ -72,7 +73,8 @@ void Projectiles::push(CoordF position, AnimImage* animImage, Lines hLines, Line
 	frameNoArray[size] = 0;
 	timerArray[size] = 0;
 	delayArray[size] = float(0.03);
-	rotationArray[size] = 0;
+	rotationArray[size] = rotation;
+	velocityArray[size] = 3;
 	dydxArray[size] = CoordF{ 0, 0 };
 	size++;
 }
@@ -90,5 +92,6 @@ void Projectiles::pop(int index)
 	timerArray[index] = timerArray[size];
 	delayArray[index] = delayArray[size];
 	rotationArray[index] = rotationArray[size];
+	velocityArray[index] = velocityArray[size];
 	dydxArray[index] = dydxArray[size];
 }

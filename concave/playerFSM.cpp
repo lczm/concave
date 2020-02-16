@@ -82,12 +82,12 @@ void playerIdleState(Level* level, int index)
         state = PLAYER_STATE_MAGIC_FIRE;
 
         Projectiles& projectiles = level->getProjectiles();
-        CoordF jPos = CoordF{ 5, 5 };
+        // CoordF jPos = CoordF{ 5, 5 };
         projectiles.push(
-            jPos, &level->getProjImage(),
-            translateHLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, jPos),
-            translateVLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, jPos),
-        0);
+            position, &level->getProjImage(),
+            translateHLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, position),
+            translateVLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, position),
+        rotation);
         return;
     }
     else if (input->getMouseMButton()) {

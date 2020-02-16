@@ -204,6 +204,7 @@ void Level::update()
 	calculateDeltaArray(players.getSize(), pDeltaArray, players.getRotationArray(), players.getVelocityArray(), frameTime);
 	updatePositionArray(players.getSize(), players.getPositionArray(), pDeltaArray);
 	updateLinesArray(players.getSize(), players.getHLinesArray(), players.getVLinesArray(), pDeltaArray);
+	updateDirectionArray(players.getSize(), players.getRotationArray(), players.getDirectionArray());
 
 	// Enemy
 	updateFSMArray(this, enemies.getSize(), enemies.getFSMArray());
@@ -216,13 +217,18 @@ void Level::update()
 	updateAllWallCollision(tiles, players.getSize(), players.getHLinesArray(), players.getVLinesArray(), players.getPositionArray());
 	updateAllWallCollision(tiles, enemies.getSize(), enemies.getHLinesArray(), enemies.getVLinesArray(), enemies.getPositionArray());
 
+	// Projectiles
+	vector<CoordF> projDeltaArray(projectiles.getSize());
+	calculateDeltaArray(projectiles.getSize(), projDeltaArray, projectiles.getRotationArray(), projectiles.getVelocityArray(), frameTime);
+	updatePositionArray(projectiles.getSize(), projectiles.getPositionArray(), projDeltaArray);
+	// Update collision etc
+
 	// Move Camera
 	camCoord = players.getPositionArray()[0];
 	if (input->isKeyDown('O')) camScale *= 1 - 0.01;
 	if (input->isKeyDown('P')) camScale *= 1 + 0.01;
 	levelEdit();
 	changeLevel();
-
 }
 
 	
@@ -244,9 +250,11 @@ void Level::render()
 	// Player (Temporary)
 	int playerState = players.getStateArray()[0];
 	int playerDirection = players.getDirectionArray()[0];
+	float playerRotation = players.getRotationArray()[0];
 	int playerFrameNo = players.getFrameNoArray()[0];
 	CoordF playerPos = players.getPositionArray()[0];
-	SpriteData playerSD = players.getAnimImageArray()[0]->getSpriteData(playerState, playerDirection, playerFrameNo);
+	SpriteData playerSD = players.getAnimImageArray()[0]->getSpriteData(playerState, 
+		playerDirection, playerFrameNo);
 	graphics->drawSprite(
 		playerSD, gridToScreen(playerPos), camScale);
 
@@ -272,12 +280,15 @@ void Level::render()
 	//}
 
 	for (int i = 0; i < projectiles.getSize(); i++) {
+		float rotation = projectiles.getRotationArray()[i];
+		float direction = rotationToDirection16(rotation);
 		SpriteData sd = projectiles.getAnimImageArray()[i]->getSpriteData(0, 
-			11,
+			rotationToDirection16(projectiles.getRotationArray()[i]),
 			projectiles.getFrameNoArray()[i]);
 		graphics->drawSprite(sd,
 			gridToScreen(projectiles.getPositionArray()[i]), camScale);
 	}
+
 	//for (int i = 0; i < projectiles.getSize(); i++) {
 	//	SpriteData sd = projectiles.getAnimImageArray()[i]->getSpriteData(
 	//		0, projectiles.getRotationArray()[i],
@@ -340,7 +351,6 @@ void Level::levelEdit()
 	{
 		writeToFile(map);
 	}
-
 
 	if (input->getMouseLButton())
 	{

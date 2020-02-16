@@ -51,6 +51,7 @@ private:
 	vector<float> timerArray;
 	vector<float> delayArray;
 	vector<float> rotationArray;
+	vector<float> velocityArray;
 	vector<CoordF> dydxArray;
 
 public:
@@ -70,5 +71,6 @@ public:
 	vector<float>& getTimerArray() { return timerArray; }
 	vector<float>& getDelayArray() { return delayArray; }
 	vector<float>& getRotationArray() { return rotationArray; }
+	vector<float>& getVelocityArray() { return velocityArray; }
 	vector<CoordF>& getDydxArray() { return dydxArray; }
 };

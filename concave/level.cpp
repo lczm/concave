@@ -99,6 +99,11 @@ void Level::initialize()
 	storeGridMask.initialize(0, 0, 78, 84, 1, 1, 59, 59);
 	storeImage.initialize(&storeTexture, storeGridMask);
 
+	//cow
+	cowTexture.initialize(graphics, IMAGE_NPCCOW_DUNGEON);
+	cowGridMask.initialize(0, 0, 109, 88, 1, 1, 9, 89);
+	cowImage.initialize(&cowTexture, cowGridMask);
+
 
 
 	//church sprites
@@ -122,13 +127,17 @@ void Level::initialize()
 	bloodPool.initialize(&bloodPoolImage, CoordI{ 0,0 });
 	torch.initialize(&torchImage, CoordI{ 2,4 });
 	store.initialize(&storeImage, CoordI{ 0,0 });
+	cow.initialize(&cowImage, CoordI{ 0,0 });
+
+
 
 	//Animation
 	doorAnim.initialize(&tileTexture, { tileGridMask }, {});
 	chestAnim.initialize(&tileTexture, { tileGridMask }, {});
-	barrelAnim.initialize(&manyItemsTexture, { manyItemsGridMask }, {5});
+	barrelAnim.initialize(&manyItemsTexture, { manyItemsGridMask }, {9});
 	bloodPoolAnim.initialize(&bloodPoolTexture, { bloodPoolGridMask }, {4});
 	torchAnim.initialize(&torchTexture, {torchGridMask}, { 11 });
+	cowAnim.initialize(&cowTexture, { cowGridMask }, { 12 });
 
 	// Warrior
 	// warriorTexture.initialize(graphics, IMAGE_UNIT_WARRIOR);
@@ -496,15 +505,10 @@ void Level::tilesInitialize()
 				tiles.set(x, y, &blood, translateHLines(Lines{ {} }, x, y),
 					translateVLines(Lines{}, x, y));
 				break;
-
-
-
 			case ImageType::churchFloor:
 				tiles.set(x, y, &floorSprite, translateHLines(Lines{ {} }, x, y),
 					translateVLines(Lines{}, x, y));
 				break;
-
-
 
 			case ImageType::churchDoor:
 				tiles.set(x, y, &door, translateHLines(Lines{ {} }, x, y),
@@ -515,8 +519,6 @@ void Level::tilesInitialize()
 					//translateVLines(Lines{}, x, y));
 				break;
 
-
-
 			case ImageType::churchChest:
 				pos = CoordF{ float(x), float(y) };
 				tiles.set(x, y, &floorSprite, translateHLines(Lines{ {} }, x, y),
@@ -526,37 +528,25 @@ void Level::tilesInitialize()
 				//animObjects.push(pos, &chestAnim, 0, 0, 0.1, translateHLines(Lines{ {} }, x, y),
 					//translateVLines(Lines{}, x, y));
 				break;
-
-
-
 			case ImageType::churchWallEast:
 				tiles.set(x, y, &wallEast, translateHLines(Lines{ {} }, x, y),
 					translateVLines(Lines{}, x, y));
 				break;
-
-
 
 			case ImageType::churchWallWest:
 				tiles.set(x, y, &wallWest, translateHLines(Lines{ {} }, x, y),
 					translateVLines(Lines{}, x, y));
 				break;
 
-
-
 			case ImageType::churchWallConnect:
 				tiles.set(x, y, &WallConnect, translateHLines(Lines{ {} }, x, y),
 					translateVLines(Lines{}, x, y));
 				break;
 
-
-
 			case ImageType::churchWallPath:
 				tiles.set(x, y, &wallPath, translateHLines(Lines{ {} }, x, y),
 					translateVLines(Lines{}, x, y));
 				break;
-
-
-
 				//test object
 			//add no to constants ltr
 			case 11:
@@ -630,7 +620,10 @@ void Level::tilesInitialize()
 			case 21:
 				tiles.set(x, y, &store, translateHLines(Lines{ {} }, x, y),
 					translateVLines(Lines{}, x, y));
-				
+				break;
+			case 22:
+				tiles.set(x, y, &cow, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
 				break;
 			}
 		}

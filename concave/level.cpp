@@ -70,9 +70,15 @@ void Level::initialize()
 	deadPeopleGridMask.initialize(0, 0, 108, 109,1, 1, 75, 90);
 	deadPeopleImage.initialize(&deadTexture, deadPeopleGridMask);
 
+	//armour
+	armourTexture.initialize(graphics, IMAGE_ARMOURITEMS_DUNGEON);
+	armourGridMask.initialize(0, 0, 38, 44, 1, 1, 19, 14);
+	armourImage.initialize(&armourTexture, armourGridMask);
 
-
-
+	//witch
+	witchTexture.initialize(graphics, IMAGE_WITCHITEMS_DUNGEON);
+	witchGridMask.initialize(0, 0, 150, 141, 1, 1, 74, 90);
+	witchImage.initialize(&witchTexture, witchGridMask);
 
 
 	//church sprites
@@ -85,19 +91,18 @@ void Level::initialize()
 	WallConnect.initialize(&tileImage, IMAGE_MAP.at(ImageType::churchWallConnect));
 	wallPath.initialize(&tileImage, IMAGE_MAP.at(ImageType::churchWallPath));
 	chest.initialize(&tileImage, IMAGE_MAP.at(ImageType::churchChest));
-
 	//barrel
 	barrel.initialize(&manyItemsImage, CoordI{ 0,0 });
-
 	//fireplace
 	fireItem.initialize(&flameImage, CoordI{ 4,5 });
-
-	//armour
+	//book
 	book.initialize(&manyItemsImage, CoordI{ 0,1 });
-
 	//dead man
 	dead.initialize(&deadPeopleImage, CoordI{3,0});
+	armour.initialize(&armourImage, CoordI{ 0,0 });
 
+	//witch
+	witch.initialize(&witchImage, CoordI{ 0,0 });
 
 	// Warrior
 	warriorTexture.initialize(graphics, IMAGE_UNIT_WARRIOR);
@@ -432,6 +437,14 @@ void Level::tilesInitialize()
 				break;
 			case 14:
 				tiles.set(x, y, &dead, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				break;
+			case 15:
+				tiles.set(x, y, &armour, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				break;
+			case 16:
+				tiles.set(x, y, &witch, translateHLines(Lines{ {} }, x, y),
 					translateVLines(Lines{}, x, y));
 				break;
 			}

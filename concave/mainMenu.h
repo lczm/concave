@@ -6,8 +6,9 @@ class MainMenu : public Window
 {
 private:
 
-	Texture menuBg;
-	Texture itemBg;
+	Texture menuBgTexture;
+	SpriteData menuBg;
+	Button itemBg;
 
 	Texture playbtnTexture;
 	Texture insbtnTexture;
@@ -47,5 +48,6 @@ public:
 	void update();
 	void render();
 
-	void initBg(Graphics* graphics);
+	void initButtons();
+	/*void CheckState(Button a, Button a_hover);*/
 };

@@ -46,11 +46,7 @@ bool Button::isHovered()
 	int mouseY = input->getMouseY();
 
 
-	if (!mouseX && !mouseY)
-	{
-		return false;
-	}
-	else
+	if (mouseX && mouseY)
 	{
 		
 
@@ -69,20 +65,15 @@ bool Button::isClicked()
 	int mouseX = input->getMouseX();
 	int mouseY = input->getMouseY();
 
-	if (!input->getMouseLButton())
-	{
-		return false;
-	}
-	else
-	{
-
-		float buttonWidth = x + getSpriteData().width;
-		float buttonHeight = y + getSpriteData().height;
+	if (!input->getMouseLButton()) return false;
+		
+	float buttonWidth = x + getSpriteData().width;
+	float buttonHeight = y + getSpriteData().height;
 
 
-		return (mouseX > x && mouseX < buttonWidth &&
+	return (mouseX > x && mouseX < buttonWidth &&
 			mouseY > y && mouseY < buttonHeight);
-	}
+
 
 }
 

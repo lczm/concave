@@ -192,6 +192,7 @@ const char IMAGE_HUD_HEALTH[] = "sprites/hud_health.png";
 const char IMAGE_HUD_HEALTHORB[] = "sprites/hud_healthorb.png";
 const char IMAGE_HUD_SKILLS[] = "sprites/hud_skills.png";
 const char IMAGE_HUD_HEALTHORBREGEN[] = "sprites/hud_healthorb_regen.png";
+const char IMAGE_HUD_MODIFIERS[] = "sprites/hud_modifiers.png";
 
 //-----------------------------------------------
 //                    Audio

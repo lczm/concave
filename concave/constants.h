@@ -184,6 +184,14 @@ const char IMAGE_HUD_HEALTH[] = "sprites/hud_health.png";
 const char IMAGE_HUD_HEALTHORB[] = "sprites/hud_healthorb.png";
 
 //-----------------------------------------------
+//                    Audio
+//-----------------------------------------------
+// Wave_Bank
+const char WAVE_BANK[] = "audio\\Win\\Wave_Bank.xwb";
+// Sound_Bank
+const char SOUND_BANK[] = "audio\\Win\\Sound_Bank.xsb";
+
+//-----------------------------------------------
 //					  Other
 //-----------------------------------------------
 // Safely delete pointer referenced item

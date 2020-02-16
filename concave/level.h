@@ -13,6 +13,7 @@
 #include "movementSystem.h"
 #include "fsmSystem.h"
 #include "modifiers.h"
+#include "audioEngine.h"
 
 #include "cellular.h"
 #include "EditComponent.h"
@@ -26,6 +27,8 @@ using namespace std;
 class Level : public Window
 {
 private:
+	// AudioEngine
+	AudioEngine* audioEngine;
 	// Camera
 	CoordF camCoord; float camScale;
 	// Tiles

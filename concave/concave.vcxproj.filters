@@ -33,6 +33,10 @@
     <ClCompile Include="credits.cpp" />
     <ClCompile Include="options.cpp" />
     <ClCompile Include="button.cpp" />
+    <ClCompile Include="inventory.cpp" />
+    <ClCompile Include="item.cpp" />
+    <ClCompile Include="spriteText.cpp" />
+    <ClCompile Include="audioEngine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="animObjects.h" />
@@ -99,15 +103,11 @@
     <ClCompile Include="image.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="spriteText.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="inventory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="item.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
+    <ClInclude Include="inventory.h" />
+    <ClInclude Include="inventoryCell.h" />
+    <ClInclude Include="item.h" />
+    <ClInclude Include="spriteText.h" />
+    <ClInclude Include="audioEngine.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="constants.h">
@@ -144,18 +144,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="image.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="spriteText.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="item.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="inventory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="inventoryCell.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

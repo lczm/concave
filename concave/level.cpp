@@ -10,6 +10,8 @@ Level::~Level()
 
 void Level::initialize()
 {	
+	audioEngine = new AudioEngine();
+    audioEngine->initialize();
 	ifstream fout("text\\gameInfo.csv", std::ofstream::out | std::ofstream::trunc);
 	fout.close();
 	for (int i = 0; i < 5; i++)
@@ -340,6 +342,9 @@ void Level::render()
 	//}
 	//will be moved to another file I hope
 	//renderSprites();
+
+	// Use this for audio
+    // audioEngine->play("splat 2");
 }
 
 CoordF Level::gridToScreen(float gx, float gy)

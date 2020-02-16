@@ -63,6 +63,7 @@ void playerIdleState(Level* level, int index)
     float& delay = players.getDelayArray()[index];
     float& rotation = players.getRotationArray()[index];
     float& velocity = players.getVelocityArray()[index];
+    Projectiles& projectiles = level->getProjectiles();
 
     if (input->getMouseLButton()) {
         input->setMouseLButton(false);
@@ -81,8 +82,6 @@ void playerIdleState(Level* level, int index)
         fsm = playerMagicFireState;
         state = PLAYER_STATE_MAGIC_FIRE;
 
-        Projectiles& projectiles = level->getProjectiles();
-        // CoordF jPos = CoordF{ 5, 5 };
         projectiles.push(
             position, &level->getProjImage(),
             translateHLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, position),
@@ -124,6 +123,7 @@ void playerWalkState(Level* level, int index)
     float& delay = players.getDelayArray()[index];
     float& rotation = players.getRotationArray()[index];
     float& velocity = players.getVelocityArray()[index];
+    Projectiles& projectiles = level->getProjectiles();
 
     if (input->getMouseLButton()) {
         input->setMouseLButton(false);
@@ -139,6 +139,12 @@ void playerWalkState(Level* level, int index)
         frameNo = 0;
         fsm = playerMagicFireState;
         state = PLAYER_STATE_MAGIC_FIRE;
+
+        projectiles.push(
+            position, &level->getProjImage(),
+            translateHLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, position),
+            translateVLines(Lines{ { -0.4, 0.4, -0.2 }, { -0.4, 0.4, 0.2 } }, position),
+        rotation);
         return;
     }
     else if (input->getMouseMButton()) {
@@ -153,7 +159,6 @@ void playerWalkState(Level* level, int index)
     }
 
     if (fastSquareProximityCheck(position, destPosition, 0.01)) {
-        // In case of any inaccuracies
         destPosition = position;
         velocity = 0;
         frameNo = 0;

@@ -235,6 +235,7 @@ void Level::update()
 	
 void Level::render()
 {
+	// Tiles
 	for (int x = 0; x < tiles.getRows(); x++)
 	{
 		for (int y = 0; y < tiles.getCols(); y++)
@@ -246,6 +247,12 @@ void Level::render()
 				tiles.getSprite(x, y)->getSpriteData(),
 				gridToScreen(x, y), camScale);
 		}
+	}
+	// Objects
+	for (int i = 0; i < objects.getSize(); i++) {
+		SpriteData objectSD = objects.getSpriteArray()[i]->getSpriteData();
+		CoordF objectPos = objects.getPositionArray()[i];
+		graphics->drawSprite(objectSD, gridToScreen(objectPos), camScale);
 	}
 
 	// Player (Temporary)

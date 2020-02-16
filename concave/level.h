@@ -5,6 +5,7 @@
 #include "players.h"
 #include "enemies.h"
 #include "projectiles.h"
+#include "objects.h"
 #include "playerFSM.h"
 #include "enemyFSM.h"
 #include "collisionSystem.h"
@@ -14,7 +15,6 @@
 #include "cellular.h"
 #include "EditComponent.h"
 #include "renderLevel.h"
-
 #include <vector>
 #include <fstream>
 #include <string>
@@ -71,6 +71,7 @@ private:
 	Players players;
 	Projectiles projectiles;
 	Enemies enemies;
+	Objects objects;
 
 	// Camera
 	int map[mapWidth][mapHeight];

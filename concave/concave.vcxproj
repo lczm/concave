@@ -171,9 +171,9 @@
     <ClCompile Include="playerFSM.cpp" />
     <ClCompile Include="projectiles.cpp" />
     <ClCompile Include="collisionSystem.cpp" />
+    <ClCompile Include="renderLevel.cpp" />
     <ClCompile Include="shopNpc.cpp" />
     <ClCompile Include="tiles.cpp" />
-    <ClCompile Include="renderLevel.cpp" />
     <ClCompile Include="room.cpp" />
     <ClCompile Include="window.cpp" />
     <ClCompile Include="winmain.cpp" />

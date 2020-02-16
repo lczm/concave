@@ -204,13 +204,20 @@ void Level::initialize()
 		100, 100, 100, 100);
 
 	// Enemy
-	enemies.initialize(1);
+	enemies.initialize(100);
 	CoordF ePos = CoordF{ 0, 0 };
 	enemies.push(
 		ePos, &balrogAnimImage, UNIT_STATE_WALK,
 		enemyWalkState, 0, 0.5,
 		translateHLines(Lines{ { -0.4, 0.4, -0.4 }, { -0.4, 0.4, 0.4 } }, ePos),
 		translateVLines(Lines{ { -0.4, 0.4, -0.4 }, { -0.4, 0.4, 0.4 } }, ePos));
+
+	CoordF ePos2 = CoordF{ 2, 2 };
+	enemies.push(
+		ePos, &balrogAnimImage, UNIT_STATE_WALK,
+		enemyWalkState, 0, 0.5,
+		translateHLines(Lines{ { -0.4, 0.4, -0.4 }, { -0.4, 0.4, 0.4 } }, ePos2),
+		translateVLines(Lines{ { -0.4, 0.4, -0.4 }, { -0.4, 0.4, 0.4 } }, ePos2));
 
 	// Projectiles
 	projectiles.initialize(10000);
@@ -290,20 +297,30 @@ void Level::render()
 	{
 		for (int y = 0; y < tiles.getCols(); y++)
 		{
+            CoordF coords  = gridToScreen(x, y);
+			// graphics->drawSprite(
+			// 	underTiles.getSprite(x, y)->getSpriteData(),
+			// 	gridToScreen(x, y), camScale);
 			graphics->drawSprite(
 				underTiles.getSprite(x, y)->getSpriteData(),
-				gridToScreen(x, y), camScale);
+				int(coords.x), int(coords.y), camScale);
 			
+			// graphics->drawSprite(
+			// 	tiles.getSprite(x, y)->getSpriteData(),
+			// 	gridToScreen(x, y), camScale);
 			graphics->drawSprite(
 				tiles.getSprite(x, y)->getSpriteData(),
-				gridToScreen(x, y), camScale);
+				int(coords.x), int(coords.y), camScale);
 		}
 	}
+
 	// Objects
 	for (int i = 0; i < objects.getSize(); i++) {
 		SpriteData objectSD = objects.getSpriteArray()[i]->getSpriteData();
 		CoordF objectPos = objects.getPositionArray()[i];
-		graphics->drawSprite(objectSD, gridToScreen(objectPos), camScale);
+		CoordF coords = gridToScreen(objectPos);
+		graphics->drawSprite(objectSD, int(coords.x), int(coords.y), camScale);
+		// graphics->drawSprite(objectSD, gridToScreen(objectPos), camScale);
 	}
 
 	// AnimObjects
@@ -312,42 +329,37 @@ void Level::render()
 		int animObjectDirection = animObjects.getDirectionArray()[i];
 		int animObjectFrameNo = animObjects.getFrameNoArray()[i];
 		CoordF animObjectPos = animObjects.getPositionArray()[i];
+		CoordF coords = gridToScreen(animObjectPos);
 		SpriteData animObjectSD = animObjects.getAnimImageArray()[i]->getSpriteData(animObjectState, animObjectDirection, animObjectFrameNo);
-		graphics->drawSprite(animObjectSD, gridToScreen(animObjectPos), camScale);
+		graphics->drawSprite(animObjectSD, int(coords.x), int(coords.y), camScale);
 	}
 
-	// Player (Temporary)
-	int playerState = players.getStateArray()[0];
-	int playerDirection = players.getDirectionArray()[0];
-	float playerRotation = players.getRotationArray()[0];
-	int playerFrameNo = players.getFrameNoArray()[0];
-	CoordF playerPos = players.getPositionArray()[0];
-	SpriteData playerSD = players.getAnimImageArray()[0]->getSpriteData(playerState, 
-		playerDirection, playerFrameNo);
-	graphics->drawSprite(
-		playerSD, gridToScreen(playerPos), camScale);
+	// Players
+	for (int i = 0; i < players.getSize(); i++) {
+        int playerState = players.getStateArray()[i];
+        int playerDirection = players.getDirectionArray()[i];
+        float playerRotation = players.getRotationArray()[i];
+        int playerFrameNo = players.getFrameNoArray()[i];
+        CoordF playerPos = players.getPositionArray()[i];
+		CoordF coords = gridToScreen(playerPos);
+        SpriteData playerSD = players.getAnimImageArray()[i]->getSpriteData(playerState, 
+            playerDirection, playerFrameNo);
+        graphics->drawSprite(playerSD, int(coords.x), int(coords.y), camScale);
+	}
 
-	// Enemies (Temporary)
-	int enemyState = enemies.getStateArray()[0];
-	int enemyDirection = enemies.getDirectionArray()[0];
-	int enemyFrameNo = enemies.getFrameNoArray()[0];
-	CoordF enemyPos = enemies.getPositionArray()[0];
-	SpriteData enemySD = enemies.getAnimImageArray()[0]->getSpriteData(enemyState, enemyDirection, enemyFrameNo);
-	graphics->drawSprite(
-		enemySD, gridToScreen(enemyPos), camScale);
+	// Enemies
+	for (int i = 0; i < enemies.getSize(); i++) {
+        int enemyState = enemies.getStateArray()[i];
+        int enemyDirection = enemies.getDirectionArray()[i];
+        int enemyFrameNo = enemies.getFrameNoArray()[i];
+        CoordF enemyPos = enemies.getPositionArray()[i];
+		CoordF coords = gridToScreen(enemyPos);
+        SpriteData enemySD = enemies.getAnimImageArray()[i]->getSpriteData(enemyState, enemyDirection, enemyFrameNo);
+        graphics->drawSprite(
+            enemySD, int(coords.x), int(coords.y), camScale);
+	}
 
-	//for (int i = 0; i < players.getSize(); i++) {
-	//	// Temporary solution to make it not blurry
-	//	// CoordF screenCoords = gridToScreen(players.getPositionArray()[i]);
-	//	SpriteData sd = players.getAnimImageArray()[i]->getSpriteData(
-	//		players.getStateArray()[i],
-	//		rotationToDirection(players.getRotationArray()[i]),
-	//		players.getFrameNoArray()[i]);
-
- //       graphics->drawSprite(sd,
- //           gridToScreen(players.getPositionArray()[i]), camScale);
-	//}
-
+	// Projectiles
 	for (int i = 0; i < projectiles.getSize(); i++) {
 		float rotation = projectiles.getRotationArray()[i];
 		float direction = rotationToDirection16(rotation);
@@ -358,16 +370,6 @@ void Level::render()
 		graphics->drawSprite(sd,
 			gridToScreen(projectiles.getPositionArray()[i]), camScale);
 	}
-
-	//for (int i = 0; i < projectiles.getSize(); i++) {
-	//	SpriteData sd = projectiles.getAnimImageArray()[i]->getSpriteData(
-	//		0, projectiles.getRotationArray()[i],
-	//		projectiles.getFrameNoArray()[i]);
-	//	graphics->drawSprite(sd,
-	//		gridToScreen(projectiles.getPositionArray()[i]), camScale);
-	//}
-	//will be moved to another file I hope
-	//renderSprites();
 
 	// Use this for audio
     // audioEngine->play("splat 2");

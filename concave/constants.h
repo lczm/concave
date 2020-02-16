@@ -36,7 +36,7 @@ struct LineI : Line {
 	LineI(float lower, float upper, float shift, int id) : Line(lower, upper, shift) { LineI::id = id; }
 };
 typedef vector<Line> Lines;
-typedef set<LineI> LineISet;
+typedef multiset<LineI> LineISet;
 typedef LineISet::iterator LineISetIter;
 typedef vector<LineISetIter> LineISetIters;
 

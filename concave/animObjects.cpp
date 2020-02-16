@@ -36,8 +36,8 @@ void AnimObjects::push(CoordF position, AnimImage* animImage, int state, int dir
 	delayArray[size] = delay;
 	// Collision
 	LineISetIters hLineIters, vLineIters;
-	for (Line line : hLines) hLineIters.push_back(hLineISet.insert(LineI{ line, size }).first);
-	for (Line line : vLines) vLineIters.push_back(vLineISet.insert(LineI{ line, size }).first);
+	for (Line line : hLines) hLineIters.push_back(hLineISet.insert(LineI{ line, size }));
+	for (Line line : vLines) vLineIters.push_back(vLineISet.insert(LineI{ line, size }));
 	hLineISetItersArray[size] = hLineIters;
 	vLineISetItersArray[size] = vLineIters;
 	size++;

@@ -7,11 +7,16 @@ private:
 	Texture itemTexture;
 	GridMask itemGridMask;
 	Image itemImage;
+	ItemType itemType;
+	vector<int> posInInventory;
+	vector<int> itemSize;
 	SpriteData itemSpriteData;
 	UINT itemID;
 
 public:
-	Item(UINT id, Graphics* graphics, ItemType itemType);
+	Item();
+	Item(Graphics* graphics, UINT id, ItemType itemType, vector<int> posInInven);
 	~Item();
 	SpriteData getItemSpriteData() { return itemSpriteData; }
+	vector<int> getInvenPos() { return posInInventory; }
 };

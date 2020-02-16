@@ -176,6 +176,7 @@
     <ClInclude Include="image.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="inventory.h" />
+    <ClInclude Include="inventoryCell.h" />
     <ClInclude Include="item.h" />
     <ClInclude Include="level.h" />
     <ClInclude Include="mainMenu.h" />

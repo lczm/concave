@@ -5,6 +5,7 @@
 class Inventory : public Window
 {
 private:
+	vector<vector<Item*>> inventoryGrid;
 	vector<Item*> playerInventory;
 	Texture inventoryTexture;
 	GridMask inventoryGridMask;
@@ -12,15 +13,17 @@ private:
 	SpriteData inventorySpriteData;
 	UINT inventoryX;
 	UINT inventoryY;
+	UINT itemInvenX;
+	UINT itemInvenY;
 
 public:
 	Inventory();
 	~Inventory();
 
-	void populateInventory(vector<int> playerInven);
 	void initialize();
 	void releaseAll();
 	void resetAll();
 	void update();
 	void render();
 };
+

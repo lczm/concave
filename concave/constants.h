@@ -66,6 +66,13 @@ typedef void (*FSM)(Level* level, int index);
 //	float rotation;
 //};
 
+enum class ItemType { Elixr, Sword, Shield, Armor };
+// enum DIRECTION16 { SOUTH, SOUTH_WEST, WEST, NORTH_WEST, NORTH, NORTH_EAST, EAST, SOUTH_EAST };
+//namespace DIRECTION8 {
+//	const int
+//		SOUTH = 0, SOUTH_WEST = 1, WEST = 2, NORTH_WEST = 3,
+//		NORTH = 4, NORTH_EAST = 5, EAST = 6, SOUTH_EAST = 7;}
+
 //-----------------------------------------------
 //                   Tiles
 //-----------------------------------------------
@@ -162,6 +169,19 @@ const char CR_HOVER_TEXTURE[] = "sprites/creditshover.png";
 
 const char SCROLLBAR[] = "sprites/scrollbar.png";
 const char SCOLLER[] = "sprites/scroller.png";
+
+
+//-----------------------------------------------
+//                Image (HUD)
+//-----------------------------------------------
+const char IMAGE_HUD_PLAYER_INFO[] = "sprites/hud_player_info.png";
+const char IMAGE_HUD_FONT[] = "sprites/hud_diablo_font.bmp";
+const char IMAGE_HUD_INVENTORY[] = "sprites/hud_inventory.png";
+const char IMAGE_HUD_ITEMS[] = "sprites/hud_items.png";
+const char IMAGE_HUD_MANA[] = "sprites/hud_mana.png";
+const char IMAGE_HUD_MANAORB[] = "sprites/hud_manaorb.png";
+const char IMAGE_HUD_HEALTH[] = "sprites/hud_health.png";
+const char IMAGE_HUD_HEALTHORB[] = "sprites/hud_healthorb.png";
 
 //-----------------------------------------------
 //					  Other

@@ -12,7 +12,7 @@ HUD Window::hud;
 Instructions Window::instructions;
 Options Window::options;
 Credits Window::credits;
-
+Inventory Window::inventory;
 Window::Window()
 {}
 

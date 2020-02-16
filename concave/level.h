@@ -80,6 +80,7 @@ private:
 	AnimImage doorAnim;
 	AnimImage chestAnim;
 	AnimImage barrelAnim;
+	HUD* playerHUD;
 	// Camera
 	int map[mapWidth][mapHeight];
 

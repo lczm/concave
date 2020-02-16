@@ -10,6 +10,7 @@ class HUD;
 class Instructions;
 class Options;
 class Credits;
+class Inventory;
 
 class Window
 {
@@ -26,6 +27,8 @@ public:
 	static Instructions instructions;
 	static Options options;
 	static Credits credits;
+	static Inventory inventory;
+
 public:
 	Window();
 	~Window();
@@ -42,3 +45,4 @@ public:
 #include "instructions.h"
 #include "options.h"
 #include "credits.h"
+#include "inventory.h"

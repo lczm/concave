@@ -195,9 +195,10 @@ void Level::initialize()
 
 	// Projectiles
 	projectiles.initialize(10000);
-	increaseProjectilesAmount(0, players, 100);
+	increaseProjectilesAmount(0, players, 10);
 	increaseAttackSpeed(0, players, 0.01);
 	increaseMovementSpeed(0, players, 2);
+	increaseProjectileSize(0, projectiles, 1.5);
 }
 
 void Level::releaseAll()
@@ -330,6 +331,7 @@ void Level::render()
 		SpriteData sd = projectiles.getAnimImageArray()[i]->getSpriteData(0, 
 			rotationToDirection16(projectiles.getRotationArray()[i]),
 			projectiles.getFrameNoArray()[i]);
+		sd.scale = projectiles.getSizeArray()[i];
 		graphics->drawSprite(sd,
 			gridToScreen(projectiles.getPositionArray()[i]), camScale);
 	}

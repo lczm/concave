@@ -18,7 +18,10 @@ void increaseMovementSpeed(int index, Players& players, float amount);
 void increaseProjectilesAmount(int index, Players& players, int amount);
 
 // Increase projectile size
-void increaseProjectileSize(int index, Projectiles& projectiles, int amount);
+void increaseProjectilesSize(int index, Projectiles& projectiles, int amount);
+
+// Increase projectile speed
+void increaseProjectilesSpeed(int index, Projectiles& projectiles, int amount);
 
 // Increase damage
 void increaseDamage(int index, Players& players, float amount);

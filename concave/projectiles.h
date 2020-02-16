@@ -9,6 +9,8 @@ class Projectiles
 {
 private:
 	int capacity, size;
+	float velocity;
+	float projSize;
 	// Position
 	vector<CoordF> positionArray;
 	// Animation
@@ -31,6 +33,8 @@ public:
 	void pop(int index);
 public:
 	int getSize() { return size; }
+	float& getVelocity() { return velocity; }
+	float& getProjSize() { return projSize; }
 	// Postition
 	vector<CoordF>& getPositionArray() { return positionArray; }
 	// Animation

@@ -8,6 +8,8 @@ Projectiles::~Projectiles()
 
 void Projectiles::initialize(int capacity)
 {
+	Projectiles::velocity = 3;
+	Projectiles::projSize = 1;
 	Projectiles::capacity = capacity;
 	// Position
 	Projectiles::positionArray.resize(capacity);
@@ -38,12 +40,12 @@ void Projectiles::push(CoordF position, AnimImage* animImage, Lines hLines, Line
 	delayArray[size] = float(0.03);
 	// Movement
 	rotationArray[size] = rotation;
-	velocityArray[size] = 3;
+	velocityArray[size] = Projectiles::velocity;
 	// Collision
 	hLinesArray[size] = hLines;
 	vLinesArray[size] = vLines;
 	// Size of projectiles
-	sizeArray[size] = 1;
+	sizeArray[size] = Projectiles::projSize;
 	size++;
 }
 

@@ -33,17 +33,11 @@ void Level::initialize()
 	}
 	editComponent->readFromFile("save.txt", map, 0);
 
-
-
-
-	
-
 	////  Sprite Initialisation  ////
 	// Tiles
 	tileTexture.initialize(graphics, IMAGE_TILES_DUNGEON);
 	tileGridMask.initialize(0, 0, 128, 192, 1, 1, 64, 127);
 	tileImage.initialize(&tileTexture, tileGridMask);
-
 
 	//reference to yh code
 	//void initialize(int originX, int originY, int perWidth, int perHeight, int gapWidth, int gapHeight, int pivotX, int pivotY);
@@ -198,7 +192,8 @@ void Level::initialize()
 	increaseProjectilesAmount(0, players, 10);
 	increaseAttackSpeed(0, players, 0.01);
 	increaseMovementSpeed(0, players, 2);
-	increaseProjectileSize(0, projectiles, 1.5);
+	increaseProjectilesSize(0, projectiles, 3);
+	increaseProjectilesSpeed(0, projectiles, 5);
 }
 
 void Level::releaseAll()

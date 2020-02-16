@@ -212,12 +212,12 @@ void Level::initialize()
 		translateHLines(Lines{ { -0.4, 0.4, -0.4 }, { -0.4, 0.4, 0.4 } }, ePos),
 		translateVLines(Lines{ { -0.4, 0.4, -0.4 }, { -0.4, 0.4, 0.4 } }, ePos));
 
-	// CoordF ePos2 = CoordF{ 2, 2 };
-	// enemies.push(
-	// 	ePos, &balrogAnimImage, UNIT_STATE_WALK,
-	// 	enemyWalkState, 0, 0.5,
-	// 	translateHLines(Lines{ { -0.4, 0.4, -0.4 }, { -0.4, 0.4, 0.4 } }, ePos2),
-	// 	translateVLines(Lines{ { -0.4, 0.4, -0.4 }, { -0.4, 0.4, 0.4 } }, ePos2));
+	CoordF ePos2 = CoordF{ 0, 1 };
+	enemies.push(
+		ePos2, &balrogAnimImage, UNIT_STATE_WALK,
+		enemyWalkState, 0, 0.5,
+		translateHLines(Lines{ { -0.4, 0.4, -0.4 }, { -0.4, 0.4, 0.4 } }, ePos2),
+		translateVLines(Lines{ { -0.4, 0.4, -0.4 }, { -0.4, 0.4, 0.4 } }, ePos2));
 
 	// Projectiles
 	projectiles.initialize(5000);
@@ -258,9 +258,9 @@ void Level::update()
 	updateDirectionArray(enemies.getSize(), enemies.getRotationArray(), enemies.getDirectionArray());
 
 	// Update Collision
-	updateLineISetItersArray(players.getHLineISet(), players.getVLineISet(), players.getSize(), players.getHLineISetItersArray(), players.getVLineISetItersArray(), pDeltaArray);
-	updateLineISetItersArray(enemies.getHLineISet(), enemies.getVLineISet(), enemies.getSize(), enemies.getHLineISetItersArray(), enemies.getVLineISetItersArray(), pDeltaArray);
-	updateLinesArray(projectiles.getSize(), projectiles.getHLinesArray(), projectiles.getVLinesArray(), jDeltaArray);
+	// updateLineISetItersArray(players.getHLineISet(), players.getVLineISet(), players.getSize(), players.getHLineISetItersArray(), players.getVLineISetItersArray(), pDeltaArray);
+	// updateLineISetItersArray(enemies.getHLineISet(), enemies.getVLineISet(), enemies.getSize(), enemies.getHLineISetItersArray(), enemies.getVLineISetItersArray(), pDeltaArray);
+	// updateLinesArray(projectiles.getSize(), projectiles.getHLinesArray(), projectiles.getVLinesArray(), jDeltaArray);
 
 	// Get Collision (Wall)
 
@@ -355,6 +355,7 @@ void Level::render()
         CoordF enemyPos = enemies.getPositionArray()[i];
 		CoordF coords = gridToScreen(enemyPos);
         SpriteData enemySD = enemies.getAnimImageArray()[i]->getSpriteData(enemyState, enemyDirection, enemyFrameNo);
+		std::cout << coords.x << "|" << coords.y << std::endl;
         graphics->drawSprite(
             enemySD, int(coords.x), int(coords.y), camScale);
 	}

@@ -24,7 +24,7 @@ typedef Coord<int> CoordI;
 typedef Coord<float> CoordF;
 // Line (Collision)
 struct Line {
-	float lower, upper, shift;
+	float lower = 0, upper = 0, shift = 0;
 	Line() {}
 	Line(float lower, float upper, float shift) { Line::lower = lower; Line::upper = upper; Line::shift = shift; }
 	bool operator<(const Line& other) const { return shift < other.shift; }
@@ -36,7 +36,7 @@ struct LineI : Line {
 	LineI(float lower, float upper, float shift, int id) : Line(lower, upper, shift) { LineI::id = id; }
 };
 typedef vector<Line> Lines;
-typedef set<LineI> LineISet;
+typedef multiset<LineI> LineISet;
 typedef LineISet::iterator LineISetIter;
 typedef vector<LineISetIter> LineISetIters;
 

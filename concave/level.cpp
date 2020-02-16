@@ -204,7 +204,7 @@ void Level::initialize()
 		100, 100, 100, 100);
 
 	// Enemy
-	enemies.initialize(100);
+	enemies.initialize(2);
 	CoordF ePos = CoordF{ 0, 0 };
 	enemies.push(
 		ePos, &balrogAnimImage, UNIT_STATE_WALK,
@@ -212,15 +212,15 @@ void Level::initialize()
 		translateHLines(Lines{ { -0.4, 0.4, -0.4 }, { -0.4, 0.4, 0.4 } }, ePos),
 		translateVLines(Lines{ { -0.4, 0.4, -0.4 }, { -0.4, 0.4, 0.4 } }, ePos));
 
-	CoordF ePos2 = CoordF{ 2, 2 };
-	enemies.push(
-		ePos, &balrogAnimImage, UNIT_STATE_WALK,
-		enemyWalkState, 0, 0.5,
-		translateHLines(Lines{ { -0.4, 0.4, -0.4 }, { -0.4, 0.4, 0.4 } }, ePos2),
-		translateVLines(Lines{ { -0.4, 0.4, -0.4 }, { -0.4, 0.4, 0.4 } }, ePos2));
+	// CoordF ePos2 = CoordF{ 2, 2 };
+	// enemies.push(
+	// 	ePos, &balrogAnimImage, UNIT_STATE_WALK,
+	// 	enemyWalkState, 0, 0.5,
+	// 	translateHLines(Lines{ { -0.4, 0.4, -0.4 }, { -0.4, 0.4, 0.4 } }, ePos2),
+	// 	translateVLines(Lines{ { -0.4, 0.4, -0.4 }, { -0.4, 0.4, 0.4 } }, ePos2));
 
 	// Projectiles
-	projectiles.initialize(10000);
+	projectiles.initialize(5000);
 	increaseProjectilesAmount(0, players, 10);
 	increaseAttackSpeed(0, players, 0.01);
 	increaseMovementSpeed(0, players, 2);

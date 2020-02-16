@@ -26,8 +26,8 @@ void Objects::push(CoordF position, Sprite* sprite, Lines hLines, Lines vLines)
 	spriteArray[size] = sprite;
 	// Collision
 	LineISetIters hLineIters, vLineIters;
-	for (Line line : hLines) hLineIters.push_back(hLineISet.insert(LineI{ line, size }).first);
-	for (Line line : vLines) vLineIters.push_back(vLineISet.insert(LineI{ line, size }).first);
+	for (Line line : hLines) hLineIters.push_back(hLineISet.insert(LineI{ line, size }));
+	for (Line line : vLines) vLineIters.push_back(vLineISet.insert(LineI{ line, size }));
 	hLineISetItersArray[size] = hLineIters;
 	vLineISetItersArray[size] = vLineIters;
 	size++;

@@ -49,8 +49,8 @@ void Enemies::push(CoordF position, AnimImage* animImage, int state, FSM fsm, fl
 	velocityArray[size] = velocity;
 	// Collision
 	LineISetIters hLineIters, vLineIters;
-	for (Line line : hLines) hLineIters.push_back(hLineISet.insert(LineI{ line, size }).first);
-	for (Line line : vLines) vLineIters.push_back(vLineISet.insert(LineI{ line, size }).first);
+	for (Line line : hLines) hLineIters.push_back(hLineISet.insert(LineI{ line, size }));
+	for (Line line : vLines) vLineIters.push_back(vLineISet.insert(LineI{ line, size }));
 	hLineISetItersArray[size] = hLineIters;
 	vLineISetItersArray[size] = vLineIters;
 	rangeArray[size] = 0.3;

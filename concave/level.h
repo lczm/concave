@@ -38,7 +38,7 @@ private:
 		wallEast, wallWest, WallConnect,
 		wallPath, barrel, fireItem, torch,
 		book, dead, armour, witch, banner,
-		cabinet, bloodPool, store;
+		cabinet, bloodPool, store, cow;
 
 	/* Tile texture, masks and images*/
 	Texture itemTexture;	  GridMask itemGridMask;      Image itemImage;
@@ -55,6 +55,8 @@ private:
 
 	Texture torchTexture;  GridMask torchGridMask;   Image torchImage;
 	Texture storeTexture;	  GridMask storeGridMask;      Image storeImage;
+	Texture cowTexture;  GridMask cowGridMask;   Image cowImage;
+
 
 	// Player
 	Texture warriorTexture; AnimImage warriorAnimImage;
@@ -99,6 +101,7 @@ private:
 	AnimImage bloodPoolAnim;
 	AnimImage fireItemAnim;
 	AnimImage torchAnim;
+	AnimImage cowAnim;
 	// Camera
 	int map[mapWidth][mapHeight];
 

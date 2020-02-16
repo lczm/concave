@@ -60,16 +60,21 @@ SpriteData HUD::getInventorySpriteData()
 
 void HUD::drawHUD()
 {
-	int hpHeight = healthOrbSpriteData.height * 10 / 100;
-	int mpHeight = manaOrbSpriteData.height * 10 / 100;
+	int& currentHealth = level.getPlayers().getHealthArray()[0];
+	int& maxHealth = level.getPlayers().getMaxHealthArray()[0];
+	int& currentMana = level.getPlayers().getManaArray()[0];
+	int& maxMana = level.getPlayers().getMaxManaArray()[0];
+
+	int hpHeight = healthOrbSpriteData.height * maxHealth - currentHealth / 100;
+	int mpHeight = manaOrbSpriteData.height * maxMana - currentMana / 100;
 	healthOrbSpriteData.rect.top = hpHeight;
 	manaOrbSpriteData.rect.top = mpHeight;
 	graphics->drawSprite(manaOrbSpriteData, GAME_WIDTH - 230, GAME_HEIGHT - 230 + mpHeight, 1);
 	graphics->drawSprite(healthOrbSpriteData, 0, GAME_HEIGHT - 230 + hpHeight, 1);
 	graphics->drawSprite(manaSpriteData, GAME_WIDTH - 530, GAME_HEIGHT - 230, 1);
 	graphics->drawSprite(healthSpriteData, 0, GAME_HEIGHT - 230, 1);
-	spriteText.print("HP: 100/100", 20, GAME_HEIGHT - 280);
-	spriteText.print("MP: 100/100", GAME_WIDTH - 220, GAME_HEIGHT - 280);
+	spriteText.print("HP: " + to_string(currentHealth) + "/" + to_string(maxHealth), 20, GAME_HEIGHT - 280);
+	spriteText.print("MP: " + to_string(currentMana) + "/" + to_string(maxMana), GAME_WIDTH - 220, GAME_HEIGHT - 280);
 }
 
 void HUD::releaseAll()

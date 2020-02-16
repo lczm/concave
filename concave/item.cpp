@@ -17,8 +17,7 @@ Item::Item(Graphics* graphics, UINT id, ItemType itemtype, CoordI posInInven = {
 		itemType = ItemType::Elixr;
 		itemGridMask.initialize(5, 348, 28, 28, 1, 0, 0, 0);
 		itemImage.initialize(&itemTexture, itemGridMask);
-		// itemImage.getSpriteData(itemSpriteData, itemSpriteMapCoord);
-		itemImage.getSpriteData(itemSpriteMapCoord);
+		itemSpriteData = itemImage.getSpriteData(itemSpriteMapCoord);
 		is = { 1, 1 };
 		itemSize = is;
 		break;
@@ -26,8 +25,7 @@ Item::Item(Graphics* graphics, UINT id, ItemType itemtype, CoordI posInInven = {
 		itemType = ItemType::Armor;
 		itemGridMask.initialize(1, 20, 56, 84, 1, 0, 0, 0);
 		itemImage.initialize(&itemTexture, itemGridMask);
-		// itemImage.getSpriteData(itemSpriteData, itemSpriteMapCoord);
-		itemImage.getSpriteData(itemSpriteMapCoord);
+		itemSpriteData = itemImage.getSpriteData(itemSpriteMapCoord);
 		is = { 3, 2 };
 		itemSize = is;
 		break;

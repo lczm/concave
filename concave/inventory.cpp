@@ -27,8 +27,7 @@ void Inventory::initialize()
 	inventoryTexture.initialize(Window::graphics, IMAGE_HUD_INVENTORY);
 	inventoryGridMask.initialize(0, 0, 320, 352, 1, 1, 0, 0);
 	inventoryImage.initialize(&inventoryTexture, inventoryGridMask);
-	// inventoryImage.getSpriteData(inventorySpriteData, inventorySpriteMapCoord);
-	inventoryImage.getSpriteData(inventorySpriteMapCoord);
+	inventorySpriteData = inventoryImage.getSpriteData(inventorySpriteMapCoord);
 	CoordI invenPos = { 0,0 };
 	Item* test1 = new Item(graphics, 1, ItemType::Armor, invenPos);
 	invenPos = { 0,3 };

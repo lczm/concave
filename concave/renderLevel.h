@@ -24,6 +24,7 @@ private:
 	GridMask manyItemsGridMask;
 	Image manyItemsImage;
 
+	Texture cabinetTexture;
 	GridMask cabinetGridMask;
 	Image cabinetImage;
 

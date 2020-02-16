@@ -224,6 +224,23 @@ void Level::update()
 	updatePositionArray(projectiles.getSize(), projectiles.getPositionArray(), projDeltaArray);
 	// Update collision etc
 
+	// AnimObjects (Temp)
+	for (int i = 0; i < animObjects.getSize(); i++) {
+		int& state = animObjects.getStateArray()[i];
+		int& frameNo = animObjects.getFrameNoArray()[i];
+		float& timer = animObjects.getTimerArray()[i];
+		float& delay = animObjects.getDelayArray()[i];
+		AnimImage*& animImage = animObjects.getAnimImageArray()[i];
+		timer += frameTime;
+		if (timer > delay) {
+			timer -= delay;
+			frameNo += 1;
+			if (frameNo > animImage->getEndFrame(state)) {
+				frameNo = 0;
+			}
+		}
+	}
+	
 	// Move Camera
 	camCoord = players.getPositionArray()[0];
 	if (input->isKeyDown('O')) camScale *= 1 - 0.01;
@@ -253,6 +270,16 @@ void Level::render()
 		SpriteData objectSD = objects.getSpriteArray()[i]->getSpriteData();
 		CoordF objectPos = objects.getPositionArray()[i];
 		graphics->drawSprite(objectSD, gridToScreen(objectPos), camScale);
+	}
+
+	// AnimObjects
+	for (int i = 0; i < animObjects.getSize(); i++) {
+		int animObjectState = animObjects.getStateArray()[i];
+		int animObjectDirection = animObjects.getDirectionArray()[i];
+		int animObjectFrameNo = animObjects.getFrameNoArray()[i];
+		CoordF animObjectPos = animObjects.getPositionArray()[i];
+		SpriteData animObjectSD = animObjects.getAnimImageArray()[i]->getSpriteData(animObjectState, animObjectDirection, animObjectFrameNo);
+		graphics->drawSprite(animObjectSD, gridToScreen(animObjectPos), camScale);
 	}
 
 	// Player (Temporary)

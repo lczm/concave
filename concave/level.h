@@ -6,6 +6,7 @@
 #include "enemies.h"
 #include "projectiles.h"
 #include "objects.h"
+#include "animObjects.h"
 #include "playerFSM.h"
 #include "enemyFSM.h"
 #include "collisionSystem.h"
@@ -72,6 +73,7 @@ private:
 	Projectiles projectiles;
 	Enemies enemies;
 	Objects objects;
+	AnimObjects animObjects;
 
 	// Camera
 	int map[mapWidth][mapHeight];

@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="animObjects.cpp" />
     <ClCompile Include="cellular.cpp" />
     <ClCompile Include="concave.cpp" />
     <ClCompile Include="EditComponent.cpp" />
@@ -179,6 +180,7 @@
     <ClCompile Include="winmain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="animObjects.h" />
     <ClInclude Include="cellular.h" />
     <ClInclude Include="component.h" />
     <ClInclude Include="concave.h" />

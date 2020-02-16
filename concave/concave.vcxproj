@@ -157,6 +157,7 @@
     <ClCompile Include="enemies.cpp" />
     <ClCompile Include="enemyFSM.cpp" />
     <ClCompile Include="fsmSystem.cpp" />
+    <ClCompile Include="modifiers.cpp" />
     <ClCompile Include="movementSystem.cpp" />
     <ClCompile Include="players.cpp" />
     <ClCompile Include="game.cpp" />
@@ -186,6 +187,7 @@
     <ClInclude Include="enemies.h" />
     <ClInclude Include="enemyFSM.h" />
     <ClInclude Include="fsmSystem.h" />
+    <ClInclude Include="modifiers.h" />
     <ClInclude Include="movementSystem.h" />
     <ClInclude Include="players.h" />
     <ClInclude Include="game.h" />

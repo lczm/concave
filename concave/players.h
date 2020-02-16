@@ -28,8 +28,8 @@ private:
 	vector<int> maxHealthArray;
 	vector<int> manaArray;
 	vector<int> maxManaArray;
-	vector<int> damageArray;
 	vector<int> noProjArray;
+	vector<float> damageArray;
 public:
 	Players(); ~Players();
 	void initialize(int capacity);
@@ -59,6 +59,6 @@ public:
 	vector<int>& getMaxHealthArray() { return maxHealthArray; };
 	vector<int>& getManaArray() { return manaArray; };
 	vector<int>& getMaxManaArray() { return maxManaArray; };
-	vector<int>& getDamageArray() { return damageArray; }
 	vector<int>& getNoProjArray() { return noProjArray; }
+	vector<float>& getDamageArray() { return damageArray; }
 };

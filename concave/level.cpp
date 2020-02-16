@@ -158,6 +158,8 @@ void Level::initialize()
 
 	// Projectiles
 	projectiles.initialize(1000000);
+	increaseProjectilesAmount(0, players, 10);
+	increaseSpeed(0, players, 0.001);
 }
 
 void Level::releaseAll()

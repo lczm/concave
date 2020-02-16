@@ -31,8 +31,8 @@ void Players::initialize(int capacity)
 	Players::maxHealthArray.resize(capacity);
 	Players::manaArray.resize(capacity);
 	Players::maxManaArray.resize(capacity);
-	Players::damageArray.resize(capacity);
 	Players::noProjArray.resize(capacity);
+	Players::damageArray.resize(capacity);
 }
 
 void Players::push(CoordF position, AnimImage* animImage, int state, FSM fsm, float rotation, float velocity, Lines hLines, Lines vLines, int health, int maxHealth, int mana, int maxMana)
@@ -59,8 +59,8 @@ void Players::push(CoordF position, AnimImage* animImage, int state, FSM fsm, fl
 	maxHealthArray[size] = maxHealth;
 	manaArray[size] = mana;
 	maxManaArray[size] = maxMana;
+	noProjArray[size] = 1;
 	damageArray[size] = 10;
-	noProjArray[size] = 10;
 	size++;
 }
 
@@ -89,6 +89,6 @@ void Players::pop(int index)
 	maxHealthArray[index] = maxHealthArray[size];
 	manaArray[index] = manaArray[size];
 	maxManaArray[index] = maxManaArray[size];
-	damageArray[index] = damageArray[size];
 	noProjArray[index] = noProjArray[size];
+	damageArray[index] = damageArray[size];
 }

@@ -10,6 +10,7 @@
 #include "collisionSystem.h"
 #include "movementSystem.h"
 #include "fsmSystem.h"
+#include "modifiers.h"
 
 #include "cellular.h"
 #include "EditComponent.h"

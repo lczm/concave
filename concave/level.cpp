@@ -78,7 +78,7 @@ void Level::initialize()
 
 	//armour
 	armourTexture.initialize(graphics, IMAGE_ARMOURITEMS_DUNGEON);
-	armourGridMask.initialize(0, 0, 95, 95, 1, 1, 64, 64);
+	armourGridMask.initialize(0, 0, 95, 95, 1, 1, 44, 64);
 	armourImage.initialize(&armourTexture, armourGridMask);
 
 	//witch
@@ -269,6 +269,7 @@ void Level::render()
 			graphics->drawSprite(
 				underTiles.getSprite(x, y)->getSpriteData(),
 				gridToScreen(x, y), camScale);
+
 			graphics->drawSprite(
 				tiles.getSprite(x, y)->getSpriteData(),
 				gridToScreen(x, y), camScale);
@@ -446,7 +447,7 @@ void Level::tilesInitialize()
 	objects.clear();
 	animObjects.clear();
 	objects.initialize(500);
-	animObjects.initialize(500);
+	animObjects.initialize(1000);
 
 	for (int x = 0; x < mapWidth; x++) {
 		for (int y = 0; y < mapHeight; y++) {
@@ -471,12 +472,9 @@ void Level::tilesInitialize()
 			case ImageType::churchDoor:
 				tiles.set(x, y, &door, translateHLines(Lines{ {} }, x, y),
 					translateVLines(Lines{}, x, y));
-
 				CoordF pos = CoordF{ float(x), float(y) };
-
 				objects.push(pos, &door, translateHLines(Lines{ {} }, x, y),
 					translateVLines(Lines{}, x, y));
-
 				//animObjects.push(pos, &doorAnim, 0, 0, 0, translateHLines(Lines{ {} }, x, y),
 					//translateVLines(Lines{}, x, y));
 				break;
@@ -513,8 +511,6 @@ void Level::tilesInitialize()
 				break;
 				//test object
 			//add no to constants ltr
-
-
 			case 11:
 				tiles.set(x, y, &barrel, translateHLines(Lines{ {} }, x, y),
 					translateVLines(Lines{}, x, y));

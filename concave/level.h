@@ -88,4 +88,5 @@ public:
 	//void renderSprites();
 	void writeToFile(int map[mapWidth][mapHeight]);
 	void placeRoom();
+	void tilesInitialize();
 };

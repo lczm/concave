@@ -89,49 +89,8 @@ void Level::initialize()
 	////  Entities Initialisation  ////
 	// Tiles
 	tiles.initialize(mapWidth, mapHeight);
-
-	for (int x = 0; x < mapWidth; x++) {
-		for (int y = 0; y < mapHeight; y++) {
-			switch (map[x][y])
-			{
-				//changing between textures
-			case ImageType::churchBlood:
-				tiles.set(x,y, &blood, translateHLines(Lines{ {} }, x, y),
-					translateVLines(Lines{}, x, y));
-				break;
-			case ImageType::churchFloor:
-				tiles.set(x, y, &floorSprite, translateHLines(Lines{ {} }, x, y),
-					translateVLines(Lines{}, x, y));
-				break;
-			case ImageType::churchDoor:
-				tiles.set(x, y, &door, translateHLines(Lines{ {} }, x, y),
-					translateVLines(Lines{}, x, y));
-				break;
-			case ImageType::churchChest:
-				tiles.set(x, y, &chest, translateHLines(Lines{ {} }, x, y),
-					translateVLines(Lines{}, x, y));
-				break;
-			case ImageType::churchWallEast:
-				tiles.set(x, y, &wallEast, translateHLines(Lines{ {} }, x, y),
-					translateVLines(Lines{}, x, y));
-				break;
-			case ImageType::churchWallWest:
-				tiles.set(x, y, &wallWest, translateHLines(Lines{ {} }, x, y),
-					translateVLines(Lines{}, x, y));
-				break;
-			case ImageType::churchWallConnect:
-				tiles.set(x, y, &WallConnect, translateHLines(Lines{ {} }, x, y),
-					translateVLines(Lines{}, x, y));
-				break;
-			case ImageType::churchWallPath:
-				tiles.set(x, y, &wallPath, translateHLines(Lines{ {} }, x, y),
-					translateVLines(Lines{}, x, y));
-				break;
-				//test object
-			}
-		}
-	}
-
+	tilesInitialize();
+	
 	/*
 	for (int y = 0; y < tiles.getRows(); y++)
 		for (int x = 0; x < tiles.getCols(); x++)
@@ -334,6 +293,7 @@ void Level::readFromFile()
 {	
 	++mapNo %= 4;
 	editComponent->readFromFile("save.txt", map, mapNo);
+	tilesInitialize();
 }
 
 void Level::writeToFile(int map[mapWidth][mapHeight])
@@ -349,7 +309,7 @@ void Level::changeLevel()
 		//woahh
 		//mapNo = 29229;
 		input->clearKeyPress(0x45);
-		editComponent->animateObjects();
+		//editComponent->animateObjects();
 		level.readFromFile();
 		//level.initialize();
 	}
@@ -392,4 +352,48 @@ void Level::renderSprites()
 void Level::placeRoom()
 {
 	editComponent->placeRoom(map);
+}
+void Level::tilesInitialize()
+{
+	for (int x = 0; x < mapWidth; x++) {
+		for (int y = 0; y < mapHeight; y++) {
+			switch (map[x][y])
+			{
+				//changing between textures
+			case ImageType::churchBlood:
+				tiles.set(x, y, &blood, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				break;
+			case ImageType::churchFloor:
+				tiles.set(x, y, &floorSprite, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				break;
+			case ImageType::churchDoor:
+				tiles.set(x, y, &door, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				break;
+			case ImageType::churchChest:
+				tiles.set(x, y, &chest, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				break;
+			case ImageType::churchWallEast:
+				tiles.set(x, y, &wallEast, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				break;
+			case ImageType::churchWallWest:
+				tiles.set(x, y, &wallWest, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				break;
+			case ImageType::churchWallConnect:
+				tiles.set(x, y, &WallConnect, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				break;
+			case ImageType::churchWallPath:
+				tiles.set(x, y, &wallPath, translateHLines(Lines{ {} }, x, y),
+					translateVLines(Lines{}, x, y));
+				break;
+				//test object
+			}
+		}
+	}
 }

@@ -9,6 +9,10 @@ private:
 	Texture menuBgTexture;
 	SpriteData menuBg;
 
+	Texture logoTexture;
+	SpriteData logo;
+
+
 
 	Texture playbtnTexture;
 	Texture insbtnTexture;

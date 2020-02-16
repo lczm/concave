@@ -233,7 +233,7 @@ const std::map<ImageType, CoordI> IMAGE_MAP
 	{ImageType::churchWallEast,  CoordI{ 19,3 }},
 	{ImageType::churchWallWest, CoordI{ 18,3 }},
 	{ImageType::churchBlood, CoordI{ 10, 8 }},
-	{ImageType::churchDoor, CoordI{ 4,1 }},
+	{ImageType::churchDoor, CoordI{ 14,8 }},
 	{ImageType::churchFloor,  CoordI{ 12,0 }},
 	{ImageType::churchChest, CoordI{ 10, 6 }},
 	{ImageType::churchWallConnect, CoordI{ 3, 0 }},
